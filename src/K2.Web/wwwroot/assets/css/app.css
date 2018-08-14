@@ -1,0 +1,22 @@
+﻿.jconfirm {
+    z-index: 999999;
+}
+
+    .jconfirm .jconfirm-box {
+        padding: 5px 5px 0 5px;
+        background-color: transparent;
+        display: block;
+    }
+
+        .jconfirm .jconfirm-box div.content-pane {
+            margin-bottom: 0;
+        }
+
+    .jconfirm .jconfirm-bg.seen {
+        background-color: #ccc;
+    }
+
+    .jconfirm.jconfirm-white .jconfirm-box {
+        box-shadow: none;
+        border-radius: 5px;
+    }

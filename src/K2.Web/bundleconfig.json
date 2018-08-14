@@ -1,0 +1,32 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/assets/vendors/base/vendors.bundle.min.css",
+    "inputFiles": [
+      "wwwroot/assets/vendors/base/vendors.bundle.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/vendors/base/vendors.bundle.min.js",
+    "inputFiles": [
+      "wwwroot/assets/vendors/base/vendors.bundle.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/scripts.bundle.min.js",
+    "inputFiles": [
+      "wwwroot/assets/scripts.bundle.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/style.bundle.min.css",
+    "inputFiles": [
+      "wwwroot/assets/style.bundle.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/app.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/app.js"
+    ]
+  }
+]
