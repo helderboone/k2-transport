@@ -21722,8 +21722,8 @@ strong {
     }
 
     .m-dropdown.m-dropdown--align-center.m-dropdown--large .m-dropdown__wrapper {
-        width: 380px;
-        margin-left: -190px;
+        width: 320px;
+        margin-left: -160px;
     }
 
     .m-dropdown.m-dropdown--align-center.m-dropdown--huge .m-dropdown__wrapper {
@@ -51901,7 +51901,7 @@ body.m-content--skin-light2 {
     }
 
     .m-container.m-container--fluid {
-        padding: 0 80px;
+        padding: 0 90px 0 80px;
     }
 
     .m-container.m-container--responsive {
@@ -51968,7 +51968,7 @@ body.m-content--skin-light2 {
 
 @media (max-width: 1024px) {
     .m-brand {
-        background: #fff;
+        background-color: #8DD2F1;
         padding: 0 20px;
         width: 100%;
         position: relative;
@@ -52185,9 +52185,9 @@ body.m-content--skin-light2 {
 
 @media (min-width: 1025px) {
     .m-header {
-        -webkit-box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
-        box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
-        background: #6AB6E8;
+        -webkit-box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.2);
+        box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.2);
+        background: #8DD2F1;
         height: 80px;
     }
 
@@ -52218,8 +52218,8 @@ body.m-content--skin-light2 {
 
 @media (max-width: 1024px) {
     .m-header {
-        -webkit-box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
-        box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
+        -webkit-box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.1);
+        box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.1);
         padding: 0;
         height: 70px !important;
     }
@@ -52410,7 +52410,7 @@ body.m-content--skin-light2 {
             .m-topbar .m-topbar__nav.m-nav > .m-nav__item:hover > .m-nav__link .m-topbar__username, .m-topbar .m-topbar__nav.m-nav > .m-nav__item.m-nav__link-icon--active > .m-nav__link .m-topbar__username, .m-topbar .m-topbar__nav.m-nav > .m-nav__item.m-dropdown--open > .m-nav__link .m-topbar__username {
                 -webkit-transition: all 0.3s ease;
                 transition: all 0.3s ease;
-                color: #f9f9f9;
+                color: #0083B2;
             }
 
             .m-topbar .m-topbar__nav.m-nav > .m-nav__item:hover.m-nav__item--qs > .m-nav__link .m-nav__link-icon .m-nav__link-icon-wrapper, .m-topbar .m-topbar__nav.m-nav > .m-nav__item.m-nav__link-icon--active.m-nav__item--qs > .m-nav__link .m-nav__link-icon .m-nav__link-icon-wrapper, .m-topbar .m-topbar__nav.m-nav > .m-nav__item.m-dropdown--open.m-nav__item--qs > .m-nav__link .m-nav__link-icon .m-nav__link-icon-wrapper {
@@ -52467,6 +52467,7 @@ body.m-content--skin-light2 {
         top: 0;
         -webkit-transition: all 0.3s ease;
         transition: all 0.3s ease;
+        background-color: #8DD2F1;
     }
 
     .m-topbar .m-topbar__nav.m-nav {
@@ -53215,7 +53216,7 @@ body.m-content--skin-light2 {
             }
 
     .m-aside-header-menu-mobile-close.m-aside-header-menu-mobile-close--skin-light {
-        background-color: #eeeef5;
+        background-color: #f9f9f9;
     }
 
         .m-aside-header-menu-mobile-close.m-aside-header-menu-mobile-close--skin-light > i {
@@ -54073,7 +54074,7 @@ body.m-content--skin-light2 {
     }
 
     .m-header-menu.m-header-menu--skin-light .m-menu__nav > .m-menu__item:hover > .m-menu__link .m-menu__link-icon, .m-header-menu.m-header-menu--skin-light .m-menu__nav > .m-menu__item.m-menu__item--hover > .m-menu__link .m-menu__link-icon {
-        color: #fff;
+        color: #0083B2;
     }
 
     .m-header-menu.m-header-menu--skin-light .m-menu__nav > .m-menu__item:hover > .m-menu__link .m-menu__link-bullet.m-menu__link-bullet--dot > span, .m-header-menu.m-header-menu--skin-light .m-menu__nav > .m-menu__item.m-menu__item--hover > .m-menu__link .m-menu__link-bullet.m-menu__link-bullet--dot > span {
@@ -54085,11 +54086,11 @@ body.m-content--skin-light2 {
     }
 
     .m-header-menu.m-header-menu--skin-light .m-menu__nav > .m-menu__item:hover > .m-menu__link .m-menu__link-text, .m-header-menu.m-header-menu--skin-light .m-menu__nav > .m-menu__item.m-menu__item--hover > .m-menu__link .m-menu__link-text {
-        color: #fff;
+        color: #0083B2;
     }
 
     .m-header-menu.m-header-menu--skin-light .m-menu__nav > .m-menu__item:hover > .m-menu__link > .m-menu__hor-arrow, .m-header-menu.m-header-menu--skin-light .m-menu__nav > .m-menu__item.m-menu__item--hover > .m-menu__link > .m-menu__hor-arrow {
-        color: #fff;
+        color: #0083B2;
     }
 
     .m-header-menu.m-header-menu--submenu-skin-light .m-menu__nav > .m-menu__item .m-menu__submenu > .m-menu__subnav {

@@ -16,7 +16,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <head>
     <meta charset="utf-8" />
 
-    <title>Metronic | Dashboard</title>
+    <title>K2 | Reservas</title>
     <meta name="description" content="Latest updates and statistic charts">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <!--begin::Web font -->
@@ -35,9 +35,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--end::Page Vendors Styles -->
     <!--begin::Base Styles -->
     <link href="assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="assets/demo/demo9/base/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="assets/style.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Base Styles -->
-    <link rel="shortcut icon" href="assets/demo/demo9/media/img/logo/favicon.ico" />
+    <link rel="shortcut icon" href="assets/img/favicon.png" />
 </head>
 <!-- end::Head -->
 <!-- begin::Body -->
@@ -46,7 +46,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- begin::Page loader -->
     <div class="m-page-loader m-page-loader--base">
         <div class="m-blockui">
-            <span>Please wait...</span>
+            <span>Processando...</span>
             <span><div class="m-loader m-loader--brand"></div></span>
         </div>
     </div>
@@ -65,15 +65,10 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="m-stack m-stack--ver m-stack--general">
                             <div class="m-stack__item m-stack__item--middle m-brand__logo">
                                 <a href="index.html" class="m-brand__logo-wrapper">
-                                    <img alt="" src="assets/demo/demo9/media/img/logo/logo.png" />
+                                    <img alt="" src="assets/img/logo.png" />
                                 </a>
                             </div>
                             <div class="m-stack__item m-stack__item--middle m-brand__tools">
-                                <!-- BEGIN: Responsive Aside Left Menu Toggler -->
-                                <a href="javascript:;" id="m_aside_left_toggle_mobile" class="m-brand__icon m-brand__toggler m-brand__toggler--left">
-                                    <span></span>
-                                </a>
-                                <!-- END -->
                                 <!-- BEGIN: Responsive Header Menu Toggler -->
                                 <a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler">
                                     <span></span>
@@ -94,8 +89,8 @@ License: You must have a valid license purchased only from themeforest(the above
 
                             <div class="m-stack__item m-stack__item--fluid">
                                 <!-- BEGIN: Horizontal Menu -->
-                                <button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-dark " id="m_aside_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
-                                <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark ">
+                                <button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-light" id="m_aside_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
+                                <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light">
                                     <ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
                                         <li class="m-menu__item  m-menu__item--active  m-menu__item--submenu m-menu__item--rel" m-menu-submenu-toggle="click" aria-haspopup="true"><a href="javascript:;" class="m-menu__link m-menu__toggle" title="Non functional dummy link" "><span class=" m-menu__item-here"></span><i class="m-menu__link-icon flaticon-analytics"></i><span class="m-menu__link-text">Dashboard</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a><div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left"><span class="m-menu__arrow m-menu__arrow--adjust"></span><ul class="m-menu__subnav"><li class="m-menu__item  m-menu__item--active " aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class="m-menu__link-icon flaticon-diagram"></i><span class="m-menu__link-title">  <span class="m-menu__link-wrap">      <span class="m-menu__link-text">Generate Reports</span>      <span class="m-menu__link-badge"><span class="m-badge m-badge--success">2</span></span>  </span></span></a></li><li class="m-menu__item  m-menu__item--submenu" m-menu-submenu-toggle="hover" m-menu-link-redirect="1" aria-haspopup="true"><a href="javascript:;" class="m-menu__link m-menu__toggle" title="Non functional dummy link" "><i class=" m-menu__link-icon flaticon-business"></i><span class="m-menu__link-text">Manage Orders</span><i class="m-menu__hor-arrow la la-angle-right"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a><div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--right"><span class="m-menu__arrow "></span><ul class="m-menu__subnav"><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class="m-menu__link-text">Latest Orders</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Pending Orders</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class="m-menu__link-text">Processed Orders</span></a></li><li class="m-menu__item  m-menu__item--submenu" m-menu-submenu-toggle="hover" m-menu-link-redirect="1" aria-haspopup="true"><a href="javascript:;" class="m-menu__link m-menu__toggle" title="Non functional dummy link" "><i class=" m-menu__link-icon flaticon-business"></i><span class="m-menu__link-text">Delivered Orders</span><i class="m-menu__hor-arrow la la-angle-right"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a><div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--right"><span class="m-menu__arrow "></span><ul class="m-menu__subnav"><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class="m-menu__link-text">Latest Orders</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Pending Orders</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class="m-menu__link-text">Processed Orders</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Delivery Reports</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class="m-menu__link-text">Payments</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Customers</span></a></li></ul></div></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class="m-menu__link-text">Payments</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Customers</span></a></li></ul></div></li><li class="m-menu__item  m-menu__item--submenu" m-menu-submenu-toggle="hover" m-menu-link-redirect="1" aria-haspopup="true"><a href="javascript:;" class="m-menu__link m-menu__toggle" title="Non functional dummy link" "><i class="m-menu__link-icon flaticon-chat-1"></i><span class="m-menu__link-text">Customer Feedbacks</span><i class="m-menu__hor-arrow la la-angle-right"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a><div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--right"><span class="m-menu__arrow "></span><ul class="m-menu__subnav"><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Customer Feedbacks</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class="m-menu__link-text">Supplier Feedbacks</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Reviewed Feedbacks</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class="m-menu__link-text">Resolved Feedbacks</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Feedback Reports</span></a></li></ul></div></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class="m-menu__link-icon flaticon-users"></i><span class="m-menu__link-text">Register Member</span></a></li></ul></div></li>
                                         <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel" m-menu-submenu-toggle="click" m-menu-link-redirect="1" aria-haspopup="true"><a href="javascript:;" class="m-menu__link m-menu__toggle" title="Non functional dummy link" "><span class=" m-menu__item-here"></span><i class="m-menu__link-icon flaticon-notes"></i><span class="m-menu__link-text">Reports</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a><div class="m-menu__submenu  m-menu__submenu--fixed m-menu__submenu--left" style="width:600px"><span class="m-menu__arrow m-menu__arrow--adjust"></span><div class="m-menu__subnav"><ul class="m-menu__content"><li class="m-menu__item"><h3 class="m-menu__heading m-menu__toggle"><span class="m-menu__link-text">Finance Reports</span><i class="m-menu__ver-arrow la la-angle-right"></i></h3><ul class="m-menu__inner"><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class="m-menu__link-icon flaticon-map"></i><span class="m-menu__link-text">Annual Reports</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class=" m-menu__link-icon flaticon-user"></i><span class="m-menu__link-text">HR Reports</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class="m-menu__link-icon flaticon-clipboard"></i><span class="m-menu__link-text">IPO Reports</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class=" m-menu__link-icon flaticon-graphic-1"></i><span class="m-menu__link-text">Finance Margins</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class="m-menu__link-icon flaticon-graphic-2"></i><span class="m-menu__link-text">Revenue Reports</span></a></li></ul></li><li class="m-menu__item"><h3 class="m-menu__heading m-menu__toggle"><span class="m-menu__link-text">Project Reports</span><i class="m-menu__ver-arrow la la-angle-right"></i></h3><ul class="m-menu__inner"><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class=" m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Coca Cola CRM</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Delta Airlines Booking Site</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class=" m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Malibu Accounting</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Vineseed Website Rewamp</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class=" m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Zircon Mobile App</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Mercury CMS</span></a></li></ul></li></ul></div></div></li>
@@ -110,7 +105,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="m-stack__item m-stack__item--middle m-stack__item--center">
                         <!-- BEGIN: Brand -->
                         <a href="index.html" class="m-brand m-brand--desktop">
-                            <img alt="" src="assets/demo/demo9/media/img/logo/logo.png" />
+                            <img alt="" src="assets/img/logo.png" />
                         </a>
                         <!-- END: Brand -->
                     </div>
@@ -886,7 +881,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- end::Scroll Top -->
     <!--begin::Base Scripts -->
     <script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
-    <script src="assets/demo/demo9/base/scripts.bundle.js" type="text/javascript"></script>
+    <script src="assets/scripts.bundle.js" type="text/javascript"></script>
     <!--end::Base Scripts -->
     <!--begin::Page Vendors Scripts -->
     <script src="assets/vendors/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
