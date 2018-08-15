@@ -1,9 +1,9 @@
 ﻿// Tipos de notificação
 var TipoNotificacao = {
-	Info: { Modal: "blue", Notify: "info" },
-	Aviso: { Modal: "orange", Notify: "warning" },
-	Erro: { Modal: "red", Notify: "danger" },
-	Sucesso: { Modal: "green", Notify: "success" }
+	Info: { Modal: "info", Notify: "info" },
+	Aviso: { Modal: "warning", Notify: "warning" },
+	Erro: { Modal: "danger", Notify: "danger" },
+	Sucesso: { Modal: "success", Notify: "success" }
 };
 
 // Funções globais para serem utilizadas por todo o sistema
@@ -171,22 +171,14 @@ var App = function () {
 		},
 
 	    // Exibe um popup utilizando o plugin Jquery Confirm
-		exibirModalPorHtml: function (conteudoHtml, openCallback, fecharAoClicarBg, alinharNoTopo, permanecerAberto, titulo) {
+		exibirModalPorHtml: function (conteudoHtml, openCallback, fecharAoClicarBg, permanecerAberto) {
 
-		    var jc = $.alert({
-		        template: '<div class="jconfirm"><div class="jconfirm-bg"></div><div class="jconfirm-scrollpane"><div class="container" style="width:100%;"><div class="row"><div class="jconfirm-box-container"><div class="jconfirm-box" role="dialog" aria-labelledby="labelled" tabindex="-1"><div class="closeIcon">&times;</div><div class="content-pane"><div class="content"></div></div><div class="buttons"></div><div class="jquery-clear"></div></div></div></div></div></div></div>',
+		    var jc = $.dialog({
 		        content: conteudoHtml,
-		        title: titulo,
-		        cancelButton: false,
-		        confirmButton: false,
+                title: null,
 		        closeIcon: false,
 		        backgroundDismiss: (fecharAoClicarBg == null ? false : fecharAoClicarBg),
-		        keyboardEnabled: (fecharAoClicarBg == null ? false : fecharAoClicarBg),
-		        alignOnTop: (alinharNoTopo == null ? false : alinharNoTopo),
-		        opacity: 0.6,
-		        animation: "top",
-		        closeAnimation: "bottom",
-		        columnClass: "col-xs-12", //col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3",
+                columnClass: "col-xs-10 col-xs-1 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3",
 		        onOpen: function () {
 		            this.$content.find(".btn-fechar").click(function () {
 		                jc.close();
@@ -223,78 +215,36 @@ var App = function () {
 
 		// Exibe um modal utilizando o plugin "JQuery Confirm"
 		exibirModal: function (tipo, mensagem, titulo, mensagemAdicional, fecharCallback) {
-			var cssBotaoFechar = "info";
-			var icone = "info_outline";
+            var icone = "flaticon-chat-1";
 
-			if (tipo === TipoNotificacao.Aviso) {
-				icone = "warning";
-				cssBotaoFechar = "warning";
+            if (tipo === TipoNotificacao.Aviso) {
+                icone = "flaticon-warning-2";
 			} else if (tipo === TipoNotificacao.Erro) {
-				icone = "bug_report";
-				cssBotaoFechar = "danger";
+                icone = "flaticon-circle";
 			} else if (tipo === TipoNotificacao.Sucesso) {
-				icone = "thumb_up";
-				cssBotaoFechar = "success";
+                icone = "flaticon-like";
 			}
 
-			cssBotaoFechar = "btn btn-" + cssBotaoFechar + " btn-md btn-fechar";
-
-            /*
-            var htmlModal = "<div class=\"modal-block modal-block-md\">" +
-                                "<div class=\"card card-modal\">" +
-								    "<div class=\"card-header card-header-icon card-modal-icon\" data-background-color=\"" + tipo.Modal + "\">" +
-									    "<i class=\"material-icons\">" + icone + "</i>" +
-								    "</div>" +
-								    "<div class=\"card-content\">" +
-									    "<h4 class=\"card-title\">" + titulo + "</h4>" +
-									    "<p>" + mensagem + "</p>";
-			    if (mensagemAdicional != null) {
-				    htmlModal = htmlModal + "<div class=\"stats\">" + mensagemAdicional + "</div>";
-			    }
-			    htmlModal = htmlModal + "</div>" +
-								    "<div class=\"card-footer text-right\">" +
-									    "<button class=\"" + cssBotaoFechar + "\">Fechar</button>" +
-								    "</div>" +
-							    "</div>" +
-                            "</div>";
-            */
-
-            var htmlModal = '<div class="modal fade show" style="display: block; padding-left: 17px;">' +
-                                '<div class="modal-dialog modal-dialog-centered" role="document">' +
-                                    '<div class="modal-content">' +
-                                        '<div class="m-portlet m-portlet--skin-dark m-portlet--bordered-semi m--bg-brand">' + 
-                                            '<div class="m-portlet__head">' + 
-                                                '<div class="m-portlet__head-caption">' + 
-                                                    '<div class="m-portlet__head-title">' + 
-                                                        '<span class="m-portlet__head-icon">' +
-                                                            '<i class="flaticon-statistics"></i>' +
-                                                        '</span>' +
-                                                        '<h3 class="m-portlet__head-text">' +
-                                                            'Solid Background Dark Skin' +
-						                                '</h3>' +
-                                                    '</div>' +
-                                                '</div>' +
-                                                '<div class="m-portlet__head-tools">' +
-                                                    '<ul class="m-portlet__nav">' +
-                                                        '<li class="m-portlet__nav-item">' +
-                                                            '<a href="" class="m-portlet__nav-link m-portlet__nav-link--icon"><i class="la la-cloud-upload"></i></a>' +
-                                                        '</li>' + 
-                                                        '<li class="m-portlet__nav-item">' +
-                                                            '<a href="" class="m-portlet__nav-link m-portlet__nav-link--icon"><i class="la la-cog"></i></a>' +
-                                                        '</li>' +
-                                                        '<li class="m-portlet__nav-item">' +
-                                                            '<a href="" class="m-portlet__nav-link m-portlet__nav-link--icon"><i class="la la-share-alt-square"></i></a>'
-                                                        '</li>' +
-                                                    '</ul>' +
-                                                '</div>' +
-			                                '</div>' +
-                                            '<div class="m-portlet__body">' +
-                                                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.' +
-			                                '</div>' +
-		                                '</div>' + 
+            var htmlModal = '<div class="m-portlet m-portlet--' + tipo.Modal + ' m-portlet--head-solid-bg m-portlet--bordered modal-block-md" style="margin-bottom:0; opacity: 0.9;">' + 
+                                '<div class="m-portlet__head">' + 
+                                    '<div class="m-portlet__head-caption">' + 
+                                        '<div class="m-portlet__head-title">' + 
+                                            '<span class="m-portlet__head-icon"><i class="' + icone + '"></i></span>' +
+                                            '<h3 class="m-portlet__head-text">' + titulo + '</h3>' +
+                                        '</div>' +
+                                    '</div>' +
+			                    '</div>' +
+                                '<div class="m-portlet__body">' +
+                                    '<p style="font-weight:600;">' + mensagem + '</p>' + mensagemAdicional +
+                                '</div>' +
+                                '<div class="m-portlet__foot">' +
+                                    '<div class="row align-items-center">' +
+                                         '<div class="col-lg-12 m--align-right">' +
+                                            '<button class="btn btn-outline-' + tipo.Modal + ' btn-fechar">Fechar</button>' +
+                                        '</div>' +
                                     '</div>' +
                                 '</div>' +
-                            '</div>';
+		                  '</div>';
 
 			this.exibirModalPorHtml(htmlModal, function () {
 				if (fecharCallback != null) {

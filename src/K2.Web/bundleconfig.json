@@ -2,13 +2,15 @@
   {
     "outputFileName": "wwwroot/assets/vendors/base/vendors.bundle.min.css",
     "inputFiles": [
-      "wwwroot/assets/vendors/base/vendors.bundle.css"
+      "wwwroot/assets/vendors/base/vendors.bundle.css",
+      "wwwroot/assets/vendors/custom/jquery-confirm/jquery-confirm.min.css"
     ]
   },
   {
     "outputFileName": "wwwroot/assets/vendors/base/vendors.bundle.min.js",
     "inputFiles": [
-      "wwwroot/assets/vendors/base/vendors.bundle.js"
+      "wwwroot/assets/vendors/base/vendors.bundle.js",
+      "wwwroot/assets/vendors/custom/jquery-confirm/jquery-confirm.min.js"
     ]
   },
   {

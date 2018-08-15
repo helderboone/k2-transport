@@ -1,14 +1,12 @@
-﻿.jconfirm {
-    z-index: 999999;
-}
-
+﻿
     .jconfirm .jconfirm-box {
-        padding: 5px 5px 0 5px;
+        padding: 0;
         background-color: transparent;
         display: block;
+        border-radius: 0px !important;
     }
 
-        .jconfirm .jconfirm-box div.content-pane {
+        .jconfirm .jconfirm-box div.jconfirm-content-pane {
             margin-bottom: 0;
         }
 
@@ -18,5 +16,31 @@
 
     .jconfirm.jconfirm-white .jconfirm-box {
         box-shadow: none;
-        border-radius: 5px;
     }
+
+.jconfirm.jconfirm-white .jconfirm-box, .jconfirm.jconfirm-light .jconfirm-box {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+
+
+.modal-block-xs {
+    max-width: 200px;
+}
+
+.modal-block-sm {
+    max-width: 400px;
+}
+
+.modal-block-md {
+    max-width: 600px;
+}
+
+.modal-block-lg {
+    max-width: 900px;
+}
+
+.modal-block-full {
+    max-width: 100%;
+}
