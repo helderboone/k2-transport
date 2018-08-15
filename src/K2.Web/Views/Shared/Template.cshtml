@@ -34,16 +34,8 @@
 </head>
 <!-- end::Head -->
 <!-- begin::Body -->
-<body class="m--skin- m-page--loading-enabled m-page--loading m-content--skin-light m-header--fixed m-header--fixed-mobile m-aside--offcanvas-default">
+<body class="m--skin- m-content--skin-light m-header--fixed m-header--fixed-mobile m-aside--offcanvas-default">
 
-    <!-- begin::Page loader -->
-    <div class="m-page-loader m-page-loader--base">
-        <div class="m-blockui">
-            <span>Processando...</span>
-            <span><div class="m-loader m-loader--brand"></div></span>
-        </div>
-    </div>
-    <!-- end::Page Loader -->
     <!-- begin:: Page -->
     <div class="m-grid m-grid--hor m-grid--root m-page">
         <!-- BEGIN: Header -->
@@ -415,11 +407,8 @@
     <!--end::Page Snippets -->
     <!-- begin::Page Loader -->
     <script>
-        $(window).on('load', function () {
-            $('body').removeClass('m-page--loading');
-
-            App.exibirModal(TipoNotificacao.Info, "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "Título da mensagem", "Mensagem adicional aqui.");
-        });
+        $(document).ajaxStart(App.bloquear());
+        $(document).ajaxStop(App.desbloquear()); 
     </script>
     <!-- end::Page Loader -->
 </body>

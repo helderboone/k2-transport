@@ -7,7 +7,7 @@
     {
         public FeedbackViewModel()
         {
-            Tipo = TipoFeedback.Info;
+            Tipo = TipoFeedback.INFO;
             TipoAcao = TipoAcaoOcultarFeedback.OcultarPopups;
         }
 
@@ -30,9 +30,10 @@
     /// </summary>
     public enum TipoFeedback
     {
-        Info = 1,
-        Aviso = 2,
-        Erro = 3
+        INFO = 1,
+        ATENCAO = 2,
+        ERRO = 3,
+        SUCESSO = 4
     }
 
     /// <summary>

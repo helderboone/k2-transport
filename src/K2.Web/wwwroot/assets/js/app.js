@@ -1,108 +1,92 @@
-﻿// Tipos de notificação
-var TipoNotificacao = {
-	Info: { Modal: "info", Notify: "info" },
-	Aviso: { Modal: "warning", Notify: "warning" },
-	Erro: { Modal: "danger", Notify: "danger" },
-	Sucesso: { Modal: "success", Notify: "success" }
+﻿class Feedback {
+    constructor(_tipo, _titulo, _mensagem, _mensagemAdicional, _tipoAcao) {
+        this.tipo = _tipo;
+        this.titulo = _titulo;
+        this.mensagem = _mensagem;
+        this.mensagemAdicional = _mensagemAdicional;
+        this.tipoAcao = _tipoAcao;
+    }
+}
+
+const TipoFeedback = {
+    SUCESSO: {
+        icone: "fa fa-check-circle",
+        titulo: "Sucesso",
+        corJqConfirm: "green",
+        bootstrapTipo: 'success'
+    },
+    ATENCAO: {
+        icone: "fa fa-exclamation-triangle",
+        titulo: "Atenção",
+        corJqConfirm: "orange",
+        bootstrapTipo: 'warning'
+    },
+    INFO: {
+        icone: "fa fa-info-circle",
+        titulo: "Info",
+        corJqConfirm: "blue",
+        bootstrapTipo: 'info'
+    },
+    ERRO: {
+        icone: "fa fa-skull",
+        titulo: "Erro",
+        corJqConfirm: "red",
+        bootstrapTipo: 'danger'
+    }
 };
+
+//var feedback = {
+//    tipo: TipoFeedback.SUCESSO,
+//    titulo: "Título do feedback",
+//    mensagem: "Mensagem do feedback",
+//    mensagemAdicional: "Mensagem adicional do feedback",
+//    tipoAcao: 1
+//};
 
 // Funções globais para serem utilizadas por todo o sistema
 var App = function () {
 	
-    var arrLoading = [];
-    var arrModal = [];
-    var arrModalPermanecerAberto = [];
+	var arrModal = [];
+	var arrModalPermanecerAberto = [];
 
-    var corrigePathRota = function (rota) {
-        return "/inspecao/" + rota;
-    };
+	var corrigePathRota = function (rota) {
+		return "/inspecao/" + rota;
+	};
 
 	return {
-	    corrigirPathRota: function (rota) {
-	        return corrigePathRota(rota);
-	    },
-
-	    // Bloqueia a página ou um elemento específico, indicando que algum processamento está sendo realizado
-		bloquear: function (opcoes) {
-
-			opcoes = $.extend(true, {}, opcoes);
-			var html = "<div class=\"modal-block\" style=\"text-align: center;\">";
-			if (opcoes.somenteIcone) {
-                html = html + "<div class=\"loading-message loading-message-boxed\" style=\"display: inline-table;\"><img src=\"/inspecao/Assets/img/loading.svg\"/></div>";
-			} else {
-                html = html + "<div class=\"loading-message loading-message-boxed\" style=\"display: inline-table;\"><img src=\"/inspecao/Assets/img/loading.svg\"/><br/><span>" + (opcoes.mensagem ? opcoes.mensagem : "Carregando") + "</span></div>";
-			}
-
-		    html = html + "</div>";
-
-			var alert = $.alert({
-			    template: '<div class="jconfirm"><div class="jconfirm-bg"></div><div class="jconfirm-scrollpane"><div class="container" style="width:100%;"><div class="row"><div class="jconfirm-box-container"><div class="jconfirm-box" role="dialog" aria-labelledby="labelled" tabindex="-1"><div class="closeIcon">&times;</div><div class="content-pane"><div class="content"></div></div><div class="buttons"></div><div class="jquery-clear"></div></div></div></div></div></div></div>',
-			    content: html,
-				title: false,
-				cancelButton: false,
-				confirmButton: false,
-				closeIcon: false,
-				opacity: 0.2,
-				animation: "opacity",
-				closeAnimation: "opacity",
-				columnClass: "col-xs-12"
-			});
-
-			arrLoading.push(alert);
+		corrigirPathRota: function (rota) {
+			return corrigePathRota(rota);
 		},
 
-		// Desbloqueia a página
-		desbloquear: function () {
-		    $.each(arrLoading, function (i, a) {
-				a.close();
-			});
+		// Bloqueia a página ou um elemento específico, indicando que algum processamento está sendo realizado
+        bloquear: function (selector) {
+            if (selector != null) {
+                mApp.block(selector, {
+                    overlayColor: '#000000',
+                    type: 'loader',
+                    state: 'info',
+                    message: 'Processando...'
+                });
+            }
+            else {
+                mApp.blockPage({
+                    overlayColor: '#000000',
+                    type: 'loader',
+                    state: 'info',
+                    message: 'Processando...',
+                    baseZ: 999999
+                });
+            }
 		},
 
-	    // Bloqueia um elemento específico, utilizando o plugin "Block UI"
-		bloquearElemento: function (selector) {
-		    var options = $.extend(true, {}, options);
-
-		    var el = $(selector);
-
-		    if (el.length)
-		    {
-                var html = "<div class=\"modal-block\" style=\"text-align: center;\"><div class=\"loading-message-sm loading-message-boxed\" style=\"display: inline-table;\"><img src=\"/inspecao/Assets/img/loading.svg\"/></div></div>";
-
-		        if (el.height() <= ($(window).height())) {
-		            options.cenrerY = true;
-		        }
-		        el.block({
-		            message: html,
-		            baseZ: 999999,
-		            centerY: options.cenrerY !== undefined ? options.cenrerY : false,
-		            css: {
-		                top: '10%',
-		                border: '0',
-		                padding: '0',
-		                backgroundColor: 'none'
-		            },
-		            overlayCSS: {
-		                backgroundColor: '#fff',
-		                opacity: 0.4,
-		                cursor: 'wait'
-		            }
-		        });
-		    }
-		},
-
-	    // Desbloqueia um elemento específico, utilizando o plugin "Block UI"
-		desbloquearElemento: function (selector) {
-		    var el = $(selector);
-
-		    if (el.length)
-		    {
-		        el.unblock({
-		            onUnblock: function () {
-		                el.css('position', '');
-		                el.css('zoom', '');
-		            }
-		        });
-		    }
+		// Desbloqueia a página ou um elemento específico
+        desbloquear: function (selector) {
+            if (selector != null) {
+                mApp.unblock(selector);
+            }
+            else {
+                mApp.unblockPage();
+            }
 		},
 
 		aplicarMascaraCnpj: function (input) {
@@ -114,16 +98,17 @@ var App = function () {
 		},
 
 		// Exibe uma notificação utilizando o plugin "Bootstrap Notify"
-		exibirNotificacao: function (tipo, mensagem, titulo, ocultarCallback) {
-			$.notify({
-				icon: "notifications",
-				title: titulo,
+		exibirNotificacao: function (tipo, mensagem, ocultarCallback) {
+            $.notify({
+                icon: "icon " + tipo.icone,
+                title: tipo.titulo,
 				message: mensagem
-			}, {
-			    type: tipo.Notify,
-			    z_index: 9999999999,
-			    timer: (tipo == TipoNotificacao.Erro ? 12000 : 5000),
-			    mouse_over: "pause",
+            },
+            {
+                type: tipo.bootstrapTipo,
+                z_index: 9999999999,
+                timer: (tipo === TipoFeedback.ERRO ? 12000 : 5000),
+				mouse_over: "pause",
 				placement: {
 					from: "top",
 					align: "center"
@@ -132,25 +117,25 @@ var App = function () {
 			});
 		},
 
-		// Exibe uma notificação utilizando o plugin "Bootstrap Notify", a partir de um objeto do tipo "MensagemViewModel"
-		exibirNotificacaoPorMensagem: function (mensagem, ocultarCallback) {
-			switch (mensagem.Tipo) {
-				case 1: { tipo = TipoNotificacao.Info; break; }
-				case 2: { tipo = TipoNotificacao.Aviso; break; }
-				case 3: { tipo = TipoNotificacao.Erro; break; }
-				default: { tipo = TipoNotificacao.Info; break; }
+		// Exibe uma notificação utilizando o plugin "Bootstrap Notify", a partir de um objeto do tipo "FeedbackViewModel"
+        exibirNotificacaoPorFeedback: function (feedback, ocultarCallback) {
+            switch (feedback.Tipo) {
+                case 1: { tipo = TipoFeedback.INFO; break; }
+                case 2: { tipo = TipoFeedback.ATENCAO; break; }
+                case 3: { tipo = TipoFeedback.ERRO; break; }
+                default: { tipo = TipoFeedback.INFO; break; }
 			}
 
-			this.exibirNotificacao(tipo, mensagem.Mensagem, mensagem.Titulo, function () {
+            this.exibirNotificacao(tipo, feedback.Mensagem, feedback.Titulo, function () {
 				if (ocultarCallback != null) {
 					ocultarCallback();
 				} else {
-					if (mensagem.TipoAcao != null) {
-						switch (mensagem.TipoAcao) {
+                    if (feedback.TipoAcao != null) {
+                        switch (feedback.TipoAcao) {
 							case 1: { window.history.back(); break; }
-						    case 2: { window.close(); break; }
-						    case 3: { location.href = corrigePathRota("inicio"); break; }
-						    case 4: { location.reload(); break; }
+							case 2: { window.close(); break; }
+							case 3: { location.href = corrigePathRota("inicio"); break; }
+							case 4: { location.reload(); break; }
 						}
 					}
 				}
@@ -162,121 +147,107 @@ var App = function () {
 			if (jqXhr.responseJSON != null) {
 				var mensagem = jqXhr.responseJSON;
 
-				mensagem.Tipo == null ?
-					this.exibirNotificacao(TipoNotificacao.Erro, jqXhr.status + " - " + jqXhr.statusText, "Erro") :
+                mensagem.Tipo == null ?
+                    this.exibirNotificacao(TipoFeedback.ERRO, jqXhr.status + " - " + jqXhr.statusText, "Erro") :
 					this.exibirNotificacaoPorMensagem(mensagem, ocultarCallback);
 			} else {
-				this.exibirNotificacao(TipoNotificacao.Erro, jqXhr.status + " - " + jqXhr.statusText, "Erro");
+                this.exibirNotificacao(TipoFeedback.ERRO, jqXhr.status + " - " + jqXhr.statusText, "Erro");
 			}
-		},
+        },
 
-	    // Exibe um popup utilizando o plugin Jquery Confirm
+        // Exibe um alert utilizando o plugin "JQuery Confirm"
+        exibirAlert: function (tipo, mensagem, mensagemAdicional, fecharCallback) {
+
+            if (!tipo)
+                throw new Error("O parâmetro \"tipo\" não pode ser nulo.");
+
+            let html = '<div style="margin:5px;"><p style="font-weight: 500;">' + mensagem + '</p>' + mensagemAdicional + '</div>';
+
+            let alert = $.alert({
+                icon: tipo.icone,
+                theme: 'supervan',
+                closeIcon: false,
+                animation: 'scale',
+                type: tipo.corJqConfirm,
+                title: tipo.titulo,
+                content: html,
+                onOpen: function () {
+                    alert.setDialogCenter();
+                },
+                onClose: function () {
+                    if (fecharCallback != 'undefined' && fecharCallback != null) {
+                        fecharCallback();
+                    }
+                }
+            });
+        },
+
+		// Exibe um popup utilizando o plugin Jquery Confirm
 		exibirModalPorHtml: function (conteudoHtml, openCallback, fecharAoClicarBg, permanecerAberto) {
 
-		    var jc = $.dialog({
-		        content: conteudoHtml,
-                title: null,
-		        closeIcon: false,
-		        backgroundDismiss: (fecharAoClicarBg == null ? false : fecharAoClicarBg),
-                columnClass: "col-xs-10 col-xs-1 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3",
-		        onOpen: function () {
-		            this.$content.find(".btn-fechar").click(function () {
-		                jc.close();
-		            });
+			var jc = $.dialog({
+				content: conteudoHtml,
+				title: null,
+				closeIcon: false,
+				backgroundDismiss: (fecharAoClicarBg == null ? false : fecharAoClicarBg),
+				columnClass: "col-xs-10 col-xs-1 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3",
+				onOpen: function () {
+					this.$content.find(".btn-fechar").click(function () {
+						jc.close();
+					});
 
-		            if (openCallback != null) {
-		                openCallback();
-		            }
+					if (openCallback != null) {
+						openCallback();
+					}
 
-		            jc.setDialogCenter();
-		        }
-		    });
+					jc.setDialogCenter();
+				}
+			});
 
-		    // Quando o método "ocultarModal" for chamado, ocultará todos os modais com exceção dos que a propriedade "permanecerAberto" for true
-		    if (permanecerAberto == null || !permanecerAberto)
-                arrModal.push(jc);
-		    else {
-		        arrModalPermanecerAberto.push(jc);
-		    }
+			// Quando o método "ocultarModal" for chamado, ocultará todos os modais com exceção dos que a propriedade "permanecerAberto" for true
+			if (permanecerAberto == null || !permanecerAberto)
+				arrModal.push(jc);
+			else {
+				arrModalPermanecerAberto.push(jc);
+			}
 
-		    return jc;
+			return jc;
 		},
 
 		// Exibe um modal baseado no contéudo de uma rota
 		exibirModalPorRota: function (rota, openCallback, alinharNoTopo, permanecerAberto, titulo) {
-			this.bloquear();
+			//this.bloquear();
 
 			$.get(rota, function (html) {
-			    App.exibirModalPorHtml(html, openCallback, false, alinharNoTopo, permanecerAberto, titulo);
+				App.exibirModalPorHtml(html, openCallback, false, alinharNoTopo, permanecerAberto, titulo);
 			}).fail(function (jqXhr) {
-			    App.exibirModalPorJqXHR(jqXhr);
-            });
-		},
-
-		// Exibe um modal utilizando o plugin "JQuery Confirm"
-		exibirModal: function (tipo, mensagem, titulo, mensagemAdicional, fecharCallback) {
-            var icone = "flaticon-chat-1";
-
-            if (tipo === TipoNotificacao.Aviso) {
-                icone = "flaticon-warning-2";
-			} else if (tipo === TipoNotificacao.Erro) {
-                icone = "flaticon-circle";
-			} else if (tipo === TipoNotificacao.Sucesso) {
-                icone = "flaticon-like";
-			}
-
-            var htmlModal = '<div class="m-portlet m-portlet--' + tipo.Modal + ' m-portlet--head-solid-bg m-portlet--bordered modal-block-md" style="margin-bottom:0; opacity: 0.9;">' + 
-                                '<div class="m-portlet__head">' + 
-                                    '<div class="m-portlet__head-caption">' + 
-                                        '<div class="m-portlet__head-title">' + 
-                                            '<span class="m-portlet__head-icon"><i class="' + icone + '"></i></span>' +
-                                            '<h3 class="m-portlet__head-text">' + titulo + '</h3>' +
-                                        '</div>' +
-                                    '</div>' +
-			                    '</div>' +
-                                '<div class="m-portlet__body">' +
-                                    '<p style="font-weight:600;">' + mensagem + '</p>' + mensagemAdicional +
-                                '</div>' +
-                                '<div class="m-portlet__foot">' +
-                                    '<div class="row align-items-center">' +
-                                         '<div class="col-lg-12 m--align-right">' +
-                                            '<button class="btn btn-outline-' + tipo.Modal + ' btn-fechar">Fechar</button>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-		                  '</div>';
-
-			this.exibirModalPorHtml(htmlModal, function () {
-				if (fecharCallback != null) {
-					$(".btn-fechar").click(function () {
-						fecharCallback();
-					});
-				}
+				App.exibirModalPorJqXHR(jqXhr);
 			});
 		},
 
-		// Exibe um modal utilizando o plugin "Magnific Popup", a partir de um objeto do tipo "MensagemViewModel"
-		exibirModalPorMensagem: function (mensagem, fecharCallback) {
-			switch (mensagem.Tipo) {
-				case 1: { tipo = TipoNotificacao.Info; break; }
-				case 2: { tipo = TipoNotificacao.Aviso; break; }
-				case 3: { tipo = TipoNotificacao.Erro; break; }
-				default: { tipo = TipoNotificacao.Info; break; }
+		// Exibe um modal utilizando o plugin "Magnific Popup", a partir de um objeto do tipo "FeedbackViewModel"
+		exibirModalPorFeedback: function (feedback, fecharCallback) {
+            switch (feedback.Tipo) {
+                case 1: { tipo = TipoFeedback.INFO; break; }
+                case 2: { tipo = TipoFeedback.ATENCAO; break; }
+                case 3: { tipo = TipoFeedback.ERRO; break; }
+                case 4: { tipo = TipoFeedback.SUCESSO; break; }
+                default: { tipo = TipoFeedback.INFO; break; }
 			}
 
-			this.exibirModal(tipo, mensagem.Mensagem, mensagem.Titulo, mensagem.MensagemAdicional, function () {
+            this.exibirModal(tipo, feedback.Mensagem, feedback.Titulo, feedback.MensagemAdicional, function () {
 				if (fecharCallback != null) {
 					fecharCallback();
 				} else {
-					if (mensagem.TipoAcao != null)
+                    if (feedback.TipoAcao != null)
 					{
-						switch (mensagem.TipoAcao) {
+                        switch (feedback.TipoAcao) {
 							case 1: { window.history.back(); break; }
 							case 2: { window.close(); break; }
-						    case 3: { location.href = corrigePathRota("inicio"); break; }
-						    case 4: { location.reload(); break; }
+							case 3: { location.href = corrigePathRota("inicio"); break; }
+							case 4: { location.reload(); break; }
 							case 5: { App.ocultarModal(); break; }
-						    case 6: { location.href = corrigePathRota("login"); break; }
+							case 6: { location.href = corrigePathRota("login"); break; }
 						}
 					}
 				}
@@ -288,97 +259,86 @@ var App = function () {
 			if (jqXhr.responseJSON != null) {
 				var mensagem = jqXhr.responseJSON;
 
-				mensagem.Tipo == null ?
-					this.exibirModal(TipoNotificacao.Erro, jqXhr.status + " - " + jqXhr.statusText, "Erro") :
+                mensagem.Tipo == null ?
+                    this.exibirModal(TipoFeedback.ERRO, jqXhr.status + " - " + jqXhr.statusText, "Erro") :
 					this.exibirModalPorMensagem(mensagem, fecharCallback);
 			} else {
-                if (jqXhr.readyState === 0) // Offline
-                    this.exibirModal(TipoNotificacao.Erro, "Ocorreu um erro de comunicação. Por favor certifique-se de que você esteja conectado a internet.", "Erro de conexão", null, function() {
-                        App.ocultarModal();
-                    });
-                else if (jqXhr.readyState === 4 && jqXhr.status === 401) // Ausência do cookie de autenticação
-                    this.exibirModal(TipoNotificacao.Aviso, "Sua sessão expirou. Você precisa fazer seu login novamente.", "Login expirado", "Ao clicar no botão \"FECHAR\" você será redirecionado para a tela de login.", function() {
-                        App.ocultarModal();
-                        location.href = corrigePathRota("login");
-                    });
-                else
-                    this.exibirModal(TipoNotificacao.Erro, jqXhr.status + " - " + jqXhr.statusText, "Erro");
+				if (jqXhr.readyState === 0) // Offline
+                    this.exibirModal(TipoFeedback.ERRO, "Ocorreu um erro de comunicação. Por favor certifique-se de que você esteja conectado a internet.", "Erro de conexão", null, function() {
+						App.ocultarModal();
+					});
+				else if (jqXhr.readyState === 4 && jqXhr.status === 401) // Ausência do cookie de autenticação
+                    this.exibirModal(TipoFeedback.ATENCAO, "Sua sessão expirou. Você precisa fazer seu login novamente.", "Login expirado", "Ao clicar no botão \"FECHAR\" você será redirecionado para a tela de login.", function() {
+						App.ocultarModal();
+						location.href = corrigePathRota("login");
+					});
+				else
+                    this.exibirModal(TipoFeedback.ERRO, jqXhr.status + " - " + jqXhr.statusText, "Erro");
 			}
 		},
 
 		// Exibe um modal de confirmação utilizando o plugin "Magnific Popup"
-		exibirModalConfirmacao: function (mensagem, titulo, textoBotaoSim, textoBotaoNao, simCallback, naoCallback) {
+		exibirConfirm: function (mensagem, textoBotaoSim, textoBotaoNao, simCallback, naoCallback) {
 
-		    var htmlModal = "<div class=\"modal-block modal-block-md\">" +
-                                "<div class=\"card card-modal\">" +
-								    "<div class=\"card-header card-header-icon card-modal-icon\" data-background-color=\"purple\">" +
-									    "<i class=\"material-icons\">help_outline</i>" +
-								    "</div>" +
-								    "<div class=\"card-content\">" +
-									    "<h4 class=\"card-title\">" + titulo + "</h4>" +
-									    "<p>" + mensagem + "</p>" +
-								    "</div>" +
-								    "<div class=\"card-footer text-right\">" +
-									    "<button class=\"btn btn-md btn-default btn-sim\">" + textoBotaoSim + "</button>" +
-									    "<button class=\"btn btn-md btn-default btn-nao\">" + textoBotaoNao + "</button>" +
-								    "</div>" +
-							    "</div>" +
-		                    "</div>";
-
-			var modal = this.exibirModalPorHtml(htmlModal, function() {
-
-				if (simCallback != null) {
-					$(".btn-sim").click(function() {
-					    simCallback();
-					    modal.close();
-					});
-				} else {
-				    $(".btn-sim").click(function () {
-				        modal.close();
-				    });
-				}
-
-				if (naoCallback != null) {
-					$(".btn-nao").click(function () {
-					    naoCallback();
-					    modal.close();
-					});
-				} else {
-				    $(".btn-nao").click(function () {
-				        modal.close();
-				    });
-				}
-			});
+            let jc = $.confirm({
+                title: 'Atenção',
+                content: mensagem,
+                theme: 'supervan',
+                icon: 'fa fa-question-circle',
+                type: 'orange',
+                buttons: {
+                    confirm: {
+                        text: textoBotaoSim != null ? textoBotaoSim : 'Sim',
+                        action: function () {
+                            if (simCallback != null) {
+                                simCallback();
+                                jc.close();
+                            }
+                        }
+                    },
+                    cancel: {
+                        text: textoBotaoNao != null ? textoBotaoNao : 'Não',
+                        action: function () {
+                            if (naoCallback != null) {
+                                naoCallback();
+                                jc.close();
+                            } else {
+                                jc.close();
+                            }
+                        }
+                    }
+                }
+            });
 		},
 
 		// Oculta todos os modais exibidos
 		ocultarModal: function (fecharTudo) {
-		    $.each(arrModal, function (i, modal) {
-		        modal.close();
-            });
+			$.each(arrModal, function (i, modal) {
+				modal.close();
+			});
 
-            if (fecharTudo != null && fecharTudo) {
-                $.each(arrModalPermanecerAberto, function (i, modal) {
-                    modal.close();
-                }); 
-            }
-        },
+			if (fecharTudo != null && fecharTudo) {
+				$.each(arrModalPermanecerAberto, function (i, modal) {
+					modal.close();
+				}); 
+			}
+		},
 
-        ocultarModalPorTitulo: function(titulo) {
-            $.each(arrModal, function (i, modal) {
-                if (modal.title === titulo) {
-                    modal.close();
-                    return;
-                }
-            });
+		ocultarModalPorTitulo: function(titulo) {
+			$.each(arrModal, function (i, modal) {
+				if (modal.title === titulo) {
+					modal.close();
+					return;
+				}
+			});
 
-            $.each(arrModalPermanecerAberto, function (i, modal) {
-                if (modal.title === titulo) {
-                    modal.close();
-                    return;
-                }
-            }); 
-        },
+			$.each(arrModalPermanecerAberto, function (i, modal) {
+				if (modal.title === titulo) {
+					modal.close();
+					return;
+				}
+			}); 
+		},
 
 		abrirPopup: function (url, altura, largura, nome, criarNovaJanela) {
 			$.popupWindow(url, {
@@ -391,34 +351,34 @@ var App = function () {
 		
 		definirValidacaoForm: function(idForm, submitCallback) {
 			$(idForm).validate({
-			    errorPlacement: function (error, element) {
+				errorPlacement: function (error, element) {
 					$(element).parent("div").addClass("has-error");
 
 					var helpBlock = $(element).parent("div").find(".help-block");
-                    
+					
 					if (helpBlock.length)
 					{
 						$(helpBlock).html(error);
 					}
 
-			        var div = $(element).parents("div.input-group");
+					var div = $(element).parents("div.input-group");
 
 					if (div.length)
 					{
-					    var label = div.find("label.label-select");
+						var label = div.find("label.label-select");
 
-					    if (label.length)
-					        label.addClass("has-error");
+						if (label.length)
+							label.addClass("has-error");
 					}
 
 					var dropdownToggle = $(element).parent("div").find(".dropdown-toggle");
 
 					if (dropdownToggle.length)
 					{
-					    $(dropdownToggle).addClass("has-error");
+						$(dropdownToggle).addClass("has-error");
 					}
-			    },
-			    submitHandler: function () {
+				},
+				submitHandler: function () {
 					if (submitCallback != null) {
 						submitCallback();
 					}
@@ -431,27 +391,27 @@ var App = function () {
 }();
 
 if (jQuery().dataTable) {
-    $.extend($.fn.dataTable.defaults, {
-        processing: false,
-        responsive: false,
-        autoWidth: true,
-        lengthMenu: [[10, 25, 50], [10, 25, 50]],
-        pagingType: "full_numbers",
-        language: {
-            sLengthMenu: '_MENU_ registros por p&aacute;gina',
-            sProcessing: '<i class="fa fa-spinner fa-pulse"></i> Carregando',
-            infoEmpty: "Nenhum registro encontrado.",
-            info: "_END_ de _TOTAL_ registros",
-            paginate: {
-                first: "Primeiro",
-                next: "Pr&oacute;ximo",
-                previous: "Anterior",
-                last: "Último",
-                zeroRecords: "Nenhum registro encontrado."
-            },
-            infoFiltered: "(filtrado a partir do total de _MAX_ registros)",
-            emptyTable: "Nenhum registro encontrado.",
-            zeroRecords: "Nenhum registro encontrado."
-        }
-    });
+	$.extend($.fn.dataTable.defaults, {
+		processing: false,
+		responsive: false,
+		autoWidth: true,
+		lengthMenu: [[10, 25, 50], [10, 25, 50]],
+		pagingType: "full_numbers",
+		language: {
+			sLengthMenu: '_MENU_ registros por p&aacute;gina',
+			sProcessing: '<i class="fa fa-spinner fa-pulse"></i> Carregando',
+			infoEmpty: "Nenhum registro encontrado.",
+			info: "_END_ de _TOTAL_ registros",
+			paginate: {
+				first: "Primeiro",
+				next: "Pr&oacute;ximo",
+				previous: "Anterior",
+				last: "Último",
+				zeroRecords: "Nenhum registro encontrado."
+			},
+			infoFiltered: "(filtrado a partir do total de _MAX_ registros)",
+			emptyTable: "Nenhum registro encontrado.",
+			zeroRecords: "Nenhum registro encontrado."
+		}
+	});
 }

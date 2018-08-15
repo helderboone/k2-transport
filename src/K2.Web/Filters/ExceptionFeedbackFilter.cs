@@ -20,9 +20,17 @@ namespace K2.Web.Filters
 
         public override void OnException(ExceptionContext context)
         {
-            var result = new ViewResult { ViewName = "CustomError" };
-            
-            result.ViewData.Add("Exception", context.Exception);
+            var result = new ViewResult { ViewName = "Feedback" };
+
+            var feedback = new FeedbackViewModel
+            {
+                Mensagem = _mensagem,
+                MensagemAdicional = _mensagemAdicional,
+                TipoAcao = _tipoAcao,
+                Tipo = TipoFeedback.ERRO
+            };
+
+            result.ViewData.Add("Feedback", feedback);
             
             context.Result = result;
         }

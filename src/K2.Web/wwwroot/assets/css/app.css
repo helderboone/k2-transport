@@ -23,7 +23,17 @@
     box-shadow: none;
 }
 
+.jconfirm.jconfirm-modern.jconfirm-open .jconfirm-box .jconfirm-title-c .jconfirm-icon-c i.fa {
+    font-size: 69px;
+}
 
+.jconfirm.jconfirm-supervan .jconfirm-box div.jconfirm-title-c .jconfirm-icon-c i.fa {
+    font-size: 28px;
+}
+
+.jconfirm.jconfirm-supervan .jconfirm-bg {
+    background-color: rgba(54,70,93,.85);
+}
 
 .modal-block-xs {
     max-width: 200px;
@@ -43,4 +53,10 @@
 
 .modal-block-full {
     max-width: 100%;
+}
+
+.m-blockui {
+    -webkit-box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.3);
+    box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.3);
+    padding: 5px;
 }

@@ -1641,7 +1641,8 @@ var mApp = function() {
                 centerY: true,
                 message: '',
                 shadow: true,
-                width: 'auto'
+                width: 'auto',
+                baseZ: 100
             }, options);
 
             var skin;
@@ -1682,6 +1683,7 @@ var mApp = function() {
                 message: html,
                 centerY: options.centerY,
                 centerX: options.centerX,
+                baseZ: options.baseZ,
                 css: {
                     top: '30%',
                     left: '50%',

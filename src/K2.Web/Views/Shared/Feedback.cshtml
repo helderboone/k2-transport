@@ -1,0 +1,56 @@
+﻿@model FeedbackViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- begin::Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>K2 | Reservas</title>
+    <!--begin::Web font -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"] },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+    <!--end::Web font -->
+    <!--begin::Base Styles -->
+    <link href="assets/vendors/base/vendors.bundle.min.css" rel="stylesheet" type="text/css" />
+    <environment include="Development">
+        <link href="assets/style.bundle.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+    </environment>
+    <environment exclude="Development">
+        <link href="assets/style.bundle.min.css" rel="stylesheet" type="text/css" />
+    </environment>
+    <!--end::Base Styles -->
+    <link rel="shortcut icon" href="assets/img/favicon.png" />
+</head>
+<!-- end::Head -->
+<!-- begin::Body -->
+<body class="m--skin- m-content--skin-light m-header--fixed m-header--fixed-mobile m-aside--offcanvas-default">
+
+    <!--begin::Base Scripts -->
+    <script src="assets/vendors/base/vendors.bundle.min.js" type="text/javascript"></script>
+    <environment include="Development">
+        <script src="assets/scripts.bundle.js" type="text/javascript"></script>
+        <script src="assets/js/app.js" type="text/javascript"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="assets/scripts.bundle.min.js" type="text/javascript"></script>
+        <script src="assets/js/app.min.js" type="text/javascript"></script>
+    </environment>
+    <!--end::Base Scripts -->
+    <!-- begin::Page Loader -->
+    <script>
+        $(document).ready(function () {
+            App.exibirm
+        });
+    </script>
+    <!-- end::Page Loader -->
+</body>
+<!-- end::Body -->
+</html>
