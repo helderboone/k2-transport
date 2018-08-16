@@ -5,14 +5,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using K2.Web.Models;
+using K2.Web.Filters;
 
 namespace K2.Web.Controllers
 {
     public class HomeController : Controller
     {
         [Route("")]
+        [ExceptionFeedbackHtmlFilter("Deu erro aqui", TipoAcaoOcultarFeedback.RedirecionarTelaInicial)]
         public IActionResult Index()
         {
+            var b = 0;
+            var i = 5 / b;
+
             return View("About");
         }
 

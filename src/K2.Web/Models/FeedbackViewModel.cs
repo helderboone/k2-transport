@@ -36,6 +36,12 @@
         SUCESSO = 4
     }
 
+    public enum TipoResponseFeedback
+    {
+        Json,
+        Html
+    }
+
     /// <summary>
     /// Tipo de ação que deverá ser executada quando o botão para ocultar a mensagem de erro é ocultado
     /// </summary>

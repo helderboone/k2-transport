@@ -43,7 +43,7 @@ namespace K2.Web.Controllers
 
             return ExibirFeedback(new FeedbackViewModel
             {
-                Tipo = TipoFeedback.Erro,
+                Tipo = TipoFeedback.ERRO,
                 Titulo = "Ooooops...",
                 Mensagem = string.IsNullOrEmpty(mensagem) ? ex.GetBaseException().Message : mensagem,
                 MensagemAdicional = "Todas as informações sobre o erro ocorrido foram registradas. A causa do erro será investigada e em breve esse problema será resolvido. Pedimos desculpas pelo transtorno.",
@@ -92,7 +92,7 @@ namespace K2.Web.Controllers
 
             return ObterFeedback(new FeedbackViewModel
             {
-                Tipo = TipoFeedback.Erro,
+                Tipo = TipoFeedback.ERRO,
                 Titulo = "Ooooops...",
                 Mensagem = string.IsNullOrEmpty(mensagem) ? ex.GetBaseException().Message : mensagem,
                 MensagemAdicional = "Todas as informações sobre o erro ocorrido foram registradas. A causa do erro será investigada e em breve esse problema será resolvido. Pedimos desculpas pelo transtorno.",

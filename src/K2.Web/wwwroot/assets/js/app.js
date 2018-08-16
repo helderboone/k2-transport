@@ -227,21 +227,14 @@ var App = function () {
 
 		// Exibe um modal utilizando o plugin "Magnific Popup", a partir de um objeto do tipo "FeedbackViewModel"
 		exibirModalPorFeedback: function (feedback, fecharCallback) {
-            switch (feedback.Tipo) {
-                case 1: { tipo = TipoFeedback.INFO; break; }
-                case 2: { tipo = TipoFeedback.ATENCAO; break; }
-                case 3: { tipo = TipoFeedback.ERRO; break; }
-                case 4: { tipo = TipoFeedback.SUCESSO; break; }
-                default: { tipo = TipoFeedback.INFO; break; }
-			}
 
-            this.exibirModal(tipo, feedback.Mensagem, feedback.Titulo, feedback.MensagemAdicional, function () {
+            this.exibirAlert(feedback.tipo, feedback.mensagem, feedback.titulo, feedback.mensagemAdicional, function () {
 				if (fecharCallback != null) {
 					fecharCallback();
 				} else {
-                    if (feedback.TipoAcao != null)
+                    if (feedback.tipoAcao != null)
 					{
-                        switch (feedback.TipoAcao) {
+                        switch (feedback.tipoAcao) {
 							case 1: { window.history.back(); break; }
 							case 2: { window.close(); break; }
 							case 3: { location.href = corrigePathRota("inicio"); break; }
