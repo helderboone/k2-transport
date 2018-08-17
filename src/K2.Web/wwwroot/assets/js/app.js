@@ -1,10 +1,9 @@
 ﻿class Feedback {
-    constructor(_tipo, _titulo, _mensagem, _mensagemAdicional, _tipoAcao) {
-        this.tipo = _tipo;
-        this.titulo = _titulo;
-        this.mensagem = _mensagem;
-        this.mensagemAdicional = _mensagemAdicional;
-        this.tipoAcao = _tipoAcao;
+    constructor(tipo, mensagem, mensagemAdicional, tipoAcao) {
+        this.Tipo = tipo;
+        this.Mensagem = mensagem;
+        this.MensagemAdicional = mensagemAdicional;
+        this.TipoAcao = tipoAcao;
     }
 }
 
@@ -228,13 +227,13 @@ var App = function () {
 		// Exibe um modal utilizando o plugin "Magnific Popup", a partir de um objeto do tipo "FeedbackViewModel"
 		exibirModalPorFeedback: function (feedback, fecharCallback) {
 
-            this.exibirAlert(feedback.tipo, feedback.mensagem, feedback.titulo, feedback.mensagemAdicional, function () {
+            this.exibirAlert(feedback.Tipo, feedback.Mensagem, feedback.MensagemAdicional, function () {
 				if (fecharCallback != null) {
 					fecharCallback();
 				} else {
-                    if (feedback.tipoAcao != null)
+                    if (feedback.TipoAcao != null)
 					{
-                        switch (feedback.tipoAcao) {
+                        switch (feedback.TipoAcao) {
 							case 1: { window.history.back(); break; }
 							case 2: { window.close(); break; }
 							case 3: { location.href = corrigePathRota("inicio"); break; }

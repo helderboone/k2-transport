@@ -41,14 +41,16 @@ namespace K2.Web.Controllers
 
             //Elmah.ErrorSignal.FromCurrentContext().Raise(!string.IsNullOrEmpty(mensagem) ? new Exception(mensagem, ex) : ex);
 
-            return ExibirFeedback(new FeedbackViewModel
-            {
-                Tipo = TipoFeedback.ERRO,
-                Titulo = "Ooooops...",
-                Mensagem = string.IsNullOrEmpty(mensagem) ? ex.GetBaseException().Message : mensagem,
-                MensagemAdicional = "Todas as informações sobre o erro ocorrido foram registradas. A causa do erro será investigada e em breve esse problema será resolvido. Pedimos desculpas pelo transtorno.",
-                TipoAcao = tipoAcao
-            });
+            return null;
+
+            //return ExibirFeedback(new FeedbackViewModel
+            //{
+            //    Tipo = TipoFeedback.ERRO,
+            //    //Titulo = "Ooooops...",
+            //    Mensagem = string.IsNullOrEmpty(mensagem) ? ex.GetBaseException().Message : mensagem,
+            //    MensagemAdicional = "Todas as informações sobre o erro ocorrido foram registradas. A causa do erro será investigada e em breve esse problema será resolvido. Pedimos desculpas pelo transtorno.",
+            //    TipoAcao = tipoAcao
+            //});
         }
 
         /// <summary>
@@ -90,14 +92,16 @@ namespace K2.Web.Controllers
 
             //Elmah.ErrorSignal.FromCurrentContext().Raise(!string.IsNullOrEmpty(mensagem) ? new Exception(mensagem, ex) : ex);
 
-            return ObterFeedback(new FeedbackViewModel
-            {
-                Tipo = TipoFeedback.ERRO,
-                Titulo = "Ooooops...",
-                Mensagem = string.IsNullOrEmpty(mensagem) ? ex.GetBaseException().Message : mensagem,
-                MensagemAdicional = "Todas as informações sobre o erro ocorrido foram registradas. A causa do erro será investigada e em breve esse problema será resolvido. Pedimos desculpas pelo transtorno.",
-                TipoAcao = tipoAcao
-            });
+            return null;
+            
+            //return ObterFeedback(new FeedbackViewModel
+            //{
+            //    Tipo = TipoFeedback.ERRO,
+            //    //Titulo = "Ooooops...",
+            //    Mensagem = string.IsNullOrEmpty(mensagem) ? ex.GetBaseException().Message : mensagem,
+            //    MensagemAdicional = "Todas as informações sobre o erro ocorrido foram registradas. A causa do erro será investigada e em breve esse problema será resolvido. Pedimos desculpas pelo transtorno.",
+            //    TipoAcao = tipoAcao
+            //});
         }
 
         /// <summary>
@@ -105,7 +109,7 @@ namespace K2.Web.Controllers
         /// </summary>
         public JsonResult ObterFeedback(FeedbackViewModel feedback)
         {
-            return Json(new { feedback.Titulo, feedback.Mensagem, Tipo = (int)feedback.Tipo, TipoAcao = (int)feedback.TipoAcao, feedback.MensagemAdicional });
+            return Json(new { feedback.Mensagem, Tipo = (int)feedback.Tipo, TipoAcao = (int)feedback.TipoAcao, feedback.MensagemAdicional });
         }
     }
 }

@@ -6,13 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using K2.Web.Models;
 using K2.Web.Filters;
+using Microsoft.AspNetCore.Hosting;
 
 namespace K2.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public HomeController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
+
         [Route("")]
-        [ExceptionFeedbackHtmlFilter("Deu erro aqui", TipoAcaoOcultarFeedback.RedirecionarTelaInicial)]
+        [FeedbackExceptionFilter("mensagem aqui", TipoAcaoOcultarFeedback.FecharJanela, "mensagem adicional")]
         public IActionResult Index()
         {
             var b = 0;

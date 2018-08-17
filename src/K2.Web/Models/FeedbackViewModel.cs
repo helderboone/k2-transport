@@ -1,28 +1,44 @@
-﻿namespace K2.Web.Models
+﻿using System;
+
+namespace K2.Web.Models
 {
     /// <summary>
     /// Representa uma mensagem exibida pelo sistema
     /// </summary>
     public class FeedbackViewModel
     {
-        public FeedbackViewModel()
-        {
-            Tipo = TipoFeedback.INFO;
-            TipoAcao = TipoAcaoOcultarFeedback.OcultarPopups;
-        }
+        public TipoFeedback Tipo { get; }
 
-        public string Titulo { get; set; }
-
-        public string Mensagem { get; set; }
+        public string Mensagem { get; }
 
         public string MensagemAdicional { get; set; }
-
-        public TipoFeedback Tipo { get; set; }
 
         /// <summary>
         /// Tipo de ação que deverá ser realizada quando a mensagem é ocultada 
         /// </summary>
         public TipoAcaoOcultarFeedback TipoAcao { get; set; }
+
+        public FeedbackViewModel(TipoFeedback tipo, string mensagem, string mensagemAdicional = null, TipoAcaoOcultarFeedback tipoAcao = TipoAcaoOcultarFeedback.FecharJanela)
+        {
+            Tipo = tipo;
+            Mensagem = mensagem;
+            MensagemAdicional = mensagemAdicional;
+            TipoAcao = tipoAcao;
+        }
+    }
+
+    public class FeedbackExceptionViewModel : FeedbackViewModel
+    {
+        public string ExceptionMessage { get; }
+
+        public string StackTrace { get; }
+
+        public FeedbackExceptionViewModel(Exception exception, string mensagem, string mensagemAdicional = null, TipoAcaoOcultarFeedback tipoAcao = TipoAcaoOcultarFeedback.FecharJanela)
+            : base (TipoFeedback.ERRO, mensagem, mensagemAdicional, tipoAcao)
+        {
+            ExceptionMessage = exception.GetBaseException().Message;
+            StackTrace = exception.StackTrace;
+        }
     }
 
     /// <summary>
@@ -36,7 +52,7 @@
         SUCESSO = 4
     }
 
-    public enum TipoResponseFeedback
+    public enum TipoFeedbackResponse
     {
         Json,
         Html
