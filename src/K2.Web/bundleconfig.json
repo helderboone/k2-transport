@@ -30,5 +30,11 @@
     "inputFiles": [
       "wwwroot/assets/js/app.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/views/usuario-login.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/views/usuario-login.js"
+    ]
   }
 ]

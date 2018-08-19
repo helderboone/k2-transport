@@ -47,7 +47,7 @@
     <!-- begin::Page Loader -->
     <script>
         $(document).ready(function () {
-            var feedback = new Feedback(TipoFeedback.@(Model.Tipo), '@(Model.Mensagem)', '@(Model.MensagemAdicional)',  @((int)Model.TipoAcao));
+            var feedback = new Feedback(TipoFeedback.@(Model.Tipo), '@Html.Raw(Model.Mensagem)', "@Html.Raw(Model.MensagemAdicional)",  @((int)Model.TipoAcao));
 
             App.exibirModalPorFeedback(feedback);
         });

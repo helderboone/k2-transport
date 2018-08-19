@@ -48075,7 +48075,7 @@ select.m-select2 {
 }
 
 .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__head .m-login__desc {
-    color: #c2acf4;
+    color: #f9f9f9;
 }
 
 .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form {
@@ -48083,46 +48083,46 @@ select.m-select2 {
 }
 
     .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control {
-        color: #e3d9fa;
-        background: rgba(67, 34, 167, 0.4);
+        color: #f9f9f9;
+        background: rgba(100, 189, 227, 0.3);
     }
 
         .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control::-moz-placeholder {
-            color: #b295f1;
+            color: #f9f9f9;
             opacity: 1;
         }
 
         .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control:-ms-input-placeholder {
-            color: #b295f1;
+            color: #f9f9f9;
         }
 
         .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control::-webkit-input-placeholder {
-            color: #b295f1;
+            color: #f9f9f9;
         }
 
         .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control:focus {
-            color: white;
+            color: #f9f9f9;
         }
 
             .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control:focus::-moz-placeholder {
-                color: #e3d9fa;
+                color: #f9f9f9;
                 opacity: 1;
             }
 
             .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control:focus:-ms-input-placeholder {
-                color: #e3d9fa;
+                color: #f9f9f9;
             }
 
             .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control:focus::-webkit-input-placeholder {
-                color: #e3d9fa;
+                color: #f9f9f9;
             }
 
     .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-sub .m-checkbox {
-        color: #c2acf4;
+        color: #f9f9f9;
     }
 
     .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-sub .m-link {
-        color: #c2acf4;
+        color: #f9f9f9;
     }
 
         .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-sub .m-link:hover {
@@ -48136,8 +48136,8 @@ select.m-select2 {
             }
 
     .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-action .m-login__btn {
-        color: #b295f1;
-        border-color: #9168eb;
+        color: #BCE7FA;
+        border-color: #BCE7FA;
         background-color: transparent;
     }
 
@@ -48148,11 +48148,11 @@ select.m-select2 {
 
         .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-action .m-login__btn.m-login__btn--primary {
             color: white;
-            border-color: #c2acf4;
+            border-color: #64BDE3;
         }
 
             .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-action .m-login__btn.m-login__btn--primary:focus, .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-action .m-login__btn.m-login__btn--primary:hover {
-                border-color: white;
+                border-color: #BCE7FA;
                 color: white;
             }
 
@@ -48176,7 +48176,7 @@ select.m-select2 {
 
 @media (max-width: 1024px) {
     .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control {
-        background: rgba(67, 34, 167, 0.8);
+        background: rgba(100, 189, 227, 0.4);
     }
 }
 

@@ -83,8 +83,9 @@ namespace K2.Web.Filters
                             }
 
                             html.Append($"<p>Exception: {context.Exception.Message}</p>");
-                            html.Append($"<p>Base exception: {context.Exception.GetBaseException().Message}</p>");
-                            html.Append($"<p>Stack trace: <br><div>{context.Exception.GetBaseException().Message}</div></p>");
+
+                            if (context.Exception.Message != context.Exception.GetBaseException().Message)
+                                html.Append($"<p>Base exception: {context.Exception.GetBaseException().Message}</p>");
 
                             feedback = new FeedbackViewModel(TipoFeedback.ERRO, _mensagem, html.ToString(), _tipoAcaoOcultar);
                         }
