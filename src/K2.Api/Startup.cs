@@ -1,8 +1,14 @@
-﻿using K2.Dominio;
+﻿using K2.Api.Middlewares;
+using K2.Dominio;
+using K2.Dominio.Interfaces.Dados;
+using K2.Dominio.Interfaces.Dados.Repositorios;
+using K2.Dominio.Interfaces.Servicos;
+using K2.Dominio.Servicos;
+using K2.Infraestrutura.Dados;
+using K2.Infraestrutura.Dados.Repositorios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +32,14 @@ namespace K2.Api
                .AddJsonFile("appsettings.json");
 
             Configuration = builder.Build();
+
+            services.AddScoped<EfDataContext, EfDataContext>(x => new EfDataContext(Configuration["K2ConnectionString"]));
+            services.AddScoped<IUow, Uow>();
+
+            // AddTransient: determina que referências desta classe sejam geradas toda vez que uma dependência for encontrada
+            services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
+
+            services.AddTransient<IUsuarioServico, UsuarioServico>();
 
             // Configuração realizada, seguindo o artigo "ASP.NET Core 2.0: autenticação em APIs utilizando JWT" 
             // (https://medium.com/@renato.groffe/asp-net-core-2-0-autentica%C3%A7%C3%A3o-em-apis-utilizando-jwt-json-web-tokens-4b1871efd)
@@ -90,15 +104,25 @@ namespace K2.Api
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // Entende que a página default é a "index.html" dentro da pasta "wwwroot"
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.Run(async (context) =>
+            else
             {
-                await context.Response.WriteAsync("Hello World!");
-            });
+                // Middleware customizado para interceptar erros HTTP e exceptions não tratadas
+                app.UseCustomExceptionHandler();
+            }
+
+            // Utiliza a compressão do response
+            app.UseResponseCompression();
+
+            app.UseMvc();
         }
     }
 }

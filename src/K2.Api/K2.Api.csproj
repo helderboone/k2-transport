@@ -10,10 +10,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\K2.Dominio\K2.Dominio.csproj" />
+    <ProjectReference Include="..\K2.Infraestrutura.Dados\K2.Infraestrutura.Dados.csproj" />
   </ItemGroup>
 
 </Project>

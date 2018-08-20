@@ -1,6 +1,16 @@
 ﻿class Feedback {
     constructor(tipo, mensagem, mensagemAdicional, tipoAcao) {
-        this.Tipo = tipo;
+
+        switch (tipo) {
+
+            case 'ATENCAO':
+                this.Tipo = TipoFeedback.ATENCAO;
+                break;
+            default:
+                this.Tipo = TipoFeedback.INFO;
+                break;
+        }
+
         this.Mensagem = mensagem;
         this.MensagemAdicional = mensagemAdicional;
         this.TipoAcao = tipoAcao;
@@ -49,7 +59,7 @@ var App = function () {
 	var arrModalPermanecerAberto = [];
 
 	var corrigePathRota = function (rota) {
-		return "/inspecao/" + rota;
+		return "" + rota;
 	};
 
 	return {

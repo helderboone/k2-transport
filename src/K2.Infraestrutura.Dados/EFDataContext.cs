@@ -26,7 +26,7 @@ namespace K2.Infraestrutura.Dados
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL(_connectionString);
+            optionsBuilder.UseMySql(_connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

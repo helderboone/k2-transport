@@ -17,7 +17,7 @@ namespace K2.Web.Filters
             Arguments = new object[] { mensagem, tipoAcaoOcultar, mensagemAdicional, tipoResponse };
         }
 
-        private class FeedbackExceptionFilter : IExceptionFilter
+        private class FeedbackExceptionFilter : ExceptionFilterAttribute
         {
             private readonly IHostingEnvironment _hostingEnvironment;
 
@@ -36,7 +36,7 @@ namespace K2.Web.Filters
                 _tipoResponse = tipoResponse;
             }
 
-            public void OnException(ExceptionContext context)
+            public override void OnException(ExceptionContext context)
             {
                 FeedbackViewModel feedback = null;
                 IActionResult result = null;
@@ -103,6 +103,8 @@ namespace K2.Web.Filters
                 }
 
                 context.Result = result;
+
+                base.OnException(context);
             }
         }
     }

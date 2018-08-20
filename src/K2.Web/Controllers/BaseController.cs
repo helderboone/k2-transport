@@ -10,6 +10,7 @@ namespace K2.Web.Controllers
 {
     public class BaseController : Controller
     {
+       
         /// <summary>
         /// Redireciona para a página de mensagem
         /// </summary>

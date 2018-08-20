@@ -94,10 +94,28 @@ var SnippetLogin = function() {
             form.ajaxSubmit({
                 url: '',
                 success: function(response, status, xhr, $form) {
-                	// similate 2s delay
-                	setTimeout(function() {
-	                    btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
-	                    showErrorMsg(form, 'danger', 'Incorrect username or password. Please try again.');
+                    App.bloquear();
+
+                    setTimeout(function () {
+                        
+                        $.post(App.corrigirPathRota("login"), { email: $("#email").val(), senha: $("#password").val(), permanecerLogado: $("#remember").prop("checked") }, function (feedback) {
+                            if (feedback.Tipo == TipoFeedback.ATENCAO) {
+
+                            }
+                            else {
+                            }
+                        })
+                        .fail(function (response) {
+                            var feedback = new Feedback(response.responseJSON.Tipo, response.responseJSON.Mensagem, response.responseJSON.MensagemAdicional, response.responseJSON.TipoAcao); 
+                            App.exibirModalPorFeedback(feedback);
+                        })
+                        .always(function () {
+                            App.desbloquear();
+                            btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
+                        });
+
+                        //btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
+	                    //showErrorMsg(form, 'danger', 'Incorrect username or password. Please try again.');
                     }, 2000);
                 }
             });
