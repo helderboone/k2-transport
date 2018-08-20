@@ -109,15 +109,8 @@ namespace K2.Api
 
             app.UseStaticFiles();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                // Middleware customizado para interceptar erros HTTP e exceptions não tratadas
-                app.UseCustomExceptionHandler();
-            }
+            // Middleware customizado para interceptar erros HTTP e exceptions não tratadas
+            app.UseCustomExceptionHandler();
 
             // Utiliza a compressão do response
             app.UseResponseCompression();

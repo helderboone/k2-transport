@@ -1,11 +1,10 @@
-﻿using System;
-using System.Text;
-using K2.Web.Models;
+﻿using K2.Web.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Text;
 
 namespace K2.Web.Filters
 {
@@ -38,37 +37,36 @@ namespace K2.Web.Filters
 
             public override void OnException(ExceptionContext context)
             {
-                FeedbackViewModel feedback = null;
                 IActionResult result = null;
+
+                FeedbackViewModel feedbackViewModel;
 
                 switch (_tipoResponse)
                 {
                     case TipoFeedbackResponse.Json:
 
-                        feedback = new FeedbackViewModel(TipoFeedback.ERRO, _mensagem, _mensagemAdicional, _tipoAcaoOcultar);
-
                         if (_hostingEnvironment.IsDevelopment())
                         {
-                            result = new JsonResult(new {
-                                feedback.Tipo,
-                                feedback.Mensagem,
-                                feedback.MensagemAdicional,
-                                Exception = context.Exception.Message,
-                                BaseException = context.Exception.GetBaseException().Message,
-                                context.Exception.StackTrace
-                            });
+                            var html = new StringBuilder();
+
+                            if (!string.IsNullOrEmpty(_mensagemAdicional))
+                            {
+                                html.Append("<p>" + _mensagemAdicional + "</p>");
+                            }
+
+                            html.Append($"<p>Exception: {context.Exception.Message}</p>");
+
+                            if (context.Exception.Message != context.Exception.GetBaseException().Message)
+                                html.Append($"<p>Base exception: {context.Exception.GetBaseException().Message}</p>");
+
+                            feedbackViewModel = new FeedbackViewModel(TipoFeedback.Erro, _mensagem, new[] { html.ToString() }, _tipoAcaoOcultar);
                         }
                         else
                         {
-                            result = new JsonResult(new
-                            {
-                                feedback.Tipo,
-                                feedback.Mensagem,
-                                feedback.MensagemAdicional,
-                                Exception = context.Exception.Message,
-                                BaseException = context.Exception.GetBaseException().Message
-                            });
+                            feedbackViewModel = new FeedbackViewModel(TipoFeedback.Erro, _mensagem, new[] { _mensagemAdicional }, _tipoAcaoOcultar);
                         }
+
+                        result = new JsonResult(feedbackViewModel);
 
                         break;
                     case TipoFeedbackResponse.Html:
@@ -87,17 +85,17 @@ namespace K2.Web.Filters
                             if (context.Exception.Message != context.Exception.GetBaseException().Message)
                                 html.Append($"<p>Base exception: {context.Exception.GetBaseException().Message}</p>");
 
-                            feedback = new FeedbackViewModel(TipoFeedback.ERRO, _mensagem, html.ToString(), _tipoAcaoOcultar);
+                            feedbackViewModel = new FeedbackViewModel(TipoFeedback.Erro, _mensagem, new[] { html.ToString() }, _tipoAcaoOcultar);
                         }
                         else
                         {
-                            feedback = new FeedbackViewModel(TipoFeedback.ERRO, _mensagem, _mensagemAdicional, _tipoAcaoOcultar);
+                            feedbackViewModel = new FeedbackViewModel(TipoFeedback.Erro, _mensagem, new[] { _mensagemAdicional }, _tipoAcaoOcultar);
                         }
 
                         result = new ViewResult { ViewName = "Feedback" };
 
                         ((ViewResult)result).ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), context.ModelState);
-                        ((ViewResult)result).ViewData.Model = feedback;
+                        ((ViewResult)result).ViewData.Model = feedbackViewModel;
 
                         break;
                 }

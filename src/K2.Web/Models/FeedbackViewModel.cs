@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,52 +21,26 @@ namespace K2.Web.Models
         [JsonProperty("TipoAcao")]
         public TipoAcaoOcultarFeedback TipoAcao { get; set; }
 
-        public FeedbackViewModel(TipoFeedback tipo, string mensagem, string mensagemAdicional = null, TipoAcaoOcultarFeedback tipoAcao = TipoAcaoOcultarFeedback.FecharJanela)
+        public FeedbackViewModel(TipoFeedback tipo, string mensagem, IEnumerable<string> mensagensAdicionais = null, TipoAcaoOcultarFeedback tipoAcao = TipoAcaoOcultarFeedback.Ocultar)
         {
             Tipo = tipo;
             Mensagem = mensagem;
-            MensagemAdicional = mensagemAdicional;
+            MensagemAdicional = mensagensAdicionais != null && mensagensAdicionais.Any()
+                ? string.Join(string.Empty, mensagensAdicionais.Where(x => !string.IsNullOrEmpty(x)).Select(x => "<li>" + x + "</li>"))
+                : string.Empty; 
             TipoAcao = tipoAcao;
-        }
-
-        public FeedbackViewModel(TipoFeedback tipo, IEnumerable<string> mensagens, string mensagemAdicional = null, TipoAcaoOcultarFeedback tipoAcao = TipoAcaoOcultarFeedback.FecharJanela)
-        {
-            Tipo = tipo;
-            Mensagem = string.Join(string.Empty, mensagens.Where(x => !string.IsNullOrEmpty(x)).Select(x => "<li>" + x + "</li>"));
-            MensagemAdicional = mensagemAdicional;
-            TipoAcao = tipoAcao;
-        }
-    }
-
-    public class TipoFeedbackConverter : JsonConverter
-    {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            TipoFeedback tipo = (TipoFeedback)value;
-
-            writer.WriteRawValue("TipoFeedback." + tipo.ToString());
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            return Enum.Parse(typeof(TipoFeedback), (string)reader.Value);
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(TipoFeedback);
         }
     }
 
     /// <summary>
-    /// Tipo da mensagem
+    /// Tipo de feedback
     /// </summary>
     public enum TipoFeedback
     {
-        INFO = 1,
-        ATENCAO = 2,
-        ERRO = 3,
-        SUCESSO = 4
+        Info = 1,
+        Atencao = 2,
+        Erro = 3,
+        Sucesso = 4
     }
 
     public enum TipoFeedbackResponse
@@ -82,6 +54,7 @@ namespace K2.Web.Models
     /// </summary>
     public enum TipoAcaoOcultarFeedback
     {
+        Ocultar = 0,
         /// <summary>
         /// Redireciona para a página anteriormente exibida antes da exibição da mensagem de erro
         /// </summary>

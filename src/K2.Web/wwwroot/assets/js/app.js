@@ -1,48 +1,32 @@
-﻿class Feedback {
-    constructor(tipo, mensagem, mensagemAdicional, tipoAcao) {
+﻿//const TipoFeedback = {
+//    SUCESSO: {
+//        icone: "fa fa-check-circle",
+//        titulo: "Sucesso",
+//        corJqConfirm: "green",
+//        bootstrapTipo: 'success'
+//    },
+//    ATENCAO: {
+//        icone: "fa fa-exclamation-triangle",
+//        titulo: "Atenção",
+//        corJqConfirm: "orange",
+//        bootstrapTipo: 'warning'
+//    },
+//    INFO: {
+//        icone: "fa fa-info-circle",
+//        titulo: "Info",
+//        corJqConfirm: "blue",
+//        bootstrapTipo: 'info'
+//    },
+//    ERRO: {
+//        icone: "fa fa-skull",
+//        titulo: "Erro",
+//        corJqConfirm: "red",
+//        bootstrapTipo: 'danger'
+//    }
+//};
 
-        switch (tipo) {
 
-            case 'ATENCAO':
-                this.Tipo = TipoFeedback.ATENCAO;
-                break;
-            default:
-                this.Tipo = TipoFeedback.INFO;
-                break;
-        }
 
-        this.Mensagem = mensagem;
-        this.MensagemAdicional = mensagemAdicional;
-        this.TipoAcao = tipoAcao;
-    }
-}
-
-const TipoFeedback = {
-    SUCESSO: {
-        icone: "fa fa-check-circle",
-        titulo: "Sucesso",
-        corJqConfirm: "green",
-        bootstrapTipo: 'success'
-    },
-    ATENCAO: {
-        icone: "fa fa-exclamation-triangle",
-        titulo: "Atenção",
-        corJqConfirm: "orange",
-        bootstrapTipo: 'warning'
-    },
-    INFO: {
-        icone: "fa fa-info-circle",
-        titulo: "Info",
-        corJqConfirm: "blue",
-        bootstrapTipo: 'info'
-    },
-    ERRO: {
-        icone: "fa fa-skull",
-        titulo: "Erro",
-        corJqConfirm: "red",
-        bootstrapTipo: 'danger'
-    }
-};
 
 //var feedback = {
 //    tipo: TipoFeedback.SUCESSO,

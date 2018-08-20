@@ -23,13 +23,4 @@ namespace K2.Web.Models
         /// </summary>
         public object Retorno { get; set; }
     }
-
-    public class JwtTokenSaida
-    {
-        public DateTime DataCriacaoToken { get; set; }
-
-        public DateTime DataExpiracaoToken { get; set; }
-
-        public string Token { get; set; }
-    }
 }
