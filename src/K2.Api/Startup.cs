@@ -8,7 +8,6 @@ using K2.Infraestrutura.Dados;
 using K2.Infraestrutura.Dados.Repositorios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -84,7 +83,7 @@ namespace K2.Api
             services.AddAuthorization(options =>
             {
                 // Adiciona as policies de acesso, definindo os claimns existentes em cada policy.
-                options.AddPolicy(PermissaoAcesso.Usuarios, policy => policy.RequireClaim(PermissaoAcesso.Usuarios).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(Perfil.Administrador, policy => policy.RequireClaim(Perfil.Administrador).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             services
@@ -102,7 +101,7 @@ namespace K2.Api
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             // Entende que a página default é a "index.html" dentro da pasta "wwwroot"
             app.UseDefaultFiles();

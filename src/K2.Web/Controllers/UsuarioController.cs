@@ -6,25 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using RestSharp;
-using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace K2.Web.Controllers
 {
-    public class UsuarioController : Controller
+    [Authorize]
+    public class UsuarioController : BaseController
     {
-        private readonly IConfiguration _configuration;
-        private readonly string _urlApi;
-
-        private readonly RestClient _apiClient;
-
         public UsuarioController(IConfiguration configuration)
+            : base(configuration)
         {
-            _configuration = configuration;
-
-            _urlApi = configuration["UrlApi"];
-            _apiClient = new RestClient(_urlApi);
         }
 
         [AllowAnonymous]
@@ -43,13 +36,13 @@ namespace K2.Web.Controllers
         [HttpPost]
         [Route("autenticar")]
         [FeedbackExceptionFilter("Não foi possível realizar o login.", TipoAcaoOcultarFeedback.Ocultar, tipoResponse: TipoFeedbackResponse.Json)]
-        public async Task<IActionResult> Autenticar(string email, string senha, bool permanecerLogado)
+        public async Task<IActionResult> Login(string email, string senha, bool permanecerLogado)
         {
             var request = new RestRequest("v1/usuarios/autenticar", Method.POST);
             request.AddParameter("email", email);
             request.AddParameter("senha", senha);
 
-            var response = await _apiClient.ExecuteTaskAsync(request);
+            var response = await _restClient.ExecuteTaskAsync(request);
 
             if (response == null || string.IsNullOrEmpty(response.Content))
                 return new JsonResult(new FeedbackViewModel(TipoFeedback.Erro, "Acesso negado.", new[] { "As informações retornadas pela API são nulas." }));
@@ -64,7 +57,10 @@ namespace K2.Web.Controllers
 
             // Cria o cookie de autenticação
 
-            var userIdentity = new ClaimsIdentity(autenticacaoSaida.ObterClaims(), CookieAuthenticationDefaults.AuthenticationScheme);
+            var claims = new List<Claim>(autenticacaoSaida.ObterClaims());
+            claims.Add(new Claim("jwtToken", autenticacaoSaida.ObterToken()));
+
+            var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var principal = new ClaimsPrincipal(userIdentity);
 
@@ -72,12 +68,28 @@ namespace K2.Web.Controllers
             {
                 AllowRefresh = true,
                 IsPersistent = permanecerLogado,
-                ExpiresUtc = DateTime.UtcNow.AddDays(365 * 10)
+                ExpiresUtc = autenticacaoSaida.Retorno.DataExpiracaoToken
             };
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);
 
             return new JsonResult(new FeedbackViewModel(TipoFeedback.Sucesso, "Usuário autenticado com sucesso."));
+        }
+
+        [HttpPost]
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return new EmptyResult();
+        }
+
+        [HttpGet]
+        [Route("alterar-senha")]
+        public IActionResult AlterarSenha()
+        {
+            return PartialView();
         }
     }
 }

@@ -20,5 +20,7 @@ namespace K2.Web
         public string ObterPrimeiroNomeUsuario() => ObterNomeUsuario().Split(" ".ToCharArray())[0];
 
         public string ObterEmailUsuario() => Convert.ToString(_context.User.Claims.ElementAt(1).Value);
+
+        public string ObterPerfilUsuario() => Convert.ToString(_context.User.Claims.First(x => x.Type == "Perfil").Value);
     }
 }

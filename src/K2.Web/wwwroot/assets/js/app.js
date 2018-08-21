@@ -60,7 +60,9 @@ var App = function () {
 				title: null,
 				closeIcon: false,
 				backgroundDismiss: (fecharAoClicarBg == null ? false : fecharAoClicarBg),
-				columnClass: "col-xs-10 col-xs-1 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3",
+                columnClass: 'col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1',
+                offsetTop: 10,
+                offsetBottom: 10,
 				onOpen: function () {
 					this.$content.find(".btn-fechar").click(function () {
 						jc.close();

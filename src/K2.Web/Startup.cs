@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using K2.Dominio;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace K2.Web
 {
@@ -20,9 +22,17 @@ namespace K2.Web
                     .AddCookie(options =>
                     {
                         options.LoginPath         = "/login";
+                        options.AccessDeniedPath  = "/acesso-negado";
                         options.SlidingExpiration = true;
                         options.Cookie.Name       = "K2";
+                        options.ExpireTimeSpan    = TimeSpan.FromHours(2); // Se o cookie não for persistente, a sessão ficará ativa por 2 horas
                     });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Perfil.Administrador, policy => policy.RequireClaim(Perfil.Administrador).AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme));
+                options.AddPolicy("pepeca", policy => policy.RequireClaim("pepeca").AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme));
+            });
 
             services.AddMvc();
         }

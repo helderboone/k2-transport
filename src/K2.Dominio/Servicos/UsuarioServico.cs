@@ -38,11 +38,12 @@ namespace K2.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            // Define as permissões de acesso (aqui, de forma estática, porém essas permissões poderiam ser obtidas do banco de dados).
-            usuario.PermissoesAcesso = new[]
-            {
-                PermissaoAcesso.Usuarios
-            };
+            var perfil = string.Empty;
+
+            if (usuario.Administrador)
+                perfil = Perfil.Administrador;
+
+            usuario.Perfis = new[] { perfil };
 
             return new Saida(true, new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso }, new UsuarioSaida(usuario));
         }

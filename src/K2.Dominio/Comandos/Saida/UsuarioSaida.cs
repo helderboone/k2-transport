@@ -48,9 +48,9 @@ namespace K2.Dominio.Comandos.Saida
         public bool Administrador{ get; }
 
         /// <summary>
-        /// Permissões de acesso do usuário
+        /// Perfis de acesso do usuário
         /// </summary>
-        public string[] PermissoesAcesso { get; }
+        public string[] Perfis { get; }
 
         public UsuarioSaida(Usuario usuario)
         {
@@ -65,7 +65,7 @@ namespace K2.Dominio.Comandos.Saida
             this.Celular          = usuario.Celular;
             this.Ativo            = usuario.Ativo;
             this.Administrador    = usuario.Administrador;
-            this.PermissoesAcesso = usuario.PermissoesAcesso;
+            this.Perfis           = usuario.Perfis;
         }
 
         public override string ToString()

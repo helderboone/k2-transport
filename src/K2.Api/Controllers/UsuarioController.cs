@@ -64,8 +64,8 @@ namespace K2.Api.Controllers
                         new Claim("Cpf", usuario.Cpf),
                         new Claim("Rg", usuario.Rg)
                     }
-                    // Adiciona as perissões de acesso do usuário
-                    .Union(usuario.PermissoesAcesso.Select(x => new Claim(x, x)))
+                    // Adiciona os perfis de acesso do usuário
+                    .Union(usuario.Perfis.Select(x => new Claim("Perfil", x)))
                 );
 
             var jwtHandler = new JwtSecurityTokenHandler();

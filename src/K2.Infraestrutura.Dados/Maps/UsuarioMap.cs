@@ -20,7 +20,7 @@ namespace K2.Infraestrutura.Dados.Maps
             builder.Property(x => x.Ativo);
             //builder.Property(x => x.Administrador);
 
-            builder.Ignore(x => x.PermissoesAcesso);
+            builder.Ignore(x => x.Perfis);
         }
     }
 }

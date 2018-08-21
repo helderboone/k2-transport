@@ -51,9 +51,9 @@
         public bool Administrador { get; private set; }
 
         /// <summary>
-        /// Permissões de acesso do usuário
+        /// Perfis de acesso do usuário
         /// </summary>
-        public string[] PermissoesAcesso { get; internal set; }
+        public string[] Perfis { get; internal set; }
 
         private Usuario()
         {

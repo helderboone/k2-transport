@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace K2.Web.Filters
 {
@@ -36,6 +37,20 @@ namespace K2.Web.Filters
             }
 
             public override void OnException(ExceptionContext context)
+            {
+                HandleException(context);
+
+                base.OnException(context);
+            }
+
+            public override async Task OnExceptionAsync(ExceptionContext context)
+            {
+                HandleException(context);
+
+                base.OnException(context);
+            }
+
+            private void HandleException(ExceptionContext context)
             {
                 IActionResult result = null;
 
@@ -101,8 +116,6 @@ namespace K2.Web.Filters
                 }
 
                 context.Result = result;
-
-                base.OnException(context);
             }
         }
     }

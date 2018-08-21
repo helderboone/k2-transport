@@ -3,7 +3,7 @@
 <!-- begin::Head -->
 <head>
     <meta charset="utf-8" />
-    <title>K2 | Reservas</title>
+    <title>K2 | Administração</title>
     <meta name="description" content="Latest updates and statistic charts">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <!--begin::Web font -->
@@ -228,6 +228,9 @@
                                     <li class="m-nav__item m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                                         <a href="#" class="m-nav__link m-dropdown__toggle">
                                             <span class="m-topbar__username m--hidden-mobile">@(new CookieHelper(Context).ObterPrimeiroNomeUsuario())</span>
+                                            <span class="m-topbar__userpic">
+                                                <i class="fa fa-user-circle"></i>
+                                            </span>
                                             <span class="m-nav__link-icon m-topbar__usericon  m--hide">
                                                 <span class="m-nav__link-icon-wrapper"><i class="flaticon-user-ok"></i></span>
                                             </span>
@@ -238,11 +241,11 @@
                                                 <div class="m-dropdown__header m--align-center">
                                                     <div class="m-card-user m-card-user--skin-light">
                                                         <div class="m-card-user__pic">
-                                                            @*<img src="assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless" alt="" />*@
+                                                            <i class="fa fa-user-circle" style="font-size:4rem; color:#333;"></i>
                                                         </div>
                                                         <div class="m-card-user__details">
                                                             <span class="m-card-user__name m--font-weight-500">@(new CookieHelper(Context).ObterNomeUsuario())</span>
-                                                            <a href="" class="m-card-user__email m--font-weight-300 m-link">@(new CookieHelper(Context).ObterEmailUsuario())</a>
+                                                            <a href="" class="m-card-user__email m--font-weight-300 m-link">@(new CookieHelper(Context).ObterPerfilUsuario())</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -254,45 +257,20 @@
                                                             </li>
                                                             <li class="m-nav__item">
                                                                 <a href="profile.html" class="m-nav__link">
-                                                                    <i class="m-nav__link-icon flaticon-profile-1"></i>
-                                                                    <span class="m-nav__link-title">
-                                                                        <span class="m-nav__link-wrap">
-                                                                            <span class="m-nav__link-text">My Profile</span>
-                                                                            <span class="m-nav__link-badge"><span class="m-badge m-badge--success">2</span></span>
-                                                                        </span>
-                                                                    </span>
+                                                                    <i class="m-nav__link-icon fa fa-address-card"></i>
+                                                                    <span class="m-nav__link-text">Meus dados</span>
                                                                 </a>
                                                             </li>
                                                             <li class="m-nav__item">
-                                                                <a href="profile.html" class="m-nav__link">
-                                                                    <i class="m-nav__link-icon flaticon-share"></i>
-                                                                    <span class="m-nav__link-text">Activity</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="m-nav__item">
-                                                                <a href="profile.html" class="m-nav__link">
-                                                                    <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                                    <span class="m-nav__link-text">Messages</span>
+                                                                <a href="javascript:;" id="lnkAlterarSenha" class="m-nav__link">
+                                                                    <i class="m-nav__link-icon fa fa-lock"></i>
+                                                                    <span class="m-nav__link-text">Alterar senha</span>
                                                                 </a>
                                                             </li>
                                                             <li class="m-nav__separator m-nav__separator--fit">
                                                             </li>
                                                             <li class="m-nav__item">
-                                                                <a href="profile.html" class="m-nav__link">
-                                                                    <i class="m-nav__link-icon flaticon-info"></i>
-                                                                    <span class="m-nav__link-text">FAQ</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="m-nav__item">
-                                                                <a href="profile.html" class="m-nav__link">
-                                                                    <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                                    <span class="m-nav__link-text">Support</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="m-nav__separator m-nav__separator--fit">
-                                                            </li>
-                                                            <li class="m-nav__item">
-                                                                <a href="snippets/pages/user/login-1.html" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
+                                                                <a id="lnkLogout" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Sair</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -391,6 +369,8 @@
     <environment include="Development">
         <script src="assets/scripts.bundle.js" type="text/javascript"></script>
         <script src="assets/js/app.js" type="text/javascript"></script>
+        <script src="assets/js/feedback.js" type="text/javascript"></script>
+        <script src="assets/js/k2.js" type="text/javascript"></script>
     </environment>
     <environment exclude="Development">
         <script src="assets/scripts.bundle.min.js" type="text/javascript"></script>
@@ -400,13 +380,28 @@
     <!--begin::Page Vendors Scripts -->
     @RenderSection("VendorsJs", required: false)
     <!--end::Page Vendors Scripts -->
-    <!--begin::Page Snippets -->
-    @*<script src="assets/app/js/dashboard.js" type="text/javascript"></script>*@
-    <!--end::Page Snippets -->
     <!-- begin::Page Loader -->
     <script>
         $(document).ajaxStart(App.bloquear());
         $(document).ajaxStop(App.desbloquear()); 
+
+        $(document).ready(function () {
+            $("#lnkAlterarMeusDados").click(function () {
+                K2.alterarMeusDados();
+            });
+
+            $("#lnkAlterarSenha").click(function () {
+                K2.alterarSenhaUsuario();
+            });
+
+            $("#lnkLogout").click(function () {
+                App.exibirConfirm("Deseja realmente sair?", "Sim", "Não", function () {
+                    $.post("logout", function () {
+                        location.href = "login";
+                    });
+                });
+            });
+        });
     </script>
     <!-- end::Page Loader -->
 </body>

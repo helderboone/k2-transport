@@ -73,9 +73,14 @@ class Feedback {
         return new Feedback(feedbackViewModel.Tipo, feedbackViewModel.Mensagem, feedbackViewModel.MensagemAdicional, feedbackViewModel.TipoAcao);
     }
 
-    static exibirModal(feedbackViewModel, fecharCallback) {
+    static exibirModalPorViewModel(feedbackViewModel, fecharCallback) {
         var feedback = Feedback.converter(feedbackViewModel);
 
+        Feedback.exibirModal(feedback, fecharCallback);
+    }
+
+    static exibirModal(feedback, fecharCallback) {
+        
         let html = '<div style="margin:5px;"><p style="font-weight: 500;">' + feedback.Mensagem + '</p>' + (feedback.MensagemAdicional != null ? feedback.MensagemAdicional : "") + '</div>';
 
         let alert = $.alert({
@@ -97,10 +102,10 @@ class Feedback {
                         switch (feedback.TipoAcao) {
                             case 1: window.history.back(); break;
                             case 2: window.close(); break;
-                            case 3: location.href = corrigePathRota("inicio"); break;
+                            case 3: location.href = App.corrigirPathRota("inicio"); break;
                             case 4: location.reload(); break;
                             case 5: App.ocultarModal(); break;
-                            case 6: location.href = corrigePathRota("login"); break;
+                            case 6: location.href = App.corrigirPathRota("login"); break;
                         }
                     }
                 }
@@ -128,21 +133,4 @@ class Feedback {
             onClosed: (fecharCallback != null ? function () { fecharCallback(); } : null)
         });
     }
-
-    //static converterJson(json) {
-    //    var obj = JSON.parse(json);
-    //    var tipo = TipoFeedback.INFO;
-
-    //    switch (obj.Tipo) {
-
-    //        case 1:
-    //            tipo = TipoFeedback.ATENCAO;
-    //            break;
-    //        default:
-    //            tipo = TipoFeedback.INFO;
-    //            break;
-    //    }
-
-    //    return new Feedback(tipo, obj.Mensagem, obj.MensagemAdicional, obj.TipoAcao);
-    //}
 }
