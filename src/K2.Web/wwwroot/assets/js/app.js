@@ -1,42 +1,4 @@
-﻿//const TipoFeedback = {
-//    SUCESSO: {
-//        icone: "fa fa-check-circle",
-//        titulo: "Sucesso",
-//        corJqConfirm: "green",
-//        bootstrapTipo: 'success'
-//    },
-//    ATENCAO: {
-//        icone: "fa fa-exclamation-triangle",
-//        titulo: "Atenção",
-//        corJqConfirm: "orange",
-//        bootstrapTipo: 'warning'
-//    },
-//    INFO: {
-//        icone: "fa fa-info-circle",
-//        titulo: "Info",
-//        corJqConfirm: "blue",
-//        bootstrapTipo: 'info'
-//    },
-//    ERRO: {
-//        icone: "fa fa-skull",
-//        titulo: "Erro",
-//        corJqConfirm: "red",
-//        bootstrapTipo: 'danger'
-//    }
-//};
-
-
-
-
-//var feedback = {
-//    tipo: TipoFeedback.SUCESSO,
-//    titulo: "Título do feedback",
-//    mensagem: "Mensagem do feedback",
-//    mensagemAdicional: "Mensagem adicional do feedback",
-//    tipoAcao: 1
-//};
-
-// Funções globais para serem utilizadas por todo o sistema
+﻿// Funções globais para serem utilizadas por todo o sistema
 var App = function () {
 	
 	var arrModal = [];
@@ -90,92 +52,7 @@ var App = function () {
 			$(input).mask("99/99/9999");
 		},
 
-		// Exibe uma notificação utilizando o plugin "Bootstrap Notify"
-		exibirNotificacao: function (tipo, mensagem, ocultarCallback) {
-            $.notify({
-                icon: "icon " + tipo.icone,
-                title: tipo.titulo,
-				message: mensagem
-            },
-            {
-                type: tipo.bootstrapTipo,
-                z_index: 9999999999,
-                timer: (tipo === TipoFeedback.ERRO ? 12000 : 5000),
-				mouse_over: "pause",
-				placement: {
-					from: "top",
-					align: "center"
-				},
-				onClosed: (ocultarCallback != null ? function() { ocultarCallback(); } : null)
-			});
-		},
-
-		// Exibe uma notificação utilizando o plugin "Bootstrap Notify", a partir de um objeto do tipo "FeedbackViewModel"
-        exibirNotificacaoPorFeedback: function (feedback, ocultarCallback) {
-            switch (feedback.Tipo) {
-                case 1: { tipo = TipoFeedback.INFO; break; }
-                case 2: { tipo = TipoFeedback.ATENCAO; break; }
-                case 3: { tipo = TipoFeedback.ERRO; break; }
-                default: { tipo = TipoFeedback.INFO; break; }
-			}
-
-            this.exibirNotificacao(tipo, feedback.Mensagem, feedback.Titulo, function () {
-				if (ocultarCallback != null) {
-					ocultarCallback();
-				} else {
-                    if (feedback.TipoAcao != null) {
-                        switch (feedback.TipoAcao) {
-							case 1: { window.history.back(); break; }
-							case 2: { window.close(); break; }
-							case 3: { location.href = corrigePathRota("inicio"); break; }
-							case 4: { location.reload(); break; }
-						}
-					}
-				}
-			});
-		},
-
-		// Exibe uma notificação utilizando o plugin "Bootstrap Notify", a partir de um objeto jqXHR retornado por uma chamada assíncrona reailizada utilizando jQuery
-		exibirNotificacaoPorJqXHR: function (jqXhr, ocultarCallback) {
-			if (jqXhr.responseJSON != null) {
-				var mensagem = jqXhr.responseJSON;
-
-                mensagem.Tipo == null ?
-                    this.exibirNotificacao(TipoFeedback.ERRO, jqXhr.status + " - " + jqXhr.statusText, "Erro") :
-					this.exibirNotificacaoPorMensagem(mensagem, ocultarCallback);
-			} else {
-                this.exibirNotificacao(TipoFeedback.ERRO, jqXhr.status + " - " + jqXhr.statusText, "Erro");
-			}
-        },
-
-        // Exibe um alert utilizando o plugin "JQuery Confirm"
-        exibirAlert: function (tipo, mensagem, mensagemAdicional, fecharCallback) {
-
-            if (!tipo)
-                throw new Error("O parâmetro \"tipo\" não pode ser nulo.");
-
-            let html = '<div style="margin:5px;"><p style="font-weight: 500;">' + mensagem + '</p>' + mensagemAdicional + '</div>';
-
-            let alert = $.alert({
-                icon: tipo.icone,
-                theme: 'supervan',
-                closeIcon: false,
-                animation: 'scale',
-                type: tipo.corJqConfirm,
-                title: tipo.titulo,
-                content: html,
-                onOpen: function () {
-                    alert.setDialogCenter();
-                },
-                onClose: function () {
-                    if (fecharCallback != 'undefined' && fecharCallback != null) {
-                        fecharCallback();
-                    }
-                }
-            });
-        },
-
-		// Exibe um popup utilizando o plugin Jquery Confirm
+        // Exibe um popup utilizando o plugin Jquery Confirm
 		exibirModalPorHtml: function (conteudoHtml, openCallback, fecharAoClicarBg, permanecerAberto) {
 
 			var jc = $.dialog({
@@ -216,51 +93,6 @@ var App = function () {
 			}).fail(function (jqXhr) {
 				App.exibirModalPorJqXHR(jqXhr);
 			});
-		},
-
-		// Exibe um modal utilizando o plugin "Magnific Popup", a partir de um objeto do tipo "FeedbackViewModel"
-		exibirModalPorFeedback: function (feedback, fecharCallback) {
-
-            this.exibirAlert(feedback.Tipo, feedback.Mensagem, feedback.MensagemAdicional, function () {
-				if (fecharCallback != null) {
-					fecharCallback();
-				} else {
-                    if (feedback.TipoAcao != null)
-					{
-                        switch (feedback.TipoAcao) {
-							case 1: { window.history.back(); break; }
-							case 2: { window.close(); break; }
-							case 3: { location.href = corrigePathRota("inicio"); break; }
-							case 4: { location.reload(); break; }
-							case 5: { App.ocultarModal(); break; }
-							case 6: { location.href = corrigePathRota("login"); break; }
-						}
-					}
-				}
-			});
-		},
-
-		// Exibe um modal utilizando o plugin "Magnific Popup", a partir de um objeto jqXHR retornado por uma chamada assíncrona reailizada utilizando jQuery
-		exibirModalPorJqXHR: function (jqXhr, fecharCallback) {
-			if (jqXhr.responseJSON != null) {
-				var mensagem = jqXhr.responseJSON;
-
-                mensagem.Tipo == null ?
-                    this.exibirModal(TipoFeedback.ERRO, jqXhr.status + " - " + jqXhr.statusText, "Erro") :
-					this.exibirModalPorMensagem(mensagem, fecharCallback);
-			} else {
-				if (jqXhr.readyState === 0) // Offline
-                    this.exibirModal(TipoFeedback.ERRO, "Ocorreu um erro de comunicação. Por favor certifique-se de que você esteja conectado a internet.", "Erro de conexão", null, function() {
-						App.ocultarModal();
-					});
-				else if (jqXhr.readyState === 4 && jqXhr.status === 401) // Ausência do cookie de autenticação
-                    this.exibirModal(TipoFeedback.ATENCAO, "Sua sessão expirou. Você precisa fazer seu login novamente.", "Login expirado", "Ao clicar no botão \"FECHAR\" você será redirecionado para a tela de login.", function() {
-						App.ocultarModal();
-						location.href = corrigePathRota("login");
-					});
-				else
-                    this.exibirModal(TipoFeedback.ERRO, jqXhr.status + " - " + jqXhr.statusText, "Erro");
-			}
 		},
 
 		// Exibe um modal de confirmação utilizando o plugin "Magnific Popup"

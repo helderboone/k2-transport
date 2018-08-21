@@ -60,7 +60,12 @@ var SnippetLogin = function() {
                 url: '',
                 success: function () {
                     $.post(App.corrigirPathRota("autenticar"), { email: $("#email").val(), senha: $("#password").val(), permanecerLogado: $("#remember").prop("checked") }, function (feedbackViewModel) {
-                        Feedback.exibirModal(feedbackViewModel);
+                        var feedback = Feedback.converter(feedbackViewModel);
+
+                        if (feedback.Tipo.Nome == Tipo.Sucesso)
+                            location.href = App.corrigirPathRota("inicio");
+                        else
+                            Feedback.exibirModal(feedbackViewModel);
                     })
                     .fail(function (feedbackViewModel) {
                         Feedback.exibirModal(feedbackViewModel);

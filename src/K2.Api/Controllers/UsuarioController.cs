@@ -60,6 +60,7 @@ namespace K2.Api.Controllers
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
                         new Claim(JwtRegisteredClaimNames.UniqueName, usuario.Email),
                         new Claim("IdUsuario", usuario.Id.ToString()),
+                        new Claim("Nome", usuario.Nome),
                         new Claim("Cpf", usuario.Cpf),
                         new Claim("Rg", usuario.Rg)
                     }

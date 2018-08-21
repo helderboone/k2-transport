@@ -227,10 +227,7 @@
                                     </li>
                                     <li class="m-nav__item m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                                         <a href="#" class="m-nav__link m-dropdown__toggle">
-                                            <span class="m-topbar__username m--hidden-mobile">Mark</span>
-                                            <span class="m-topbar__userpic">
-                                                @*<img src="assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless m--img-centered" alt="" />*@
-                                            </span>
+                                            <span class="m-topbar__username m--hidden-mobile">@(new CookieHelper(Context).ObterPrimeiroNomeUsuario())</span>
                                             <span class="m-nav__link-icon m-topbar__usericon  m--hide">
                                                 <span class="m-nav__link-icon-wrapper"><i class="flaticon-user-ok"></i></span>
                                             </span>
@@ -244,8 +241,8 @@
                                                             @*<img src="assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless" alt="" />*@
                                                         </div>
                                                         <div class="m-card-user__details">
-                                                            <span class="m-card-user__name m--font-weight-500">Mark Andre</span>
-                                                            <a href="" class="m-card-user__email m--font-weight-300 m-link">mark.andre@gmail.com</a>
+                                                            <span class="m-card-user__name m--font-weight-500">@(new CookieHelper(Context).ObterNomeUsuario())</span>
+                                                            <a href="" class="m-card-user__email m--font-weight-300 m-link">@(new CookieHelper(Context).ObterEmailUsuario())</a>
                                                         </div>
                                                     </div>
                                                 </div>

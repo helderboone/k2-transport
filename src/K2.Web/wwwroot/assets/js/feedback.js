@@ -1,54 +1,61 @@
-﻿class TipoFeedback {
+﻿const Tipo = {
+    Erro: "ERRO",
+    Atencao: "ATENCAO",
+    Info: "INFO",
+    Sucesso: "SUCESSO"
+};
+
+class TipoFeedback {
     constructor(tipo) {
         switch (tipo) {
             case 1:
-                this.Tipo = "INFO";
+                this.Nome = Tipo.Info;
                 break;
             case 2:
-                this.Tipo = "ATENCAO";
+                this.Nome = Tipo.Atencao;
                 break;
             case 3:
-                this.Tipo = "ERRO";
+                this.Nome = Tipo.Erro;
                 break;
             case 4:
-                this.Tipo = "SUCESSO";
+                this.Nome = Tipo.Sucesso;
                 break;
         }
     }
 
     obterTitulo() {
-        switch (this.Tipo) {
-            case "INFO": return "Info";
-            case "ATENCAO": return "Atenção";
-            case "ERRO": return "Erro";
-            case "SUCESSO": return "Sucesso";
+        switch (this.Nome) {
+            case Tipo.Info: return "Info";
+            case Tipo.Atencao: return "Atenção";
+            case Tipo.Erro: return "Erro";
+            case Tipo.Sucesso: return "Sucesso";
         }
     }
 
     obterIcone() {
-        switch (this.Tipo) {
-            case "INFO": return "fa fa-info-circle";
-            case "ATENCAO": return "fa fa-exclamation-triangle";
-            case "ERRO": return "fa fa-skull";
-            case "SUCESSO": return "fa fa-check-circle";
+        switch (this.Nome) {
+            case Tipo.Info: return "fa fa-info-circle";
+            case Tipo.Atencao: return "fa fa-exclamation-triangle";
+            case Tipo.Erro: return "fa fa-skull";
+            case Tipo.Sucesso: return "fa fa-check-circle";
         }
     }
 
     obterTypeJqueryConfirm() {
-        switch (this.Tipo) {
-            case "INFO": return "blue";
-            case "ATENCAO": return "orange";
-            case "ERRO": return "red";
-            case "SUCESSO": return "green";
+        switch (this.Nome) {
+            case Tipo.Info: return "blue";
+            case Tipo.Atencao: return "orange";
+            case Tipo.Erro: return "red";
+            case Tipo.Sucesso: return "green";
         }
     }
 
     obterClassCssBootstrap() {
-        switch (this.Tipo) {
-            case "INFO": return "info";
-            case "ATENCAO": return "warning";
-            case "ERRO": return "danger";
-            case "SUCESSO": return "success";
+        switch (this.Nome) {
+            case Tipo.Info: return "info";
+            case Tipo.Atencao: return "warning";
+            case Tipo.Erro: return "danger";
+            case Tipo.Sucesso: return "success";
         }
     }
 }
@@ -98,6 +105,27 @@ class Feedback {
                     }
                 }
             }
+        });
+    }
+
+    static exibirNotificacao(feedbackViewModel, fecharCallback) {
+        var feedback = Feedback.converter(feedbackViewModel);
+
+        $.notify({
+            icon: "icon " + feedback.Tipo.obterIcone(),
+            title: feedback.Tipo.obterTitulo(),
+            message: feedback.Mensagem
+        },
+        {
+            type: feedback.obterClassCssBootstrap(),
+            z_index: 9999999999,
+            timer: (feedback.Tipo.Nome == "ERRO" ? 12000 : 5000),
+            mouse_over: "pause",
+            placement: {
+                from: "top",
+                align: "center"
+            },
+            onClosed: (fecharCallback != null ? function () { fecharCallback(); } : null)
         });
     }
 

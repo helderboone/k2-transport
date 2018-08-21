@@ -1,11 +1,13 @@
 ﻿using K2.Web.Filters;
 using K2.Web.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using RestSharp;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace K2.Web.Controllers
@@ -25,11 +27,6 @@ namespace K2.Web.Controllers
             _apiClient = new RestClient(_urlApi);
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [AllowAnonymous]
         [HttpGet]
         [Route("")]
@@ -37,7 +34,7 @@ namespace K2.Web.Controllers
         public IActionResult Login()
         {
             return User.Identity.IsAuthenticated
-                ? (ActionResult)RedirectToAction("Index", "Inicio")
+                ? (ActionResult)RedirectToAction("Index", "Home")
                 : View();
         }
 
@@ -54,18 +51,33 @@ namespace K2.Web.Controllers
 
             var response = await _apiClient.ExecuteTaskAsync(request);
 
-            if (response != null && !string.IsNullOrEmpty(response.Content))
+            if (response == null || string.IsNullOrEmpty(response.Content))
+                return new JsonResult(new FeedbackViewModel(TipoFeedback.Erro, "Acesso negado.", new[] { "As informações retornadas pela API são nulas." }));
+
+            var autenticacaoSaida = AutenticacaoSaida.Obter(response.Content);
+
+            if (autenticacaoSaida == null)
+                return new JsonResult(new FeedbackViewModel(TipoFeedback.Erro, "Acesso negado.", new[] { "As informações retornadas pela API são nulas." }));
+
+            if (!autenticacaoSaida.Sucesso)
+                return new JsonResult(new FeedbackViewModel(TipoFeedback.Atencao, "Acesso negado.", autenticacaoSaida.Mensagens));
+
+            // Cria o cookie de autenticação
+
+            var userIdentity = new ClaimsIdentity(autenticacaoSaida.ObterClaims(), CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var principal = new ClaimsPrincipal(userIdentity);
+
+            var authenticationProperties = new AuthenticationProperties
             {
-                var autenticacaoSaida = AutenticacaoSaida.Obter(response.Content);
+                AllowRefresh = true,
+                IsPersistent = permanecerLogado,
+                ExpiresUtc = DateTime.UtcNow.AddDays(365 * 10)
+            };
 
-                return autenticacaoSaida == null
-                    ? new JsonResult(new FeedbackViewModel(TipoFeedback.Erro, "Não foi possível autenticar o usuário na API.", new[] { "As informações retornadas pela API são nulas." }))
-                    : autenticacaoSaida.Sucesso
-                        ? new JsonResult(new FeedbackViewModel(TipoFeedback.Sucesso, "Usuário autenticado com sucesso."))
-                        : new JsonResult(new FeedbackViewModel(TipoFeedback.Atencao, "Não foi possível autenticar o usuário. Por favor, tenta novamente mais tarde.", autenticacaoSaida.Mensagens));
-            }
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);
 
-            return new JsonResult(new FeedbackViewModel(TipoFeedback.Erro, "Não foi possível autenticar o usuário na API.", new[] { "As informações retornadas pela API são nulas." }));
+            return new JsonResult(new FeedbackViewModel(TipoFeedback.Sucesso, "Usuário autenticado com sucesso."));
         }
     }
 }
