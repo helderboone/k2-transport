@@ -73,33 +73,25 @@ class Feedback {
         return new Feedback(feedbackViewModel.Tipo, feedbackViewModel.Mensagem, feedbackViewModel.MensagemAdicional, feedbackViewModel.TipoAcao);
     }
 
-    static exibirModalPorViewModel(feedbackViewModel, fecharCallback) {
-        var feedback = Feedback.converter(feedbackViewModel);
+    exibirModal(fecharCallback) {
+        let html = '<div style="margin:5px;"><p style="font-weight: 500; font-size:14px;">' + this.Mensagem + '</p>' + (this.MensagemAdicional != null ? this.MensagemAdicional : "") + '</div>';
 
-        Feedback.exibirModal(feedback, fecharCallback);
-    }
+        let tipoAcao = this.TipoAcao;
 
-    static exibirModal(feedback, fecharCallback) {
-        
-        let html = '<div style="margin:5px;"><p style="font-weight: 500;">' + feedback.Mensagem + '</p>' + (feedback.MensagemAdicional != null ? feedback.MensagemAdicional : "") + '</div>';
-
-        let alert = $.alert({
-            icon: feedback.Tipo.obterIcone(),
+        $.alert({
+            icon: this.Tipo.obterIcone(),
             theme: 'supervan',
             closeIcon: false,
             animation: 'scale',
-            type: feedback.Tipo.obterTypeJqueryConfirm(),
-            title: feedback.Tipo.obterTitulo(),
+            type: this.Tipo.obterTypeJqueryConfirm(),
+            title: this.Tipo.obterTitulo(),
             content: html,
-            onOpen: function () {
-                alert.setDialogCenter();
-            },
             onClose: function () {
                 if (fecharCallback != null) {
                     fecharCallback();
                 } else {
-                    if (feedback.TipoAcao != null) {
-                        switch (feedback.TipoAcao) {
+                    if (tipoAcao != null) {
+                        switch (tipoAcao) {
                             case 1: window.history.back(); break;
                             case 2: window.close(); break;
                             case 3: location.href = App.corrigirPathRota("inicio"); break;
@@ -113,18 +105,16 @@ class Feedback {
         });
     }
 
-    static exibirNotificacao(feedbackViewModel, fecharCallback) {
-        var feedback = Feedback.converter(feedbackViewModel);
-
+    exibirNotificacao(fecharCallback) {
         $.notify({
-            icon: "icon " + feedback.Tipo.obterIcone(),
-            title: feedback.Tipo.obterTitulo(),
-            message: feedback.Mensagem
+            icon: "icon " + this.Tipo.obterIcone(),
+            title: this.Tipo.obterTitulo(),
+            message: this.Mensagem
         },
         {
-            type: feedback.obterClassCssBootstrap(),
+            type: this.obterClassCssBootstrap(),
             z_index: 9999999999,
-            timer: (feedback.Tipo.Nome == "ERRO" ? 12000 : 5000),
+            timer: (this.Tipo.Nome == Tipo.Erro ? 12000 : 5000),
             mouse_over: "pause",
             placement: {
                 from: "top",

@@ -133,6 +133,6 @@
     <value>Usuário inativo. Não é possível acessar o sistema.</value>
   </data>
   <data name="Usuario_Nao_Encontrado_Por_Login_Senha" xml:space="preserve">
-    <value>Usuário não encontrado. Favor verificar o login e senha informados.</value>
+    <value>Usuário não encontrado. Por favor verifique o login e senha informados.</value>
   </data>
 </root>

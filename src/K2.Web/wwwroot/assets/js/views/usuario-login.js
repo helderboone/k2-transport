@@ -65,10 +65,11 @@ var SnippetLogin = function() {
                         if (feedback.Tipo.Nome == Tipo.Sucesso)
                             location.href = App.corrigirPathRota("inicio");
                         else
-                            Feedback.exibirModal(feedback);
+                            feedback.exibirModal();
                     })
-                    .fail(function (feedbackViewModel) {
-                        Feedback.exibirModalPorViewModel(feedbackViewModel);
+                    .fail(function (jqXhr) {
+                        var feedback = Feedback.converter(jqXhr.responseJSON);
+                        feedback.exibirModal();
                     })
                     .always(function () {
                         btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);

@@ -5,7 +5,7 @@ var App = function () {
 	var arrModalPermanecerAberto = [];
 
 	var corrigePathRota = function (rota) {
-		return "" + rota;
+		return "/" + rota;
 	};
 
 	return {
@@ -44,13 +44,13 @@ var App = function () {
             }
 		},
 
-		aplicarMascaraCnpj: function (input) {
-			$(input).mask("99.999.999/9999-99");
-		},
+		//aplicarMascaraCnpj: function (input) {
+		//	$(input).mask("99.999.999/9999-99");
+		//},
 
-		aplicarMascaraData: function (input) {
-			$(input).mask("99/99/9999");
-		},
+		//aplicarMascaraData: function (input) {
+		//	$(input).mask("99/99/9999");
+		//},
 
         // Exibe um popup utilizando o plugin Jquery Confirm
 		exibirModalPorHtml: function (conteudoHtml, openCallback, fecharAoClicarBg, permanecerAberto) {
@@ -92,14 +92,14 @@ var App = function () {
 
 			$.get(rota, function (html) {
 				App.exibirModalPorHtml(html, openCallback, false, alinharNoTopo, permanecerAberto, titulo);
-			}).fail(function (jqXhr) {
-				App.exibirModalPorJqXHR(jqXhr);
+            }).fail(function (jqXhr) {
+                var feedback = Feedback.converter(jqXhr.responseJSON);
+                feedback.exibirModal();
 			});
 		},
 
 		// Exibe um modal de confirmação utilizando o plugin "Magnific Popup"
 		exibirConfirm: function (mensagem, textoBotaoSim, textoBotaoNao, simCallback, naoCallback) {
-
             let jc = $.confirm({
                 title: 'Atenção',
                 content: mensagem,
@@ -168,70 +168,31 @@ var App = function () {
 				createNew: (criarNovaJanela == null ? false : criarNovaJanela)
 			});
 		},
-		
-		definirValidacaoForm: function(idForm, submitCallback) {
-			$(idForm).validate({
-				errorPlacement: function (error, element) {
-					$(element).parent("div").addClass("has-error");
-
-					var helpBlock = $(element).parent("div").find(".help-block");
-					
-					if (helpBlock.length)
-					{
-						$(helpBlock).html(error);
-					}
-
-					var div = $(element).parents("div.input-group");
-
-					if (div.length)
-					{
-						var label = div.find("label.label-select");
-
-						if (label.length)
-							label.addClass("has-error");
-					}
-
-					var dropdownToggle = $(element).parent("div").find(".dropdown-toggle");
-
-					if (dropdownToggle.length)
-					{
-						$(dropdownToggle).addClass("has-error");
-					}
-				},
-				submitHandler: function () {
-					if (submitCallback != null) {
-						submitCallback();
-					}
-
-					return false;
-				}
-			});
-		}
 	};
 }();
 
-if (jQuery().dataTable) {
-	$.extend($.fn.dataTable.defaults, {
-		processing: false,
-		responsive: false,
-		autoWidth: true,
-		lengthMenu: [[10, 25, 50], [10, 25, 50]],
-		pagingType: "full_numbers",
-		language: {
-			sLengthMenu: '_MENU_ registros por p&aacute;gina',
-			sProcessing: '<i class="fa fa-spinner fa-pulse"></i> Carregando',
-			infoEmpty: "Nenhum registro encontrado.",
-			info: "_END_ de _TOTAL_ registros",
-			paginate: {
-				first: "Primeiro",
-				next: "Pr&oacute;ximo",
-				previous: "Anterior",
-				last: "Último",
-				zeroRecords: "Nenhum registro encontrado."
-			},
-			infoFiltered: "(filtrado a partir do total de _MAX_ registros)",
-			emptyTable: "Nenhum registro encontrado.",
-			zeroRecords: "Nenhum registro encontrado."
-		}
-	});
-}
+//if (jQuery().dataTable) {
+//	$.extend($.fn.dataTable.defaults, {
+//		processing: false,
+//		responsive: false,
+//		autoWidth: true,
+//		lengthMenu: [[10, 25, 50], [10, 25, 50]],
+//		pagingType: "full_numbers",
+//		language: {
+//			sLengthMenu: '_MENU_ registros por p&aacute;gina',
+//			sProcessing: '<i class="fa fa-spinner fa-pulse"></i> Carregando',
+//			infoEmpty: "Nenhum registro encontrado.",
+//			info: "_END_ de _TOTAL_ registros",
+//			paginate: {
+//				first: "Primeiro",
+//				next: "Pr&oacute;ximo",
+//				previous: "Anterior",
+//				last: "Último",
+//				zeroRecords: "Nenhum registro encontrado."
+//			},
+//			infoFiltered: "(filtrado a partir do total de _MAX_ registros)",
+//			emptyTable: "Nenhum registro encontrado.",
+//			zeroRecords: "Nenhum registro encontrado."
+//		}
+//	});
+//}

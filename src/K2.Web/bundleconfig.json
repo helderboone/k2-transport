@@ -26,6 +26,12 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/assets/css/app.min.css",
+    "inputFiles": [
+      "wwwroot/assets/css/app.css"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/assets/js/app.min.js",
     "inputFiles": [
       "wwwroot/assets/js/app.js",

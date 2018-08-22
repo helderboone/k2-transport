@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace K2.Web.Models
+namespace K2.Web
 {
     /// <summary>
-    /// Representa uma mensagem exibida pelo sistema
+    /// Representa um feedback exibido pelo sistema
     /// </summary>
-    public class FeedbackViewModel
+    public class Feedback
     {
         [JsonProperty("Tipo")]
         public TipoFeedback Tipo { get; }
@@ -19,14 +19,14 @@ namespace K2.Web.Models
         public string MensagemAdicional { get; set; }
 
         [JsonProperty("TipoAcao")]
-        public TipoAcaoOcultarFeedback TipoAcao { get; set; }
+        public TipoAcaoAoOcultarFeedback TipoAcao { get; set; }
 
-        public FeedbackViewModel(TipoFeedback tipo, string mensagem, IEnumerable<string> mensagensAdicionais = null, TipoAcaoOcultarFeedback tipoAcao = TipoAcaoOcultarFeedback.Ocultar)
+        public Feedback(TipoFeedback tipo, string mensagem, IEnumerable<string> mensagensAdicionais = null, TipoAcaoAoOcultarFeedback tipoAcao = TipoAcaoAoOcultarFeedback.Ocultar)
         {
             Tipo = tipo;
             Mensagem = mensagem;
             MensagemAdicional = mensagensAdicionais != null && mensagensAdicionais.Any()
-                ? string.Join(string.Empty, mensagensAdicionais.Where(x => !string.IsNullOrEmpty(x)).Select(x => "<li>" + x + "</li>"))
+                ? "<ul style=\"text-align:justify;\">" + string.Join(string.Empty, mensagensAdicionais.Where(x => !string.IsNullOrEmpty(x)).Select(x => "<li>" + x + "</li>")) + "</ul>"
                 : string.Empty; 
             TipoAcao = tipoAcao;
         }
@@ -41,24 +41,18 @@ namespace K2.Web.Models
         Atencao = 2,
         Erro = 3,
         Sucesso = 4
-    }
-
-    public enum TipoFeedbackResponse
-    {
-        Json,
-        Html
-    }
+    }  
 
     /// <summary>
-    /// Tipo de ação que deverá ser executada quando o botão para ocultar a mensagem de erro é ocultado
+    /// Tipo de ação que deverá ser executada ao ocultar o feedback
     /// </summary>
-    public enum TipoAcaoOcultarFeedback
+    public enum TipoAcaoAoOcultarFeedback
     {
         Ocultar = 0,
         /// <summary>
         /// Redireciona para a página anteriormente exibida antes da exibição da mensagem de erro
         /// </summary>
-        RedirecionarPaginaAnterior = 1,
+        VoltarPaginaAnterior = 1,
         /// <summary>
         /// Fecha a janela no caso de uma janela popup
         /// </summary>

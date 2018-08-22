@@ -32,10 +32,9 @@ namespace K2.Web.Controllers
         }
 
         [AllowAnonymous]
-        [Produces("application/json")]
         [HttpPost]
         [Route("autenticar")]
-        [FeedbackExceptionFilter("Não foi possível realizar o login.", TipoAcaoOcultarFeedback.Ocultar, tipoResponse: TipoFeedbackResponse.Json)]
+        [FeedbackExceptionFilter("Ocorreu um erro na tentativa de efetuar o login.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> Login(string email, string senha, bool permanecerLogado)
         {
             var request = new RestRequest("v1/usuarios/autenticar", Method.POST);
@@ -45,15 +44,15 @@ namespace K2.Web.Controllers
             var response = await _restClient.ExecuteTaskAsync(request);
 
             if (response == null || string.IsNullOrEmpty(response.Content))
-                return new JsonResult(new FeedbackViewModel(TipoFeedback.Erro, "Acesso negado.", new[] { "As informações retornadas pela API são nulas." }));
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário.", "Provavelmente a API está offline." }), TipoFeedbackResponse.Json);
 
             var autenticacaoSaida = AutenticacaoSaida.Obter(response.Content);
 
             if (autenticacaoSaida == null)
-                return new JsonResult(new FeedbackViewModel(TipoFeedback.Erro, "Acesso negado.", new[] { "As informações retornadas pela API são nulas." }));
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário." }), TipoFeedbackResponse.Json);
 
             if (!autenticacaoSaida.Sucesso)
-                return new JsonResult(new FeedbackViewModel(TipoFeedback.Atencao, "Acesso negado.", autenticacaoSaida.Mensagens));
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível efetuar o login.", autenticacaoSaida.Mensagens), TipoFeedbackResponse.Json);
 
             // Cria o cookie de autenticação
 
@@ -73,7 +72,7 @@ namespace K2.Web.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);
 
-            return new JsonResult(new FeedbackViewModel(TipoFeedback.Sucesso, "Usuário autenticado com sucesso."));
+            return new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Usuário autenticado com sucesso."), TipoFeedbackResponse.Json);
         }
 
         [HttpPost]
@@ -87,6 +86,7 @@ namespace K2.Web.Controllers
 
         [HttpGet]
         [Route("alterar-senha")]
+        //[FeedbackExceptionFilter("Não foi possível realizar o login.", TipoAcaoAoOcultarFeedback.Ocultar, tipoResponse: TipoFeedbackResponse.Json)]
         public IActionResult AlterarSenha()
         {
             return PartialView();

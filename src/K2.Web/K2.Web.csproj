@@ -22,4 +22,8 @@
     <ProjectReference Include="..\K2.Dominio\K2.Dominio.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\ViewModels\" />
+  </ItemGroup>
+
 </Project>

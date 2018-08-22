@@ -1,9 +1,11 @@
 ﻿using K2.Dominio;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Net;
 
 namespace K2.Web
 {
@@ -22,7 +24,7 @@ namespace K2.Web
                     .AddCookie(options =>
                     {
                         options.LoginPath         = "/login";
-                        options.AccessDeniedPath  = "/acesso-negado";
+                        options.AccessDeniedPath  = $"/feedback/{(int)HttpStatusCode.Forbidden}";
                         options.SlidingExpiration = true;
                         options.Cookie.Name       = "K2";
                         options.ExpireTimeSpan    = TimeSpan.FromHours(2); // Se o cookie não for persistente, a sessão ficará ativa por 2 horas
@@ -37,9 +39,19 @@ namespace K2.Web
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
+            }
+
+            // Customiza as páginas de erro
+            app.UseStatusCodePagesWithReExecute("/feedback/{0}");
 
             app.UseAuthentication();
 

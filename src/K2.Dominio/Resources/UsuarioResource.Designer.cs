@@ -106,7 +106,7 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usuário não encontrado. Favor verificar o login e senha informados..
+        ///   Looks up a localized string similar to Usuário não encontrado. Por favor verifique o login e senha informados..
         /// </summary>
         public static string Usuario_Nao_Encontrado_Por_Login_Senha {
             get {

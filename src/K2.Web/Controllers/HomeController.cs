@@ -2,6 +2,8 @@
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace K2.Web.Controllers
 {
@@ -15,27 +17,17 @@ namespace K2.Web.Controllers
         }
 
         [Route("inicio")]
-        //[FeedbackExceptionFilter("mensagem aqui", TipoAcaoOcultarFeedback.FecharJanela, "mensagem adicional")]
+        [FeedbackExceptionFilter("Não foi possível realizar o login.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public IActionResult Index()
         {
+            var i = 0;
+            var r = 8 / i;
+
             return View("About");
         }
 
-        [Authorize]
-        [HttpGet]
-        [Route("acesso-negado")]
-        public IActionResult AcessoNegado()
-        {
-            var feedback = new FeedbackViewModel(TipoFeedback.Atencao, "Você não tem permissão para acessar essa página.", tipoAcao: TipoAcaoOcultarFeedback.RedirecionarTelaInicial);
-
-            return View("Feedback", feedback);
-        }
-
-
-
         [Authorize(Policy = "pepeca")]
         [Route("about")]
-        [FeedbackExceptionFilter("Não foi possível realizar o login.", TipoAcaoOcultarFeedback.Ocultar, tipoResponse: TipoFeedbackResponse.Json)]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
