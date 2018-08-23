@@ -1,0 +1,34 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:58530/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "DEV": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "PRD": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    }//,
+    //"K2-Web": {
+    //  "commandName": "Project",
+    //  "launchBrowser": true,
+    //  "environmentVariables": {
+    //    "ASPNETCORE_ENVIRONMENT": "Development"
+    //  },
+    //  "applicationUrl": "http://localhost:58532/"
+    //}
+  }
+}
