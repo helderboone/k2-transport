@@ -52,7 +52,7 @@ namespace K2.Api
             var config = new LoggingConfiguration();
 
             InternalLogger.LogFile = @"c:\temp\internal-nlog.txt";
-            InternalLogger.LogLevel = NLog.LogLevel.Trace;
+            InternalLogger.LogLevel = LogLevel.Trace;
 
             var dbTarget = new DatabaseTarget("mySql")
             {
