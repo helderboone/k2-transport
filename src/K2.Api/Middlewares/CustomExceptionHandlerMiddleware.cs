@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using K2.Dominio.Comandos.Saida;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -14,10 +16,12 @@ namespace K2.Api.Middlewares
     public class CustomExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger _logger;
 
-        public CustomExceptionHandlerMiddleware(RequestDelegate next)
+        public CustomExceptionHandlerMiddleware(RequestDelegate next, ILogger<CustomExceptionHandlerMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -52,6 +56,12 @@ namespace K2.Api.Middlewares
                             await context.Response.WriteAsync(JsonConvert.SerializeObject(new UnsupportedMediaTypeApiResponse(context.Request.ContentType)));
                             break;
                         }
+                    default:
+                        {
+                            context.Response.ContentType = "application/json";
+                            await context.Response.WriteAsync(JsonConvert.SerializeObject(new Saida(false, new[] { $"Erro {(int)context.Response.StatusCode}: {context.Response.StatusCode.ToString()}" }, null)));
+                            break;
+                        }
                 }
             }
             catch (Exception exception)
@@ -62,6 +72,8 @@ namespace K2.Api.Middlewares
 
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
+            _logger.LogError(exception, exception.GetBaseException().Message);
+
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 

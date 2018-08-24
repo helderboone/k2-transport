@@ -10,7 +10,7 @@ namespace K2.Api
     {
         public string Audience { get; set; }
         public string Issuer { get; set; }
-        public int ExpiracaoEmSegundos { get; set; }
+        public int ExpiracaoEmDias { get; set; }
 
         // A propriedade Key, à qual será vinculada uma instância da classe SecurityKey (namespace Microsoft.IdentityModel.Tokens) 
         // armazenando a chave de criptografia utilizada na criação de tokens;

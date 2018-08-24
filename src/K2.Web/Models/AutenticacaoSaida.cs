@@ -6,6 +6,9 @@ using System.Security.Claims;
 
 namespace K2.Web.Models
 {
+    /// <summary>
+    /// Classe que reflete o resultado do processo de autenticação
+    /// </summary>
     public class AutenticacaoSaida
     {
         [JsonProperty("sucesso")]
@@ -44,6 +47,9 @@ namespace K2.Web.Models
         }
     }
 
+    /// <summary>
+    /// Classe que reflete as informações do token JWT retornado no processo de autenticação
+    /// </summary>
     public class Retorno
     {
         [JsonProperty("dataCriacaoToken")]

@@ -17,7 +17,7 @@ namespace K2.Web.Controllers
         }
 
         [Route("inicio")]
-        [FeedbackExceptionFilter("Não foi possível realizar o login.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        //[FeedbackExceptionFilter("Não foi possível realizar o login.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public IActionResult Index()
         {
             var i = 0;

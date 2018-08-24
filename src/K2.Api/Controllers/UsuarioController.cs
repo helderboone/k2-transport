@@ -5,6 +5,7 @@ using K2.Dominio.Interfaces.Servicos;
 using K2.Dominio.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,10 +20,12 @@ namespace K2.Api.Controllers
     public class UsuarioController : Controller
     {
         private readonly IUsuarioServico _usuarioServico;
+        private readonly ILogger<UsuarioController> _logger;
 
-        public UsuarioController(IUsuarioServico usuarioServico)
+        public UsuarioController(IUsuarioServico usuarioServico, ILogger<UsuarioController> logger)
         {
             _usuarioServico = usuarioServico;
+            _logger = logger;
         }
 
         /// <summary>
@@ -36,6 +39,11 @@ namespace K2.Api.Controllers
             string senha,
             [FromServices] JwtTokenConfig tokenConfig /*FromServices: resolvidos via mecanismo de injeção de dependências do ASP.NET Core*/)
         {
+            _logger.LogInformation("Vai maladandra!");
+
+            var i = 0;
+            var r = 8 / i;
+
             var autenticarComando = new AutenticarUsuarioEntrada(email, senha);
 
             var comandoSaida = await _usuarioServico.Autenticar(autenticarComando);
@@ -46,7 +54,7 @@ namespace K2.Api.Controllers
             var usuario = (UsuarioSaida)comandoSaida.Retorno;
 
             var dataCriacaoToken = DateTime.Now;
-            var dataExpiracaoToken = dataCriacaoToken + TimeSpan.FromSeconds(tokenConfig.ExpiracaoEmSegundos);
+            var dataExpiracaoToken = dataCriacaoToken + TimeSpan.FromDays(tokenConfig.ExpiracaoEmDias);
 
             return CriarResponseTokenJwt(usuario, dataCriacaoToken, dataExpiracaoToken, tokenConfig);
         }

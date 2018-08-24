@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K2.Api", "K2.Api\K2.Api.csproj", "{6786C225-4C84-4FFA-A801-1440C9C13600}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K2.Api", "K2.Api\K2.Api.csproj", "{6786C225-4C84-4FFA-A801-1440C9C13600}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K2.Dominio", "K2.Dominio\K2.Dominio.csproj", "{87BFC801-E588-4EB9-876A-E12AFEC06976}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K2.Dominio", "K2.Dominio\K2.Dominio.csproj", "{87BFC801-E588-4EB9-876A-E12AFEC06976}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Frontend", "1 - Frontend", "{171B5734-BE67-4591-821B-D20EE63AD664}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Backend", "2 - Backend", "{9D5C5DEB-BA29-4162-BADA-768DEA033F38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K2.Infraestrutura.Dados", "K2.Infraestrutura.Dados\K2.Infraestrutura.Dados.csproj", "{CD96CD19-4492-486B-95FC-9B72ABA14771}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K2.Infraestrutura.Dados", "K2.Infraestrutura.Dados\K2.Infraestrutura.Dados.csproj", "{CD96CD19-4492-486B-95FC-9B72ABA14771}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K2.Web", "K2.Web\K2.Web.csproj", "{05DC3CD7-F9B6-452F-B9DF-DF85002FB659}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K2.Infraestrutura", "K2.Infraestrutura\K2.Infraestrutura.csproj", "{BAEA15E5-755C-401F-A311-DB0E30A7F343}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{05DC3CD7-F9B6-452F-B9DF-DF85002FB659}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05DC3CD7-F9B6-452F-B9DF-DF85002FB659}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05DC3CD7-F9B6-452F-B9DF-DF85002FB659}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAEA15E5-755C-401F-A311-DB0E30A7F343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAEA15E5-755C-401F-A311-DB0E30A7F343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAEA15E5-755C-401F-A311-DB0E30A7F343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAEA15E5-755C-401F-A311-DB0E30A7F343}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{87BFC801-E588-4EB9-876A-E12AFEC06976} = {9D5C5DEB-BA29-4162-BADA-768DEA033F38}
 		{CD96CD19-4492-486B-95FC-9B72ABA14771} = {9D5C5DEB-BA29-4162-BADA-768DEA033F38}
 		{05DC3CD7-F9B6-452F-B9DF-DF85002FB659} = {171B5734-BE67-4591-821B-D20EE63AD664}
+		{BAEA15E5-755C-401F-A311-DB0E30A7F343} = {9D5C5DEB-BA29-4162-BADA-768DEA033F38}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {072DF348-4F32-40D2-9EC5-2E1397754BE8}

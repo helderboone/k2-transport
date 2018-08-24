@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\K2.Dominio\K2.Dominio.csproj" />
+    <ProjectReference Include="..\K2.Infraestrutura\K2.Infraestrutura.csproj" />
   </ItemGroup>
 
 </Project>
