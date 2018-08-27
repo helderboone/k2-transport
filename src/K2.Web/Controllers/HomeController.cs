@@ -2,6 +2,7 @@
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -11,17 +12,21 @@ namespace K2.Web.Controllers
     public class HomeController : Controller
     {
 
-        public HomeController()
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
         {
-            
+            _logger = logger;
         }
 
         [Route("inicio")]
         //[FeedbackExceptionFilter("Não foi possível realizar o login.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public IActionResult Index()
         {
-            var i = 0;
-            var r = 8 / i;
+            _logger.LogInformation("OLá!");
+            
+            //var i = 0;
+            //var r = 8 / i;
 
             return View("About");
         }

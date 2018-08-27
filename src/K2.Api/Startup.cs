@@ -17,6 +17,7 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 
 namespace K2.Api
 {
@@ -103,13 +104,18 @@ namespace K2.Api
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
+
+            // Customiza as páginas de erro
+            app.UseStatusCodePagesWithReExecute("/feedback/{0}");
+
             // Entende que a página default é a "index.html" dentro da pasta "wwwroot"
             app.UseDefaultFiles();
 
             app.UseStaticFiles();
 
             // Middleware customizado para interceptar erros HTTP e exceptions não tratadas
-            app.UseCustomExceptionHandler();
+            //app.UseCustomExceptionHandler();
 
             // Utiliza a compressão do response
             app.UseResponseCompression();

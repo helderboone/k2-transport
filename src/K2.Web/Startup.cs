@@ -1,7 +1,6 @@
 ﻿using K2.Dominio;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -39,16 +38,9 @@ namespace K2.Web
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
-            }
+            app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
 
             // Customiza as páginas de erro
             app.UseStatusCodePagesWithReExecute("/feedback/{0}");

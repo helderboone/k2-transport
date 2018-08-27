@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 
 namespace K2.Web.Models
@@ -28,6 +29,8 @@ namespace K2.Web.Models
         }
 
         public string ObterToken() => this.Retorno?.Token;
+
+        public string ObterNomeUsuario() => this.ObterClaims().FirstOrDefault(x => x.Type == "Nome")?.Value;
 
         public IEnumerable<Claim> ObterClaims()
         {

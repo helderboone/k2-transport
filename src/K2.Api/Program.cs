@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using NLog;
-using NLog.Common;
 using NLog.Config;
 using NLog.Targets;
 using NLog.Web;
@@ -51,8 +50,8 @@ namespace K2.Api
         {
             var config = new LoggingConfiguration();
 
-            InternalLogger.LogFile = @"c:\temp\internal-nlog.txt";
-            InternalLogger.LogLevel = LogLevel.Trace;
+            //NLog.Common.InternalLogger.LogFile = @"c:\temp\internal-nlog.txt";
+            //NLog.Common.InternalLogger.LogLevel = LogLevel.Trace;
 
             var dbTarget = new DatabaseTarget("mySql")
             {

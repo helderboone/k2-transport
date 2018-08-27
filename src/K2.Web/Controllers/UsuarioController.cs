@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using RestSharp;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace K2.Web.Controllers
@@ -59,7 +60,12 @@ namespace K2.Web.Controllers
             var claims = new List<Claim>(autenticacaoSaida.ObterClaims());
             claims.Add(new Claim("jwtToken", autenticacaoSaida.ObterToken()));
 
-            var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var userIdentity = new ClaimsIdentity(
+                new GenericIdentity(autenticacaoSaida.ObterNomeUsuario()),
+                claims,
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                null,
+                null);
 
             var principal = new ClaimsPrincipal(userIdentity);
 

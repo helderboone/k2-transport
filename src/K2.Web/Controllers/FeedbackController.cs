@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -28,7 +27,6 @@ namespace K2.Web.Controllers
                     feedback = new Feedback(TipoFeedback.Atencao, $"Você não tem permissão para acessar essa funcionalidade. ({httpStatusCode.ToString()} - {(int)httpStatusCode})", tipoAcao: TipoAcaoAoOcultarFeedback.VoltarPaginaAnterior);
                     break;
                 case HttpStatusCode.InternalServerError:
-                    var exception = HttpContext.Features.Get<IExceptionHandlerFeature>();
                     feedback = new Feedback(TipoFeedback.Erro, $"Ooops! Um erro inesperado aconteceu... ({httpStatusCode.ToString()} - {(int)httpStatusCode})", tipoAcao: TipoAcaoAoOcultarFeedback.VoltarPaginaAnterior);
                     break;
                 case HttpStatusCode.Unauthorized:
