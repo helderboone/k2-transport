@@ -1,5 +1,4 @@
-﻿using K2.Api.Middlewares;
-using K2.Dominio;
+﻿using K2.Dominio;
 using K2.Dominio.Interfaces.Dados;
 using K2.Dominio.Interfaces.Dados.Repositorios;
 using K2.Dominio.Interfaces.Servicos;
@@ -8,9 +7,12 @@ using K2.Infraestrutura.Dados;
 using K2.Infraestrutura.Dados.Repositorios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Slack;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
@@ -102,20 +104,20 @@ namespace K2.Api
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IHostingEnvironment env)
         {
+            var configuration = new SlackConfiguration()
+            {
+                WebhookUrl = new Uri("https://hooks.slack.com/services/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"),
+                MinLevel = LogLevel.Information
+            };
+
+            loggerFactory.AddSlack(configuration, env);
+
             app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
 
             // Customiza as páginas de erro
             app.UseStatusCodePagesWithReExecute("/feedback/{0}");
-
-            // Entende que a página default é a "index.html" dentro da pasta "wwwroot"
-            app.UseDefaultFiles();
-
-            app.UseStaticFiles();
-
-            // Middleware customizado para interceptar erros HTTP e exceptions não tratadas
-            //app.UseCustomExceptionHandler();
 
             // Utiliza a compressão do response
             app.UseResponseCompression();
