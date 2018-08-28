@@ -32,22 +32,29 @@ namespace K2.Infraestrutura.Logging.Database
             if (string.IsNullOrEmpty(mensagem))
                 return;
 
-            if (exception != null)
-                mensagem += " (" + exception.GetBaseException().Message + ")";
-
             using (var connection = new MySqlConnection(_connectionString))
             {
                 if (connection.State != System.Data.ConnectionState.Open)
                     connection.Open();
 
-                using (var command = new MySqlCommand("INSERT INTO `log` (`NomeOrigem`, `Data`, `Tipo`, `Mensagem`, `Usuario`, `Stacktrace`) VALUES (@origem, @data, @tipo, @mensagem, @usuario, @stacktrace);", connection))
+                using (var command = new MySqlCommand("INSERT INTO `log` (`NomeOrigem`, `Data`, `Tipo`, `Mensagem`, `Usuario`, `ExceptionInfo`) VALUES (@origem, @data, @tipo, @mensagem, @usuario, @exception);", connection))
                 {
                     command.Parameters.AddWithValue("origem", _nomeCategoria);
                     command.Parameters.AddWithValue("data", TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time")));
                     command.Parameters.AddWithValue("tipo", logLevel.ToString());
                     command.Parameters.AddWithValue("mensagem", mensagem);
-                    command.Parameters.AddWithValue("usuario", _httpContextAccessor.HttpContext.Request.Path);
-                    command.Parameters.AddWithValue("stacktrace", exception != null ? exception.StackTrace : null);
+                    command.Parameters.AddWithValue("usuario", _httpContextAccessor.HttpContext?.User?.Identity?.Name);
+
+                    if (exception == null)
+                        command.Parameters.AddWithValue("exception", null);
+                    else
+                    {
+                        var logException = new LogException(exception, _httpContextAccessor);
+
+                        var json = Newtonsoft.Json.JsonConvert.SerializeObject(logException, Newtonsoft.Json.Formatting.Indented);
+
+                        command.Parameters.AddWithValue("exception", json);
+                    }
 
                     command.ExecuteNonQuery();
                 }
