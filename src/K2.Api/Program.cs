@@ -1,23 +1,25 @@
-﻿using Microsoft.AspNetCore;
+﻿using K2.Infraestrutura.Logging.Database;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using System.IO;
+using Microsoft.Extensions.Logging;
 
 namespace K2.Api
 {
     public class Program
     {
-        public static IConfiguration _configuration;
-
         public static void Main(string[] args)
         {
-            CreateWebHost(args).Run();
+            BuildWebHost(args).Run();
         }
 
-        public static IWebHost CreateWebHost(string[] args) =>
-            WebHost
-                .CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .ConfigureLogging(logging =>
+                {
+                    logging.AddConsole();
+                    logging.AddFilter<MySqlLoggerProvider>("Microsoft", LogLevel.Warning);
+                })
                 .Build();
     }
 }

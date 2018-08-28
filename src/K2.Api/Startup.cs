@@ -5,14 +5,14 @@ using K2.Dominio.Interfaces.Servicos;
 using K2.Dominio.Servicos;
 using K2.Infraestrutura.Dados;
 using K2.Infraestrutura.Dados.Repositorios;
+using K2.Infraestrutura.Logging.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Slack;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
@@ -34,6 +34,8 @@ namespace K2.Api
                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
             Configuration = builder.Build();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<EfDataContext, EfDataContext>(x => new EfDataContext(Configuration["K2ConnectionString"]));
             services.AddScoped<IUow, Uow>();
@@ -104,15 +106,9 @@ namespace K2.Api
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IHttpContextAccessor httpContextAccessor)
         {
-            var configuration = new SlackConfiguration()
-            {
-                WebhookUrl = new Uri("https://hooks.slack.com/services/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"),
-                MinLevel = LogLevel.Information
-            };
-
-            loggerFactory.AddSlack(configuration, env);
+            loggerFactory.AddMySqlLoggerProvider(Configuration["K2ConnectionString"], httpContextAccessor);
 
             app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
 
