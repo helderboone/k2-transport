@@ -6,6 +6,7 @@ using K2.Dominio.Servicos;
 using K2.Infraestrutura.Dados;
 using K2.Infraestrutura.Dados.Repositorios;
 using K2.Infraestrutura.Logging.Database;
+using K2.Infraestrutura.Logging.Slack;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -108,7 +109,9 @@ namespace K2.Api
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IHttpContextAccessor httpContextAccessor)
         {
-            loggerFactory.AddMySqlLoggerProvider(Configuration["K2ConnectionString"], httpContextAccessor);
+            loggerFactory
+                .AddMySqlLoggerProvider(Configuration["K2ConnectionString"], httpContextAccessor) // Adiciona o logger para gravar no banco de dados.
+                .AddSlackLoggerProvider(Configuration["Slack:Webhook"], Configuration["Slack:Channel"], httpContextAccessor, Configuration["Slack:UserName"]); // Adiciona o logger para mandar mensagem pelo Slack.
 
             app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
 

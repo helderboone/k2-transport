@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using System;
 
 namespace K2.Infraestrutura.Logging.Database
@@ -8,12 +9,12 @@ namespace K2.Infraestrutura.Logging.Database
     public class MySqlLogger : ILogger
     {
         private readonly string _connectionString;
-        private readonly string _nomeCategoria;
+        private readonly string _nomeOrigem;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public MySqlLogger(string nomeCategoria, string connectionString, IHttpContextAccessor httpContextAccessor)
+        public MySqlLogger(string nomeOrigem, string connectionString, IHttpContextAccessor httpContextAccessor)
         {
-            _nomeCategoria = nomeCategoria;
+            _nomeOrigem = nomeOrigem;
             _connectionString = connectionString;
             _httpContextAccessor = httpContextAccessor;
         }
@@ -27,7 +28,9 @@ namespace K2.Infraestrutura.Logging.Database
             if (formatter == null)
                 throw new ArgumentNullException(nameof(formatter));
 
-            var mensagem = formatter(state, exception);
+            var mensagem = exception == null
+                ? formatter(state, exception)
+                : exception.GetBaseException().Message;
 
             if (string.IsNullOrEmpty(mensagem))
                 return;
@@ -39,7 +42,7 @@ namespace K2.Infraestrutura.Logging.Database
 
                 using (var command = new MySqlCommand("INSERT INTO `log` (`NomeOrigem`, `Data`, `Tipo`, `Mensagem`, `Usuario`, `ExceptionInfo`) VALUES (@origem, @data, @tipo, @mensagem, @usuario, @exception);", connection))
                 {
-                    command.Parameters.AddWithValue("origem", _nomeCategoria);
+                    command.Parameters.AddWithValue("origem", _nomeOrigem);
                     command.Parameters.AddWithValue("data", TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time")));
                     command.Parameters.AddWithValue("tipo", logLevel.ToString());
                     command.Parameters.AddWithValue("mensagem", mensagem);
@@ -51,7 +54,7 @@ namespace K2.Infraestrutura.Logging.Database
                     {
                         var logException = new LogException(exception, _httpContextAccessor);
 
-                        var json = Newtonsoft.Json.JsonConvert.SerializeObject(logException, Newtonsoft.Json.Formatting.Indented);
+                        var json = JsonConvert.SerializeObject(logException, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
 
                         command.Parameters.AddWithValue("exception", json);
                     }

@@ -39,10 +39,6 @@ namespace K2.Api.Controllers
             string senha,
             [FromServices] JwtTokenConfig tokenConfig /*FromServices: resolvidos via mecanismo de injeção de dependências do ASP.NET Core*/)
         {
-            var i = 0;
-
-            var n = 5 / i;
-
             var autenticarComando = new AutenticarUsuarioEntrada(email, senha);
 
             var comandoSaida = await _usuarioServico.Autenticar(autenticarComando);

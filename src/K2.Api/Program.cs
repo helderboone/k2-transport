@@ -1,4 +1,5 @@
 ﻿using K2.Infraestrutura.Logging.Database;
+using K2.Infraestrutura.Logging.Slack;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
@@ -19,6 +20,7 @@ namespace K2.Api
                 {
                     logging.AddConsole();
                     logging.AddFilter<MySqlLoggerProvider>("Microsoft", LogLevel.Warning);
+                    logging.AddFilter<SlackLoggerProvider>("Microsoft", LogLevel.Warning);
                 })
                 .Build();
     }
