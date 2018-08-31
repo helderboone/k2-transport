@@ -17,7 +17,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
-using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
@@ -26,16 +25,15 @@ namespace K2.Api
 {
     public class Startup
     {
-        public static IConfiguration Configuration { get; private set; }
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var builder = new ConfigurationBuilder()
-               .SetBasePath(Directory.GetCurrentDirectory())
-               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-            Configuration = builder.Build();
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<EfDataContext, EfDataContext>(x => new EfDataContext(Configuration["K2ConnectionString"]));
@@ -110,8 +108,10 @@ namespace K2.Api
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IHttpContextAccessor httpContextAccessor)
         {
             loggerFactory
-                .AddMySqlLoggerProvider(Configuration["K2ConnectionString"], httpContextAccessor) // Adiciona o logger para gravar no banco de dados.
-                .AddSlackLoggerProvider(Configuration["Slack:Webhook"], Configuration["Slack:Channel"], httpContextAccessor, Configuration["Slack:UserName"]); // Adiciona o logger para mandar mensagem pelo Slack.
+                // Adiciona o logger para gravar no banco de dados.
+                .AddMySqlLoggerProvider(Configuration["K2ConnectionString"], httpContextAccessor)
+                // Adiciona o logger para mandar mensagem pelo Slack.
+                .AddSlackLoggerProvider(Configuration["Slack:Webhook"], Configuration["Slack:Channel"], httpContextAccessor, Configuration["Slack:UserName"]);
 
             app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
 

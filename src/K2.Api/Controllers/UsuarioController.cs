@@ -5,7 +5,6 @@ using K2.Dominio.Interfaces.Servicos;
 using K2.Dominio.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -20,12 +19,10 @@ namespace K2.Api.Controllers
     public class UsuarioController : Controller
     {
         private readonly IUsuarioServico _usuarioServico;
-        private readonly ILogger<UsuarioController> _logger;
 
-        public UsuarioController(IUsuarioServico usuarioServico, ILogger<UsuarioController> logger)
+        public UsuarioController(IUsuarioServico usuarioServico)
         {
             _usuarioServico = usuarioServico;
-            _logger = logger;
         }
 
         /// <summary>
@@ -50,8 +47,6 @@ namespace K2.Api.Controllers
 
             var dataCriacaoToken = DateTime.Now;
             var dataExpiracaoToken = dataCriacaoToken + TimeSpan.FromDays(tokenConfig.ExpiracaoEmDias);
-
-            _logger.LogInformation("O usuário {0} foi autenticado com sucesso!", usuario.Nome);
 
             return CriarResponseTokenJwt(usuario, dataCriacaoToken, dataExpiracaoToken, tokenConfig);
         }

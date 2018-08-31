@@ -2,7 +2,7 @@
 
     return {
         alterarSenhaUsuario: function () {
-            App.exibirModalPorRota(App.corrigirPathRota("alterar-senha2"), function () {
+            App.exibirModalPorRota(App.corrigirPathRota("alterar-senha"), function () {
                 //App.definirValidacaoForm("#frmAlterarSenha", function () {
                 //    App.exibirModalConfirmacao("Deseja realmente alterar a sua senha de acesso?", "Atenção", "Sim", "Não", function () {
                 //        App.bloquear();

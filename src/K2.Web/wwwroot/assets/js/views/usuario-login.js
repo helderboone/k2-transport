@@ -59,7 +59,7 @@ var SnippetLogin = function() {
             form.ajaxSubmit({
                 url: '',
                 success: function () {
-                    $.post(App.corrigirPathRota("autenticar"), { email: $("#email").val(), senha: $("#password").val(), permanecerLogado: $("#remember").prop("checked") }, function (feedbackViewModel) {
+                    $.post(App.corrigirPathRota("login"), { email: $("#email").val(), senha: $("#password").val(), permanecerLogado: $("#remember").prop("checked") }, function (feedbackViewModel) {
                         var feedback = Feedback.converter(feedbackViewModel);
 
                         if (feedback.Tipo.Nome == Tipo.Sucesso)

@@ -7,9 +7,9 @@ namespace K2.Infraestrutura.Logging
 {
     internal class LogException
     {
-        public LogExceptionRequest Request { get; }
-
         public LogExceptionInfo ExceptionInfo { get; }
+
+        public LogExceptionRequest Request { get; }
 
         public LogException(Exception exception, IHttpContextAccessor httpContextAccessor)
         {

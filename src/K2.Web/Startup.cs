@@ -1,8 +1,12 @@
 ﻿using K2.Dominio;
+using K2.Infraestrutura.Logging.Database;
+using K2.Infraestrutura.Logging.Slack;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
 
@@ -19,6 +23,8 @@ namespace K2.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options =>
                     {
@@ -38,8 +44,14 @@ namespace K2.Web
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IHttpContextAccessor httpContextAccessor)
         {
+            loggerFactory
+                // Adiciona o logger para gravar no banco de dados.
+                .AddMySqlLoggerProvider(Configuration["K2ConnectionString"], httpContextAccessor)
+                // Adiciona o logger para mandar mensagem pelo Slack.
+                .AddSlackLoggerProvider(Configuration["Slack:Webhook"], Configuration["Slack:Channel"], httpContextAccessor, Configuration["Slack:UserName"]);
+
             app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
 
             // Customiza as páginas de erro

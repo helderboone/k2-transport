@@ -28,9 +28,7 @@ namespace K2.Infraestrutura.Logging.Database
             if (formatter == null)
                 throw new ArgumentNullException(nameof(formatter));
 
-            var mensagem = exception == null
-                ? formatter(state, exception)
-                : exception.GetBaseException().Message;
+            var mensagem = formatter(state, exception);
 
             if (string.IsNullOrEmpty(mensagem))
                 return;

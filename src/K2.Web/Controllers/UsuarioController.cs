@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using RestSharp;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -16,9 +17,10 @@ namespace K2.Web.Controllers
     [Authorize]
     public class UsuarioController : BaseController
     {
-        public UsuarioController(IConfiguration configuration)
-            : base(configuration)
+        public UsuarioController(IConfiguration configuration, ILogger<UsuarioController> logger)
+            : base(configuration, logger)
         {
+            
         }
 
         [AllowAnonymous]
@@ -34,10 +36,14 @@ namespace K2.Web.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("autenticar")]
+        [Route("login")]
         [FeedbackExceptionFilter("Ocorreu um erro na tentativa de efetuar o login.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> Login(string email, string senha, bool permanecerLogado)
         {
+            var a = 0;
+
+            var b = 1 / a;
+
             var request = new RestRequest("v1/usuarios/autenticar", Method.POST);
             request.AddParameter("email", email);
             request.AddParameter("senha", senha);
@@ -45,15 +51,15 @@ namespace K2.Web.Controllers
             var response = await _restClient.ExecuteTaskAsync(request);
 
             if (response == null || string.IsNullOrEmpty(response.Content))
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário.", "Provavelmente a API está offline." }), TipoFeedbackResponse.Json);
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário.", "Provavelmente a API está offline." }));
 
             var autenticacaoSaida = AutenticacaoSaida.Obter(response.Content);
 
             if (autenticacaoSaida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário." }), TipoFeedbackResponse.Json);
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário." }));
 
             if (!autenticacaoSaida.Sucesso)
-                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível efetuar o login.", autenticacaoSaida.Mensagens), TipoFeedbackResponse.Json);
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível efetuar o login.", autenticacaoSaida.Mensagens));
 
             // Cria o cookie de autenticação
 
@@ -78,7 +84,7 @@ namespace K2.Web.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);
 
-            return new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Usuário autenticado com sucesso."), TipoFeedbackResponse.Json);
+            return new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Usuário autenticado com sucesso."));
         }
 
         [HttpPost]
@@ -92,9 +98,13 @@ namespace K2.Web.Controllers
 
         [HttpGet]
         [Route("alterar-senha")]
-        //[FeedbackExceptionFilter("Não foi possível realizar o login.", TipoAcaoAoOcultarFeedback.Ocultar, tipoResponse: TipoFeedbackResponse.Json)]
+        [FeedbackExceptionFilter("Não foi exibir o formulário para alterar a senha.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public IActionResult AlterarSenha()
         {
+            var a = 0;
+
+            var b = 1 / a;
+
             return PartialView();
         }
     }
