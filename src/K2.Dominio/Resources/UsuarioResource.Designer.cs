@@ -79,6 +79,42 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sua senha foi alterada com sucesso..
+        /// </summary>
+        public static string Senha_Alterada_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Senha_Alterada_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A senha atual é obrigatória e não foi informada..
+        /// </summary>
+        public static string Senha_Atual_Obrigatoria_Nao_Informada {
+            get {
+                return ResourceManager.GetString("Senha_Atual_Obrigatoria_Nao_Informada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A senha e a confirmação da senha são diferentes. Verifique as senhas informadas..
+        /// </summary>
+        public static string Senha_Confirmacao_senha_diferentes {
+            get {
+                return ResourceManager.GetString("Senha_Confirmacao_senha_diferentes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A nova senha é obrigatória e não foi informada..
+        /// </summary>
+        public static string Senha_Nova_Obrigatoria_Nao_Informada {
+            get {
+                return ResourceManager.GetString("Senha_Nova_Obrigatoria_Nao_Informada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A senha é obrigatória e não foi informada..
         /// </summary>
         public static string Senha_Obrigatoria_Nao_Informada {
@@ -111,6 +147,15 @@ namespace K2.Dominio.Resources {
         public static string Usuario_Nao_Encontrado_Por_Login_Senha {
             get {
                 return ResourceManager.GetString("Usuario_Nao_Encontrado_Por_Login_Senha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senha atual inválida. Por favor verifique se a senha atual informada está correta..
+        /// </summary>
+        public static string Usuario_Nao_Encontrado_Por_Senha {
+            get {
+                return ResourceManager.GetString("Usuario_Nao_Encontrado_Por_Senha", resourceCulture);
             }
         }
     }

@@ -13,5 +13,10 @@ namespace K2.Dominio.Interfaces.Servicos
         /// Realiza a autenticação de um usuário
         /// </summary>
         Task<ISaida> Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada);
+
+        /// <summary>
+        /// Realiza a alteração da senha do usuário
+        /// </summary>
+        Task<ISaida> AlterarSenha(AlterarSenhaUsuarioEntrada alterarSenhaEntrada);
     }
 }

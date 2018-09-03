@@ -3,6 +3,7 @@ using K2.Dominio.Interfaces.Dados;
 using K2.Dominio.Interfaces.Dados.Repositorios;
 using K2.Dominio.Interfaces.Servicos;
 using K2.Dominio.Servicos;
+using K2.Infraestrutura;
 using K2.Infraestrutura.Dados;
 using K2.Infraestrutura.Dados.Repositorios;
 using K2.Infraestrutura.Logging.Database;
@@ -35,6 +36,7 @@ namespace K2.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton(x => new EmailUtil(Configuration["Smtp:Servidor"], Configuration["Smtp:Porta"], Configuration["Smtp:Usuario"], Configuration["Smtp:Senha"]));
 
             services.AddScoped<EfDataContext, EfDataContext>(x => new EfDataContext(Configuration["K2ConnectionString"]));
             services.AddScoped<IUow, Uow>();
@@ -91,7 +93,6 @@ namespace K2.Api
             });
 
             services
-                //.AddMvc(options => options.Filters.Add(typeof(CustomModelStateValidationFilter)))
                 .AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
@@ -120,6 +121,8 @@ namespace K2.Api
 
             // Utiliza a compressão do response
             app.UseResponseCompression();
+
+            app.UseAuthentication();
 
             app.UseMvc();
         }

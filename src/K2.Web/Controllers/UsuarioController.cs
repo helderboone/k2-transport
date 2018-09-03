@@ -37,13 +37,9 @@ namespace K2.Web.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("login")]
-        [FeedbackExceptionFilter("Ocorreu um erro na tentativa de efetuar o login.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        [FeedbackExceptionFilter("Ocorreu um erro na tentativa de efetuar login.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> Login(string email, string senha, bool permanecerLogado)
         {
-            var a = 0;
-
-            var b = 1 / a;
-
             var request = new RestRequest("v1/usuarios/autenticar", Method.POST);
             request.AddParameter("email", email);
             request.AddParameter("senha", senha);
@@ -98,14 +94,33 @@ namespace K2.Web.Controllers
 
         [HttpGet]
         [Route("alterar-senha")]
-        [FeedbackExceptionFilter("Não foi exibir o formulário para alterar a senha.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public IActionResult AlterarSenha()
         {
-            var a = 0;
-
-            var b = 1 / a;
-
             return PartialView();
+        }
+
+        [HttpPost]
+        [Route("alterar-senha")]
+        public async Task<IActionResult> AlterarSenha(string senhaAtual, string senhaNova, string confirmacaoSenhaNova, bool enviarEmailSenhaNova)
+        {
+            var request = new RestRequest("v1/usuarios/alterar-senha", Method.PUT);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", "Bearer " + new CookieHelper(HttpContext).ObterTokenJwt());
+            request.AddParameter("model", new { SenhaAtual = senhaAtual, SenhaNova = senhaNova, ConfirmacaoSenhaNova = confirmacaoSenhaNova, EnviarEmailSenhaNova = enviarEmailSenhaNova });
+
+            var response = await _restClient.ExecuteTaskAsync(request);
+
+            if (response == null || string.IsNullOrEmpty(response.Content))
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar sua senha de acesso.", new[] { "Não foi possível alterar a senha de acesso.", "Provavelmente a API está offline." }));
+
+            var saida = Saida.Obter(response.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário." }));
+
+            return !saida.Sucesso
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar sua senha de acesso.", saida.Mensagens))
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Senha de acesso alterada com sucesso."));
         }
     }
 }

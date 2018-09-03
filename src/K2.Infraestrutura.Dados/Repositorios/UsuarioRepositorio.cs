@@ -15,13 +15,14 @@ namespace K2.Infraestrutura.Dados.Repositorios
             _efContext = efContext;
         }
 
-        public async Task<Usuario> ObterPorEmailSenha(string email, string senha)
+        public async Task<Usuario> ObterPorEmailSenha(string email, string senha, bool habilitarTracking = false)
         {
-            return await _efContext
-                .Usuarios
-                .Where(x => x.Email == email && x.Senha == senha)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
+            var query = _efContext.Usuarios.Where(x => x.Email == email && x.Senha == senha);
+
+            if (!habilitarTracking)
+                query = query.AsNoTracking();
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

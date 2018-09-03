@@ -47,6 +47,7 @@ namespace K2.Web.Filters
 
                 logger.LogError(context.Exception, _mensagem);
 
+                context.HttpContext.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
                 context.Result = new FeedbackResult(feedback);
             }
         }

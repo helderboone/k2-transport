@@ -24,8 +24,4 @@
     <ProjectReference Include="..\K2.Infraestrutura\K2.Infraestrutura.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\ViewModels\" />
-  </ItemGroup>
-
 </Project>

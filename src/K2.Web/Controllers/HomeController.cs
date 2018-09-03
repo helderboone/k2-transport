@@ -23,8 +23,6 @@ namespace K2.Web.Controllers
         //[FeedbackExceptionFilter("Não foi possível realizar o login.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public IActionResult Index()
         {
-            _logger.LogInformation("OLá!");
-            
             //var i = 0;
             //var r = 8 / i;
 

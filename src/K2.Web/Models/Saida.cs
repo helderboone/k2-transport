@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace K2.Web.Models
@@ -22,5 +22,12 @@ namespace K2.Web.Models
         /// Objeto retornado
         /// </summary>
         public object Retorno { get; set; }
+
+        public static Saida Obter(string json)
+        {
+            return !string.IsNullOrEmpty(json)
+                ? JsonConvert.DeserializeObject<Saida>(json)
+                : null;
+        }
     }
 }

@@ -11,20 +11,27 @@
             </div>
         </div>
     </div>
-    <form class="m-form m-form--label-align-right">
+    <form id="frmAlterarSenha" class="m-form m-form--state m-form--label-align-right">
         <div class="m-portlet__body">
-            <div class="form-group m-form__group">
-                <label for="exampleInputEmail1">Senha atual</label>
-                <input type="email" class="form-control m-input m-input--square m-input--air" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                <span class="m-form__help">We'll never share your email with anyone else.</span>
+            <div class="form-group m-form__group m-form__group--md">
+                <label for="iSenhaAtual">Senha atual</label>
+                <input type="password" class="form-control m-input m-input--square m-input--air" id="iSenhaAtual" name="iSenhaAtual" maxlength="8">
+                <span class="m-form__help">Informe sua senha atual.</span>
             </div>
-            <div class="form-group m-form__group">
-                <label for="exampleInputPassword1">Nova senha</label>
-                <input type="password" class="form-control m-input m-input--square m-input--air" id="exampleInputPassword1" placeholder="Password">
+            <div class="form-group m-form__group m-form__group--md">
+                <label for="iNovaSenha">Nova senha</label>
+                <input type="password" class="form-control m-input m-input--square m-input--air" id="iNovaSenha" name="iNovaSenha" maxlength="8">
+                <span class="m-form__help">Informe um senha com no máximo 8 caracteres.</span>
             </div>
-            <div class="form-group m-form__group">
-                <label for="exampleInputPassword1">Confirme a nova senha</label>
-                <input type="password" class="form-control m-input m-input--square m-input--air" id="exampleInputPassword1" placeholder="Password">
+            <div class="form-group m-form__group m-form__group--md">
+                <label for="iConfirmaNovaSenha">Confirme a nova senha</label>
+                <input type="password" class="form-control m-input m-input--square m-input--air" id="iConfirmaNovaSenha" name="iConfirmaNovaSenha" maxlength="8"> 
+            </div>
+            <div class="form-group m-form__group m-form__group--md">
+                <label class="m-checkbox">
+                    <input type="checkbox" id="iEnviarEmail" name="iEnviarEmail"> Envie minha nova senha por e-mail.
+                    <span></span>
+                </label>
             </div>
         </div>
         <div class="m-portlet__foot m-portlet__foot--fit">

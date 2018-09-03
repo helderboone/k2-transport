@@ -3,20 +3,44 @@
     return {
         alterarSenhaUsuario: function () {
             App.exibirModalPorRota(App.corrigirPathRota("alterar-senha"), function () {
-                //App.definirValidacaoForm("#frmAlterarSenha", function () {
-                //    App.exibirModalConfirmacao("Deseja realmente alterar a sua senha de acesso?", "Atenção", "Sim", "Não", function () {
-                //        App.bloquear();
+                $("#frmAlterarSenha").validate({
+                    rules: {
+                        iSenhaAtual: {
+                            required: true,
+                            minlength: 3,
+                            maxlength: 8
+                        },
+                        iNovaSenha: {
+                            required: true,
+                            minlength: 3,
+                            maxlength: 8
+                        },
+                        iConfirmaNovaSenha: {
+                            required: true,
+                            minlength: 3,
+                            maxlength: 8
+                        }
+                    },
 
-                //        $.post(App.corrigirPathRota("alterar-senha-usuario"), { email: $("#hdfEmail").val(), senha: $("#txtSenha").val(), novaSenha: $("#txtNovaSenha").val(), enviarEmail: $("#chkEnviarEmail").prop("checked") }, function () {
-                //            App.exibirModal(TipoNotificacao.Sucesso, "Sua senha de acesso foi alterada com sucesso.", "Sucesso", null, function () {
-                //                App.ocultarModal();
-                //            });
-                //        })
-                //            .fail(function (xhr) {
-                //                App.exibirModalPorJqXHR(xhr, function () { App.ocultarModal(); });
-                //            });
-                //    });
-                //});
+                    //display error alert on form submit  
+                    //invalidHandler: function (event, validator) {
+                    //    var alert = $('#m_form_1_msg');
+                    //    alert.removeClass('m--hide').show();
+                    //    mUtil.scrollTop();
+                    //},
+
+                    submitHandler: function () {
+                        $.post(App.corrigirPathRota("alterar-senha"), { senhaAtual: $("#iSenhaAtual").val(), senhaNova: $("#iNovaSenha").val(), confirmacaoSenhaNova: $("#iConfirmaNovaSenha").val(), enviarEmailSenhaNova: $("#iEnviarEmail").prop("checked") })
+                        .done(function (feedbackViewModel) {
+                            var feedback = Feedback.converter(feedbackViewModel);
+                            feedback.exibirModal();
+                        })
+                        .fail(function (xhr) {
+                            var feedback = Feedback.converter(jqXhr.responseJSON);
+                            feedback.exibirModal();
+                        });
+                    }
+                });
             });
         },
 

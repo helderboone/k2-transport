@@ -2,6 +2,7 @@
 using K2.Dominio.Comandos.Entrada.Usuario;
 using K2.Dominio.Comandos.Saida;
 using K2.Dominio.Interfaces.Comandos;
+using K2.Dominio.Interfaces.Dados;
 using K2.Dominio.Interfaces.Dados.Repositorios;
 using K2.Dominio.Interfaces.Servicos;
 using K2.Dominio.Resources;
@@ -12,10 +13,12 @@ namespace K2.Dominio.Servicos
     public class UsuarioServico : Notificavel, IUsuarioServico
     {
         private readonly IUsuarioRepositorio _usuarioRepositorio;
+        private readonly IUow _uow;
 
-        public UsuarioServico(IUsuarioRepositorio usuarioRepositorio)
+        public UsuarioServico(IUsuarioRepositorio usuarioRepositorio, IUow uow)
         {
             _usuarioRepositorio = usuarioRepositorio;
+            _uow = uow;
         }
 
         public async Task<ISaida> Autenticar(AutenticarUsuarioEntrada autenticacaoEntrada)
@@ -46,6 +49,27 @@ namespace K2.Dominio.Servicos
             usuario.Perfis = new[] { perfil };
 
             return new Saida(true, new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso }, new UsuarioSaida(usuario));
+        }
+
+        public async Task<ISaida> AlterarSenha(AlterarSenhaUsuarioEntrada alterarSenhaEntrada)
+        {
+            if (alterarSenhaEntrada.Invalido)
+                return new Saida(false, alterarSenhaEntrada.Mensagens, null);
+
+            var usuario = await _usuarioRepositorio.ObterPorEmailSenha(alterarSenhaEntrada.Email, alterarSenhaEntrada.SenhaAtual, true);
+
+            this.NotificarSeNulo(usuario, UsuarioResource.Usuario_Nao_Encontrado_Por_Senha);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            usuario.Senha = alterarSenhaEntrada.SenhaNova;
+
+            await _uow.Commit();
+
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { UsuarioResource.Senha_Alterada_Com_Sucesso }, null);
         }
     }
 }

@@ -71,8 +71,6 @@ var App = function () {
 					if (openCallback != null) {
 						openCallback();
 					}
-
-					jc.setDialogCenter();
 				}
 			});
 
