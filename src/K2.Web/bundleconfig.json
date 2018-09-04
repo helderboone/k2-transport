@@ -34,8 +34,8 @@
   {
     "outputFileName": "wwwroot/assets/js/app.min.js",
     "inputFiles": [
-      "wwwroot/assets/js/app.js",
       "wwwroot/assets/js/feedback.js",
+      "wwwroot/assets/js/app.js",
       "wwwroot/assets/js/k2.js"
     ]
   },
