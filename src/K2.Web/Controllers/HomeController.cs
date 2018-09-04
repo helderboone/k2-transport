@@ -1,10 +1,6 @@
-﻿using K2.Web.Filters;
-using K2.Web.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace K2.Web.Controllers
 {

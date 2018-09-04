@@ -77,13 +77,13 @@ namespace K2.Api.Controllers
 
             try
             {
-                _emailUtil.EnviarEmail("contato@k2transport.com.br", new[] { emailUsuario }, "Senha de acesso alterada.", $"Sua nova senha de acesso é {model.SenhaNova}");
+                _emailUtil.EnviarEmail("teste-utilzao@jnogueira.net.br", new[] { emailUsuario }, "Senha de acesso alterada.", $"Sua nova senha de acesso é <b>{model.SenhaNova}</b>");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Erro ao enviar a senha alterada para o e-mail {emailUsuario}.");
 
-                return new Saida(true, new[] { "Sua senha foi alterada com sucesso porém ocorreu um erro ao tentar enviar a senha para seu e-mail." }, null);
+                return new Dominio.Comandos.Saida.Saida(true, new[] { "Sua senha foi alterada com sucesso porém ocorreu um erro ao tentar enviar a senha para seu e-mail." }, null);
             }
 
             return saida;
@@ -110,18 +110,18 @@ namespace K2.Api.Controllers
 
             var securityToken = jwtHandler.CreateToken(new SecurityTokenDescriptor
             {
-                Issuer = tokenConfig.Issuer,
-                Audience = tokenConfig.Audience,
+                Issuer             = tokenConfig.Issuer,
+                Audience           = tokenConfig.Audience,
                 SigningCredentials = tokenConfig.SigningCredentials,
-                Subject = identity,
-                NotBefore = dataCriacaoToken,
-                Expires = dataExpiracaoToken
+                Subject            = identity,
+                NotBefore          = dataCriacaoToken,
+                Expires            = dataExpiracaoToken
             });
 
             // Cria o token JWT em formato de string
             var jwtToken = jwtHandler.WriteToken(securityToken);
 
-            return new Saida(true, new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso }, new
+            return new Dominio.Comandos.Saida.Saida(true, new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso }, new
             {
                 DataCriacaoToken = dataCriacaoToken,
                 DataExpiracaoToken = dataExpiracaoToken,

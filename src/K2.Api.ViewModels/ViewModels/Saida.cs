@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace K2.Web.Models
+namespace K2.Api.ViewModels
 {
     /// <summary>
     /// Comando para padronização das saídas do domínio
@@ -22,6 +22,13 @@ namespace K2.Web.Models
         /// Objeto retornado
         /// </summary>
         public object Retorno { get; set; }
+
+        public Saida(bool sucesso, IEnumerable<string> mensagens, object retorno)
+        {
+            this.Sucesso   = sucesso;
+            this.Mensagens = mensagens;
+            this.Retorno   = retorno;
+        }
 
         public static Saida Obter(string json)
         {

@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K2.Web", "K2.Web\K2.Web.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K2.Infraestrutura", "K2.Infraestrutura\K2.Infraestrutura.csproj", "{F202DF5B-E5DD-4301-9EA1-9EC45D81E6FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K2.Api.ViewModels", "K2.Api.ViewModels\K2.Api.ViewModels.csproj", "{B7551D4A-A15E-4CA0-9AD0-04C308CEB356}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{F202DF5B-E5DD-4301-9EA1-9EC45D81E6FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F202DF5B-E5DD-4301-9EA1-9EC45D81E6FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F202DF5B-E5DD-4301-9EA1-9EC45D81E6FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7551D4A-A15E-4CA0-9AD0-04C308CEB356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7551D4A-A15E-4CA0-9AD0-04C308CEB356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7551D4A-A15E-4CA0-9AD0-04C308CEB356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7551D4A-A15E-4CA0-9AD0-04C308CEB356}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{CD96CD19-4492-486B-95FC-9B72ABA14771} = {9D5C5DEB-BA29-4162-BADA-768DEA033F38}
 		{05DC3CD7-F9B6-452F-B9DF-DF85002FB659} = {171B5734-BE67-4591-821B-D20EE63AD664}
 		{F202DF5B-E5DD-4301-9EA1-9EC45D81E6FE} = {9D5C5DEB-BA29-4162-BADA-768DEA033F38}
+		{B7551D4A-A15E-4CA0-9AD0-04C308CEB356} = {9D5C5DEB-BA29-4162-BADA-768DEA033F38}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {072DF348-4F32-40D2-9EC5-2E1397754BE8}

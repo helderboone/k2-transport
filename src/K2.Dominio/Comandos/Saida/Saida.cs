@@ -8,18 +8,6 @@ namespace K2.Dominio.Comandos.Saida
     /// </summary>
     public class Saida : ISaida
     {
-        //public Saida()
-        //{
-
-        //}
-
-        public Saida(bool sucesso, IEnumerable<string> mensagens, object retorno)
-        {
-            this.Sucesso = sucesso;
-            this.Mensagens = mensagens;
-            this.Retorno = retorno;
-        }
-
         /// <summary>
         /// Indica se houve sucesso
         /// </summary>
@@ -34,5 +22,12 @@ namespace K2.Dominio.Comandos.Saida
         /// Objeto retornado
         /// </summary>
         public object Retorno { get; set; }
+
+        public Saida(bool sucesso, IEnumerable<string> mensagens, object retorno)
+        {
+            this.Sucesso = sucesso;
+            this.Mensagens = mensagens;
+            this.Retorno = retorno;
+        }
     }
 }

@@ -66,9 +66,9 @@ namespace K2.Web
         /// </summary>
         ReloadPagina = 4,
         /// <summary>
-        /// Oculta os popups abertos
+        /// Oculta os moldais abertos
         /// </summary>
-        OcultarPopups = 5,
+        OcultarMoldais = 5,
         /// <summary>
         /// Redireciona para tela de login
         /// </summary>

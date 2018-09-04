@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
 using System.IO.Compression;
@@ -68,21 +69,23 @@ namespace K2.Api
                 // AddJwtBearer: definidas configurações como a chave e o algoritmo de criptografia utilizados, a necessidade de analisar se um token ainda é válido e o tempo de tolerância para expiração de um token
                 .AddJwtBearer(options =>
                 {
-                    var paramsValidation = options.TokenValidationParameters;
-                    paramsValidation.IssuerSigningKey = tokenConfig.Key;
-                    paramsValidation.ValidAudience = tokenConfig.Audience;
-                    paramsValidation.ValidIssuer = tokenConfig.Issuer;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // Valida a assinatura de um token recebido
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        // Verifica se um token recebido ainda é válido
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        // Tempo de tolerância para a expiração de um token (utilizado
+                        // caso haja problemas de sincronismo de horário entre diferentes
+                        // computadores envolvidos no processo de comunicação)
+                        ClockSkew = TimeSpan.Zero,
 
-                    // Valida a assinatura de um token recebido
-                    paramsValidation.ValidateIssuerSigningKey = true;
-
-                    // Verifica se um token recebido ainda é válido
-                    paramsValidation.ValidateLifetime = true;
-
-                    // Tempo de tolerância para a expiração de um token (utilizado
-                    // caso haja problemas de sincronismo de horário entre diferentes
-                    // computadores envolvidos no processo de comunicação)
-                    paramsValidation.ClockSkew = TimeSpan.Zero;
+                        ValidIssuer      = tokenConfig.Issuer,
+                        ValidAudience    = tokenConfig.Audience,
+                        IssuerSigningKey = tokenConfig.Key
+                    };
                 });
 
             // AddAuthorization: ativará o uso de tokens com o intuito de autorizar ou não o acesso a recursos da aplicação

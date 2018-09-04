@@ -23,6 +23,6 @@ namespace K2.Web
 
         public string ObterPerfilUsuario() => Convert.ToString(_context.User.Claims.First(x => x.Type == "Perfil").Value);
 
-        public string ObterTokenJwt() => _context.User.Claims.First(x => x.Type == "jwtToken").Value;
+        public string ObterTokenJwt() => _context.User.Claims.FirstOrDefault(x => x.Type == "jwtToken")?.Value;
     }
 }

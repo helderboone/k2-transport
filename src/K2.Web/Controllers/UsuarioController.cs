@@ -1,13 +1,15 @@
-﻿using K2.Web.Filters;
-using K2.Web.Models;
+﻿using K2.Api.ViewModels;
+using K2.Web.Filters;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using RestSharp;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -17,8 +19,8 @@ namespace K2.Web.Controllers
     [Authorize]
     public class UsuarioController : BaseController
     {
-        public UsuarioController(IConfiguration configuration, ILogger<UsuarioController> logger)
-            : base(configuration, logger)
+        public UsuarioController(IConfiguration configuration, ILogger<UsuarioController> logger, IHttpContextAccessor httpContextAccessor)
+            : base(configuration, logger, httpContextAccessor)
         {
             
         }
@@ -40,16 +42,15 @@ namespace K2.Web.Controllers
         [FeedbackExceptionFilter("Ocorreu um erro na tentativa de efetuar login.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> Login(string email, string senha, bool permanecerLogado)
         {
-            var request = new RestRequest("v1/usuarios/autenticar", Method.POST);
-            request.AddParameter("email", email);
-            request.AddParameter("senha", senha);
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "email", Value = email, Type = ParameterType.QueryString },
+                new Parameter{ Name = "senha", Value = senha, Type = ParameterType.QueryString }
+            };
 
-            var response = await _restClient.ExecuteTaskAsync(request);
+            var apiResponse = await base.ChamarApi("usuarios/autenticar", Method.POST, parametros, false);
 
-            if (response == null || string.IsNullOrEmpty(response.Content))
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário.", "Provavelmente a API está offline." }));
-
-            var autenticacaoSaida = AutenticacaoSaida.Obter(response.Content);
+            var autenticacaoSaida = AutenticacaoSaida.Obter(apiResponse.Content);
 
             if (autenticacaoSaida == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário." }));
@@ -101,26 +102,27 @@ namespace K2.Web.Controllers
 
         [HttpPost]
         [Route("alterar-senha")]
+        [FeedbackExceptionFilter("Ocorreu um erro na tentativa de alterar a senha de acesso.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarSenha(string senhaAtual, string senhaNova, string confirmacaoSenhaNova, bool enviarEmailSenhaNova)
         {
-            var request = new RestRequest("v1/usuarios/alterar-senha", Method.PUT);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Authorization", "Bearer " + new CookieHelper(HttpContext).ObterTokenJwt());
-            request.AddParameter("model", new { SenhaAtual = senhaAtual, SenhaNova = senhaNova, ConfirmacaoSenhaNova = confirmacaoSenhaNova, EnviarEmailSenhaNova = enviarEmailSenhaNova });
+            var model = new AlterarSenhaUsuarioViewModel
+            {
+                SenhaAtual           = senhaAtual,
+                SenhaNova            = senhaNova,
+                ConfirmacaoSenhaNova = confirmacaoSenhaNova,
+                EnviarEmailSenhaNova = enviarEmailSenhaNova
+            };
 
-            var response = await _restClient.ExecuteTaskAsync(request);
+            var apiResponse = await base.ChamarApi("usuarios/alterar-senha", Method.PUT, new[] { new Parameter { Name = "model", Value = model.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" } });
 
-            if (response == null || string.IsNullOrEmpty(response.Content))
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar sua senha de acesso.", new[] { "Não foi possível alterar a senha de acesso.", "Provavelmente a API está offline." }));
-
-            var saida = Saida.Obter(response.Content);
+            var saida = Saida.Obter(apiResponse.Content);
 
             if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário." }));
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar sua senha de acesso.", new[] { "Não foi possível recuperar as informações do usuário." }));
 
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar sua senha de acesso.", saida.Mensagens))
-                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Senha de acesso alterada com sucesso."));
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
     }
 }

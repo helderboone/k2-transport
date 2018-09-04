@@ -31,7 +31,8 @@ namespace K2.Infraestrutura
             var smtpUtil = new SmtpUtil(emailRemetente, emailDestinatarios, mensagem, smtpClient)
             {
                 Assunto = assunto,
-                NomeRemetente = nomeRemetente
+                NomeRemetente = nomeRemetente,
+                MensagemEmHtml = true
             };
 
             smtpUtil.Enviar();

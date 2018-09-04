@@ -1,5 +1,4 @@
-﻿using K2.Dominio;
-using K2.Infraestrutura.Logging.Database;
+﻿using K2.Infraestrutura.Logging.Database;
 using K2.Infraestrutura.Logging.Slack;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -37,7 +36,7 @@ namespace K2.Web
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(Perfil.Administrador, policy => policy.RequireClaim(Perfil.Administrador).AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme));
+                options.AddPolicy("Administrador", policy => policy.RequireClaim("Administrador").AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme));
                 options.AddPolicy("pepeca", policy => policy.RequireClaim("pepeca").AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme));
             });
 

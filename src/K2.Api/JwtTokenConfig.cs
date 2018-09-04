@@ -1,5 +1,4 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using System.Security.Cryptography;
 
 namespace K2.Api
 {
@@ -22,12 +21,9 @@ namespace K2.Api
 
         public JwtTokenConfig()
         {
-            using (var provider = new RSACryptoServiceProvider(2048))
-            {
-                Key = new RsaSecurityKey(provider.ExportParameters(true));
-            }
+            Key = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes("B4C7EC2C-D6F9-43D7-9DF5-267BDD1C73DB"));
 
-            SigningCredentials = new SigningCredentials(Key, SecurityAlgorithms.RsaSha256Signature);
+            SigningCredentials = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
         }
     }
 }

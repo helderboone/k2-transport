@@ -13,11 +13,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="MySql.Data" Version="8.0.12" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\K2.Api.ViewModels\K2.Api.ViewModels.csproj" />
     <ProjectReference Include="..\K2.Dominio\K2.Dominio.csproj" />
     <ProjectReference Include="..\K2.Infraestrutura.Dados\K2.Infraestrutura.Dados.csproj" />
     <ProjectReference Include="..\K2.Infraestrutura\K2.Infraestrutura.csproj" />

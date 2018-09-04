@@ -22,23 +22,21 @@
                         }
                     },
 
-                    //display error alert on form submit  
-                    //invalidHandler: function (event, validator) {
-                    //    var alert = $('#m_form_1_msg');
-                    //    alert.removeClass('m--hide').show();
-                    //    mUtil.scrollTop();
-                    //},
-
                     submitHandler: function () {
+                        App.bloquear($("#frmAlterarSenha"));
+
                         $.post(App.corrigirPathRota("alterar-senha"), { senhaAtual: $("#iSenhaAtual").val(), senhaNova: $("#iNovaSenha").val(), confirmacaoSenhaNova: $("#iConfirmaNovaSenha").val(), enviarEmailSenhaNova: $("#iEnviarEmail").prop("checked") })
-                        .done(function (feedbackViewModel) {
-                            var feedback = Feedback.converter(feedbackViewModel);
-                            feedback.exibirModal();
-                        })
-                        .fail(function (xhr) {
-                            var feedback = Feedback.converter(jqXhr.responseJSON);
-                            feedback.exibirModal();
-                        });
+                            .done(function (feedbackViewModel) {
+                                var feedback = Feedback.converter(feedbackViewModel);
+                                feedback.exibirModal();
+                            })
+                            .fail(function (jqXhr) {
+                                var feedback = Feedback.converter(jqXhr.responseJSON);
+                                feedback.exibirModal();
+                            })
+                            .always(function () {
+                                App.desbloquear($("#frmAlterarSenha"));
+                            });
                     }
                 });
             });

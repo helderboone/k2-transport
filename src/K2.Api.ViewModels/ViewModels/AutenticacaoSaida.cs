@@ -5,20 +5,26 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 
-namespace K2.Web.Models
+namespace K2.Api.ViewModels
 {
     /// <summary>
     /// Classe que reflete o resultado do processo de autenticação
     /// </summary>
     public class AutenticacaoSaida
     {
-        [JsonProperty("sucesso")]
+        /// <summary>
+        /// Indica se houve sucesso
+        /// </summary>
         public bool Sucesso { get; set; }
 
-        [JsonProperty("mensagens")]
-        public string[] Mensagens { get; set; }
+        /// <summary>
+        /// Mensagens retornadas
+        /// </summary>
+        public IEnumerable<string> Mensagens { get; set; }
 
-        [JsonProperty("retorno")]
+        /// <summary>
+        /// Objeto retornado
+        /// </summary>
         public Retorno Retorno { get; set; }
 
         public static AutenticacaoSaida Obter(string json)
@@ -55,13 +61,10 @@ namespace K2.Web.Models
     /// </summary>
     public class Retorno
     {
-        [JsonProperty("dataCriacaoToken")]
         public DateTimeOffset DataCriacaoToken { get; set; }
 
-        [JsonProperty("dataExpiracaoToken")]
         public DateTimeOffset DataExpiracaoToken { get; set; }
 
-        [JsonProperty("token")]
         public string Token { get; set; }
     }
 }
