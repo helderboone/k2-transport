@@ -25,7 +25,6 @@ namespace K2.Web.Controllers
             return View("About");
         }
 
-        [Authorize(Policy = "pepeca")]
         [Route("about")]
         public IActionResult About()
         {

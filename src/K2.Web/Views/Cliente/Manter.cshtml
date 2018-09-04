@@ -1,0 +1,44 @@
+﻿<div class="m-portlet m-portlet--primary m-portlet-lg" style="border: 1px solid #ccc; margin:0 auto;">
+    <div class="m-portlet__head" style="border-bottom: 1px solid #8DD2F1;">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon">
+                    <i class="fa fa-lock"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    Alterar senha
+                </h3>
+            </div>
+        </div>
+    </div>
+    <form id="frmAlterarSenha" class="m-form m-form--state m-form--label-align-right">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group m-form__group--md">
+                <label for="iSenhaAtual">Senha atual</label>
+                <input type="password" class="form-control m-input m-input--square m-input--air" id="iSenhaAtual" name="iSenhaAtual" maxlength="8">
+                <span class="m-form__help">Informe sua senha atual.</span>
+            </div>
+            <div class="form-group m-form__group m-form__group--md">
+                <label for="iNovaSenha">Nova senha</label>
+                <input type="password" class="form-control m-input m-input--square m-input--air" id="iNovaSenha" name="iNovaSenha" maxlength="8">
+                <span class="m-form__help">Informe um senha com no máximo 8 caracteres.</span>
+            </div>
+            <div class="form-group m-form__group m-form__group--md">
+                <label for="iConfirmaNovaSenha">Confirme a nova senha</label>
+                <input type="password" class="form-control m-input m-input--square m-input--air" id="iConfirmaNovaSenha" name="iConfirmaNovaSenha" maxlength="8">
+            </div>
+            <div class="form-group m-form__group m-form__group--md">
+                <label class="m-checkbox">
+                    <input type="checkbox" id="iEnviarEmail" name="iEnviarEmail"> Envie minha nova senha por e-mail.
+                    <span></span>
+                </label>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid m-form__actions--right">
+                <button type="button" class="btn btn-secondary btn-fechar">Cancelar</button>
+                <button type="submit" class="btn btn-info">Alterar</button>
+            </div>
+        </div>
+    </form>
+</div>
