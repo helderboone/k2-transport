@@ -36,7 +36,7 @@ namespace K2.Web
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Administrador", policy => policy.RequireClaim("Administrador").AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme));
+                options.AddPolicy("Administrador", policy => policy.RequireClaim("Perfil", "Administrador").AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme));
             });
 
             services.AddMvc();

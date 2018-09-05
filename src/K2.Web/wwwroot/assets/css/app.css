@@ -85,3 +85,30 @@
     background-color: #8DD2F1;
     border-color: #8DD2F1;
 }
+
+@media (min-width: 1025px) {
+    .m-body .m-container.m-container--fluid .m-wrapper {
+        padding: 0 50px;
+    }
+}
+
+.m-subheader {
+    margin: 15px 0 15px 0;
+}
+
+.m-portlet--k2 {
+    border: 1px solid #efefef;
+}
+
+.m-portlet--k2-modal {
+    border: 1px solid #ccc;
+}
+
+
+.m-portlet__head--k2 {
+    border-bottom: 1px solid #8DD2F1 !important;
+}
+
+.m-content--skin-light .m-body {
+    background-color: #f9f9f9;
+}

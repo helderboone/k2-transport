@@ -8,5 +8,7 @@
         public const string Administrador = "Administrador";
 
         public const string Motorista = "Motorista";
+
+        public const string Cliente = "Cliente";
     }
 }

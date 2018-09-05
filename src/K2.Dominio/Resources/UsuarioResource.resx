@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Celular_Obrigatorio_Nao_Informado" xml:space="preserve">
+    <value>O número do celular é obrigatório e não foi informado.</value>
+  </data>
+  <data name="Cpf_Invalido" xml:space="preserve">
+    <value>O número do CPF informado é inválido. Corrija o número informado.</value>
+  </data>
+  <data name="Cpf_Obrigatorio_Nao_Informado" xml:space="preserve">
+    <value>O número do CPF é obrigatório e não foi informado.</value>
+  </data>
   <data name="Email_Invalido" xml:space="preserve">
     <value>O e-mail informado é inválido.</value>
   </data>
   <data name="Email_Obrigatorio_Nao_Informado" xml:space="preserve">
     <value>O e-mail é obrigatório e não foi informado.</value>
+  </data>
+  <data name="Nome_Obrigatorio_Nao_Informado" xml:space="preserve">
+    <value>O nome é obrigatório e não foi informado.</value>
+  </data>
+  <data name="Perfil_Obrigatorio_Nao_Informado" xml:space="preserve">
+    <value>O perfil de acesso é obrigatório e não foi informado.</value>
+  </data>
+  <data name="Rg_Obrigatorio_Nao_Informado" xml:space="preserve">
+    <value>O número do RG é obrigatório e não foi informado.</value>
   </data>
   <data name="Senha_Alterada_Com_Sucesso" xml:space="preserve">
     <value>Sua senha foi alterada com sucesso.</value>

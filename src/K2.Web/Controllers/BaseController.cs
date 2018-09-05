@@ -20,10 +20,13 @@ namespace K2.Web.Controllers
 
         protected readonly RestClient _restClient;
 
+        protected readonly CookieHelper _cookieHelper;
+
         public BaseController(IConfiguration configuration, ILogger logger, IHttpContextAccessor httpContextAccessor)
         {
             _configuration       = configuration;
             _httpContextAccessor = httpContextAccessor;
+            _cookieHelper        = new CookieHelper(httpContextAccessor.HttpContext);
             _logger              = logger;
 
             _restClient = new RestClient(configuration["UrlApi"]);
@@ -34,11 +37,9 @@ namespace K2.Web.Controllers
             var request = new RestRequest(rota, metodo);
             request.AddHeader("Content-Type", "application/json");
 
-            var cookieHelper = new CookieHelper(_httpContextAccessor.HttpContext);
-
             if (usarToken)
             {
-                var tokenJwt = cookieHelper.ObterTokenJwt();
+                var tokenJwt = _cookieHelper.ObterTokenJwt();
 
                 if (!string.IsNullOrEmpty(tokenJwt))
                     request.AddHeader("Authorization", "Bearer " + tokenJwt);

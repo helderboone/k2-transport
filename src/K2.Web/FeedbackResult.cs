@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Threading.Tasks;
 
 namespace K2.Web
@@ -14,9 +16,21 @@ namespace K2.Web
 
         public async Task ExecuteResultAsync(ActionContext context)
         {
-            var jsonResult = new JsonResult(_feedback);
+            if (context.HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                var jsonResult = new JsonResult(_feedback);
 
-            await jsonResult.ExecuteResultAsync(context);
+                await jsonResult.ExecuteResultAsync(context);
+            }
+            else
+            {
+                var viewResult = new ViewResult();
+                viewResult.ViewName = "Feedback";
+                viewResult.ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), context.ModelState);
+                viewResult.ViewData.Model = _feedback;
+
+                await viewResult.ExecuteResultAsync(context);
+            }
         }
     }
 }

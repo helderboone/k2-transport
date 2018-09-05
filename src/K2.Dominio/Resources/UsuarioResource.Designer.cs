@@ -61,6 +61,33 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O número do celular é obrigatório e não foi informado..
+        /// </summary>
+        public static string Celular_Obrigatorio_Nao_Informado {
+            get {
+                return ResourceManager.GetString("Celular_Obrigatorio_Nao_Informado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O número do CPF informado é inválido. Corrija o número informado..
+        /// </summary>
+        public static string Cpf_Invalido {
+            get {
+                return ResourceManager.GetString("Cpf_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O número do CPF é obrigatório e não foi informado..
+        /// </summary>
+        public static string Cpf_Obrigatorio_Nao_Informado {
+            get {
+                return ResourceManager.GetString("Cpf_Obrigatorio_Nao_Informado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O e-mail informado é inválido..
         /// </summary>
         public static string Email_Invalido {
@@ -75,6 +102,33 @@ namespace K2.Dominio.Resources {
         public static string Email_Obrigatorio_Nao_Informado {
             get {
                 return ResourceManager.GetString("Email_Obrigatorio_Nao_Informado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O nome é obrigatório e não foi informado..
+        /// </summary>
+        public static string Nome_Obrigatorio_Nao_Informado {
+            get {
+                return ResourceManager.GetString("Nome_Obrigatorio_Nao_Informado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O perfil de acesso é obrigatório e não foi informado..
+        /// </summary>
+        public static string Perfil_Obrigatorio_Nao_Informado {
+            get {
+                return ResourceManager.GetString("Perfil_Obrigatorio_Nao_Informado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O número do RG é obrigatório e não foi informado..
+        /// </summary>
+        public static string Rg_Obrigatorio_Nao_Informado {
+            get {
+                return ResourceManager.GetString("Rg_Obrigatorio_Nao_Informado", resourceCulture);
             }
         }
         
