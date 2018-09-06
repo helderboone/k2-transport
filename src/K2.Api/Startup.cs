@@ -117,6 +117,8 @@ namespace K2.Api
                 // Adiciona o logger para mandar mensagem pelo Slack.
                 .AddSlackLoggerProvider(Configuration["Slack:Webhook"], Configuration["Slack:Channel"], httpContextAccessor, Configuration["Slack:UserName"]);
 
+            app.UsePathBase("/api");
+
             app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
 
             // Customiza as páginas de erro

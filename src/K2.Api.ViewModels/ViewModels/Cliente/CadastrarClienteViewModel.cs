@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace K2.Api.ViewModels.ViewModels.Cliente
+﻿namespace K2.Api.ViewModels.ViewModels.Cliente
 {
     /// <summary>
     /// Classe que reflete os parâmetros utilizados para o cadastro de um cliente

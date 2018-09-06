@@ -5,7 +5,7 @@ var App = function () {
 	var arrModalPermanecerAberto = [];
 
 	var corrigePathRota = function (rota) {
-		return "/" + rota;
+		return "/web/" + rota;
 	};
 
 	return {

@@ -80,6 +80,17 @@
     box-shadow: 1px 2px 10px 0px rgba(115, 76, 234, 0.11);
 }
 
+.input-group.m-input-group--air {
+    -webkit-box-shadow: 1px 2px 10px 0px rgba(115, 76, 234, 0.11);
+    box-shadow: 1px 2px 10px 0px rgba(115, 76, 234, 0.11);
+}
+
+.m-select2.m-select2--air .select2-container--default .select2-selection--single,
+.m-select2.m-select2--air .select2-container--default .select2-selection--multiple {
+    -webkit-box-shadow: 1px 2px 10px 0px rgba(115, 76, 234, 0.11);
+    box-shadow: 1px 2px 10px 0px rgba(115, 76, 234, 0.11);
+}
+
 .btn-brand:hover {
     color: #fff;
     background-color: #8DD2F1;
@@ -111,4 +122,8 @@
 
 .m-content--skin-light .m-body {
     background-color: #f9f9f9;
+}
+
+div.jconfirm-content-pane .jconfirm-content {
+   overflow: hidden !important;
 }

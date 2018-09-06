@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "outputFileName": "wwwroot/assets/vendors/base/vendors.bundle.min.css",
     "inputFiles": [
@@ -43,6 +43,12 @@
     "outputFileName": "wwwroot/assets/js/views/usuario-login.min.js",
     "inputFiles": [
       "wwwroot/assets/js/views/usuario-login.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/views/cliente.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/views/cliente.js"
     ]
   }
 ]

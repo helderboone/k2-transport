@@ -94,7 +94,7 @@
                                                         </div>
                                                     </li>
                                                     @*<li class="m-menu__item  m-menu__item--submenu" m-menu-submenu-toggle="hover" m-menu-link-redirect="1" aria-haspopup="true"><a href="javascript:;" class="m-menu__link m-menu__toggle" title="Non functional dummy link" "><i class=" m-menu__link-icon flaticon-chat-1"></i><span class="m-menu__link-text">Customer Feedbacks</span><i class="m-menu__hor-arrow la la-angle-right"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a><div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--right"><span class="m-menu__arrow "></span><ul class="m-menu__subnav"><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Customer Feedbacks</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Supplier Feedbacks</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Reviewed Feedbacks</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Resolved Feedbacks</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><span class=" m-menu__link-text">Feedback Reports</span></a></li></ul></div></li>
-                                                    <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class="m-menu__link-icon flaticon-users"></i><span class="m-menu__link-text">Register Member</span></a></li>*@
+                                                        <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="inner.html" class="m-menu__link " "><i class="m-menu__link-icon flaticon-users"></i><span class="m-menu__link-text">Register Member</span></a></li>*@
                                                 </ul>
                                             </div>
                                         </li>
@@ -401,6 +401,7 @@
         <script src="~/assets/scripts.bundle.min.js" type="text/javascript"></script>
         <script src="~/assets/js/app.min.js" type="text/javascript"></script>
     </environment>
+    @RenderSection("PaginaJs", required: false)
     <!--end::Base Scripts -->
     <!--begin::Page Vendors Scripts -->
     @RenderSection("VendorsJs", required: false)
@@ -421,7 +422,7 @@
 
             $("#lnkLogout").click(function () {
                 App.exibirConfirm("Deseja realmente sair?", "Sim", "Não", function () {
-                    $.post("logout", function () {
+                    $.post(App.corrigirPathRota("logout"), function () {
                         location.href = "login";
                     });
                 });
