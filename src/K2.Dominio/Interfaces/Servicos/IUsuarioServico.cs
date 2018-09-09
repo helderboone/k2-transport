@@ -1,4 +1,4 @@
-﻿using K2.Dominio.Comandos.Entrada.Usuario;
+﻿using K2.Dominio.Comandos.Entrada;
 using K2.Dominio.Interfaces.Comandos;
 using System.Threading.Tasks;
 

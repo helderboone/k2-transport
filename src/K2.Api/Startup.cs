@@ -44,8 +44,10 @@ namespace K2.Api
 
             // AddTransient: determina que referências desta classe sejam geradas toda vez que uma dependência for encontrada
             services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
+            services.AddTransient<IClienteRepositorio, ClienteRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
+            services.AddTransient<IClienteServico, ClienteServico>();
 
             // Configuração realizada, seguindo o artigo "ASP.NET Core 2.0: autenticação em APIs utilizando JWT" 
             // (https://medium.com/@renato.groffe/asp-net-core-2-0-autentica%C3%A7%C3%A3o-em-apis-utilizando-jwt-json-web-tokens-4b1871efd)
@@ -92,7 +94,7 @@ namespace K2.Api
             services.AddAuthorization(options =>
             {
                 // Adiciona as policies de acesso, definindo os claimns existentes em cada policy.
-                options.AddPolicy(Perfil.Administrador, policy => policy.RequireClaim(Perfil.Administrador).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(TipoPerfil.Administrador, policy => policy.RequireClaim(TipoPerfil.Administrador).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             services

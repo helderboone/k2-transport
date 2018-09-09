@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using K2.Dominio.Comandos.Entrada;
 
 namespace K2.Dominio.Entidades
 {
@@ -12,7 +10,12 @@ namespace K2.Dominio.Entidades
         /// <summary>
         /// ID do cliente
         /// </summary>
-        public int IdCliente { get; private set; }
+        public int Id { get; private set; }
+
+        /// <summary>
+        /// ID do usuário
+        /// </summary>
+        public int IdUsuario { get; private set; }
 
         /// <summary>
         /// CEP do cliente
@@ -27,7 +30,7 @@ namespace K2.Dominio.Entidades
         /// <summary>
         /// Nome do município do cliente
         /// </summary>
-        public string NomeMunicipio{ get; private set; }
+        public string Municipio{ get; private set; }
 
         /// <summary>
         /// Sigla da UF do cliente
@@ -42,6 +45,24 @@ namespace K2.Dominio.Entidades
         private Cliente()
         {
 
+        }
+
+        public Cliente(CadastrarClienteEntrada cadastrarEntrada)
+        {
+            if (cadastrarEntrada.Invalido)
+                return;
+
+            this.Usuario = new Usuario(cadastrarEntrada);
+
+            this.Cep = cadastrarEntrada.Cep;
+            this.Endereco = cadastrarEntrada.Endereco;
+            this.Municipio = cadastrarEntrada.Municipio;
+            this.Uf = cadastrarEntrada.Uf;
+        }
+
+        public override string ToString()
+        {
+            return this.Usuario?.Nome?.ToUpper();
         }
     }
 }

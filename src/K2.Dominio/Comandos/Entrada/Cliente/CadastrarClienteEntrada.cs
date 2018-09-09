@@ -1,4 +1,6 @@
-﻿namespace K2.Dominio.Comandos.Entrada
+﻿using JNogueira.Infraestrutura.Utilzao;
+
+namespace K2.Dominio.Comandos.Entrada
 {
     /// <summary>
     /// Comando utilizado para o cadastro de um cliente
@@ -36,12 +38,17 @@
             string endereco = null,
             string municipio = null,
             string uf = null)
-            : base(nome, email, senha, cpf, rg, celular, Dominio.Perfil.Cliente)
+            : base(nome, email, senha, cpf, rg, celular, TipoPerfil.Cliente)
         {
-            Cep       = cep;
-            Endereco  = endereco;
-            Municipio = municipio;
-            Uf        = uf;
+            Cep       = cep?.RemoverCaracter(".", "-");
+            Endereco  = endereco?.ToUpper();
+            Municipio = municipio?.ToUpper();
+            Uf        = uf?.ToUpper();
+        }
+
+        public override string ToString()
+        {
+            return this.Nome.ToUpper();
         }
     }
 }

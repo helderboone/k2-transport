@@ -3,7 +3,7 @@
     /// <summary>
     /// Classe que armazena as perfis de acesso.
     /// </summary>
-    public static class Perfil
+    public static class TipoPerfil
     {
         public const string Administrador = "Administrador";
 

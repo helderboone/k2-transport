@@ -47,12 +47,12 @@ namespace K2.Dominio.Comandos.Entrada
 
         public CadastrarUsuarioEntrada(string nome, string email, string senha, string cpf, string rg, string celular, string perfil)
         {
-            Nome    = nome;
-            Email   = email;
+            Nome    = nome?.ToUpper();
+            Email   = email?.ToLower();
             Senha   = senha;
-            Cpf     = cpf;
-            Rg      = rg;
-            Celular = celular;
+            Cpf     = cpf?.RemoverCaracter(".", "-", "/");
+            Rg      = rg?.RemoverCaracter(".", "-", "/");
+            Celular = celular?.RemoverCaracter("(", "-", ")");
             Perfil  = perfil;
 
             Validar();

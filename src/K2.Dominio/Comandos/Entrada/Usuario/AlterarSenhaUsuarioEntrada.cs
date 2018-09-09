@@ -3,7 +3,7 @@ using K2.Dominio.Interfaces.Comandos;
 using K2.Dominio.Resources;
 using NETCore.Encrypt.Extensions;
 
-namespace K2.Dominio.Comandos.Entrada.Usuario
+namespace K2.Dominio.Comandos.Entrada
 {
     /// <summary>
     /// Comando utilizado na alteração da senha de um usuário

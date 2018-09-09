@@ -1,5 +1,5 @@
 ﻿using JNogueira.Infraestrutura.NotifiqueMe;
-using K2.Dominio.Comandos.Entrada.Usuario;
+using K2.Dominio.Comandos.Entrada;
 using K2.Dominio.Comandos.Saida;
 using K2.Dominio.Interfaces.Comandos;
 using K2.Dominio.Interfaces.Dados;
@@ -44,9 +44,7 @@ namespace K2.Dominio.Servicos
             var perfil = string.Empty;
 
             if (usuario.Administrador)
-                perfil = Perfil.Administrador;
-
-            usuario.Perfis = new[] { perfil };
+                usuario.Perfil = TipoPerfil.Administrador;
 
             return new Saida(true, new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso }, new UsuarioSaida(usuario));
         }

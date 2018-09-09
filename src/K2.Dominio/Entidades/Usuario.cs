@@ -1,4 +1,7 @@
-﻿namespace K2.Dominio.Entidades
+﻿using K2.Dominio.Comandos.Entrada;
+using NETCore.Encrypt.Extensions;
+
+namespace K2.Dominio.Entidades
 {
     /// <summary>
     /// Classe que representa um usuário
@@ -51,25 +54,29 @@
         public bool Administrador { get; private set; }
 
         /// <summary>
-        /// Perfis de acesso do usuário
+        /// Perfil de acesso do usuário
         /// </summary>
-        public string[] Perfis { get; internal set; }
+        public string Perfil { get; internal set; }
 
         private Usuario()
         {
 
         }
 
-        public Usuario(string nome, string email, string cpf, string rg, string celular, bool ativo = true, bool administrador = false)
-            : this()
+        public Usuario (CadastrarUsuarioEntrada cadastrarEntrada)
         {
-            this.Nome          = nome;
-            this.Email         = email;
-            this.Cpf           = cpf;
-            this.Rg            = rg;
-            this.Celular       = celular;
-            this.Ativo         = ativo;
-            this.Administrador = administrador;
+            if (cadastrarEntrada.Invalido)
+                return;
+
+            this.Nome          = cadastrarEntrada.Nome;
+            this.Senha         = cadastrarEntrada.Senha.MD5();
+            this.Email         = cadastrarEntrada.Email;
+            this.Cpf           = cadastrarEntrada.Cpf;
+            this.Rg            = cadastrarEntrada.Rg;
+            this.Celular       = cadastrarEntrada.Celular;
+            this.Ativo         = true;
+            this.Administrador = cadastrarEntrada.Perfil == TipoPerfil.Administrador;
+            this.Perfil        = cadastrarEntrada.Perfil;
         }
 
         public override string ToString()

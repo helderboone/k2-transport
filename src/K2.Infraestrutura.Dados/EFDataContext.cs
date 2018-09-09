@@ -9,6 +9,7 @@ namespace K2.Infraestrutura.Dados
         private readonly string _connectionString;
 
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
         //public DbSet<Conta> Contas { get; set; }
         //public DbSet<Periodo> Periodos { get; set; }
         //public DbSet<Pessoa> Pessoas { get; set; }
@@ -33,7 +34,7 @@ namespace K2.Infraestrutura.Dados
         {
             // Mapeamentos para utilização do Entity Framework
             modelBuilder.ApplyConfiguration(new UsuarioMap());
-            //modelBuilder.ApplyConfiguration(new ContaMap());
+            modelBuilder.ApplyConfiguration(new ClienteMap());
             //modelBuilder.ApplyConfiguration(new PeriodoMap());
             //modelBuilder.ApplyConfiguration(new PessoaMap());
             //modelBuilder.ApplyConfiguration(new CategoriaMap());

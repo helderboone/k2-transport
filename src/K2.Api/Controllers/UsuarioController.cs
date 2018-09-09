@@ -1,5 +1,5 @@
 ﻿using K2.Api.ViewModels;
-using K2.Dominio.Comandos.Entrada.Usuario;
+using K2.Dominio.Comandos.Entrada;
 using K2.Dominio.Comandos.Saida;
 using K2.Dominio.Interfaces.Comandos;
 using K2.Dominio.Interfaces.Servicos;
@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -100,10 +99,9 @@ namespace K2.Api.Controllers
                         new Claim("IdUsuario", usuario.Id.ToString()),
                         new Claim("Nome", usuario.Nome),
                         new Claim("Cpf", usuario.Cpf),
-                        new Claim("Rg", usuario.Rg)
+                        new Claim("Rg", usuario.Rg),
+                        new Claim("Perfil", usuario.Perfil)
                     }
-                    // Adiciona os perfis de acesso do usuário
-                    .Union(usuario.Perfis.Select(x => new Claim("Perfil", x)))
                 );
 
             var jwtHandler = new JwtSecurityTokenHandler();
