@@ -51,7 +51,7 @@ namespace K2.Dominio.Comandos.Entrada
             Email   = email?.ToLower();
             Senha   = senha;
             Cpf     = cpf?.RemoverCaracter(".", "-", "/");
-            Rg      = rg?.RemoverCaracter(".", "-", "/");
+            Rg      = rg?.ToUpper().RemoverCaracter(".", "-", "/");
             Celular = celular?.RemoverCaracter("(", "-", ")");
             Perfil  = perfil;
 

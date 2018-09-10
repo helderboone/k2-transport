@@ -1,4 +1,5 @@
-﻿using K2.Dominio.Entidades;
+﻿using JNogueira.Infraestrutura.Utilzao;
+using K2.Dominio.Entidades;
 using K2.Dominio.Interfaces.Dados.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,11 +32,25 @@ namespace K2.Infraestrutura.Dados.Repositorios
             return await query.FirstOrDefaultAsync();
         }
 
+        public async Task<bool> VerificarExistenciaPorCpf(string cpf, int? idUsuario = null)
+        {
+            return idUsuario.HasValue
+                ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Cpf.Equals(cpf.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase))
+                : await _efContext.Usuarios.AnyAsync(x => x.Cpf.Equals(cpf.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase));
+        }
+
         public async Task<bool> VerificarExistenciaPorEmail(string email, int? idUsuario = null)
         {
             return idUsuario.HasValue
                 ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase))
                 : await _efContext.Usuarios.AnyAsync(x => x.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        public async Task<bool> VerificarExistenciaPorRg(string rg, int? idUsuario = null)
+        {
+            return idUsuario.HasValue
+                ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Rg.Equals(rg.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase))
+                : await _efContext.Usuarios.AnyAsync(x => x.Rg.Equals(rg.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

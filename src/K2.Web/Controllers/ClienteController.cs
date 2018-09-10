@@ -1,9 +1,12 @@
-﻿using K2.Api.ViewModels.ViewModels.Cliente;
+﻿using K2.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using RestSharp;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace K2.Web.Controllers
 {
@@ -32,10 +35,27 @@ namespace K2.Web.Controllers
 
         [Authorize(Policy = "Administrador")]
         [HttpPost]
-        [Route("salvar-cliente")]
-        public IActionResult SalvarCliente(CadastrarClienteViewModel cadastrarClienteEntrada)
+        [Route("cadastrar-cliente")]
+        public async Task<IActionResult> CadastrarCliente(CadastrarClienteViewModel cadastrarClienteEntrada)
         {
-            return new EmptyResult();
+            if (cadastrarClienteEntrada == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações do cliente não foram preenchidas.", new[] { "Verifique se todas as informações do cliente foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
+
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "cadastrarClienteEntrada", Value = cadastrarClienteEntrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
+
+            var apiResponse = await base.ChamarApi("clientes/cadastrar", Method.POST, parametros);
+
+            var saida = Saida.Obter(apiResponse.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível cadastrar o cliente.", new[] { "A API não retornou nenhuma resposta." }));
+
+            return !saida.Sucesso
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar o cliente.", saida.Mensagens))
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
     }
 }

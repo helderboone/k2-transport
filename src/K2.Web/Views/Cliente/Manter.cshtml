@@ -1,9 +1,13 @@
-﻿<div class="m-portlet m-portlet--primary m-portlet-lg" style="border: 1px solid #ccc; margin:0 auto;">
+﻿@using K2.Web.Helpers
+
+@model K2.Api.ViewModels.AlterarClienteViewModel
+
+<div class="m-portlet m-portlet--primary m-portlet-lg" style="border: 1px solid #ccc; margin:0 auto;">
     <div class="m-portlet__head" style="border-bottom: 1px solid #8DD2F1;">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
                 <h3 class="m-portlet__head-text">
-                    Cadastrar cliente
+                    @(Model == null ? "Cadastrar" : "Alterar") cliente
                 </h3>
             </div>
         </div>
@@ -21,7 +25,7 @@
                     <label for="iEmail">Email <span class="m-badge m-badge--danger m-badge--dot"></span></label>
                     <div class="input-group m-input-group m-input-group--square m-input-group--air">
                         <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
-                        <input type="email" class="form-control m-input" id="iEmail" name="iEmail" maxlength="500">
+                        <input type="email" class="form-control m-input" id="iEmail" name="iEmail" maxlength="500" style="text-transform:lowercase;">
                     </div>
                     <span class="m-form__help"></span>
                 </div>
@@ -34,7 +38,7 @@
                 </div>
                 <div class="col-lg-6">
                     <label>RG <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iRg" name="iRg" maxlength="20">
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iRg" name="iRg" maxlength="20" style="text-transform:uppercase;"> 
                     <span class="m-form__help"></span>
                 </div>
             </div>
@@ -52,7 +56,7 @@
                     <div class="m-checkbox-list">
                         <span class="m-switch m-switch--outline m-switch--info">
                             <label>
-                                <input type="checkbox" checked="checked" name="cAtivo" id="cAtivo">
+                                <input type="checkbox" @(Model == null ? "checked disabled" : (Model.Ativo ? "checked" : string.Empty)) name="cAtivo" id="cAtivo">
                                 <span></span>
                             </label>
                         </span>
@@ -61,7 +65,7 @@
             </div>
             <div class="form-group m-form__group--md m-form__group">
                 <label for="iEndereco">Endereço</label>
-                <input type="text" class="form-control m-input m-input--square m-input--air" id="iEndereco" name="iEndereco" maxlength="1000">
+                <input type="text" class="form-control m-input m-input--square m-input--air" id="iEndereco" name="iEndereco" maxlength="1000" style="text-transform:uppercase;">
                 <span class="m-form__help">Endereço completo (logradouro, número e complemento)</span>
             </div>
             <div class="form-group m-form__group--md m-form__group row">
@@ -71,40 +75,12 @@
                 </div>
                 <div class="col-lg-4">
                     <label>Município</label>
-                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iMunicipio" name="iMunicipio">
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iMunicipio" name="iMunicipio" style="text-transform:uppercase;">
                 </div>
                 <div class="col-lg-4">
                     <label>Estado</label>
                     <div class="m-select2 m-select2--square m-select2--air">
-                        <select class="form-control m-select2" id="sEstado" name="sEstado">
-                            <option value="AC">Acre</option>
-                            <option value="AL">Alagoas</option>
-                            <option value="AP">Amapá</option>
-                            <option value="AM">Amazonas</option>
-                            <option value="BA">Bahia</option>
-                            <option value="CE">Ceará</option>
-                            <option value="DF">Distrito Federal</option>
-                            <option value="ES">Espírito Santo</option>
-                            <option value="GO">Goiás</option>
-                            <option value="MA">Maranhão</option>
-                            <option value="MT">Mato Grosso</option>
-                            <option value="MS">Mato Grosso do Sul</option>
-                            <option value="MG">Minas Gerais</option>
-                            <option value="PA">Pará</option>
-                            <option value="PB">Paraíba</option>
-                            <option value="PR">Paraná</option>
-                            <option value="PE">Pernambuco</option>
-                            <option value="PI">Piauí</option>
-                            <option value="RJ">Rio de Janeiro</option>
-                            <option value="RN">Rio Grande do Norte</option>
-                            <option value="RS">Rio Grande do Sul</option>
-                            <option value="RO">Rondônia</option>
-                            <option value="RR">Roraima</option>
-                            <option value="SC">Santa Catarina</option>
-                            <option value="SP">São Paulo</option>
-                            <option value="SE">Sergipe</option>
-                            <option value="TO">Tocantins</option>
-                        </select>
+                        @HtmlHelpers.DropDownUf("sEstado", "form-control m-select2", Model == null ? "ES" : Model.Uf)
                     </div>
                 </div>
             </div>

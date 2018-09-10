@@ -70,11 +70,29 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Já existe um cliente cadastrado com o CPF informado..
+        /// </summary>
+        public static string Cliente_Ja_Existe_Por_Cpf {
+            get {
+                return ResourceManager.GetString("Cliente_Ja_Existe_Por_Cpf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Já existe um cliente cadastrado com o e-mail informado..
         /// </summary>
         public static string Cliente_Ja_Existe_Por_Email {
             get {
                 return ResourceManager.GetString("Cliente_Ja_Existe_Por_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Já existe um cliente cadastrado com o RG informado..
+        /// </summary>
+        public static string Cliente_Ja_Existe_Por_Rg {
+            get {
+                return ResourceManager.GetString("Cliente_Ja_Existe_Por_Rg", resourceCulture);
             }
         }
     }

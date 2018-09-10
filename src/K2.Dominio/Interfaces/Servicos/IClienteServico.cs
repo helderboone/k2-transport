@@ -10,6 +10,11 @@ namespace K2.Dominio.Interfaces.Servicos
     public interface IClienteServico
     {
         /// <summary>
+        /// Obtém os clientes baseadas nos parâmetros de procura
+        /// </summary>
+        Task<ISaida> ProcurarClientes(ProcurarClienteEntrada procurarEntrada);
+
+        /// <summary>
         /// Realiza o cadastro de um novo cliente.
         /// </summary>
         Task<ISaida> CadastrarCliente(CadastrarClienteEntrada cadastrarClienteEntrada);

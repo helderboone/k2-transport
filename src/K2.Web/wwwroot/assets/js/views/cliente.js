@@ -13,7 +13,7 @@
             });
 
             $("#iCelular").inputmask({
-                "mask": "(99) 9999-9999"
+                "mask": "(99) 99999-9999"
             });
 
             $("#iCep").inputmask({
@@ -58,19 +58,28 @@
                         Cep: $("#iCep").val(),
                         Endereco: $("#iEndereco").val(),
                         Municipio: $("#iMunicipio").val(),
-                        Uf: $("#iUf").val()
+                        Uf: $("#sEstado").val()
                     };
 
                     App.bloquear($("#frmManterCliente"));
 
-                    $.post(App.corrigirPathRota("salvar-cliente"), { cadastrarClienteEntrada: cliente })
-                        .done(function (feedbackViewModel) {
-                            //var feedback = Feedback.converter(feedbackViewModel);
-                            //feedback.exibirModal();
+                    $.post(App.corrigirPathRota(cadastro ? "cadastrar-cliente" : "alterar-cliente"), { cadastrarClienteEntrada: cliente })
+                        .done(function (feedbackResult) {
+                            var feedback = Feedback.converter(feedbackResult);
+
+                            if (feedback.Tipo.Nome == Tipo.Sucesso) {
+                                feedback.exibirModal(function ()
+                                {
+                                    alert("Dar refresh aqui."); App.ocultarModal();
+                                    App.ocultarModal();
+                                });
+                            }
+                            else
+                                feedback.exibirModal();
                         })
                         .fail(function (jqXhr) {
-                            //var feedback = Feedback.converter(jqXhr.responseJSON);
-                            //feedback.exibirModal();
+                            var feedback = Feedback.converter(jqXhr.responseJSON);
+                            feedback.exibirModal();
                         })
                         .always(function () {
                             App.desbloquear($("#frmManterCliente"));
@@ -82,7 +91,6 @@
 
     //== Public Functions
     return {
-        // public functions
         init: function () {
             $("#bCadastrar").click(function () {
                 manterCliente();
@@ -91,7 +99,6 @@
     };
 }();
 
-//== Class Initialization
 jQuery(document).ready(function () {
     Cliente.init();
 });

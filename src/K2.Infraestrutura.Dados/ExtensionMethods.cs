@@ -13,7 +13,7 @@ namespace K2.Infraestrutura.Dados
             if (!entities.Any() || string.IsNullOrEmpty(propertyName))
                 return entities;
 
-            var propertyInfo = typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+            var propertyInfo = typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance | BindingFlags.);
 
             return sortDirection == "ASC"
                 ? entities.OrderBy(e => propertyInfo.GetValue(e, null))

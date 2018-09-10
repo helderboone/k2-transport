@@ -1,9 +1,9 @@
-﻿namespace K2.Api.ViewModels.ViewModels.Cliente
+﻿namespace K2.Api.ViewModels
 {
     /// <summary>
-    /// Classe que reflete os parâmetros utilizados para o cadastro de um cliente
+    /// Classe que reflete os parâmetros utilizados para alteração de um cliente
     /// </summary>
-    public class CadastrarClienteViewModel : CadastrarUsuarioViewModel
+    public class AlterarClienteViewModel : AlterarUsuarioViewModel
     {
         /// <summary>
         /// CEP do cliente

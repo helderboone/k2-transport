@@ -34,29 +34,36 @@ namespace K2.Web.Controllers
 
         public async Task<IRestResponse> ChamarApi(string rota, Method metodo, ICollection<Parameter> parametros = null, bool usarToken = true)
         {
-            var request = new RestRequest(rota, metodo);
-            request.AddHeader("Content-Type", "application/json");
-
-            if (usarToken)
+            try
             {
-                var tokenJwt = _cookieHelper.ObterTokenJwt();
+                var request = new RestRequest(rota, metodo);
+                request.AddHeader("Content-Type", "application/json");
 
-                if (!string.IsNullOrEmpty(tokenJwt))
-                    request.AddHeader("Authorization", "Bearer " + tokenJwt);
+                if (usarToken)
+                {
+                    var tokenJwt = _cookieHelper.ObterTokenJwt();
+
+                    if (!string.IsNullOrEmpty(tokenJwt))
+                        request.AddHeader("Authorization", "Bearer " + tokenJwt);
+                }
+
+                if (parametros.Any())
+                {
+                    foreach (var parametro in parametros)
+                        request.AddParameter(parametro);
+                }
+
+                var response = await _restClient.ExecuteTaskAsync(request);
+
+                if (!response.IsSuccessful)
+                    throw new Exception("Falha na comunicação com a API.", response.ErrorException);
+
+                return response;
             }
-
-            if (parametros.Any())
+            catch (Exception ex)
             {
-                foreach (var parametro in parametros)
-                    request.AddParameter(parametro);
+                throw new Exception("Falha na comunicação com a API.", ex);
             }
-
-            var response = await _restClient.ExecuteTaskAsync(request);
-
-            if (!response.IsSuccessful)
-                throw new Exception("Falha na comunicação com a API.", response.ErrorException);
-
-            return response;
         }
     }
 }

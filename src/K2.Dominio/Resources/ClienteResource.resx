@@ -120,7 +120,13 @@
   <data name="Cliente_Cadastrado_Com_Sucesso" xml:space="preserve">
     <value>O cliente foi cadastrado com sucesso.</value>
   </data>
+  <data name="Cliente_Ja_Existe_Por_Cpf" xml:space="preserve">
+    <value>Já existe um cliente cadastrado com o CPF informado.</value>
+  </data>
   <data name="Cliente_Ja_Existe_Por_Email" xml:space="preserve">
     <value>Já existe um cliente cadastrado com o e-mail informado.</value>
+  </data>
+  <data name="Cliente_Ja_Existe_Por_Rg" xml:space="preserve">
+    <value>Já existe um cliente cadastrado com o RG informado.</value>
   </data>
 </root>

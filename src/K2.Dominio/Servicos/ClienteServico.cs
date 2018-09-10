@@ -33,6 +33,12 @@ namespace K2.Dominio.Servicos
             // Verifica se já existe um usuário com o mesmo email
             this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorEmail(cadastrarClienteEntrada.Email), ClienteResource.Cliente_Ja_Existe_Por_Email);
 
+            // Verifica se já existe um usuário com o mesmo CPF
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorCpf(cadastrarClienteEntrada.Cpf), ClienteResource.Cliente_Ja_Existe_Por_Cpf);
+
+            // Verifica se já existe um usuário com o mesmo RG
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorRg(cadastrarClienteEntrada.Rg), ClienteResource.Cliente_Ja_Existe_Por_Rg);
+
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
@@ -46,6 +52,14 @@ namespace K2.Dominio.Servicos
             return _uow.Invalido
                 ? new Saida(false, _uow.Mensagens, null)
                 : new Saida(true, new[] { ClienteResource.Cliente_Cadastrado_Com_Sucesso }, new ClienteSaida(cliente));
+        }
+
+        public async Task<ISaida> ProcurarClientes(ProcurarClienteEntrada procurarEntrada)
+        {
+            // Verifica se os parâmetros para a procura foram informadas corretamente
+            return procurarEntrada.Invalido
+                ? new Saida(false, procurarEntrada.Mensagens, null)
+                : await _clienteRepositorio.Procurar(procurarEntrada);
         }
     }
 }

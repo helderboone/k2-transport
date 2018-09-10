@@ -94,7 +94,7 @@ namespace K2.Api
             services.AddAuthorization(options =>
             {
                 // Adiciona as policies de acesso, definindo os claimns existentes em cada policy.
-                options.AddPolicy(TipoPerfil.Administrador, policy => policy.RequireClaim(TipoPerfil.Administrador).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(TipoPerfil.Administrador, policy => policy.RequireClaim("Perfil", "Administrador").AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             services

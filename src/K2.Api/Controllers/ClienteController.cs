@@ -1,4 +1,4 @@
-﻿using K2.Api.ViewModels.ViewModels.Cliente;
+﻿using K2.Api.ViewModels;
 using K2.Dominio.Comandos.Entrada;
 using K2.Dominio.Interfaces.Comandos;
 using K2.Dominio.Interfaces.Servicos;
@@ -22,9 +22,28 @@ namespace K2.Api.Controllers
         }
 
         /// <summary>
+        /// Realiza uma procura por clientes a partir dos parâmetros informados
+        /// </summary>
+        [Authorize(Policy = "Administrador")]
+        [HttpPost]
+        [Route("v1/clientes/procurar")]
+        public async Task<ISaida> Procurar([FromBody] ProcurarClienteViewModel viewModel)
+        {
+            var procurarEntrada = new ProcurarClienteEntrada(viewModel?.OrdenarPor, viewModel?.OrdenarSentido, viewModel?.PaginaIndex, viewModel?.PaginaTamanho)
+            {
+                Nome  = viewModel?.Nome,
+                Email = viewModel?.Email,
+                Cpf   = viewModel?.Cpf,
+                Rg    = viewModel?.Rg
+            };
+
+            return await _clienteServico.ProcurarClientes(procurarEntrada);
+        }
+
+        /// <summary>
         /// Realiza o cadastro de um novo cliente
         /// </summary>
-        [AllowAnonymous]
+        [Authorize(Policy = "Administrador")]
         [HttpPost]
         [Route("v1/clientes/cadastrar")]
         public async Task<ISaida> CadastrarCliente([FromBody]CadastrarClienteViewModel viewModel)

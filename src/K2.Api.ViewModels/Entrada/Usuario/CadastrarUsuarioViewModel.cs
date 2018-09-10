@@ -1,9 +1,11 @@
-﻿namespace K2.Api.ViewModels.ViewModels
+﻿using Newtonsoft.Json;
+
+namespace K2.Api.ViewModels
 {
     /// <summary>
     /// Classe que reflete os parâmetros utilizados para o cadastro de um usuário
     /// </summary>
-    public class CadastrarUsuarioViewModel
+    public class CadastrarUsuarioViewModel : BaseViewModel
     {
         /// <summary>
         /// Nome do usuário

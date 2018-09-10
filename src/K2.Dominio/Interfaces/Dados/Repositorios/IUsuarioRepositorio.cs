@@ -16,6 +16,16 @@ namespace K2.Dominio.Interfaces.Dados.Repositorios
         Task<bool> VerificarExistenciaPorEmail(string email, int? idUsuario = null);
 
         /// <summary>
+        /// Verifica se existe um usuário com o mesmo CPF
+        /// </summary>
+        Task<bool> VerificarExistenciaPorCpf(string cpf, int? idUsuario = null);
+
+        /// <summary>
+        /// Verifica se existe um usuário com o mesmo RG
+        /// </summary>
+        Task<bool> VerificarExistenciaPorRg(string rg, int? idUsuario = null);
+
+        /// <summary>
         /// Insere uma novo usuário
         /// </summary>
         Task Inserir(Usuario usuario);

@@ -40,7 +40,7 @@ namespace K2.Dominio.Comandos.Entrada
             string uf = null)
             : base(nome, email, senha, cpf, rg, celular, TipoPerfil.Cliente)
         {
-            Cep       = cep?.RemoverCaracter(".", "-");
+            Cep       = cep?.RemoverCaracter(".", "-", "/");
             Endereco  = endereco?.ToUpper();
             Municipio = municipio?.ToUpper();
             Uf        = uf?.ToUpper();
