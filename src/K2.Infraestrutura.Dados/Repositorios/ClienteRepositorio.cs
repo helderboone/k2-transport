@@ -43,7 +43,24 @@ namespace K2.Infraestrutura.Dados.Repositorios
             if (!string.IsNullOrEmpty(procurarEntrada.Rg))
                 query = query.Where(x => x.Usuario.Rg == procurarEntrada.Rg);
 
-            query = query.OrderByProperty(procurarEntrada.OrdenarPor, procurarEntrada.OrdenarSentido);
+            switch (procurarEntrada.OrdenarPor)
+            {
+                case "Nome":
+                    query = procurarEntrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Nome) : query.OrderByDescending(x => x.Usuario.Nome);
+                    break;
+                case "Email":
+                    query = procurarEntrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Email) : query.OrderByDescending(x => x.Usuario.Email);
+                    break;
+                case "Cpf":
+                    query = procurarEntrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Cpf) : query.OrderByDescending(x => x.Usuario.Cpf);
+                    break;
+                case "Rg":
+                    query = procurarEntrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Rg) : query.OrderByDescending(x => x.Usuario.Rg);
+                    break;
+                default:
+                    query = query.OrderByProperty(procurarEntrada.OrdenarPor, procurarEntrada.OrdenarSentido);
+                    break;
+            }
 
             if (procurarEntrada.Paginar())
             {

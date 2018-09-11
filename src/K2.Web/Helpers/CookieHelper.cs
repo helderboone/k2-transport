@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace K2.Web
+namespace K2.Web.Helpers
 {
     /// <summary>
     /// Classe utilizada para extrair informações do cookie de autenticação

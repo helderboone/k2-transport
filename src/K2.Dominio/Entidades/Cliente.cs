@@ -42,6 +42,16 @@ namespace K2.Dominio.Entidades
         /// </summary>
         public Usuario Usuario { get; private set; }
 
+        public string Nome { get { return Usuario?.Nome; } }
+
+        public string Email => this.Usuario?.Email;
+
+        public string Cpf => this.Usuario?.Cpf;
+
+        public string Rg => this.Usuario?.Rg;
+
+        public string Celular => this.Usuario?.Celular;
+
         private Cliente()
         {
 

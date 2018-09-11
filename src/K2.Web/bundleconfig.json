@@ -50,5 +50,17 @@
     "inputFiles": [
       "wwwroot/assets/js/views/cliente.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/vendors/custom/datatables/datatables.bundle.min.js",
+    "inputFiles": [
+      "wwwroot/assets/vendors/custom/datatables/datatables.bundle.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/vendors/custom/datatables/datatables.bundle.min.css",
+    "inputFiles": [
+      "wwwroot/assets/vendors/custom/datatables/datatables.bundle.css"
+    ]
   }
 ]

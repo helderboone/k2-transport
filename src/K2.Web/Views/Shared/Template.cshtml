@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using K2.Web.Helpers
+
+<!DOCTYPE html>
 <html lang="en">
 <!-- begin::Head -->
 <head>
@@ -401,12 +403,12 @@
         <script src="~/assets/scripts.bundle.min.js" type="text/javascript"></script>
         <script src="~/assets/js/app.min.js" type="text/javascript"></script>
     </environment>
-    @RenderSection("PaginaJs", required: false)
     <!--end::Base Scripts -->
     <!--begin::Page Vendors Scripts -->
     @RenderSection("VendorsJs", required: false)
     <!--end::Page Vendors Scripts -->
     <!-- begin::Page Loader -->
+    @RenderSection("PaginaJs", required: false)
     <script>
         $(document).ajaxStart(function () { App.bloquear(); });
         $(document).ajaxStop(function () { App.desbloquear(); });
