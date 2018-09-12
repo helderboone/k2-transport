@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace K2.Api.ViewModels
+namespace K2.Api.Models
 {
-    public abstract class BaseViewModel
+    public abstract class BaseModel
     {
         public string ObterJson() => this == null ? string.Empty : JsonConvert.SerializeObject(this);
     }

@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace K2.Api.ViewModels
+namespace K2.Api.Models
 {
     /// <summary>
-    /// Comando para padronização das saídas do domínio
+    /// Classe para padronização das saídas da API
     /// </summary>
-    public class Saida
+    public class Saida : BaseModel
     {
         /// <summary>
         /// Indica se houve sucesso

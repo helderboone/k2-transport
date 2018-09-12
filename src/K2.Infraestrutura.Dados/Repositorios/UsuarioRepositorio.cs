@@ -1,6 +1,6 @@
 ﻿using JNogueira.Infraestrutura.Utilzao;
 using K2.Dominio.Entidades;
-using K2.Dominio.Interfaces.Dados.Repositorios;
+using K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;

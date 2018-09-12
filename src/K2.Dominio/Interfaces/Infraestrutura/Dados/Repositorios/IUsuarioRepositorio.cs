@@ -1,7 +1,7 @@
 ﻿using K2.Dominio.Entidades;
 using System.Threading.Tasks;
 
-namespace K2.Dominio.Interfaces.Dados.Repositorios
+namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
 {
     public interface IUsuarioRepositorio
     {

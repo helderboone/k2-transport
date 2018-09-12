@@ -1,4 +1,5 @@
 ﻿using JNogueira.Infraestrutura.Utilzao;
+using K2.Dominio.Interfaces.Infraestrutura;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -6,14 +7,14 @@ using System.Net.Mail;
 
 namespace K2.Infraestrutura
 {
-    public class EmailUtil
+    public class SmtpHelper : IEmailHelper
     {
         private readonly string _servidor;
         private readonly string _porta;
         private readonly string _usuarioSmtp;
         private readonly string _senhaSmtp;
 
-        public EmailUtil(string servidor, string porta, string usuarioSmtp, string senhaSmtp)
+        public SmtpHelper(string servidor, string porta, string usuarioSmtp, string senhaSmtp)
         {
             _servidor = servidor;
             _porta = porta;

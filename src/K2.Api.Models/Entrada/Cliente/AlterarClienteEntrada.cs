@@ -1,9 +1,9 @@
-﻿namespace K2.Api.ViewModels
+﻿namespace K2.Api.Models
 {
     /// <summary>
     /// Classe que reflete os parâmetros utilizados para alteração de um cliente
     /// </summary>
-    public class AlterarClienteViewModel : AlterarUsuarioViewModel
+    public class AlterarClienteEntrada : AlterarUsuarioEntrada
     {
         /// <summary>
         /// CEP do cliente

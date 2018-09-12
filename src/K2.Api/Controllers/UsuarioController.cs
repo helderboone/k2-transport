@@ -1,13 +1,9 @@
-﻿using K2.Api.ViewModels;
-using K2.Dominio.Comandos.Entrada;
+﻿using K2.Dominio.Comandos.Entrada;
 using K2.Dominio.Comandos.Saida;
-using K2.Dominio.Interfaces.Comandos;
 using K2.Dominio.Interfaces.Servicos;
 using K2.Dominio.Resources;
-using K2.Infraestrutura;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -20,15 +16,11 @@ namespace K2.Api.Controllers
     [Produces("application/json")]
     public class UsuarioController : BaseController
     {
-        private readonly ILogger _logger;
         private readonly IUsuarioServico _usuarioServico;
-        private readonly EmailUtil _emailUtil;
 
-        public UsuarioController(IUsuarioServico usuarioServico, ILogger<UsuarioController> logger, EmailUtil emailUtil)
+        public UsuarioController(IUsuarioServico usuarioServico)
         {
             _usuarioServico = usuarioServico;
-            _logger = logger;
-            _emailUtil = emailUtil;
         }
 
         /// <summary>
@@ -37,19 +29,19 @@ namespace K2.Api.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("v1/usuarios/autenticar")]
-        public async Task<ISaida> Autenticar(
+        public async Task<Models.Saida> Autenticar(
             string email,
             string senha,
             [FromServices] JwtTokenConfig tokenConfig /*FromServices: resolvidos via mecanismo de injeção de dependências do ASP.NET Core*/)
         {
-            var autenticarComando = new AutenticarUsuarioEntrada(email, senha);
+            var entrada = new AutenticarUsuarioEntrada(email, senha);
 
-            var comandoSaida = await _usuarioServico.Autenticar(autenticarComando);
+            var saida = await _usuarioServico.Autenticar(entrada);
 
-            if (!comandoSaida.Sucesso)
-                return comandoSaida;
+            if (!saida.Sucesso)
+                return new Models.Saida(saida.Sucesso, saida.Mensagens, saida.Retorno);
 
-            var usuario = (UsuarioSaida)comandoSaida.Retorno;
+            var usuario = (UsuarioSaida)saida.Retorno;
 
             var dataCriacaoToken = DateTime.Now;
             var dataExpiracaoToken = dataCriacaoToken + TimeSpan.FromDays(tokenConfig.ExpiracaoEmDias);
@@ -63,32 +55,18 @@ namespace K2.Api.Controllers
         [Authorize]
         [HttpPut]
         [Route("v1/usuarios/alterar-senha")]
-        public async Task<ISaida> AlteraSenha([FromBody] AlterarSenhaUsuarioViewModel model)
+        public async Task<Models.Saida> AlteraSenha([FromBody] Models.AlterarSenhaUsuarioEntrada model)
         {
             var emailUsuario = base.ObterEmailUsuarioAutenticado();
 
-            var alterarSenhaEntrada = new AlterarSenhaUsuarioEntrada(emailUsuario, model.SenhaAtual, model.SenhaNova, model.ConfirmacaoSenhaNova);
+            var entrada = new AlterarSenhaUsuarioEntrada(emailUsuario, model.SenhaAtual, model.SenhaNova, model.ConfirmacaoSenhaNova, model.EnviarEmailSenhaNova);
 
-            var saida = await _usuarioServico.AlterarSenha(alterarSenhaEntrada);
+            var saida = await _usuarioServico.AlterarSenha(entrada);
 
-            if (!saida.Sucesso || (saida.Sucesso && !model.EnviarEmailSenhaNova))
-                return saida;
-
-            try
-            {
-                _emailUtil.EnviarEmail("teste-utilzao@jnogueira.net.br", new[] { emailUsuario }, "Senha de acesso alterada.", $"Sua nova senha de acesso é <b>{model.SenhaNova}</b>");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Erro ao enviar a senha alterada para o e-mail {emailUsuario}.");
-
-                return new Dominio.Comandos.Saida.Saida(true, new[] { "Sua senha foi alterada com sucesso porém ocorreu um erro ao tentar enviar a senha para seu e-mail." }, null);
-            }
-
-            return saida;
+            return new Models.Saida(saida.Sucesso, saida.Mensagens, saida.Retorno);
         }
 
-        private ISaida CriarResponseTokenJwt(UsuarioSaida usuario, DateTime dataCriacaoToken, DateTime dataExpiracaoToken, JwtTokenConfig tokenConfig)
+        private Models.Saida CriarResponseTokenJwt(UsuarioSaida usuario, DateTime dataCriacaoToken, DateTime dataExpiracaoToken, JwtTokenConfig tokenConfig)
         {
             var identity = new ClaimsIdentity(
                     new GenericIdentity(usuario.Email),
@@ -119,12 +97,7 @@ namespace K2.Api.Controllers
             // Cria o token JWT em formato de string
             var jwtToken = jwtHandler.WriteToken(securityToken);
 
-            return new Dominio.Comandos.Saida.Saida(true, new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso }, new
-            {
-                DataCriacaoToken = dataCriacaoToken,
-                DataExpiracaoToken = dataExpiracaoToken,
-                Token = jwtToken,
-            });
+            return new Models.AutenticacaoSaida(true, new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso }, new Models.Retorno(dataCriacaoToken, dataExpiracaoToken, jwtToken));
         }
     }
 }

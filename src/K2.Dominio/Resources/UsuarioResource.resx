@@ -141,6 +141,9 @@
   <data name="Rg_Obrigatorio_Nao_Informado" xml:space="preserve">
     <value>O número do RG é obrigatório e não foi informado.</value>
   </data>
+  <data name="Senha_Alterada_Com_Erro_Envio_Email" xml:space="preserve">
+    <value>Sua senha foi alterada com sucesso porém ocorreu um erro ao tentar enviar a senha para seu e-mail.</value>
+  </data>
   <data name="Senha_Alterada_Com_Sucesso" xml:space="preserve">
     <value>Sua senha foi alterada com sucesso.</value>
   </data>

@@ -1,4 +1,5 @@
-﻿using K2.Api.ViewModels;
+﻿using K2.Api.Models;
+using K2.Web.Filters;
 using K2.Web.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,12 +30,26 @@ namespace K2.Web.Controllers
         [Authorize(Policy = "Administrador")]
         [HttpPost]
         [Route("listar-clientes")]
-        public IActionResult ListarClientes(ProcurarClienteViewModel filtro)
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter as lista clientes cadastrados.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        public async Task<IActionResult> ListarClientes(ProcurarClienteEntrada filtro)
         {
+            if (filtro == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações para a procura não foram preenchidas.", tipoAcao: TipoAcaoAoOcultarFeedback.Ocultar));
+
             var dataTablesParams = new DatatablesHelper(_httpContextAccessor);
 
             filtro.PaginaIndex   = dataTablesParams.PaginaIndex;
             filtro.PaginaTamanho = dataTablesParams.PaginaTamanho;
+
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
+
+            var apiResponse = await base.ChamarApi("clientes/procurar", Method.POST, parametros);
+
+            var saida = Saida.Obter(apiResponse.Content);
+
 
             return new EmptyResult();
             
@@ -93,14 +108,14 @@ namespace K2.Web.Controllers
         [Authorize(Policy = "Administrador")]
         [HttpPost]
         [Route("cadastrar-cliente")]
-        public async Task<IActionResult> CadastrarCliente(CadastrarClienteViewModel cadastrarClienteEntrada)
+        public async Task<IActionResult> CadastrarCliente(CadastrarClienteEntrada entrada)
         {
-            if (cadastrarClienteEntrada == null)
+            if (entrada == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações do cliente não foram preenchidas.", new[] { "Verifique se todas as informações do cliente foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
 
             var parametros = new Parameter[]
             {
-                new Parameter{ Name = "cadastrarClienteEntrada", Value = cadastrarClienteEntrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+                new Parameter{ Name = "cadastrarClienteEntrada", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
             var apiResponse = await base.ChamarApi("clientes/cadastrar", Method.POST, parametros);

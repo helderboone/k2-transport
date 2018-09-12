@@ -1,7 +1,7 @@
 ﻿using K2.Dominio.Comandos.Entrada;
 using K2.Dominio.Comandos.Saida;
 using K2.Dominio.Entidades;
-using K2.Dominio.Interfaces.Dados.Repositorios;
+using K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -24,56 +24,56 @@ namespace K2.Infraestrutura.Dados.Repositorios
             await _efContext.AddAsync(cliente);
         }
 
-        public async Task<ProcurarSaida> Procurar(ProcurarClienteEntrada procurarEntrada)
+        public async Task<ProcurarSaida> Procurar(ProcurarClienteEntrada entrada)
         {
             var query = _efContext.Clientes
                 .Include(x => x.Usuario)
                 .AsNoTracking()
                 .AsQueryable();
 
-            if (!string.IsNullOrEmpty(procurarEntrada.Nome))
-                query = query.Where(x => x.Usuario.Nome.IndexOf(procurarEntrada.Nome, StringComparison.InvariantCultureIgnoreCase) != -1);
+            if (!string.IsNullOrEmpty(entrada.Nome))
+                query = query.Where(x => x.Usuario.Nome.IndexOf(entrada.Nome, StringComparison.InvariantCultureIgnoreCase) != -1);
 
-            if (!string.IsNullOrEmpty(procurarEntrada.Email))
-                query = query.Where(x => x.Usuario.Email.IndexOf(procurarEntrada.Email, StringComparison.InvariantCultureIgnoreCase) != -1);
+            if (!string.IsNullOrEmpty(entrada.Email))
+                query = query.Where(x => x.Usuario.Email.IndexOf(entrada.Email, StringComparison.InvariantCultureIgnoreCase) != -1);
 
-            if (!string.IsNullOrEmpty(procurarEntrada.Cpf))
-                query = query.Where(x => x.Usuario.Cpf == procurarEntrada.Cpf);
+            if (!string.IsNullOrEmpty(entrada.Cpf))
+                query = query.Where(x => x.Usuario.Cpf == entrada.Cpf);
 
-            if (!string.IsNullOrEmpty(procurarEntrada.Rg))
-                query = query.Where(x => x.Usuario.Rg == procurarEntrada.Rg);
+            if (!string.IsNullOrEmpty(entrada.Rg))
+                query = query.Where(x => x.Usuario.Rg == entrada.Rg);
 
-            switch (procurarEntrada.OrdenarPor)
+            switch (entrada.OrdenarPor)
             {
                 case "Nome":
-                    query = procurarEntrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Nome) : query.OrderByDescending(x => x.Usuario.Nome);
+                    query = entrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Nome) : query.OrderByDescending(x => x.Usuario.Nome);
                     break;
                 case "Email":
-                    query = procurarEntrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Email) : query.OrderByDescending(x => x.Usuario.Email);
+                    query = entrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Email) : query.OrderByDescending(x => x.Usuario.Email);
                     break;
                 case "Cpf":
-                    query = procurarEntrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Cpf) : query.OrderByDescending(x => x.Usuario.Cpf);
+                    query = entrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Cpf) : query.OrderByDescending(x => x.Usuario.Cpf);
                     break;
                 case "Rg":
-                    query = procurarEntrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Rg) : query.OrderByDescending(x => x.Usuario.Rg);
+                    query = entrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Rg) : query.OrderByDescending(x => x.Usuario.Rg);
                     break;
                 default:
-                    query = query.OrderByProperty(procurarEntrada.OrdenarPor, procurarEntrada.OrdenarSentido);
+                    query = query.OrderByProperty(entrada.OrdenarPor, entrada.OrdenarSentido);
                     break;
             }
 
-            if (procurarEntrada.Paginar())
+            if (entrada.Paginar())
             {
-                var pagedList = await query.ToPagedListAsync(procurarEntrada.PaginaIndex.Value, procurarEntrada.PaginaTamanho.Value);
+                var pagedList = await query.ToPagedListAsync(entrada.PaginaIndex.Value, entrada.PaginaTamanho.Value);
 
                 return new ProcurarSaida(
                     pagedList.ToList().Select(x => new ClienteSaida(x)),
-                    procurarEntrada.OrdenarPor,
-                    procurarEntrada.OrdenarSentido,
+                    entrada.OrdenarPor,
+                    entrada.OrdenarSentido,
                     pagedList.TotalItemCount,
                     pagedList.PageCount,
-                    procurarEntrada.PaginaIndex,
-                    procurarEntrada.PaginaTamanho);
+                    entrada.PaginaIndex,
+                    entrada.PaginaTamanho);
             }
             else
             {
@@ -81,8 +81,8 @@ namespace K2.Infraestrutura.Dados.Repositorios
 
                 return new ProcurarSaida(
                     (await query.ToListAsync()).Select(x => new ClienteSaida(x)),
-                    procurarEntrada.OrdenarPor,
-                    procurarEntrada.OrdenarSentido,
+                    entrada.OrdenarPor,
+                    entrada.OrdenarSentido,
                     totalRegistros);
             }
         }

@@ -1,5 +1,4 @@
-﻿using K2.Api.ViewModels;
-using K2.Dominio.Comandos.Entrada;
+﻿using K2.Dominio.Comandos.Entrada;
 using K2.Dominio.Interfaces.Comandos;
 using K2.Dominio.Interfaces.Servicos;
 using Microsoft.AspNetCore.Authorization;
@@ -12,13 +11,11 @@ namespace K2.Api.Controllers
     [Produces("application/json")]
     public class ClienteController : BaseController
     {
-        private readonly ILogger _logger;
         private readonly IClienteServico _clienteServico;
 
-        public ClienteController(IClienteServico clienteServico, ILogger<ClienteController> logger)
+        public ClienteController(IClienteServico clienteServico)
         {
             _clienteServico = clienteServico;
-            _logger = logger;
         }
 
         /// <summary>
@@ -27,17 +24,17 @@ namespace K2.Api.Controllers
         [Authorize(Policy = "Administrador")]
         [HttpPost]
         [Route("v1/clientes/procurar")]
-        public async Task<ISaida> Procurar([FromBody] ProcurarClienteViewModel viewModel)
+        public async Task<ISaida> Procurar([FromBody] Models.ProcurarClienteEntrada model)
         {
-            var procurarEntrada = new ProcurarClienteEntrada(viewModel?.OrdenarPor, viewModel?.OrdenarSentido, viewModel?.PaginaIndex, viewModel?.PaginaTamanho)
+            var entrada = new ProcurarClienteEntrada(model?.OrdenarPor, model?.OrdenarSentido, model?.PaginaIndex, model?.PaginaTamanho)
             {
-                Nome  = viewModel?.Nome,
-                Email = viewModel?.Email,
-                Cpf   = viewModel?.Cpf,
-                Rg    = viewModel?.Rg
+                Nome  = model?.Nome,
+                Email = model?.Email,
+                Cpf   = model?.Cpf,
+                Rg    = model?.Rg
             };
 
-            return await _clienteServico.ProcurarClientes(procurarEntrada);
+            return await _clienteServico.ProcurarClientes(entrada);
         }
 
         /// <summary>
@@ -46,19 +43,19 @@ namespace K2.Api.Controllers
         [Authorize(Policy = "Administrador")]
         [HttpPost]
         [Route("v1/clientes/cadastrar")]
-        public async Task<ISaida> CadastrarCliente([FromBody]CadastrarClienteViewModel viewModel)
+        public async Task<ISaida> CadastrarCliente([FromBody] Models.CadastrarClienteEntrada model)
         {
             var entrada = new CadastrarClienteEntrada(
-                viewModel?.Nome,
-                viewModel?.Email,
+                model?.Nome,
+                model?.Email,
                 "k2",
-                viewModel?.Cpf,
-                viewModel?.Rg,
-                viewModel?.Celular,
-                viewModel?.Cep,
-                viewModel?.Endereco,
-                viewModel?.Municipio,
-                viewModel?.Uf);
+                model?.Cpf,
+                model?.Rg,
+                model?.Celular,
+                model?.Cep,
+                model?.Endereco,
+                model?.Municipio,
+                model?.Uf);
 
             return await _clienteServico.CadastrarCliente(entrada);
         }

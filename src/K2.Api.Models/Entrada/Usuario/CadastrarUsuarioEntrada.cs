@@ -1,9 +1,9 @@
-﻿namespace K2.Api.ViewModels
+﻿namespace K2.Api.Models
 {
     /// <summary>
-    /// Classe que reflete os parâmetros utilizados para alteração de um usuário
+    /// Classe que reflete os parâmetros utilizados para o cadastro de um usuário
     /// </summary>
-    public class AlterarUsuarioViewModel : BaseViewModel
+    public class CadastrarUsuarioEntrada : BaseModel
     {
         /// <summary>
         /// Nome do usuário
@@ -14,6 +14,11 @@
         /// E-mail do usuário
         /// </summary>
         public string Email { get; set; }
+
+        /// <summary>
+        /// Senha de acesso do usuário
+        /// </summary>
+        public string Senha { get; set; }
 
         /// <summary>
         /// CPF do usuário
@@ -29,10 +34,5 @@
         /// Número do celular do usuário
         /// </summary>
         public string Celular { get; set; }
-
-        /// <summary>
-        /// Indica se o usuário está ativo
-        /// </summary>
-        public bool Ativo { get; set; }
     }
 }

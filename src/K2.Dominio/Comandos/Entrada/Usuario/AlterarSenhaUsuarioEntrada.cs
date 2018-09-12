@@ -18,12 +18,15 @@ namespace K2.Dominio.Comandos.Entrada
 
         public string ConfirmacaoSenhaNova { get; }
 
-        public AlterarSenhaUsuarioEntrada(string email, string senhaAtual, string senhaNova, string confirmacaoSenhaNova)
+        public bool EnviarEmailSenhaNova { get; }
+
+        public AlterarSenhaUsuarioEntrada(string email, string senhaAtual, string senhaNova, string confirmacaoSenhaNova, bool enviarEmailSenhaNova = false)
         {
             this.Email                = email;
             this.SenhaAtual           = senhaAtual;
             this.SenhaNova            = senhaNova;
             this.ConfirmacaoSenhaNova = confirmacaoSenhaNova;
+            this.EnviarEmailSenhaNova = enviarEmailSenhaNova;
 
             this.Validar();
 
@@ -31,7 +34,6 @@ namespace K2.Dominio.Comandos.Entrada
                 return;
 
             this.SenhaAtual = senhaAtual.MD5();
-            this.SenhaNova  = senhaNova.MD5();
         }
 
         private void Validar()
@@ -48,5 +50,7 @@ namespace K2.Dominio.Comandos.Entrada
                 .NotificarSeEmailInvalido(this.Email, UsuarioResource.Email_Invalido)
                 .NotificarSeDiferentes(this.SenhaNova, this.ConfirmacaoSenhaNova, UsuarioResource.Senha_Confirmacao_senha_diferentes);
         }
+
+        internal string CriptografarSenhaNova() => this.SenhaNova.MD5();
     }
 }

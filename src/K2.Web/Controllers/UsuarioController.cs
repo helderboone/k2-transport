@@ -1,4 +1,4 @@
-﻿using K2.Api.ViewModels;
+﻿using K2.Api.Models;
 using K2.Web.Filters;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -50,21 +50,21 @@ namespace K2.Web.Controllers
 
             var apiResponse = await base.ChamarApi("usuarios/autenticar", Method.POST, parametros, false);
 
-            var autenticacaoSaida = AutenticacaoSaida.Obter(apiResponse.Content);
+            var saida = AutenticacaoSaida.Obter(apiResponse.Content);
 
-            if (autenticacaoSaida == null)
+            if (saida == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário." }));
 
-            if (!autenticacaoSaida.Sucesso)
-                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível efetuar o login.", autenticacaoSaida.Mensagens));
+            if (!saida.Sucesso)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível efetuar o login.", saida.Mensagens));
 
             // Cria o cookie de autenticação
 
-            var claims = new List<Claim>(autenticacaoSaida.ObterClaims());
-            claims.Add(new Claim("jwtToken", autenticacaoSaida.ObterToken()));
+            var claims = new List<Claim>(saida.ObterClaims());
+            claims.Add(new Claim("jwtToken", saida.ObterToken()));
 
             var userIdentity = new ClaimsIdentity(
-                new GenericIdentity(autenticacaoSaida.ObterNomeUsuario()),
+                new GenericIdentity(saida.ObterNomeUsuario()),
                 claims,
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 null,
@@ -76,7 +76,7 @@ namespace K2.Web.Controllers
             {
                 AllowRefresh = true,
                 IsPersistent = permanecerLogado,
-                ExpiresUtc = autenticacaoSaida.Retorno.DataExpiracaoToken
+                ExpiresUtc = saida.ObterRetorno().DataExpiracaoToken
             };
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);
@@ -105,7 +105,7 @@ namespace K2.Web.Controllers
         [FeedbackExceptionFilter("Ocorreu um erro na tentativa de alterar a senha de acesso.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarSenha(string senhaAtual, string senhaNova, string confirmacaoSenhaNova, bool enviarEmailSenhaNova)
         {
-            var model = new AlterarSenhaUsuarioViewModel
+            var entrada = new AlterarSenhaUsuarioEntrada
             {
                 SenhaAtual           = senhaAtual,
                 SenhaNova            = senhaNova,
@@ -113,7 +113,7 @@ namespace K2.Web.Controllers
                 EnviarEmailSenhaNova = enviarEmailSenhaNova
             };
 
-            var apiResponse = await base.ChamarApi("usuarios/alterar-senha", Method.PUT, new[] { new Parameter { Name = "model", Value = model.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" } });
+            var apiResponse = await base.ChamarApi("usuarios/alterar-senha", Method.PUT, new[] { new Parameter { Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" } });
 
             var saida = Saida.Obter(apiResponse.Content);
 

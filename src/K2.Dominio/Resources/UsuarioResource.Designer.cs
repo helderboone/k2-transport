@@ -133,6 +133,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sua senha foi alterada com sucesso porém ocorreu um erro ao tentar enviar a senha para seu e-mail..
+        /// </summary>
+        public static string Senha_Alterada_Com_Erro_Envio_Email {
+            get {
+                return ResourceManager.GetString("Senha_Alterada_Com_Erro_Envio_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sua senha foi alterada com sucesso..
         /// </summary>
         public static string Senha_Alterada_Com_Sucesso {

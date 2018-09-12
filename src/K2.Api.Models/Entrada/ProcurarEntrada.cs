@@ -1,6 +1,9 @@
-﻿namespace K2.Api.ViewModels
+﻿namespace K2.Api.Models
 {
-    public abstract class ProcurarViewModel
+    /// <summary>
+    /// Classe que reflete os parâmetros básicos para realizar uma procura
+    /// </summary>
+    public abstract class ProcurarEntrada : BaseModel
     {
         /// <summary>
         /// Página atual da listagem que exibirá o resultado da pesquisa
@@ -22,7 +25,7 @@
         /// </summary>
         public string OrdenarSentido { get; set; }
 
-        public ProcurarViewModel()
+        public ProcurarEntrada()
         {
             this.OrdenarSentido = "ASC";
         }

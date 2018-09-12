@@ -1,6 +1,7 @@
 ﻿using K2.Dominio;
 using K2.Dominio.Interfaces.Dados;
-using K2.Dominio.Interfaces.Dados.Repositorios;
+using K2.Dominio.Interfaces.Infraestrutura;
+using K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios;
 using K2.Dominio.Interfaces.Servicos;
 using K2.Dominio.Servicos;
 using K2.Infraestrutura;
@@ -36,18 +37,9 @@ namespace K2.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // AddSingleton: instância configurada de forma que uma única referência das mesmas seja empregada durante todo o tempo em que a aplicação permanecer em execução
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton(x => new EmailUtil(Configuration["Smtp:Servidor"], Configuration["Smtp:Porta"], Configuration["Smtp:Usuario"], Configuration["Smtp:Senha"]));
-
-            services.AddScoped<EfDataContext, EfDataContext>(x => new EfDataContext(Configuration["K2ConnectionString"]));
-            services.AddScoped<IUow, Uow>();
-
-            // AddTransient: determina que referências desta classe sejam geradas toda vez que uma dependência for encontrada
-            services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
-            services.AddTransient<IClienteRepositorio, ClienteRepositorio>();
-
-            services.AddTransient<IUsuarioServico, UsuarioServico>();
-            services.AddTransient<IClienteServico, ClienteServico>();
+            services.AddSingleton<IEmailHelper, SmtpHelper>(x => new SmtpHelper(Configuration["Smtp:Servidor"], Configuration["Smtp:Porta"], Configuration["Smtp:Usuario"], Configuration["Smtp:Senha"]));
 
             // Configuração realizada, seguindo o artigo "ASP.NET Core 2.0: autenticação em APIs utilizando JWT" 
             // (https://medium.com/@renato.groffe/asp-net-core-2-0-autentica%C3%A7%C3%A3o-em-apis-utilizando-jwt-json-web-tokens-4b1871efd)
@@ -58,8 +50,17 @@ namespace K2.Api
             new ConfigureFromConfigurationOptions<JwtTokenConfig>(Configuration.GetSection("JwtTokenConfig"))
                 .Configure(tokenConfig);
 
-            // AddSingleton: instância configurada de forma que uma única referência das mesmas seja empregada durante todo o tempo em que a aplicação permanecer em execução
             services.AddSingleton(tokenConfig);
+
+            services.AddScoped<EfDataContext, EfDataContext>(x => new EfDataContext(Configuration["K2ConnectionString"]));
+            services.AddScoped<IUow, Uow>();
+
+            // AddTransient: determina que referências desta classe sejam geradas toda vez que uma dependência for encontrada
+            services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
+            services.AddTransient<IClienteRepositorio, ClienteRepositorio>();
+
+            services.AddTransient<IUsuarioServico, UsuarioServico>();
+            services.AddTransient<IClienteServico, ClienteServico>();
 
             services
                 // AddAuthentication: especificará os schemas utilizados para a autenticação do tipo Bearer

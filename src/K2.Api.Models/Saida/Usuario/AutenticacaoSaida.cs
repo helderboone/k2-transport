@@ -5,39 +5,34 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 
-namespace K2.Api.ViewModels
+namespace K2.Api.Models
 {
     /// <summary>
     /// Classe que reflete o resultado do processo de autenticação
     /// </summary>
-    public class AutenticacaoSaida
+    public class AutenticacaoSaida : Saida
     {
-        /// <summary>
-        /// Indica se houve sucesso
-        /// </summary>
-        public bool Sucesso { get; set; }
-
-        /// <summary>
-        /// Mensagens retornadas
-        /// </summary>
-        public IEnumerable<string> Mensagens { get; set; }
-
-        /// <summary>
-        /// Objeto retornado
-        /// </summary>
-        public Retorno Retorno { get; set; }
-
-        public static AutenticacaoSaida Obter(string json)
+        public AutenticacaoSaida(bool sucesso, IEnumerable<string> mensagens, Retorno retorno)
+            : base(sucesso, mensagens, retorno)
         {
-            return !string.IsNullOrEmpty(json)
-                ? JsonConvert.DeserializeObject<AutenticacaoSaida>(json)
-                : null;
+            
         }
 
-        public string ObterToken() => this.Retorno?.Token;
+        public Retorno ObterRetorno() => (Retorno)this.Retorno;
 
+        /// <summary>
+        /// Obtem o token JWT
+        /// </summary>
+        public string ObterToken() => ObterRetorno()?.Token;
+
+        /// <summary>
+        /// Extrai o nome do usuário do token JWT
+        /// </summary>
         public string ObterNomeUsuario() => this.ObterClaims().FirstOrDefault(x => x.Type == "Nome")?.Value;
 
+        /// <summary>
+        /// Extrai os claims do token JWT
+        /// </summary>
         public IEnumerable<Claim> ObterClaims()
         {
             var token = ObterToken();
@@ -54,6 +49,13 @@ namespace K2.Api.ViewModels
 
             return jwtToken.Claims;
         }
+
+        public new static AutenticacaoSaida Obter(string json)
+        {
+            return !string.IsNullOrEmpty(json)
+                ? JsonConvert.DeserializeObject<AutenticacaoSaida>(json)
+                : null;
+        }
     }
 
     /// <summary>
@@ -66,5 +68,12 @@ namespace K2.Api.ViewModels
         public DateTimeOffset DataExpiracaoToken { get; set; }
 
         public string Token { get; set; }
+
+        public Retorno(DateTimeOffset dataCriacaoToken, DateTimeOffset dataExpiracaoToken, string token)
+        {
+            DataCriacaoToken = dataCriacaoToken;
+            DataExpiracaoToken = dataExpiracaoToken;
+            Token = token;
+        }
     }
 }

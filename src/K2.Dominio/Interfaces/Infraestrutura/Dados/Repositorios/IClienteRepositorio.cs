@@ -3,7 +3,7 @@ using K2.Dominio.Comandos.Saida;
 using K2.Dominio.Entidades;
 using System.Threading.Tasks;
 
-namespace K2.Dominio.Interfaces.Dados.Repositorios
+namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
 {
     public interface IClienteRepositorio
     {
@@ -15,6 +15,6 @@ namespace K2.Dominio.Interfaces.Dados.Repositorios
         /// <summary>
         /// Obtém os clientes baseados nos parâmetros de procura
         /// </summary>
-        Task<ProcurarSaida> Procurar(ProcurarClienteEntrada procurarEntrada);
+        Task<ProcurarSaida> Procurar(ProcurarClienteEntrada entrada);
     }
 }

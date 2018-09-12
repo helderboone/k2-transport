@@ -12,11 +12,11 @@ namespace K2.Dominio.Interfaces.Servicos
         /// <summary>
         /// Obtém os clientes baseadas nos parâmetros de procura
         /// </summary>
-        Task<ISaida> ProcurarClientes(ProcurarClienteEntrada procurarEntrada);
+        Task<ISaida> ProcurarClientes(ProcurarClienteEntrada entrada);
 
         /// <summary>
         /// Realiza o cadastro de um novo cliente.
         /// </summary>
-        Task<ISaida> CadastrarCliente(CadastrarClienteEntrada cadastrarClienteEntrada);
+        Task<ISaida> CadastrarCliente(CadastrarClienteEntrada entrada);
     }
 }
