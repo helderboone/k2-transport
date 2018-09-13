@@ -50,8 +50,7 @@ namespace K2.Web.Controllers
 
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
-
-            return new EmptyResult();
+            return new DatatablesResult(dataTablesParams.Draw, saida);
             
             //try
             //{

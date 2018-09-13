@@ -12,18 +12,17 @@ namespace K2.Api.Models
     /// </summary>
     public class AutenticarSaida : Saida
     {
-        public override object Retorno
-        {
-            get => (AutenticarRetorno)base.Retorno;
-            set => base.Retorno = value;
-        }
-
         public AutenticarSaida(bool sucesso, IEnumerable<string> mensagens, AutenticarRetorno retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
 
+        /// <summary>
+        /// Obtém o retorno da autenticação
+        /// </summary>
+        public AutenticarRetorno ObterRetorno() => (AutenticarRetorno)this.Retorno;
+        
         /// <summary>
         /// Obtem o token JWT
         /// </summary>

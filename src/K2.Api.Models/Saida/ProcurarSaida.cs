@@ -8,7 +8,7 @@ namespace K2.Api.Models
     /// </summary>
     public class ProcurarSaida : Saida
     {
-        public ProcurarSaida(bool sucesso, IEnumerable<string> mensagens, object retorno)
+        public ProcurarSaida(bool sucesso, IEnumerable<string> mensagens, ProcurarRetorno retorno)
             : base(sucesso, mensagens, retorno)
         {
 
@@ -26,17 +26,17 @@ namespace K2.Api.Models
 
     public class ProcurarRetorno
     {
-        public int? PaginaIndex { get; set; }
+        public int PaginaIndex { get; set; }
 
-        public int? PaginaTamanho { get; set; }
+        public int PaginaTamanho { get; set; }
 
         public string OrdenarPor { get; set; }
 
         public string OrdenarSentido { get;  set; }
 
-        public int? TotalRegistros { get; set; }
+        public int TotalRegistros { get; set; }
 
-        public int? TotalPaginas { get; set; }
+        public int TotalPaginas { get; set; }
 
         public IEnumerable<object> Registros { get; set; }
     }

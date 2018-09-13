@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using K2.Api.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace K2.Web
@@ -10,11 +12,11 @@ namespace K2.Web
         private readonly ICollection _itens;
         private readonly int _totalRegistros;
 
-        public DatatablesResult(int draw, ICollection itens, int totalRegistros)
+        public DatatablesResult(int draw, ProcurarSaida saida)
         {
             _draw = draw;
-            _itens = itens;
-            _totalRegistros = totalRegistros;
+            _itens = saida.ObterRetorno().Registros.ToList();
+            _totalRegistros = saida.ObterRetorno().TotalRegistros;
         }
 
         public async Task ExecuteResultAsync(ActionContext context)

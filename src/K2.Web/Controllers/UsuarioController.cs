@@ -61,7 +61,7 @@ namespace K2.Web.Controllers
             // Cria o cookie de autenticação
 
             var claims = new List<Claim>(saida.ObterClaims());
-            claims.Add(new Claim("jwtToken", saida.Retorno.Token));
+            claims.Add(new Claim("jwtToken", saida.ObterToken()));
 
             var userIdentity = new ClaimsIdentity(
                 new GenericIdentity(saida.ObterNomeUsuario()),
@@ -76,7 +76,7 @@ namespace K2.Web.Controllers
             {
                 AllowRefresh = true,
                 IsPersistent = permanecerLogado,
-                ExpiresUtc = saida.Retorno.DataExpiracaoToken
+                ExpiresUtc = saida.ObterRetorno().DataExpiracaoToken
             };
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);

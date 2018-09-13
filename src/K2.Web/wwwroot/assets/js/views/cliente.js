@@ -13,8 +13,8 @@
                     //App.exibirModalPorJqXHR(xhr);
                 },
                 data: function (data) {
-                    data.Nome = "Jorge";//$("#txtNomeProcurar").val();
-                    data.Email = "jlnpinheiro@gmail.com";//$("#txtEmailProcurar").val();
+                    data.Nome = null;//$("#txtNomeProcurar").val();
+                    data.Email = null;//$("#txtEmailProcurar").val();
                 }
             },
             info: true,

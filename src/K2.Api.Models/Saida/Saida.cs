@@ -21,12 +21,7 @@ namespace K2.Api.Models
         /// <summary>
         /// Objeto retornado
         /// </summary>
-        public virtual object Retorno { get; set; }
-
-        //public Saida()
-        //{
-
-        //}
+        public object Retorno { get; set; }
 
         public Saida(bool sucesso, IEnumerable<string> mensagens, object retorno)
         {
