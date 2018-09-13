@@ -48,7 +48,7 @@ namespace K2.Web.Controllers
 
             var apiResponse = await base.ChamarApi("clientes/procurar", Method.POST, parametros);
 
-            var saida = Saida.Obter(apiResponse.Content);
+            var saida = ProcurarSaida.Obter(apiResponse.Content);
 
 
             return new EmptyResult();

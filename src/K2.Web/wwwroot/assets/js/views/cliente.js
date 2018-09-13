@@ -9,7 +9,7 @@
                 url: App.corrigirPathRota("listar-clientes"),
                 type: "POST",
                 error: function (xhr) {
-                    alert(xhr);
+                    //alert(xhr);
                     //App.exibirModalPorJqXHR(xhr);
                 },
                 data: function (data) {
@@ -192,7 +192,7 @@
             initDataTable();
 
             $("#bCadastrar").click(function () {
-                manterCliente();
+                manterCliente(null);
             });
         }
     };

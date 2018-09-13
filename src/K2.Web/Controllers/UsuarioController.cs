@@ -50,7 +50,7 @@ namespace K2.Web.Controllers
 
             var apiResponse = await base.ChamarApi("usuarios/autenticar", Method.POST, parametros, false);
 
-            var saida = AutenticacaoSaida.Obter(apiResponse.Content);
+            var saida = AutenticarSaida.Obter(apiResponse.Content);
 
             if (saida == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário." }));
@@ -61,7 +61,7 @@ namespace K2.Web.Controllers
             // Cria o cookie de autenticação
 
             var claims = new List<Claim>(saida.ObterClaims());
-            claims.Add(new Claim("jwtToken", saida.ObterToken()));
+            claims.Add(new Claim("jwtToken", saida.Retorno.Token));
 
             var userIdentity = new ClaimsIdentity(
                 new GenericIdentity(saida.ObterNomeUsuario()),
@@ -76,7 +76,7 @@ namespace K2.Web.Controllers
             {
                 AllowRefresh = true,
                 IsPersistent = permanecerLogado,
-                ExpiresUtc = saida.ObterRetorno().DataExpiracaoToken
+                ExpiresUtc = saida.Retorno.DataExpiracaoToken
             };
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);

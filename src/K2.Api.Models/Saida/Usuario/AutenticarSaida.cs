@@ -10,15 +10,19 @@ namespace K2.Api.Models
     /// <summary>
     /// Classe que reflete o resultado do processo de autenticação
     /// </summary>
-    public class AutenticacaoSaida : Saida
+    public class AutenticarSaida : Saida
     {
-        public AutenticacaoSaida(bool sucesso, IEnumerable<string> mensagens, Retorno retorno)
+        public override object Retorno
+        {
+            get => (AutenticarRetorno)base.Retorno;
+            set => base.Retorno = value;
+        }
+
+        public AutenticarSaida(bool sucesso, IEnumerable<string> mensagens, AutenticarRetorno retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
-
-        public Retorno ObterRetorno() => (Retorno)this.Retorno;
 
         /// <summary>
         /// Obtem o token JWT
@@ -50,10 +54,10 @@ namespace K2.Api.Models
             return jwtToken.Claims;
         }
 
-        public new static AutenticacaoSaida Obter(string json)
+        public new static AutenticarSaida Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
-                ? JsonConvert.DeserializeObject<AutenticacaoSaida>(json)
+                ? JsonConvert.DeserializeObject<AutenticarSaida>(json)
                 : null;
         }
     }
@@ -61,7 +65,7 @@ namespace K2.Api.Models
     /// <summary>
     /// Classe que reflete as informações do token JWT retornado no processo de autenticação
     /// </summary>
-    public class Retorno
+    public class AutenticarRetorno
     {
         public DateTimeOffset DataCriacaoToken { get; set; }
 
@@ -69,7 +73,7 @@ namespace K2.Api.Models
 
         public string Token { get; set; }
 
-        public Retorno(DateTimeOffset dataCriacaoToken, DateTimeOffset dataExpiracaoToken, string token)
+        public AutenticarRetorno(DateTimeOffset dataCriacaoToken, DateTimeOffset dataExpiracaoToken, string token)
         {
             DataCriacaoToken = dataCriacaoToken;
             DataExpiracaoToken = dataExpiracaoToken;

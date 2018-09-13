@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace K2.Api.Models
 {
@@ -8,36 +8,36 @@ namespace K2.Api.Models
     /// </summary>
     public class ProcurarSaida : Saida
     {
-        public ProcurarSaida(
-            IEnumerable<object> registros,
-            string ordenarPor,
-            string ordenarSentido,
-            int totalRegistros,
-            int? totalPaginas = null,
-            int? paginaIndex = null,
-            int? paginaTamanho = null)
-            : base(true, new[] { "Procura realizada com sucesso." }, new
-            {
-                PaginaIndex = paginaIndex,
-                PaginaTamanho = paginaTamanho,
-                OrdenarPor = ordenarPor,
-                OrdenarSentido = ordenarSentido,
-                TotalRegistros = totalRegistros,
-                TotalPaginas = totalPaginas,
-                Registros = registros
-            })
+        public ProcurarSaida(bool sucesso, IEnumerable<string> mensagens, object retorno)
+            : base(sucesso, mensagens, retorno)
         {
 
         }
 
-        public ProcurarSaida(IEnumerable<object> registros)
-            : base(true, new[] { "Procura realizada com sucesso." }, new
-            {
-                TotalRegistros = registros != null ? registros.Count() : 0,
-                Registros = registros
-            })
-        {
+        public ProcurarRetorno ObterRetorno() => (ProcurarRetorno)this.Retorno;
 
+        public new static ProcurarSaida Obter(string json)
+        {
+            return !string.IsNullOrEmpty(json)
+                ? JsonConvert.DeserializeObject<ProcurarSaida>(json)
+                : null;
         }
+    }
+
+    public class ProcurarRetorno
+    {
+        public int? PaginaIndex { get; set; }
+
+        public int? PaginaTamanho { get; set; }
+
+        public string OrdenarPor { get; set; }
+
+        public string OrdenarSentido { get;  set; }
+
+        public int? TotalRegistros { get; set; }
+
+        public int? TotalPaginas { get; set; }
+
+        public IEnumerable<object> Registros { get; set; }
     }
 }

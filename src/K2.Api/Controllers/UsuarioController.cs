@@ -97,7 +97,7 @@ namespace K2.Api.Controllers
             // Cria o token JWT em formato de string
             var jwtToken = jwtHandler.WriteToken(securityToken);
 
-            return new Models.AutenticacaoSaida(true, new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso }, new Models.Retorno(dataCriacaoToken, dataExpiracaoToken, jwtToken));
+            return new Models.AutenticarSaida(true, new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso }, new Models.AutenticarRetorno(dataCriacaoToken, dataExpiracaoToken, jwtToken));
         }
     }
 }
