@@ -24,6 +24,34 @@ namespace K2.Dominio.Servicos
             _uow = uow;
         }
 
+        public async Task<ISaida> ObterClientePorId(int id)
+        {
+            this.NotificarSeMenorOuIgualA(id, 0, UsuarioResource.Id_Invalido);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            var cliente = await _clienteRepositorio.ObterPorId(id);
+
+            // Verifica se o cliente existe
+            this.NotificarSeNulo(cliente, ClienteResource.Id_Cliente_Nao_Existe);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            return this.Invalido
+                ? new Saida(false, this.Mensagens, null)
+                : new Saida(true, new[] { ClienteResource.Cliente_Encontrado_Com_Sucesso }, new ClienteSaida(cliente));
+        }
+
+        public async Task<ISaida> ProcurarClientes(ProcurarClienteEntrada entrada)
+        {
+            // Verifica se os parâmetros para a procura foram informadas corretamente
+            return entrada.Invalido
+                ? new Saida(false, entrada.Mensagens, null)
+                : await _clienteRepositorio.Procurar(entrada);
+        }
+
         public async Task<ISaida> CadastrarCliente(CadastrarClienteEntrada entrada)
         {
             // Verifica se as informações para cadastro foram informadas corretamente
@@ -31,13 +59,13 @@ namespace K2.Dominio.Servicos
                 return new Saida(false, entrada.Mensagens, null);
 
             // Verifica se já existe um usuário com o mesmo email
-            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorEmail(entrada.Email), ClienteResource.Cliente_Ja_Existe_Por_Email);
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorEmail(entrada.Email), UsuarioResource.Usuario_Ja_Existe_Por_Email);
 
             // Verifica se já existe um usuário com o mesmo CPF
-            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorCpf(entrada.Cpf), ClienteResource.Cliente_Ja_Existe_Por_Cpf);
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorCpf(entrada.Cpf), UsuarioResource.Usuario_Ja_Existe_Por_Cpf);
 
             // Verifica se já existe um usuário com o mesmo RG
-            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorRg(entrada.Rg), ClienteResource.Cliente_Ja_Existe_Por_Rg);
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorRg(entrada.Rg), UsuarioResource.Usuario_Ja_Existe_Por_Rg);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
@@ -54,12 +82,42 @@ namespace K2.Dominio.Servicos
                 : new Saida(true, new[] { ClienteResource.Cliente_Cadastrado_Com_Sucesso }, new ClienteSaida(cliente));
         }
 
-        public async Task<ISaida> ProcurarClientes(ProcurarClienteEntrada entrada)
+        public async Task<ISaida> AlterarCliente(AlterarClienteEntrada entrada)
         {
-            // Verifica se os parâmetros para a procura foram informadas corretamente
-            return entrada.Invalido
-                ? new Saida(false, entrada.Mensagens, null)
-                : await _clienteRepositorio.Procurar(entrada);
+            // Verifica se as informações para alteração foram informadas corretamente
+            if (entrada.Invalido)
+                return new Saida(false, entrada.Mensagens, null);
+
+            var cliente = await _clienteRepositorio.ObterPorId(entrada.Id, true);
+
+            // Verifica se a categoria existe
+            this.NotificarSeNulo(cliente, ClienteResource.Id_Cliente_Nao_Existe);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Verifica se já existe um usuário com o mesmo email
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorEmail(entrada.Email, cliente.IdUsuario), UsuarioResource.Usuario_Ja_Existe_Por_Email);
+
+            // Verifica se já existe um usuário com o mesmo CPF
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorCpf(entrada.Cpf, cliente.IdUsuario), UsuarioResource.Usuario_Ja_Existe_Por_Cpf);
+
+            // Verifica se já existe um usuário com o mesmo RG
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorRg(entrada.Rg, cliente.IdUsuario), UsuarioResource.Usuario_Ja_Existe_Por_Rg);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Altera o cliente
+            cliente.Alterar(entrada);
+
+            _clienteRepositorio.Atualizar(cliente);
+
+            await _uow.Commit();
+
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { ClienteResource.Cliente_Alterado_Com_Sucesso }, new ClienteSaida(cliente));
         }
     }
 }

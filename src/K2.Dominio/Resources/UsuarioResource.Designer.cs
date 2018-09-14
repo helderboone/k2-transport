@@ -106,6 +106,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O ID informado é inválido..
+        /// </summary>
+        public static string Id_Invalido {
+            get {
+                return ResourceManager.GetString("Id_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O nome é obrigatório e não foi informado..
         /// </summary>
         public static string Nome_Obrigatorio_Nao_Informado {
@@ -201,6 +210,33 @@ namespace K2.Dominio.Resources {
         public static string Usuario_Inativo {
             get {
                 return ResourceManager.GetString("Usuario_Inativo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Já existe um usuário cadastrado com o CPF informado..
+        /// </summary>
+        public static string Usuario_Ja_Existe_Por_Cpf {
+            get {
+                return ResourceManager.GetString("Usuario_Ja_Existe_Por_Cpf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Já existe um usuário cadastrado com o e-mail informado..
+        /// </summary>
+        public static string Usuario_Ja_Existe_Por_Email {
+            get {
+                return ResourceManager.GetString("Usuario_Ja_Existe_Por_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Já existe um usuário cadastrado com o RG informado..
+        /// </summary>
+        public static string Usuario_Ja_Existe_Por_Rg {
+            get {
+                return ResourceManager.GetString("Usuario_Ja_Existe_Por_Rg", resourceCulture);
             }
         }
         

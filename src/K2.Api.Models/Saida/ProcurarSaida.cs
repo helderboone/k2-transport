@@ -26,18 +26,29 @@ namespace K2.Api.Models
 
     public class ProcurarRetorno
     {
-        public int PaginaIndex { get; set; }
+        public int? PaginaIndex { get; }
 
-        public int PaginaTamanho { get; set; }
+        public int? PaginaTamanho { get; }
 
-        public string OrdenarPor { get; set; }
+        public string OrdenarPor { get; }
 
-        public string OrdenarSentido { get;  set; }
+        public string OrdenarSentido { get; }
 
-        public int TotalRegistros { get; set; }
+        public int TotalRegistros { get; }
 
-        public int TotalPaginas { get; set; }
+        public int? TotalPaginas { get; }
 
-        public IEnumerable<object> Registros { get; set; }
+        public IEnumerable<object> Registros { get; }
+
+        public ProcurarRetorno(int? paginaIndex, int? paginaTamanho, string ordenarPor, string ordenarSentido, int totalRegistros, int? totalPaginas, IEnumerable<object> registros)
+        {
+            PaginaIndex    = paginaIndex;
+            PaginaTamanho  = paginaTamanho;
+            OrdenarPor     = ordenarPor;
+            OrdenarSentido = ordenarSentido;
+            TotalRegistros = totalRegistros;
+            TotalPaginas   = totalPaginas;
+            Registros      = registros;
+        }
     }
 }

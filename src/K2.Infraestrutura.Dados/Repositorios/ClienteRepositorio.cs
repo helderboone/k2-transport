@@ -19,9 +19,16 @@ namespace K2.Infraestrutura.Dados.Repositorios
             _efContext = efContext;
         }
 
-        public async Task Inserir(Cliente cliente)
+        public async Task<Cliente> ObterPorId(int id, bool habilitarTracking = false)
         {
-            await _efContext.AddAsync(cliente);
+            var query = _efContext.Clientes
+                    .Include(x => x.Usuario)
+                    .AsQueryable();
+
+            if (!habilitarTracking)
+                query = query.AsNoTracking();
+
+            return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<ProcurarSaida> Procurar(ProcurarClienteEntrada entrada)
@@ -85,6 +92,16 @@ namespace K2.Infraestrutura.Dados.Repositorios
                     entrada.OrdenarSentido,
                     totalRegistros);
             }
+        }
+
+        public async Task Inserir(Cliente cliente)
+        {
+            await _efContext.AddAsync(cliente);
+        }
+
+        public void Atualizar(Cliente cliente)
+        {
+            _efContext.Entry(cliente).State = EntityState.Modified;
         }
     }
 }

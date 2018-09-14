@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cliente_Alterado_Com_Sucesso" xml:space="preserve">
+    <value>O cliente foi alterado com sucesso.</value>
+  </data>
   <data name="Cliente_Cadastrado_Com_Sucesso" xml:space="preserve">
     <value>O cliente foi cadastrado com sucesso.</value>
   </data>
-  <data name="Cliente_Ja_Existe_Por_Cpf" xml:space="preserve">
-    <value>Já existe um cliente cadastrado com o CPF informado.</value>
+  <data name="Cliente_Encontrado_Com_Sucesso" xml:space="preserve">
+    <value>O cliente com o ID informado foi encontrado com sucesso.</value>
   </data>
-  <data name="Cliente_Ja_Existe_Por_Email" xml:space="preserve">
-    <value>Já existe um cliente cadastrado com o e-mail informado.</value>
-  </data>
-  <data name="Cliente_Ja_Existe_Por_Rg" xml:space="preserve">
-    <value>Já existe um cliente cadastrado com o RG informado.</value>
+  <data name="Id_Cliente_Nao_Existe" xml:space="preserve">
+    <value>O cliente com o ID informado não existe.</value>
   </data>
 </root>

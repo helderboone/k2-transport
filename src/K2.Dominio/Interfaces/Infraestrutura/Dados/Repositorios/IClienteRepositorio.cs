@@ -8,13 +8,24 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
     public interface IClienteRepositorio
     {
         /// <summary>
-        /// Insere uma novo cliente
+        /// Obtém um cliente a partir do seu ID
         /// </summary>
-        Task Inserir(Cliente cliente);
+        /// <param name="habilitarTracking">Indica que o tracking do EF deverá estar habilitado, permitindo alteração dos dados.</param>
+        Task<Cliente> ObterPorId(int id, bool habilitarTracking = false);
 
         /// <summary>
         /// Obtém os clientes baseados nos parâmetros de procura
         /// </summary>
         Task<ProcurarSaida> Procurar(ProcurarClienteEntrada entrada);
+
+        /// <summary>
+        /// Insere uma novo cliente
+        /// </summary>
+        Task Inserir(Cliente cliente);
+
+        /// <summary>
+        /// Atualiza as informações do cliente
+        /// </summary>
+        void Atualizar(Cliente cliente);
     }
 }

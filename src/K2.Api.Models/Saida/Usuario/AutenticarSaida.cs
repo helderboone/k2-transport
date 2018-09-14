@@ -18,9 +18,6 @@ namespace K2.Api.Models
             
         }
 
-        /// <summary>
-        /// Obtém o retorno da autenticação
-        /// </summary>
         public AutenticarRetorno ObterRetorno() => (AutenticarRetorno)this.Retorno;
         
         /// <summary>
@@ -66,11 +63,11 @@ namespace K2.Api.Models
     /// </summary>
     public class AutenticarRetorno
     {
-        public DateTimeOffset DataCriacaoToken { get; set; }
+        public DateTimeOffset DataCriacaoToken { get; }
 
-        public DateTimeOffset DataExpiracaoToken { get; set; }
+        public DateTimeOffset DataExpiracaoToken { get; }
 
-        public string Token { get; set; }
+        public string Token { get; }
 
         public AutenticarRetorno(DateTimeOffset dataCriacaoToken, DateTimeOffset dataExpiracaoToken, string token)
         {

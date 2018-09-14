@@ -42,8 +42,8 @@ namespace K2.Infraestrutura.Dados.Repositorios
         public async Task<bool> VerificarExistenciaPorEmail(string email, int? idUsuario = null)
         {
             return idUsuario.HasValue
-                ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase))
-                : await _efContext.Usuarios.AnyAsync(x => x.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase));
+                ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Email.ToLower() == email.ToLower())
+                : await _efContext.Usuarios.AnyAsync(x => x.Email.ToLower() == email.ToLower());
         }
 
         public async Task<bool> VerificarExistenciaPorRg(string rg, int? idUsuario = null)

@@ -57,17 +57,30 @@ namespace K2.Dominio.Entidades
 
         }
 
-        public Cliente(CadastrarClienteEntrada cadastrarEntrada)
+        public Cliente(CadastrarClienteEntrada entrada)
         {
-            if (cadastrarEntrada.Invalido)
+            if (entrada.Invalido)
                 return;
 
-            this.Usuario = new Usuario(cadastrarEntrada);
+            this.Usuario = new Usuario(entrada);
 
-            this.Cep = cadastrarEntrada.Cep;
-            this.Endereco = cadastrarEntrada.Endereco;
-            this.Municipio = cadastrarEntrada.Municipio;
-            this.Uf = cadastrarEntrada.Uf;
+            this.Cep       = entrada.Cep;
+            this.Endereco  = entrada.Endereco;
+            this.Municipio = entrada.Municipio;
+            this.Uf        = entrada.Uf;
+        }
+
+        public void Alterar(AlterarClienteEntrada entrada)
+        {
+            if (entrada.Invalido || entrada.Id != this.Id)
+                return;
+
+            this.Cep       = entrada.Cep;
+            this.Endereco  = entrada.Endereco;
+            this.Municipio = entrada.Municipio;
+            this.Uf        = entrada.Uf;
+
+            this.Usuario.Alterar(entrada);
         }
 
         public override string ToString()

@@ -18,11 +18,6 @@ namespace K2.Dominio.Comandos.Saida
         public int Id { get; }
 
         /// <summary>
-        /// Id do usuário
-        /// </summary>
-        public int IdUsuario { get; }
-
-        /// <summary>
         /// Nome do usuário
         /// </summary>
         public string Nome { get; }
@@ -71,7 +66,6 @@ namespace K2.Dominio.Comandos.Saida
         {
             this.Id        = cliente.Id;
             this.Ativo     = cliente.Usuario.Ativo;
-            this.IdUsuario = cliente.Usuario.Id;
             this.Nome      = cliente.Usuario.Nome;
             this.Email     = cliente.Usuario.Email;
             this.Cpf       = cliente.Usuario.Cpf;

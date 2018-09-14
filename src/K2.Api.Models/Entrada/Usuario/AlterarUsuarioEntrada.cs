@@ -6,6 +6,11 @@
     public class AlterarUsuarioEntrada : BaseModel
     {
         /// <summary>
+        /// ID do usuário
+        /// </summary>
+        public int IdUsuario { get; set; }
+
+        /// <summary>
         /// Nome do usuário
         /// </summary>
         public string Nome { get; set; }

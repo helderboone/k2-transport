@@ -53,49 +53,6 @@ namespace K2.Web.Controllers
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
             return new DatatablesResult(dataTablesParams.Draw, saida);
-            
-            //try
-            //{
-            //    filtro.PaginaIndex = parametros.PaginaIndex;
-            //    filtro.PaginaTamanho = parametros.PaginaTamanho;
-            //    filtro.TipoPerfil = new[] { TipoPerfilUsuario.Cliente };
-
-            //    switch (parametros.OrdenarPor)
-            //    {
-            //        case "Nome":
-            //            filtro.ModificarOrdenacao(x => x.Nome, parametros.OrdenarSentido);
-            //            break;
-            //        case "Email":
-            //            filtro.ModificarOrdenacao(x => x.Email, parametros.OrdenarSentido);
-            //            break;
-            //        case "FlagAtivo":
-            //            filtro.ModificarOrdenacao(x => x.FlagAtivo.ToString(), parametros.OrdenarSentido);
-            //            break;
-            //    }
-
-            //    var lst =
-            //        _usuarioService.Procurar(filtro)
-            //            .Select(
-            //                x =>
-            //                    new
-            //                    {
-            //                        x.IdUsuario,
-            //                        x.Nome,
-            //                        x.Email,
-            //                        x.FlagAtivo,
-            //                        x.Telefone,
-            //                        Condominios = x.Condominios.Any()
-            //                            ? string.Join("<br/>", x.Condominios.OrderBy(y => y.Nome).Select(y => y.Nome.ToUpper()))
-            //                            : string.Empty
-            //                    })
-            //            .ToList();
-
-            //    return base.ObterDataSourceDataTables(parametros.Draw, lst, filtro.TotalRegistros);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return RetornarJsonMensagemPorException(ex, TipoAcaoOcultarMensagem.OcultarPopups, "Ocorreu um erro ao carregar a listagem de clientes.");
-            //}
         }
 
         [Authorize(Policy = "Administrador")]
@@ -128,6 +85,49 @@ namespace K2.Web.Controllers
 
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar o cliente.", saida.Mensagens))
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
+        }
+
+        [Authorize(Policy = "Administrador")]
+        [HttpGet]
+        [Route("alterar-cliente/{id:int:min(1)}")]
+        public async Task<IActionResult> AlterarCliente(int id)
+        {
+            var apiResponse = await base.ChamarApi("clientes/obter-por-id/" + id, Method.GET);
+
+            var saida = ClienteSaida.Obter(apiResponse.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações do cliente.", new[] { "Não foi possível recuperar as informações do usuário." }));
+
+            if (!saida.Sucesso)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações do cliente.", saida.Mensagens));
+
+            return PartialView("Manter", saida.ObterRetorno());
+        }
+
+        [Authorize(Policy = "Administrador")]
+        [HttpPost]
+        [Route("alterar-cliente")]
+        public async Task<IActionResult> AlterarCliente(AlterarClienteEntrada entrada)
+        {
+            if (entrada == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações do cliente não foram preenchidas.", new[] { "Verifique se todas as informações do cliente foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
+
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
+
+            var apiResponse = await base.ChamarApi("clientes/alterar", Method.PUT, parametros);
+
+            var saida = Saida.Obter(apiResponse.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar o cliente.", new[] { "A API não retornou nenhuma resposta." }));
+
+            return !saida.Sucesso
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar o cliente.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
     }

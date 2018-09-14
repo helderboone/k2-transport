@@ -66,7 +66,7 @@ namespace K2.Api.Controllers
             return new Models.Saida(saida.Sucesso, saida.Mensagens, saida.Retorno);
         }
 
-        private Models.Saida CriarResponseTokenJwt(UsuarioSaida usuario, DateTime dataCriacaoToken, DateTime dataExpiracaoToken, JwtTokenConfig tokenConfig)
+        private Models.AutenticarSaida CriarResponseTokenJwt(UsuarioSaida usuario, DateTime dataCriacaoToken, DateTime dataExpiracaoToken, JwtTokenConfig tokenConfig)
         {
             var identity = new ClaimsIdentity(
                     new GenericIdentity(usuario.Email),

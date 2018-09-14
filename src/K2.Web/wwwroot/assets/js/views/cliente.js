@@ -4,7 +4,6 @@
         App.bloquear();
 
         $("#tblCliente").DataTable({
-            serverSide: true,
             ajax: {
                 url: App.corrigirPathRota("listar-clientes"),
                 type: "POST",
@@ -35,7 +34,7 @@
                 },
                 {
                     data: null,
-                    className: "td-actions dt-center",
+                    className: "td-actions all dt-center",
                     orderable: false,
                     width: "70px",
                     render: function (data, type, row) {
@@ -44,6 +43,7 @@
                     }
                 }
             ],
+            serverSide: true,
             responsive: true,
 			pagingType: 'full_numbers',
             order: [1, "asc"],
@@ -58,7 +58,7 @@
                 var id = $(this).data("id");
 
                 $(this).click(function () {
-                    alert('alterar');
+                    manterCliente(id);
                 });
             });
 
@@ -78,10 +78,6 @@
         var cadastro = id === null || id === 0;
 
         App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-cliente/" + id) : App.corrigirPathRota("cadastrar-cliente")), function () {
-            $("#iCpf").inputmask("mm/dd/yyyy", {
-                autoUnmask: true
-            });
-
             $("#iCpf").inputmask({
                 "mask": "999.999.999-99"
             });
@@ -122,7 +118,7 @@
                 submitHandler: function () {
 
                     var cliente = {
-                        IdCliente: $("#iIdCliente").val(),
+                        Id: $("#iIdCliente").val(),
                         Nome: $("#iNome").val(),
                         Email: $("#iEmail").val(),
                         Cpf: $("#iCpf").val(),
@@ -144,7 +140,7 @@
                             if (feedback.Tipo.Nome == Tipo.Sucesso) {
                                 feedback.exibirModal(function ()
                                 {
-                                    alert("Dar refresh aqui."); App.ocultarModal();
+                                    $("#tblCliente").DataTable().ajax.reload();
                                     App.ocultarModal();
                                 });
                             }

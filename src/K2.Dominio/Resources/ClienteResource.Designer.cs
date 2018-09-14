@@ -61,6 +61,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O cliente foi alterado com sucesso..
+        /// </summary>
+        public static string Cliente_Alterado_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Cliente_Alterado_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O cliente foi cadastrado com sucesso..
         /// </summary>
         public static string Cliente_Cadastrado_Com_Sucesso {
@@ -70,29 +79,20 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Já existe um cliente cadastrado com o CPF informado..
+        ///   Looks up a localized string similar to O cliente com o ID informado foi encontrado com sucesso..
         /// </summary>
-        public static string Cliente_Ja_Existe_Por_Cpf {
+        public static string Cliente_Encontrado_Com_Sucesso {
             get {
-                return ResourceManager.GetString("Cliente_Ja_Existe_Por_Cpf", resourceCulture);
+                return ResourceManager.GetString("Cliente_Encontrado_Com_Sucesso", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Já existe um cliente cadastrado com o e-mail informado..
+        ///   Looks up a localized string similar to O cliente com o ID informado não existe..
         /// </summary>
-        public static string Cliente_Ja_Existe_Por_Email {
+        public static string Id_Cliente_Nao_Existe {
             get {
-                return ResourceManager.GetString("Cliente_Ja_Existe_Por_Email", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Já existe um cliente cadastrado com o RG informado..
-        /// </summary>
-        public static string Cliente_Ja_Existe_Por_Rg {
-            get {
-                return ResourceManager.GetString("Cliente_Ja_Existe_Por_Rg", resourceCulture);
+                return ResourceManager.GetString("Id_Cliente_Nao_Existe", resourceCulture);
             }
         }
     }

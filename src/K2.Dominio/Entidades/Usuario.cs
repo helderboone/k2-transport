@@ -79,6 +79,16 @@ namespace K2.Dominio.Entidades
             this.Perfil        = cadastrarEntrada.Perfil;
         }
 
+        public void Alterar(AlterarUsuarioEntrada entrada)
+        {
+            this.Nome    = entrada.Nome;
+            this.Email   = entrada.Email;
+            this.Cpf     = entrada.Cpf;
+            this.Rg      = entrada.Rg;
+            this.Celular = entrada.Celular;
+            this.Ativo   = entrada.Ativo;
+        }
+
         public override string ToString()
         {
             return this.Nome.ToUpper();

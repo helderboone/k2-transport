@@ -48,7 +48,7 @@ namespace K2.Web.Controllers
                         request.AddHeader("Authorization", "Bearer " + tokenJwt);
                 }
 
-                if (parametros.Any())
+                if (parametros != null && parametros.Any())
                 {
                     foreach (var parametro in parametros)
                         request.AddParameter(parametro);

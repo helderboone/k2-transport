@@ -6,6 +6,11 @@
     public class AlterarClienteEntrada : AlterarUsuarioEntrada
     {
         /// <summary>
+        /// ID do cliente
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// CEP do cliente
         /// </summary>
         public string Cep { get; set; }
