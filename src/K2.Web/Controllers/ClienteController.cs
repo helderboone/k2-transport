@@ -38,8 +38,10 @@ namespace K2.Web.Controllers
 
             var dataTablesParams = new DatatablesHelper(_httpContextAccessor);
 
-            filtro.PaginaIndex   = dataTablesParams.PaginaIndex;
-            filtro.PaginaTamanho = dataTablesParams.PaginaTamanho;
+            filtro.OrdenarPor     = dataTablesParams.OrdenarPor;
+            filtro.OrdenarSentido = dataTablesParams.OrdenarSentido;
+            filtro.PaginaIndex    = dataTablesParams.PaginaIndex;
+            filtro.PaginaTamanho  = dataTablesParams.PaginaTamanho;
 
             var parametros = new Parameter[]
             {
@@ -114,7 +116,7 @@ namespace K2.Web.Controllers
 
             var parametros = new Parameter[]
             {
-                new Parameter{ Name = "cadastrarClienteEntrada", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+                new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
             var apiResponse = await base.ChamarApi("clientes/cadastrar", Method.POST, parametros);

@@ -1,6 +1,7 @@
 ﻿using JNogueira.Infraestrutura.NotifiqueMe;
 using JNogueira.Infraestrutura.Utilzao;
 using K2.Dominio.Entidades;
+using System.Reflection;
 
 namespace K2.Dominio.Comandos.Entrada
 {
@@ -32,7 +33,7 @@ namespace K2.Dominio.Comandos.Entrada
 
         private void Validar()
         {
-            this.NotificarSeNulo(typeof(Cliente).GetProperty(this.OrdenarPor), $"A propriedade {this.OrdenarPor} não pertence a classe \"Cliente\".");
+            this.NotificarSeNulo(typeof(Cliente).GetProperty(this.OrdenarPor, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance), $"A propriedade {this.OrdenarPor} não pertence a classe \"Cliente\".");
         }
     }
 }

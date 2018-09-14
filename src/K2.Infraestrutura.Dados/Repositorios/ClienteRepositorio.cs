@@ -43,19 +43,19 @@ namespace K2.Infraestrutura.Dados.Repositorios
             if (!string.IsNullOrEmpty(entrada.Rg))
                 query = query.Where(x => x.Usuario.Rg == entrada.Rg);
 
-            switch (entrada.OrdenarPor)
+            switch (entrada.OrdenarPor?.ToLower())
             {
-                case "Nome":
-                    query = entrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Nome) : query.OrderByDescending(x => x.Usuario.Nome);
+                case "nome":
+                    query = entrada.OrdenarSentido.Equals("ASC", StringComparison.CurrentCultureIgnoreCase) ? query.OrderBy(x => x.Usuario.Nome) : query.OrderByDescending(x => x.Usuario.Nome);
                     break;
-                case "Email":
-                    query = entrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Email) : query.OrderByDescending(x => x.Usuario.Email);
+                case "email":
+                    query = entrada.OrdenarSentido.Equals("ASC", StringComparison.CurrentCultureIgnoreCase) ? query.OrderBy(x => x.Usuario.Email) : query.OrderByDescending(x => x.Usuario.Email);
                     break;
-                case "Cpf":
-                    query = entrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Cpf) : query.OrderByDescending(x => x.Usuario.Cpf);
+                case "cpf":
+                    query = entrada.OrdenarSentido.Equals("ASC", StringComparison.CurrentCultureIgnoreCase) ? query.OrderBy(x => x.Usuario.Cpf) : query.OrderByDescending(x => x.Usuario.Cpf);
                     break;
-                case "Rg":
-                    query = entrada.OrdenarSentido == "ASC" ? query.OrderBy(x => x.Usuario.Rg) : query.OrderByDescending(x => x.Usuario.Rg);
+                case "rg":
+                    query = entrada.OrdenarSentido.Equals("ASC", StringComparison.CurrentCultureIgnoreCase) ? query.OrderBy(x => x.Usuario.Rg) : query.OrderByDescending(x => x.Usuario.Rg);
                     break;
                 default:
                     query = query.OrderByProperty(entrada.OrdenarPor, entrada.OrdenarSentido);

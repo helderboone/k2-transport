@@ -169,28 +169,28 @@ var App = function () {
 	};
 }();
 
-//if (jQuery().dataTable) {
-//	$.extend($.fn.dataTable.defaults, {
-//		processing: false,
-//		responsive: false,
-//		autoWidth: true,
-//		lengthMenu: [[10, 25, 50], [10, 25, 50]],
-//		pagingType: "full_numbers",
-//		language: {
-//			sLengthMenu: '_MENU_ registros por p&aacute;gina',
-//			sProcessing: '<i class="fa fa-spinner fa-pulse"></i> Carregando',
-//			infoEmpty: "Nenhum registro encontrado.",
-//			info: "_END_ de _TOTAL_ registros",
-//			paginate: {
-//				first: "Primeiro",
-//				next: "Pr&oacute;ximo",
-//				previous: "Anterior",
-//				last: "Último",
-//				zeroRecords: "Nenhum registro encontrado."
-//			},
-//			infoFiltered: "(filtrado a partir do total de _MAX_ registros)",
-//			emptyTable: "Nenhum registro encontrado.",
-//			zeroRecords: "Nenhum registro encontrado."
-//		}
-//	});
-//}
+if (jQuery().dataTable) {
+	$.extend($.fn.dataTable.defaults, {
+		//processing: false,
+		//responsive: false,
+		autoWidth: true,
+		lengthMenu: [[10, 25, 50], [10, 25, 50]],
+        pagingType: "full_numbers",
+		language: {
+			//sLengthMenu: '_MENU_ registros por p&aacute;gina',
+			//sProcessing: '<i class="fa fa-spinner fa-pulse"></i> Carregando',
+			//infoEmpty: "Nenhum registro encontrado.",
+            info: "Exibindo _START_ de _END_ of _TOTAL_ registros",
+			paginate: {
+				first: "Primeiro",
+				next: "Pr&oacute;ximo",
+				previous: "Anterior",
+				last: "Último",
+				zeroRecords: "Nenhum registro encontrado."
+			},
+			//infoFiltered: "(filtrado a partir do total de _MAX_ registros)",
+			emptyTable: "Nenhum registro encontrado.",
+			zeroRecords: "Nenhum registro encontrado."
+		}
+	});
+}
