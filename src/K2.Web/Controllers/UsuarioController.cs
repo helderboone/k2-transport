@@ -1,5 +1,5 @@
-﻿using K2.Api.Models;
-using K2.Web.Filters;
+﻿using K2.Web.Filters;
+using K2.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;

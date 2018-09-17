@@ -35,6 +35,15 @@
     background-color: rgba(54,70,93,.85);
 }
 
+.jconfirm.jconfirm-light .jconfirm-bg {
+    background-color: #444;
+    opacity: 0.5;
+}
+
+div.jconfirm-content-pane .jconfirm-content {
+    overflow: hidden !important;
+}
+
 .m-portlet-xs {
     max-width: 200px;
 }
@@ -124,6 +133,20 @@
     background-color: #f9f9f9;
 }
 
-div.jconfirm-content-pane .jconfirm-content {
-   overflow: hidden !important;
+.modal-backdrop {
+    background-color: #444;
+    opacity: 0.5;
+}
+
+.modal-content {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
+    
+    background-color:transparent;
+}
+
+.modal .modal-content {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }

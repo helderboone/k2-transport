@@ -126,6 +126,9 @@
   <data name="Cliente_Encontrado_Com_Sucesso" xml:space="preserve">
     <value>O cliente com o ID informado foi encontrado com sucesso.</value>
   </data>
+  <data name="Cliente_Excluido_Com_Sucesso" xml:space="preserve">
+    <value>O cliente foi excluído com sucesso.</value>
+  </data>
   <data name="Id_Cliente_Nao_Existe" xml:space="preserve">
     <value>O cliente com o ID informado não existe.</value>
   </data>

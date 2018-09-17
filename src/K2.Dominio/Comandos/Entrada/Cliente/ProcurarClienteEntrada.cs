@@ -11,9 +11,21 @@ namespace K2.Dominio.Comandos.Entrada
 
         public string Email { get; set; }
 
-        public string Cpf { get; set; }
+        private string _cpf;
 
-        public string Rg { get; set; }
+        public string Cpf
+        {
+            get => _cpf?.RemoverCaracter(".", "-");
+            set => _cpf = value;
+        }
+
+        private string _rg;
+
+        public string Rg
+        {
+            get => _rg?.RemoverCaracter(".", "-", "/");
+            set => _rg = value;
+        }
 
         public ProcurarClienteEntrada(string ordenarPor,
             string ordenarSentido,
@@ -25,9 +37,6 @@ namespace K2.Dominio.Comandos.Entrada
                 paginaIndex,
                 paginaTamanho)
         {
-            this.Cpf = this.Cpf?.RemoverCaracter(".", "-");
-            this.Rg = this.Rg?.ToUpper().RemoverCaracter(".", "-", "/");
-
             this.Validar();
         }
 

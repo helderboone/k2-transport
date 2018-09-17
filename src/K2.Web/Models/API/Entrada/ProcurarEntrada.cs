@@ -1,4 +1,4 @@
-﻿namespace K2.Api.Models
+﻿namespace K2.Web.Models
 {
     /// <summary>
     /// Classe que reflete os parâmetros básicos para realizar uma procura

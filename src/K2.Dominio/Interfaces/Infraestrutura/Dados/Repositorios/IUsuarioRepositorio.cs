@@ -29,5 +29,10 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         /// Insere uma novo usuário
         /// </summary>
         Task Inserir(Usuario usuario);
+
+        /// <summary>
+        /// Deleta um usuário
+        /// </summary>
+        void Deletar(Usuario usuario);
     }
 }

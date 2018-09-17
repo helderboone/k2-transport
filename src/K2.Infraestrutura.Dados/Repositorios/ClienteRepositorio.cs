@@ -48,7 +48,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
                 query = query.Where(x => x.Usuario.Cpf == entrada.Cpf);
 
             if (!string.IsNullOrEmpty(entrada.Rg))
-                query = query.Where(x => x.Usuario.Rg == entrada.Rg);
+                query = query.Where(x => x.Usuario.Rg.IndexOf(entrada.Rg, StringComparison.InvariantCultureIgnoreCase) != -1);
 
             switch (entrada.OrdenarPor?.ToLower())
             {
@@ -102,6 +102,11 @@ namespace K2.Infraestrutura.Dados.Repositorios
         public void Atualizar(Cliente cliente)
         {
             _efContext.Entry(cliente).State = EntityState.Modified;
+        }
+
+        public void Deletar(Cliente cliente)
+        {
+            _efContext.Clientes.Remove(cliente);
         }
     }
 }

@@ -8,14 +8,14 @@ namespace K2.Dominio.Comandos.Saida
     public class ClienteSaida
     {
         /// <summary>
-        /// Indica se o cliente está ativo
-        /// </summary>
-        public bool Ativo { get; }
-        
-        /// <summary>
         /// Id do cliente
         /// </summary>
         public int Id { get; }
+
+        /// <summary>
+        /// Indica se o cliente está ativo
+        /// </summary>
+        public bool Ativo { get; }
 
         /// <summary>
         /// Nome do usuário

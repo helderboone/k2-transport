@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace K2.Api.Models
+namespace K2.Web.Models
 {
     /// <summary>
     /// Classe para padronização das saídas da API relacionadas a procura

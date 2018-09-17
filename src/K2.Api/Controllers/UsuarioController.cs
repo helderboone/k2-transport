@@ -1,5 +1,6 @@
 ﻿using K2.Dominio.Comandos.Entrada;
 using K2.Dominio.Comandos.Saida;
+using K2.Dominio.Interfaces.Comandos;
 using K2.Dominio.Interfaces.Servicos;
 using K2.Dominio.Resources;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +30,7 @@ namespace K2.Api.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("v1/usuarios/autenticar")]
-        public async Task<Models.Saida> Autenticar(
+        public async Task<ISaida> Autenticar(
             string email,
             string senha,
             [FromServices] JwtTokenConfig tokenConfig /*FromServices: resolvidos via mecanismo de injeção de dependências do ASP.NET Core*/)
@@ -39,7 +40,7 @@ namespace K2.Api.Controllers
             var saida = await _usuarioServico.Autenticar(entrada);
 
             if (!saida.Sucesso)
-                return new Models.Saida(saida.Sucesso, saida.Mensagens, saida.Retorno);
+                return new Saida(saida.Sucesso, saida.Mensagens, saida.Retorno);
 
             var usuario = (UsuarioSaida)saida.Retorno;
 
@@ -55,7 +56,7 @@ namespace K2.Api.Controllers
         [Authorize]
         [HttpPut]
         [Route("v1/usuarios/alterar-senha")]
-        public async Task<Models.Saida> AlteraSenha([FromBody] Models.AlterarSenhaUsuarioEntrada model)
+        public async Task<ISaida> AlteraSenha([FromBody] AlterarSenhaUsuarioEntrada model)
         {
             var emailUsuario = base.ObterEmailUsuarioAutenticado();
 
@@ -63,10 +64,10 @@ namespace K2.Api.Controllers
 
             var saida = await _usuarioServico.AlterarSenha(entrada);
 
-            return new Models.Saida(saida.Sucesso, saida.Mensagens, saida.Retorno);
+            return new Saida(saida.Sucesso, saida.Mensagens, saida.Retorno);
         }
 
-        private Models.AutenticarSaida CriarResponseTokenJwt(UsuarioSaida usuario, DateTime dataCriacaoToken, DateTime dataExpiracaoToken, JwtTokenConfig tokenConfig)
+        private ISaida CriarResponseTokenJwt(UsuarioSaida usuario, DateTime dataCriacaoToken, DateTime dataExpiracaoToken, JwtTokenConfig tokenConfig)
         {
             var identity = new ClaimsIdentity(
                     new GenericIdentity(usuario.Email),
@@ -97,7 +98,10 @@ namespace K2.Api.Controllers
             // Cria o token JWT em formato de string
             var jwtToken = jwtHandler.WriteToken(securityToken);
 
-            return new Models.AutenticarSaida(true, new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso }, new Models.AutenticarRetorno(dataCriacaoToken, dataExpiracaoToken, jwtToken));
+            return new Saida(
+                true,
+                new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso },
+                new { DataCriacaoToken = dataCriacaoToken, DataExpiracaoToken = dataExpiracaoToken, Token = jwtToken });
         }
     }
 }

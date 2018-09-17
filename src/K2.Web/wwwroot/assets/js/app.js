@@ -44,14 +44,6 @@ var App = function () {
             }
 		},
 
-		//aplicarMascaraCnpj: function (input) {
-		//	$(input).mask("99.999.999/9999-99");
-		//},
-
-		//aplicarMascaraData: function (input) {
-		//	$(input).mask("99/99/9999");
-		//},
-
         // Exibe um popup utilizando o plugin Jquery Confirm
 		exibirModalPorHtml: function (conteudoHtml, openCallback, fecharAoClicarBg, permanecerAberto) {
 

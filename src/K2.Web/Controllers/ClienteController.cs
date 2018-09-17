@@ -1,6 +1,6 @@
-﻿using K2.Api.Models;
-using K2.Web.Filters;
+﻿using K2.Web.Filters;
 using K2.Web.Helpers;
+using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -98,7 +98,7 @@ namespace K2.Web.Controllers
             var saida = ClienteSaida.Obter(apiResponse.Content);
 
             if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações do cliente.", new[] { "Não foi possível recuperar as informações do usuário." }));
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações do cliente.", new[] { "Não foi possível recuperar as informações do cliente." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações do cliente.", saida.Mensagens));
@@ -129,6 +129,23 @@ namespace K2.Web.Controllers
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar o cliente.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
+        }
+
+        [Authorize(Policy = "Administrador")]
+        [HttpPost]
+        [Route("excluir-cliente/{id:int}")]
+        public async Task<IActionResult> ExcluirCliente(int id)
+        {
+            var apiResponse = await base.ChamarApi("clientes/excluir/" + id, Method.DELETE);
+
+            var saida = Saida.Obter(apiResponse.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir o cliente.", new[] { "Não foi possível recuperar as informações do cliente." }));
+
+            return !saida.Sucesso
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir o cliente.", saida.Mensagens))
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Cliente excluído com sucesso."));
         }
     }
 }

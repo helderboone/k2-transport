@@ -30,12 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\K2.Api.Models\K2.Api.Models.csproj" />
     <ProjectReference Include="..\K2.Infraestrutura\K2.Infraestrutura.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 

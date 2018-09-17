@@ -1,5 +1,5 @@
 ﻿using K2.Dominio.Comandos.Entrada;
-using K2.Dominio.Comandos.Saida;
+using K2.Dominio.Interfaces.Comandos;
 using K2.Dominio.Interfaces.Servicos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +23,7 @@ namespace K2.Api.Controllers
         [Authorize(Policy = "Administrador")]
         [HttpPost]
         [Route("v1/clientes/procurar")]
-        public async Task<Models.ProcurarSaida> Procurar([FromBody] Models.ProcurarClienteEntrada model)
+        public async Task<ISaida> Procurar([FromBody] ProcurarClienteEntrada model)
         {
             var entrada = new ProcurarClienteEntrada(model?.OrdenarPor, model?.OrdenarSentido, model?.PaginaIndex, model?.PaginaTamanho)
             {
@@ -33,18 +33,7 @@ namespace K2.Api.Controllers
                 Rg    = model?.Rg
             };
 
-            var saida = await _clienteServico.ProcurarClientes(entrada);
-
-            var retorno = (ProcurarRetorno)saida.Retorno;
-
-            return new Models.ProcurarSaida(saida.Sucesso, saida.Mensagens, new Models.ProcurarRetorno(
-                retorno.PaginaIndex,
-                retorno.PaginaTamanho,
-                retorno.OrdenarPor,
-                retorno.OrdenarSentido,
-                retorno.TotalRegistros,
-                retorno.TotalPaginas,
-                retorno.Registros));
+            return await _clienteServico.ProcurarClientes(entrada);
         }
 
         /// <summary>
@@ -53,7 +42,7 @@ namespace K2.Api.Controllers
         [Authorize(Policy = "Administrador")]
         [HttpPost]
         [Route("v1/clientes/cadastrar")]
-        public async Task<Models.Saida> Cadastrar([FromBody] Models.CadastrarClienteEntrada model)
+        public async Task<ISaida> Cadastrar([FromBody] CadastrarClienteEntrada model)
         {
             var entrada = new CadastrarClienteEntrada(
                 model.Nome,
@@ -67,9 +56,7 @@ namespace K2.Api.Controllers
                 model.Municipio,
                 model.Uf);
 
-            var saida = await _clienteServico.CadastrarCliente(entrada);
-
-            return new Models.Saida(saida.Sucesso, saida.Mensagens, saida.Retorno);
+            return await _clienteServico.CadastrarCliente(entrada);
         }
 
         /// <summary>
@@ -78,7 +65,7 @@ namespace K2.Api.Controllers
         [Authorize(Policy = "Administrador")]
         [HttpPut]
         [Route("v1/clientes/alterar")]
-        public async Task<Models.Saida> Alterar([FromBody] Models.AlterarClienteEntrada model)
+        public async Task<ISaida> Alterar([FromBody] AlterarClienteEntrada model)
         {
             var entrada = new AlterarClienteEntrada(
                 model.Id,
@@ -93,9 +80,7 @@ namespace K2.Api.Controllers
                 model.Municipio,
                 model.Uf);
 
-            var saida = await _clienteServico.AlterarCliente(entrada);
-
-            return new Models.Saida(saida.Sucesso, saida.Mensagens, saida.Retorno);
+            return await _clienteServico.AlterarCliente(entrada);
         }
 
         /// <summary>
@@ -104,11 +89,20 @@ namespace K2.Api.Controllers
         [Authorize(Policy = "Administrador")]
         [HttpGet]
         [Route("v1/clientes/obter-por-id/{id:int}")]
-        public async Task<Models.Saida> ObterPorId(int id)
+        public async Task<ISaida> ObterPorId(int id)
         {
-            var saida =  await _clienteServico.ObterClientePorId(id);
+            return await _clienteServico.ObterClientePorId(id);
+        }
 
-            return new Models.Saida(saida.Sucesso, saida.Mensagens, saida.Retorno);
+        /// <summary>
+        /// Realiza a exclusão de um cliente.
+        /// </summary>
+        [Authorize(Policy = "Administrador")]
+        [HttpDelete]
+        [Route("v1/clientes/excluir/{id:int}")]
+        public async Task<ISaida> ExcluirCliente(int id)
+        {
+            return await _clienteServico.ExcluirCliente(id);
         }
     }
 }

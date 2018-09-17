@@ -1,8 +1,7 @@
-﻿using JNogueira.Infraestrutura.Utilzao;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace K2.Api.Models
+namespace K2.Web.Models
 {
     /// <summary>
     /// Classe que reflete as informações de saída de um cliente

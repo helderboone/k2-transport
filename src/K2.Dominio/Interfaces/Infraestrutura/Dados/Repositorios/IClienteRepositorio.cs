@@ -27,5 +27,10 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         /// Atualiza as informações do cliente
         /// </summary>
         void Atualizar(Cliente cliente);
+
+        /// <summary>
+        /// Deleta um cliente
+        /// </summary>
+        void Deletar(Cliente cliente);
     }
 }

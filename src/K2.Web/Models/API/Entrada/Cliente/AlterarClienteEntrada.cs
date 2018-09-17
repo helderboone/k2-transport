@@ -1,10 +1,15 @@
-﻿namespace K2.Api.Models
+﻿namespace K2.Web.Models
 {
     /// <summary>
-    /// Classe que reflete os parâmetros utilizados para o cadastro de um cliente
+    /// Classe que reflete os parâmetros utilizados para alteração de um cliente
     /// </summary>
-    public class CadastrarClienteEntrada : CadastrarUsuarioEntrada
+    public class AlterarClienteEntrada : AlterarUsuarioEntrada
     {
+        /// <summary>
+        /// ID do cliente
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// CEP do cliente
         /// </summary>

@@ -1,5 +1,4 @@
 ﻿using K2.Dominio.Comandos.Entrada;
-using K2.Dominio.Comandos.Saida;
 using K2.Dominio.Interfaces.Comandos;
 using System.Threading.Tasks;
 
@@ -29,5 +28,10 @@ namespace K2.Dominio.Interfaces.Servicos
         /// Realiza a alteração de um cliente.
         /// </summary>
         Task<ISaida> AlterarCliente(AlterarClienteEntrada entrada);
+
+        /// <summary>
+        /// Exclui um cliente a partir do seu ID
+        /// </summary>
+        Task<ISaida> ExcluirCliente(int id);
     }
 }

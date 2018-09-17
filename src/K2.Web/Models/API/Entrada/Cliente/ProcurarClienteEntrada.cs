@@ -1,9 +1,9 @@
-﻿namespace K2.Api.Models
+﻿namespace K2.Web.Models
 {
     /// <summary>
-    /// Classe que reflete os parâmetros utilizados para o cadastro de um usuário
+    /// Classe que reflete os parâmetros utilizados para realizar a procura por clientes
     /// </summary>
-    public class CadastrarUsuarioEntrada : BaseModel
+    public class ProcurarClienteEntrada : ProcurarEntrada
     {
         /// <summary>
         /// Nome do usuário
@@ -16,11 +16,6 @@
         public string Email { get; set; }
 
         /// <summary>
-        /// Senha de acesso do usuário
-        /// </summary>
-        public string Senha { get; set; }
-
-        /// <summary>
         /// CPF do usuário
         /// </summary>
         public string Cpf { get; set; }
@@ -29,10 +24,5 @@
         /// Número do RG do usuário
         /// </summary>
         public string Rg { get; set; }
-
-        /// <summary>
-        /// Número do celular do usuário
-        /// </summary>
-        public string Celular { get; set; }
     }
 }

@@ -17,11 +17,6 @@ namespace K2.Infraestrutura.Dados.Repositorios
             _efContext = efContext;
         }
 
-        public async Task Inserir(Usuario usuario)
-        {
-            await this._efContext.AddAsync(usuario);
-        }
-
         public async Task<Usuario> ObterPorEmailSenha(string email, string senha, bool habilitarTracking = false)
         {
             var query = _efContext.Usuarios.Where(x => x.Email == email && x.Senha == senha);
@@ -51,6 +46,16 @@ namespace K2.Infraestrutura.Dados.Repositorios
             return idUsuario.HasValue
                 ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Rg.Equals(rg.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase))
                 : await _efContext.Usuarios.AnyAsync(x => x.Rg.Equals(rg.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        public async Task Inserir(Usuario usuario)
+        {
+            await this._efContext.AddAsync(usuario);
+        }
+
+        public void Deletar(Usuario usuario)
+        {
+            _efContext.Usuarios.Remove(usuario);
         }
     }
 }

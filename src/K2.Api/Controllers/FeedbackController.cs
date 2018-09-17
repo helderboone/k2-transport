@@ -18,17 +18,17 @@ namespace K2.Api.Controllers
             {
                 case HttpStatusCode.NotFound:
                 case HttpStatusCode.BadRequest:
-                    saida = new NotFoundApiResponse(HttpContext.Request.Path);
+                    saida = new Saida(false, new[] { $"Erro 404: O endereço \"{HttpContext.Request.Path}\" não foi encontrado." }, null);
                     break;
                 case HttpStatusCode.Forbidden:
-                    saida = new ForbiddenApiResponse();
+                    saida = new Saida(false, new[] { "Erro 403: Acesso negado. Você não tem permissão de acesso para essa funcionalidade." }, null);
                     break;
                 case HttpStatusCode.InternalServerError:
                     var ex = HttpContext.Features.Get<IExceptionHandlerFeature>();
-                    saida = new InternalServerErrorApiResponse(ex.Error);
+                    saida = new Saida(false, new[] { "Erro 500: " + ex.Error.Message }, new { Exception = ex.Error.Message, BaseException = ex.Error.GetBaseException().Message, ex.Error.Source });
                     break;
                 case HttpStatusCode.Unauthorized:
-                    saida = new UnauthorizedApiResponse();
+                    saida = new Saida(false, new[] { "Erro 401: Acesso negado. Certifique-se que você foi autenticado." }, null);
                     break;
                 default:
                     saida = new Saida(false, new[] { $"Erro {(int)httpStatusCode}: {httpStatusCode.ToString()}" }, null);

@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 
-namespace K2.Api.Models
+namespace K2.Web.Models
 {
     /// <summary>
     /// Classe que reflete o resultado do processo de autenticação

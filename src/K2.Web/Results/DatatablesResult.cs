@@ -1,4 +1,4 @@
-﻿using K2.Api.Models;
+﻿using K2.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 using System.Linq;

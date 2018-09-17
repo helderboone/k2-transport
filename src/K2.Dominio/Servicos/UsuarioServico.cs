@@ -23,9 +23,9 @@ namespace K2.Dominio.Servicos
         public UsuarioServico(IUsuarioRepositorio usuarioRepositorio, IUow uow, IEmailHelper emailUtil, ILogger<UsuarioServico> logger)
         {
             _usuarioRepositorio = usuarioRepositorio;
-            _uow = uow;
-            _emailUtil = emailUtil;
-            _logger = logger;
+            _uow                = uow;
+            _emailUtil          = emailUtil;
+            _logger             = logger;
         }
 
         public async Task<ISaida> Autenticar(AutenticarUsuarioEntrada entrada)

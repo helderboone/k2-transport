@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace K2.Api.Models
+namespace K2.Web.Models
 {
     public abstract class BaseModel
     {

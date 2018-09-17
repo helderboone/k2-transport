@@ -21,7 +21,7 @@ namespace K2.Dominio.Servicos
         {
             _clienteRepositorio = clienteRepositorio;
             _usuarioRepositorio = usuarioRepositorio;
-            _uow = uow;
+            _uow                = uow;
         }
 
         public async Task<ISaida> ObterClientePorId(int id)
@@ -111,13 +111,37 @@ namespace K2.Dominio.Servicos
             // Altera o cliente
             cliente.Alterar(entrada);
 
-            _clienteRepositorio.Atualizar(cliente);
-
             await _uow.Commit();
 
             return _uow.Invalido
                 ? new Saida(false, _uow.Mensagens, null)
                 : new Saida(true, new[] { ClienteResource.Cliente_Alterado_Com_Sucesso }, new ClienteSaida(cliente));
+        }
+
+        public async Task<ISaida> ExcluirCliente(int id)
+        {
+            this.NotificarSeMenorOuIgualA(id, 0, ClienteResource.Id_Cliente_Nao_Existe);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            var cliente = await _clienteRepositorio.ObterPorId(id);
+
+            // Verifica se o cliente existe
+            this.NotificarSeNulo(cliente, ClienteResource.Id_Cliente_Nao_Existe);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            _usuarioRepositorio.Deletar(cliente.Usuario);
+
+            _clienteRepositorio.Deletar(cliente);
+
+            await _uow.Commit();
+
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { ClienteResource.Cliente_Excluido_Com_Sucesso }, null);
         }
     }
 }

@@ -7,17 +7,17 @@
                     rules: {
                         iSenhaAtual: {
                             required: true,
-                            minlength: 3,
+                            minlength: 2,
                             maxlength: 8
                         },
                         iNovaSenha: {
                             required: true,
-                            minlength: 3,
+                            minlength: 2,
                             maxlength: 8
                         },
                         iConfirmaNovaSenha: {
                             required: true,
-                            minlength: 3,
+                            minlength: 2,
                             maxlength: 8
                         }
                     },

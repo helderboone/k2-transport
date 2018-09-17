@@ -23,8 +23,8 @@
         </div>
         <div class="m-portlet__head-tools">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button type="button" class="m-btn btn btn-secondary" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Cadastrar cliente" id="bCadastrar"><i class="la la-plus-square"></i></button>
-                <button type="button" class="m-btn btn btn-secondary" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Filtrar"><i class="la la-search"></i></button>
+                <button type="button" class="m-btn btn btn-secondary" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Novo cliente" id="bCadastrar"><i class="la la-plus-square"></i></button>
+                <button type="button" class="m-btn btn btn-secondary" data-toggle="modal" data-target="#modal_Procurar"><i class="la la-search" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Procurar"></i></button>
             </div>
         </div>
     </div>
@@ -44,8 +44,67 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal_Procurar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="m-portlet m-portlet--primary m-portlet--k2-modal" style="margin:0 auto; width:100%;">
+                <div class="m-portlet__head m-portlet__head--k2">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon">
+                                <i class="la la-search"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Procurar
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <form id="frmProcurarCliente" class="m-form m-form--state m-form--label-align-right">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group m-form__group--md row">
+                            <div class="col-lg-12 m-form__group-sub">
+                                <label>Nome</label>
+                                <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarNome" name="iProcurarNome" maxlength="500" style="text-transform:uppercase;">
+                                <span class="m-form__help">Procura por palavra</span>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group m-form__group--md row">
+                            <div class="col-lg-12 m-form__group-sub">
+                                <label>Email</label>
+                                <div class="input-group m-input-group m-input-group--square m-input-group--air">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
+                                    <input type="text" class="form-control m-input" id="iProcurarEmail" name="iProcurarEmail" maxlength="500" style="text-transform:lowercase;">
+                                </div>
+                                <span class="m-form__help">Procura por palavra</span>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group m-form__group--md row">
+                            <div class="col-lg-6 m-form__group-sub">
+                                <label>CPF</label>
+                                <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarCpf" name="iCpf">
+                            </div>
+                            <div class="col-lg-6 m-form__group-sub">
+                                <label>RG</label>
+                                <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarRg" name="iRg" maxlength="20" style="text-transform:uppercase;">
+                                <span class="m-form__help">Procura por palavra</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions--solid m-form__actions--right">
+                            <button type="button" class="btn btn-secondary btn-fechar" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-info" id="bProcurar">Procurar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>		        
+
 @section VendorsJs
-{
+    {
     <script src="~/assets/vendors/custom/datatables/datatables.bundle.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $.extend($.fn.dataTable.defaults, {
@@ -75,7 +134,7 @@
 }
 
 @section PaginaJS
-{
+    {
     <environment include="Development">
         <script src="~/assets/js/views/cliente.js" type="text/javascript"></script>
     </environment>

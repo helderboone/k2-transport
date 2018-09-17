@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\K2.Api.Models\K2.Api.Models.csproj" />
     <ProjectReference Include="..\K2.Dominio\K2.Dominio.csproj" />
     <ProjectReference Include="..\K2.Infraestrutura.Dados\K2.Infraestrutura.Dados.csproj" />
     <ProjectReference Include="..\K2.Infraestrutura\K2.Infraestrutura.csproj" />

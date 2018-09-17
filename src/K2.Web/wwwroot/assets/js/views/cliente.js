@@ -12,8 +12,10 @@
                     feedback.exibirModal();
                 },
                 data: function (data) {
-                    data.Nome = null;//$("#txtNomeProcurar").val();
-                    data.Email = null;//$("#txtEmailProcurar").val();
+                    data.Nome = $("#iProcurarNome").val();
+                    data.Email = $("#iProcurarEmail").val();
+                    data.Cpf = $("#iProcurarCpf").val();
+                    data.Rg = $("#iProcurarRg").val();
                 }
             },
             info: true,
@@ -66,7 +68,7 @@
                 var id = $(this).data("id");
 
                 $(this).click(function () {
-                    App.exibirConfirm("Deseja realmente excluir esse cliente?", "Sim", "Não", function () { alert('excluir'); });
+                    App.exibirConfirm("Deseja realmente excluir esse cliente?", "Sim", "Não", function () { excluirCliente(id); });
                 });
             });
         }).on("processing.dt", function () {
@@ -74,11 +76,19 @@
         });
     };
 
+    var procurarCliente = function () {
+        $("#frmProcurarCliente").validate({
+            submitHandler: function () {
+                $("#tblCliente").DataTable().ajax.reload();
+            }
+        });
+    };
+
     var manterCliente = function (id) {
         var cadastro = id === null || id === 0;
 
         App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-cliente/" + id) : App.corrigirPathRota("cadastrar-cliente")), function () {
-            $("#iCpf").inputmask({
+            $("#iCpf, #iProcurarCpf").inputmask({
                 "mask": "999.999.999-99"
             });
 
@@ -159,6 +169,27 @@
         });
     };
 
+    var excluirCliente = function (id) {
+        App.bloquear();
+
+        $.post(App.corrigirPathRota("excluir-cliente/" + id), function (feedbackResult) {
+            var feedback = Feedback.converter(feedbackResult);
+
+            if (feedback.Tipo.Nome == Tipo.Sucesso) {
+                feedback.exibirModal(function () {
+                    $("#tblCliente").DataTable().ajax.reload();
+                    App.ocultarModal();
+                });
+            }
+            else
+                feedback.exibirModal();
+        })
+        .fail(function (jqXhr) {
+            var feedback = Feedback.converter(jqXhr.responseJSON);
+            feedback.exibirModal();
+        });
+    };
+
     //== Public Functions
     return {
         init: function () {
@@ -166,6 +197,10 @@
 
             $("#bCadastrar").click(function () {
                 manterCliente(null);
+            });
+
+            $("#bProcurar").click(function () {
+                procurarCliente();
             });
         }
     };
