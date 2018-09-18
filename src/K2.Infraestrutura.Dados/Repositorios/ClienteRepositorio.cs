@@ -99,11 +99,6 @@ namespace K2.Infraestrutura.Dados.Repositorios
             await _efContext.AddAsync(cliente);
         }
 
-        public void Atualizar(Cliente cliente)
-        {
-            _efContext.Entry(cliente).State = EntityState.Modified;
-        }
-
         public void Deletar(Cliente cliente)
         {
             _efContext.Clientes.Remove(cliente);

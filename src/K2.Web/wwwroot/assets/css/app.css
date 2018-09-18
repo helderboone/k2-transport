@@ -150,3 +150,33 @@ div.jconfirm-content-pane .jconfirm-content {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+
+.table td {
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #F9F9F9;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #f2f2f2;
+}
+
+.table-bordered {
+    border: 1px solid #efefef;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #ecf7f9;
+}
+
+table.dataTable > tbody > tr.child ul.dtr-details {
+    width: 100%;
+}
+
+.dataTables_wrapper .child .dtr-details > li .dtr-title {
+    width: 1px;
+    white-space: nowrap;
+}

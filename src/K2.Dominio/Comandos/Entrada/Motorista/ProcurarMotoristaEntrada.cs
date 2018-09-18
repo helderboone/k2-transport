@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace K2.Dominio.Comandos.Entrada
 {
-    public class ProcurarClienteEntrada : ProcurarEntrada
+    public class ProcurarMotoristaEntrada : ProcurarEntrada
     {
         public string Nome { get; set; }
 
@@ -27,7 +27,15 @@ namespace K2.Dominio.Comandos.Entrada
             set => _rg = value;
         }
 
-        public ProcurarClienteEntrada(string ordenarPor,
+        private string _cnh;
+
+        public string Cnh
+        {
+            get => _cnh?.RemoverCaracter(".", "-", "/");
+            set => _cnh = value;
+        }
+
+        public ProcurarMotoristaEntrada(string ordenarPor,
             string ordenarSentido,
             int? paginaIndex = null,
             int? paginaTamanho = null)
@@ -42,7 +50,7 @@ namespace K2.Dominio.Comandos.Entrada
 
         private void Validar()
         {
-            this.NotificarSeNulo(typeof(Cliente).GetProperty(this.OrdenarPor, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance), $"A propriedade {this.OrdenarPor} não pertence a classe \"Cliente\".");
+            this.NotificarSeNulo(typeof(Cliente).GetProperty(this.OrdenarPor, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance), $"A propriedade {this.OrdenarPor} não pertence a classe \"Motorista\".");
         }
     }
 }

@@ -20,9 +20,24 @@
             },
             info: true,
             columns: [
-                { data: "nome", title: "Nome", orderable: true },
+                { data: "nome", title: "Nome", orderable: true, className: "all" },
+                {
+                    data: "celular",
+                    title: "Celular",
+                    orderable: false,
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).attr('class', 'celular');
+                    }
+                },
                 { data: "email", title: "E-mail", orderable: true },
-                { data: "cpf", title: "CPF", orderable: false },
+                {
+                    data: "cpf",
+                    title: "CPF",
+                    orderable: false,
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).attr('class', 'cpf');
+                    }
+                },
                 { data: "rg", title: "RG", orderable: false },
                 {
                     data: "ativo",
@@ -36,7 +51,7 @@
                 },
                 {
                     data: null,
-                    className: "td-actions all dt-center",
+                    className: "td-actions dt-center",
                     orderable: false,
                     width: "70px",
                     render: function (data, type, row) {
@@ -48,13 +63,21 @@
             serverSide: true,
             responsive: true,
 			pagingType: 'full_numbers',
-            order: [1, "asc"],
+            order: [0, "asc"],
             searching: false,
             paging: true,
             lengthChange: false,
             pageLength: 25
         }).on("draw.dt", function () {
             mApp.initTooltips();
+
+            $(".cpf").inputmask({
+                "mask": "999.999.999-99"
+            });
+
+            $(".celular").inputmask({
+                "mask": "(99) 99999-9999"
+            });
 
             $("a[class*='alterar-cliente']").each(function () {
                 var id = $(this).data("id");
