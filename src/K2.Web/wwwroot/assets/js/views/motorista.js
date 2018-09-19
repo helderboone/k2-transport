@@ -1,11 +1,11 @@
-﻿var Cliente = function () {
+﻿var Motorista = function () {
     //== Private Functions
     var initDataTable = function () {
         App.bloquear();
 
-        $("#tblCliente").DataTable({
+        $("#tblMotorista").DataTable({
             ajax: {
-                url: App.corrigirPathRota("listar-clientes"),
+                url: App.corrigirPathRota("listar-motoristas"),
                 type: "POST",
                 error: function (jqXhr) {
                     var feedback = Feedback.converter(jqXhr.responseJSON);
@@ -16,6 +16,7 @@
                     data.Email = $("#iProcurarEmail").val();
                     data.Cpf = $("#iProcurarCpf").val();
                     data.Rg = $("#iProcurarRg").val();
+                    data.Cnh = $("#iProcurarCnh").val();
                 }
             },
             info: true,
@@ -39,6 +40,7 @@
                     }
                 },
                 { data: "rg", title: "RG", orderable: false },
+                { data: "cnh", title: "CNH", orderable: false },
                 {
                     data: "ativo",
                     title: "Ativo",
@@ -56,8 +58,8 @@
                     width: "70px",
                     render: function (data, type, row) {
                         return '<a href="#" data-id-usuario="' + row.idUsuario + '" class="redefinir-senha m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Redefinir senha"><i class="fa fa-unlock"></i></a>' +
-                               '<a href="#" data-id="' + row.id + '" class="alterar-cliente m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Alterar"><i class="la la-edit"></i></a>' +
-                               '<a href="#" data-id="' + row.id + '" class="excluir-cliente m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Excluir"><i class="la la-trash"></i></a>';
+                               '<a href="#" data-id="' + row.id + '" class="alterar-motorista m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Alterar"><i class="la la-edit"></i></a>' +
+                               '<a href="#" data-id="' + row.id + '" class="excluir-motorista m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Excluir"><i class="la la-trash"></i></a>';
                     }
                 }
             ],
@@ -88,19 +90,19 @@
                 });
             });
 
-            $("a[class*='alterar-cliente']").each(function () {
+            $("a[class*='alterar-motorista']").each(function () {
                 var id = $(this).data("id");
 
                 $(this).click(function () {
-                    manterCliente(id);
+                    manterMotorista(id);
                 });
             });
 
-            $("a[class*='excluir-cliente']").each(function () {
+            $("a[class*='excluir-motorista']").each(function () {
                 var id = $(this).data("id");
 
                 $(this).click(function () {
-                    App.exibirConfirm("Deseja realmente excluir esse cliente?", "Sim", "Não", function () { excluirCliente(id); });
+                    App.exibirConfirm("Deseja realmente excluir esse motorista?", "Sim", "Não", function () { excluirMotorista(id); });
                 });
             });
         }).on("processing.dt", function () {
@@ -108,18 +110,18 @@
         });
     };
 
-    var procurarCliente = function () {
-        $("#frmProcurarCliente").validate({
+    var procurarMotorista = function () {
+        $("#frmProcurarMotorista").validate({
             submitHandler: function () {
-                $("#tblCliente").DataTable().ajax.reload();
+                $("#tblMotorista").DataTable().ajax.reload();
             }
         });
     };
 
-    var manterCliente = function (id) {
+    var manterMotorista = function (id) {
         var cadastro = id === null || id === 0;
 
-        App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-cliente/" + id) : App.corrigirPathRota("cadastrar-cliente")), function () {
+        App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-motorista/" + id) : App.corrigirPathRota("cadastrar-motorista")), function () {
             $("#iCpf, #iProcurarCpf").inputmask({
                 "mask": "999.999.999-99"
             });
@@ -132,12 +134,7 @@
                 "mask": "99.999-999"
             });
 
-            $("#sEstado").select2({
-                placeholder: "Selecione um estado",
-                dropdownParent: $('.jc-bs3-container')
-            });
-
-            $("#frmManterCliente").validate({
+            $("#frmManterMotorista").validate({
                 rules: {
                     iNome: {
                         required: true
@@ -154,35 +151,35 @@
                     },
                     iCelular: {
                         required: true
+                    },
+                    iCnh: {
+                        required: true
                     }
                 },
 
                 submitHandler: function () {
 
-                    var cliente = {
-                        Id: $("#iIdCliente").val(),
+                    var motorista = {
+                        Id: $("#iIdMotorista").val(),
                         Nome: $("#iNome").val(),
                         Email: $("#iEmail").val(),
                         Cpf: $("#iCpf").val(),
                         Rg: $("#iRg").val(),
                         Celular: $("#iCelular").val(),
                         Ativo: $("#cAtivo").is(':checked'),
-                        Cep: $("#iCep").val(),
-                        Endereco: $("#iEndereco").val(),
-                        Municipio: $("#iMunicipio").val(),
-                        Uf: $("#sEstado").val()
+                        Cnh: $("#iCnh").val()
                     };
 
-                    App.bloquear($("#frmManterCliente"));
+                    App.bloquear($("#frmManterMotorista"));
 
-                    $.post(App.corrigirPathRota(cadastro ? "cadastrar-cliente" : "alterar-cliente"), { entrada: cliente })
+                    $.post(App.corrigirPathRota(cadastro ? "cadastrar-motorista" : "alterar-motorista"), { entrada: motorista })
                         .done(function (feedbackResult) {
                             var feedback = Feedback.converter(feedbackResult);
 
                             if (feedback.Tipo.Nome == Tipo.Sucesso) {
                                 feedback.exibirModal(function ()
                                 {
-                                    $("#tblCliente").DataTable().ajax.reload();
+                                    $("#tblMotorista").DataTable().ajax.reload();
                                     App.ocultarModal();
                                 });
                             }
@@ -194,22 +191,22 @@
                             feedback.exibirModal();
                         })
                         .always(function () {
-                            App.desbloquear($("#frmManterCliente"));
+                            App.desbloquear($("#frmManterMotorista"));
                         });
                 }
             });
         });
     };
 
-    var excluirCliente = function (id) {
+    var excluirMotorista = function (id) {
         App.bloquear();
 
-        $.post(App.corrigirPathRota("excluir-cliente/" + id), function (feedbackResult) {
+        $.post(App.corrigirPathRota("excluir-motorista/" + id), function (feedbackResult) {
             var feedback = Feedback.converter(feedbackResult);
 
             if (feedback.Tipo.Nome == Tipo.Sucesso) {
                 feedback.exibirModal(function () {
-                    $("#tblCliente").DataTable().ajax.reload();
+                    $("#tblMotorista").DataTable().ajax.reload();
                     App.ocultarModal();
                 });
             }
@@ -228,16 +225,16 @@
             initDataTable();
 
             $("#bCadastrar").click(function () {
-                manterCliente(null);
+                manterMotorista(null);
             });
 
             $("#bProcurar").click(function () {
-                procurarCliente();
+                procurarMotorista();
             });
         }
     };
 }();
 
 jQuery(document).ready(function () {
-    Cliente.init();
+    Motorista.init();
 });

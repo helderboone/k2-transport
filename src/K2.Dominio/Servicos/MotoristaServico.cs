@@ -11,45 +11,45 @@ using System.Threading.Tasks;
 
 namespace K2.Dominio.Servicos
 {
-    public class ClienteServico : Notificavel, IClienteServico
+    public class MotoristaServico : Notificavel, IMotoristaServico
     {
-        private readonly IClienteRepositorio _clienteRepositorio;
+        private readonly IMotoristaRepositorio _motoristaRepositorio;
         private readonly IUsuarioRepositorio _usuarioRepositorio;
         private readonly IUow _uow;
 
-        public ClienteServico(IClienteRepositorio clienteRepositorio, IUsuarioRepositorio usuarioRepositorio, IUow uow)
+        public MotoristaServico(IMotoristaRepositorio motoristaRepositorio, IUsuarioRepositorio usuarioRepositorio, IUow uow)
         {
-            _clienteRepositorio = clienteRepositorio;
-            _usuarioRepositorio = usuarioRepositorio;
-            _uow                = uow;
+            _motoristaRepositorio = motoristaRepositorio;
+            _usuarioRepositorio   = usuarioRepositorio;
+            _uow                  = uow;
         }
 
-        public async Task<ISaida> ObterClientePorId(int id)
+        public async Task<ISaida> ObterMotoristaPorId(int id)
         {
             this.NotificarSeMenorOuIgualA(id, 0, UsuarioResource.Id_Invalido);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            var cliente = await _clienteRepositorio.ObterPorId(id);
+            var motorista = await _motoristaRepositorio.ObterPorId(id);
 
-            // Verifica se o cliente existe
-            this.NotificarSeNulo(cliente, ClienteResource.Id_Cliente_Nao_Existe);
+            // Verifica se o motorista existe
+            this.NotificarSeNulo(motorista, MotoristaResource.Id_Motorista_Nao_Existe);
 
             return this.Invalido
                 ? new Saida(false, this.Mensagens, null)
-                : new Saida(true, new[] { ClienteResource.Cliente_Encontrado_Com_Sucesso }, new ClienteSaida(cliente));
+                : new Saida(true, new[] { MotoristaResource.Motorista_Encontrado_Com_Sucesso }, new MotoristaSaida(motorista));
         }
 
-        public async Task<ISaida> ProcurarClientes(ProcurarClienteEntrada entrada)
+        public async Task<ISaida> ProcurarMotoristas(ProcurarMotoristaEntrada entrada)
         {
             // Verifica se os parâmetros para a procura foram informadas corretamente
             return entrada.Invalido
                 ? new Saida(false, entrada.Mensagens, null)
-                : await _clienteRepositorio.Procurar(entrada);
+                : await _motoristaRepositorio.Procurar(entrada);
         }
 
-        public async Task<ISaida> CadastrarCliente(CadastrarClienteEntrada entrada)
+        public async Task<ISaida> CadastrarMotorista(CadastrarMotoristaEntrada entrada)
         {
             // Verifica se as informações para cadastro foram informadas corretamente
             if (entrada.Invalido)
@@ -67,78 +67,78 @@ namespace K2.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            // Cadastra o cliente 
-            var cliente = new Cliente(entrada);
+            // Cadastra o motorista 
+            var motorista = new Motorista(entrada);
 
-            await _clienteRepositorio.Inserir(cliente);
+            await _motoristaRepositorio.Inserir(motorista);
 
             await _uow.Commit();
 
             return _uow.Invalido
                 ? new Saida(false, _uow.Mensagens, null)
-                : new Saida(true, new[] { ClienteResource.Cliente_Cadastrado_Com_Sucesso }, new ClienteSaida(cliente));
+                : new Saida(true, new[] { MotoristaResource.Motorista_Cadastrado_Com_Sucesso }, new MotoristaSaida(motorista));
         }
 
-        public async Task<ISaida> AlterarCliente(AlterarClienteEntrada entrada)
+        public async Task<ISaida> AlterarMotorista(AlterarMotoristaEntrada entrada)
         {
             // Verifica se as informações para alteração foram informadas corretamente
             if (entrada.Invalido)
                 return new Saida(false, entrada.Mensagens, null);
 
-            var cliente = await _clienteRepositorio.ObterPorId(entrada.Id, true);
+            var motorista = await _motoristaRepositorio.ObterPorId(entrada.Id, true);
 
-            // Verifica se o cliente existe
-            this.NotificarSeNulo(cliente, ClienteResource.Id_Cliente_Nao_Existe);
+            // Verifica se o motorista existe
+            this.NotificarSeNulo(motorista, MotoristaResource.Id_Motorista_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
             // Verifica se já existe um usuário com o mesmo email
-            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorEmail(entrada.Email, cliente.IdUsuario), UsuarioResource.Usuario_Ja_Existe_Por_Email);
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorEmail(entrada.Email, motorista.IdUsuario), UsuarioResource.Usuario_Ja_Existe_Por_Email);
 
             // Verifica se já existe um usuário com o mesmo CPF
-            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorCpf(entrada.Cpf, cliente.IdUsuario), UsuarioResource.Usuario_Ja_Existe_Por_Cpf);
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorCpf(entrada.Cpf, motorista.IdUsuario), UsuarioResource.Usuario_Ja_Existe_Por_Cpf);
 
             // Verifica se já existe um usuário com o mesmo RG
-            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorRg(entrada.Rg, cliente.IdUsuario), UsuarioResource.Usuario_Ja_Existe_Por_Rg);
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorRg(entrada.Rg, motorista.IdUsuario), UsuarioResource.Usuario_Ja_Existe_Por_Rg);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            // Altera o cliente
-            cliente.Alterar(entrada);
+            // Altera o motorista
+            motorista.Alterar(entrada);
 
             await _uow.Commit();
 
             return _uow.Invalido
                 ? new Saida(false, _uow.Mensagens, null)
-                : new Saida(true, new[] { ClienteResource.Cliente_Alterado_Com_Sucesso }, new ClienteSaida(cliente));
+                : new Saida(true, new[] { MotoristaResource.Motorista_Alterado_Com_Sucesso }, new MotoristaSaida(motorista));
         }
 
-        public async Task<ISaida> ExcluirCliente(int id)
+        public async Task<ISaida> ExcluirMotorista(int id)
         {
-            this.NotificarSeMenorOuIgualA(id, 0, ClienteResource.Id_Cliente_Nao_Existe);
+            this.NotificarSeMenorOuIgualA(id, 0, MotoristaResource.Id_Motorista_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            var cliente = await _clienteRepositorio.ObterPorId(id);
+            var motorista = await _motoristaRepositorio.ObterPorId(id);
 
-            // Verifica se o cliente existe
-            this.NotificarSeNulo(cliente, ClienteResource.Id_Cliente_Nao_Existe);
+            // Verifica se o motorista existe
+            this.NotificarSeNulo(motorista, MotoristaResource.Id_Motorista_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            _usuarioRepositorio.Deletar(cliente.Usuario);
+            _usuarioRepositorio.Deletar(motorista.Usuario);
 
-            _clienteRepositorio.Deletar(cliente);
+            _motoristaRepositorio.Deletar(motorista);
 
             await _uow.Commit();
 
             return _uow.Invalido
                 ? new Saida(false, _uow.Mensagens, null)
-                : new Saida(true, new[] { ClienteResource.Cliente_Excluido_Com_Sucesso }, null);
+                : new Saida(true, new[] { MotoristaResource.Motorista_Excluido_Com_Sucesso }, null);
         }
     }
 }

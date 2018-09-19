@@ -13,6 +13,11 @@ namespace K2.Dominio.Comandos.Saida
         public int Id { get; }
 
         /// <summary>
+        /// Id do Usuario
+        /// </summary>
+        public int IdUsuario { get; }
+
+        /// <summary>
         /// Indica se o cliente está ativo
         /// </summary>
         public bool Ativo { get; }
@@ -65,6 +70,7 @@ namespace K2.Dominio.Comandos.Saida
         public ClienteSaida(Cliente cliente)
         {
             this.Id        = cliente.Id;
+            this.IdUsuario = cliente.IdUsuario;
             this.Ativo     = cliente.Usuario.Ativo;
             this.Nome      = cliente.Usuario.Nome;
             this.Email     = cliente.Usuario.Email;

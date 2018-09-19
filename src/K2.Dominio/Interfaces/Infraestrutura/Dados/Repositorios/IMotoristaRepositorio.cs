@@ -5,32 +5,32 @@ using System.Threading.Tasks;
 
 namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
 {
-    public interface IClienteRepositorio
+    public interface IMotoristaRepositorio
     {
         /// <summary>
-        /// Obtém um cliente a partir do seu ID
+        /// Obtém um motorista a partir do seu ID
         /// </summary>
         /// <param name="habilitarTracking">Indica que o tracking do EF deverá estar habilitado, permitindo alteração dos dados.</param>
-        Task<Cliente> ObterPorId(int id, bool habilitarTracking = false);
+        Task<Motorista> ObterPorId(int id, bool habilitarTracking = false);
 
         /// <summary>
-        /// Verifica se existe um cliente com o ID do usuário informado
+        /// Verifica se existe um motorista com o ID do usuário informado
         /// </summary>
         Task<bool> VerificarExistenciaPorIdUsuario(int id);
 
         /// <summary>
-        /// Obtém os clientes baseados nos parâmetros de procura
+        /// Obtém os motoristas baseados nos parâmetros de procura
         /// </summary>
-        Task<ProcurarSaida> Procurar(ProcurarClienteEntrada entrada);
+        Task<ProcurarSaida> Procurar(ProcurarMotoristaEntrada entrada);
 
         /// <summary>
-        /// Insere um novo cliente
+        /// Insere um novo motorista
         /// </summary>
-        Task Inserir(Cliente cliente);
+        Task Inserir(Motorista motorista);
 
         /// <summary>
-        /// Deleta um cliente
+        /// Deleta um motorista
         /// </summary>
-        void Deletar(Cliente cliente);
+        void Deletar(Motorista motorista);
     }
 }

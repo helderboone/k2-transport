@@ -115,20 +115,20 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O usuário com o ID informado não existe..
+        /// </summary>
+        public static string Id_Usuario_Nao_Existe {
+            get {
+                return ResourceManager.GetString("Id_Usuario_Nao_Existe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O nome é obrigatório e não foi informado..
         /// </summary>
         public static string Nome_Obrigatorio_Nao_Informado {
             get {
                 return ResourceManager.GetString("Nome_Obrigatorio_Nao_Informado", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O perfil de acesso é obrigatório e não foi informado..
-        /// </summary>
-        public static string Perfil_Obrigatorio_Nao_Informado {
-            get {
-                return ResourceManager.GetString("Perfil_Obrigatorio_Nao_Informado", resourceCulture);
             }
         }
         
@@ -196,11 +196,65 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A senha foi redefinida com sucesso porém ocorreu um erro ao tentar enviar a nova senha por e-mail..
+        /// </summary>
+        public static string Senha_Redefinida_Com_Erro_Envio_Email {
+            get {
+                return ResourceManager.GetString("Senha_Redefinida_Com_Erro_Envio_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A senha foi redefinida com sucesso..
+        /// </summary>
+        public static string Senha_Redefinida_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Senha_Redefinida_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O usuário foi alterado com sucesso..
+        /// </summary>
+        public static string Usuario_Alterado_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Usuario_Alterado_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usuário autenticado com sucesso..
         /// </summary>
         public static string Usuario_Autenticado_Com_Sucesso {
             get {
                 return ResourceManager.GetString("Usuario_Autenticado_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O usuário foi cadastrado com sucesso..
+        /// </summary>
+        public static string Usuario_Cadastrado_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Usuario_Cadastrado_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O usuário com o ID informado foi encontrado com sucesso..
+        /// </summary>
+        public static string Usuario_Encontrado_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Usuario_Encontrado_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O usuário foi excluído com sucesso..
+        /// </summary>
+        public static string Usuario_Excluido_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Usuario_Excluido_Com_Sucesso", resourceCulture);
             }
         }
         

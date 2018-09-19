@@ -19,8 +19,6 @@ namespace K2.Infraestrutura.Dados.Maps
             builder.Property(x => x.Celular);
             builder.Property(x => x.Ativo);
             builder.Property(x => x.Administrador);
-
-            builder.Ignore(x => x.Perfil);
         }
     }
 }

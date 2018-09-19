@@ -1,4 +1,5 @@
-﻿using K2.Dominio;
+﻿using K2.Api.Filters;
+using K2.Dominio;
 using K2.Dominio.Interfaces.Dados;
 using K2.Dominio.Interfaces.Infraestrutura;
 using K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios;
@@ -58,9 +59,11 @@ namespace K2.Api
             // AddTransient: determina que referências desta classe sejam geradas toda vez que uma dependência for encontrada
             services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
             services.AddTransient<IClienteRepositorio, ClienteRepositorio>();
+            services.AddTransient<IMotoristaRepositorio, MotoristaRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
             services.AddTransient<IClienteServico, ClienteServico>();
+            services.AddTransient<IMotoristaServico, MotoristaServico>();
 
             services
                 // AddAuthentication: especificará os schemas utilizados para a autenticação do tipo Bearer
@@ -99,7 +102,7 @@ namespace K2.Api
             });
 
             services
-                .AddMvc()
+                .AddMvc(options => options.Filters.Add(typeof(CustomModelStateValidationFilter)))
                 .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             // Habilita a compressão do response

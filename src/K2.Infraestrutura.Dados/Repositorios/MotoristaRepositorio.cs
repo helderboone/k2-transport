@@ -10,18 +10,18 @@ using X.PagedList;
 
 namespace K2.Infraestrutura.Dados.Repositorios
 {
-    public class ClienteRepositorio : IClienteRepositorio
+    public class MotoristaRepositorio : IMotoristaRepositorio
     {
         private readonly EfDataContext _efContext;
 
-        public ClienteRepositorio(EfDataContext efContext)
+        public MotoristaRepositorio(EfDataContext efContext)
         {
             _efContext = efContext;
         }
 
-        public async Task<Cliente> ObterPorId(int id, bool habilitarTracking = false)
+        public async Task<Motorista> ObterPorId(int id, bool habilitarTracking = false)
         {
-            var query = _efContext.Clientes
+            var query = _efContext.Motoristas
                     .Include(x => x.Usuario)
                     .AsQueryable();
 
@@ -36,9 +36,9 @@ namespace K2.Infraestrutura.Dados.Repositorios
             return await _efContext.Clientes.AnyAsync(x => x.Id == id);
         }
 
-        public async Task<ProcurarSaida> Procurar(ProcurarClienteEntrada entrada)
+        public async Task<ProcurarSaida> Procurar(ProcurarMotoristaEntrada entrada)
         {
-            var query = _efContext.Clientes
+            var query = _efContext.Motoristas
                 .Include(x => x.Usuario)
                 .AsNoTracking()
                 .AsQueryable();
@@ -54,6 +54,9 @@ namespace K2.Infraestrutura.Dados.Repositorios
 
             if (!string.IsNullOrEmpty(entrada.Rg))
                 query = query.Where(x => x.Usuario.Rg.IndexOf(entrada.Rg, StringComparison.InvariantCultureIgnoreCase) != -1);
+
+            if (!string.IsNullOrEmpty(entrada.Cnh))
+                query = query.Where(x => x.Cnh.IndexOf(entrada.Cnh, StringComparison.InvariantCultureIgnoreCase) != -1);
 
             switch (entrada.OrdenarPor?.ToLower())
             {
@@ -79,7 +82,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
                 var pagedList = await query.ToPagedListAsync(entrada.PaginaIndex.Value, entrada.PaginaTamanho.Value);
 
                 return new ProcurarSaida(
-                    pagedList.ToList().Select(x => new ClienteSaida(x)),
+                    pagedList.ToList().Select(x => new MotoristaSaida(x)),
                     entrada.OrdenarPor,
                     entrada.OrdenarSentido,
                     pagedList.TotalItemCount,
@@ -92,21 +95,21 @@ namespace K2.Infraestrutura.Dados.Repositorios
                 var totalRegistros = await query.CountAsync();
 
                 return new ProcurarSaida(
-                    (await query.ToListAsync()).Select(x => new ClienteSaida(x)),
+                    (await query.ToListAsync()).Select(x => new MotoristaSaida(x)),
                     entrada.OrdenarPor,
                     entrada.OrdenarSentido,
                     totalRegistros);
             }
         }
 
-        public async Task Inserir(Cliente cliente)
+        public async Task Inserir(Motorista motorista)
         {
-            await _efContext.AddAsync(cliente);
+            await _efContext.AddAsync(motorista);
         }
 
-        public void Deletar(Cliente cliente)
+        public void Deletar(Motorista motorista)
         {
-            _efContext.Clientes.Remove(cliente);
+            _efContext.Motoristas.Remove(motorista);
         }
     }
 }

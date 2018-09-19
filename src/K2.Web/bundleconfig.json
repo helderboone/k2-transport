@@ -62,5 +62,11 @@
     "inputFiles": [
       "wwwroot/assets/vendors/custom/datatables/datatables.bundle.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/views/motorista.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/views/motorista.js"
+    ]
   }
 ]

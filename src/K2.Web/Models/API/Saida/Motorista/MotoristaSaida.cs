@@ -4,22 +4,22 @@ using System.Collections.Generic;
 namespace K2.Web.Models
 {
     /// <summary>
-    /// Classe que reflete as informações de saída de um cliente
+    /// Classe que reflete as informações de saída de um motorista
     /// </summary>
-    public class ClienteSaida : Saida
+    public class MotoristaSaida : Saida
     {
-        public ClienteSaida(bool sucesso, IEnumerable<string> mensagens, ClienteRetorno retorno)
+        public MotoristaSaida(bool sucesso, IEnumerable<string> mensagens, MotoristaRetorno retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
 
-        public ClienteRetorno ObterRetorno() => (ClienteRetorno)this.Retorno;
+        public MotoristaRetorno ObterRetorno() => (MotoristaRetorno)this.Retorno;
 
-        public new static ClienteSaida Obter(string json)
+        public new static MotoristaSaida Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
-                ? JsonConvert.DeserializeObject<ClienteSaida>(json)
+                ? JsonConvert.DeserializeObject<MotoristaSaida>(json)
                 : null;
         }
     }
@@ -27,15 +27,15 @@ namespace K2.Web.Models
     /// <summary>
     /// Classe que reflete as informações do token JWT retornado no processo de autenticação
     /// </summary>
-    public class ClienteRetorno
+    public class MotoristaRetorno
     {
         /// <summary>
-        /// Indica se o cliente está ativo
+        /// Indica se o motorista está ativo
         /// </summary>
         public bool Ativo { get; }
 
         /// <summary>
-        /// Id do cliente
+        /// Id do motorista
         /// </summary>
         public int Id { get; }
 
@@ -70,26 +70,26 @@ namespace K2.Web.Models
         public string Celular { get; }
 
         /// <summary>
-        /// CEP do cliente
+        /// CNH do motorista
         /// </summary>
-        public string Cep { get; }
+        public string Cnh { get; }
 
         /// <summary>
-        /// Descrição do endereço do cliente
+        /// Descrição do endereço do motorista
         /// </summary>
         public string Endereco { get; }
 
         /// <summary>
-        /// Nome do município do cliente
+        /// Nome do município do motorista
         /// </summary>
         public string Municipio { get; }
 
         /// <summary>
-        /// Sigla da UF do cliente
+        /// Sigla da UF do motorista
         /// </summary>
         public string Uf { get; }
 
-        public ClienteRetorno(
+        public MotoristaRetorno(
             int id,
             bool ativo,
             string nome,
@@ -97,10 +97,7 @@ namespace K2.Web.Models
             string cpf,
             string rg,
             string celular,
-            string cep,
-            string endereco,
-            string municipio,
-            string uf)
+            string cnh)
         {
             Ativo     = ativo;
             Id        = id;
@@ -109,10 +106,7 @@ namespace K2.Web.Models
             Cpf       = cpf;
             Rg        = rg;
             Celular   = celular;
-            Cep       = cep;
-            Endereco  = endereco;
-            Municipio = municipio;
-            Uf        = uf;
+            Cnh       = cnh;
         }
     }
 }

@@ -22,6 +22,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ClienteResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\MotoristaResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MotoristaResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\UsuarioResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -33,6 +38,10 @@
     <EmbeddedResource Update="Resources\ClienteResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ClienteResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MotoristaResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MotoristaResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\UsuarioResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

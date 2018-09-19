@@ -44,7 +44,7 @@ namespace K2.Dominio.Comandos.Entrada
             string endereco = null,
             string municipio = null,
             string uf = null)
-            : base(nome, email, cpf, rg, celular, ativo)
+            : base(id, nome, email, cpf, rg, celular, ativo)
         {
             Id        = id;
             Cep       = cep?.RemoverCaracter(".", "-", "/");

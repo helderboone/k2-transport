@@ -13,7 +13,7 @@ namespace K2.Dominio.Comandos.Entrada
         /// <summary>
         /// ID do usuário
         /// </summary>
-        public int? IdUsuario { get; }
+        public int IdUsuario { get; }
 
         /// <summary>
         /// Nome do usuário
@@ -58,29 +58,15 @@ namespace K2.Dominio.Comandos.Entrada
             Validar();
         }
 
-        public AlterarUsuarioEntrada(string nome, string email, string cpf, string rg, string celular, bool ativo)
-        {
-            Nome = nome?.ToUpper();
-            Email = email?.ToLower();
-            Cpf = cpf?.RemoverCaracter(".", "-", "/");
-            Rg = rg?.ToUpper().RemoverCaracter(".", "-", "/");
-            Celular = celular?.RemoverCaracter("(", "-", ")");
-            Ativo = ativo;
-
-            Validar();
-        }
-
         private void Validar()
         {
             this
+                .NotificarSeMenorOuIgualA(this.IdUsuario, 0, UsuarioResource.Id_Invalido)
                 .NotificarSeNuloOuVazio(this.Nome, UsuarioResource.Nome_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.Email, UsuarioResource.Email_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.Cpf, UsuarioResource.Cpf_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.Rg, UsuarioResource.Rg_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.Celular, UsuarioResource.Celular_Obrigatorio_Nao_Informado);
-
-            if (this.IdUsuario.HasValue)
-                this.NotificarSeMenorOuIgualA(this.IdUsuario.Value, 0, UsuarioResource.Id_Invalido);
 
             if (!string.IsNullOrEmpty(this.Email))
                 this.NotificarSeEmailInvalido(this.Email, UsuarioResource.Email_Invalido);

@@ -10,15 +10,7 @@ namespace K2.Infraestrutura.Dados
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
-        //public DbSet<Conta> Contas { get; set; }
-        //public DbSet<Periodo> Periodos { get; set; }
-        //public DbSet<Pessoa> Pessoas { get; set; }
-        //public DbSet<Categoria> Categorias { get; set; }
-        //public DbSet<CartaoCredito> CartoesCredito { get; set; }
-        //public DbSet<Agendamento> Agendamentos { get; set; }
-        //public DbSet<Parcela> Parcelas { get; set; }
-        //public DbSet<Lancamento> Lancamentos { get; set; }
-        //public DbSet<Anexo> Anexos { get; set; }
+        public DbSet<Motorista> Motoristas { get; set; }
 
         public EfDataContext(string connectionString)
         {
@@ -35,14 +27,7 @@ namespace K2.Infraestrutura.Dados
             // Mapeamentos para utilização do Entity Framework
             modelBuilder.ApplyConfiguration(new UsuarioMap());
             modelBuilder.ApplyConfiguration(new ClienteMap());
-            //modelBuilder.ApplyConfiguration(new PeriodoMap());
-            //modelBuilder.ApplyConfiguration(new PessoaMap());
-            //modelBuilder.ApplyConfiguration(new CategoriaMap());
-            //modelBuilder.ApplyConfiguration(new CartaoCreditoMap());
-            //modelBuilder.ApplyConfiguration(new AgendamentoMap());
-            //modelBuilder.ApplyConfiguration(new ParcelaMap());
-            //modelBuilder.ApplyConfiguration(new LancamentoMap());
-            //modelBuilder.ApplyConfiguration(new AnexoMap());
+            modelBuilder.ApplyConfiguration(new MotoristaMap());
         }
     }
 }

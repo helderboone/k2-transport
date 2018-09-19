@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\assets\js\views\cliente - Copy.min.js" />
     <Content Remove="wwwroot\assets\js\views\cliente.min.js" />
   </ItemGroup>
 
@@ -39,6 +40,15 @@
 
   <ItemGroup>
     <None Include="wwwroot\assets\js\views\cliente.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Motorista\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Motorista\Manter.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

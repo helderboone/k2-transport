@@ -38,7 +38,7 @@ namespace K2.Dominio.Comandos.Entrada
             string endereco = null,
             string municipio = null,
             string uf = null)
-            : base(nome, email, senha, cpf, rg, celular, TipoPerfil.Cliente)
+            : base(nome, email, senha, cpf, rg, celular)
         {
             Cep       = cep?.RemoverCaracter(".", "-", "/");
             Endereco  = endereco?.ToUpper();

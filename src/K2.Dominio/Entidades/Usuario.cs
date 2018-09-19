@@ -1,5 +1,6 @@
 ﻿using K2.Dominio.Comandos.Entrada;
 using NETCore.Encrypt.Extensions;
+using System;
 
 namespace K2.Dominio.Entidades
 {
@@ -53,30 +54,24 @@ namespace K2.Dominio.Entidades
         /// </summary>
         public bool Administrador { get; private set; }
 
-        /// <summary>
-        /// Perfil de acesso do usuário
-        /// </summary>
-        public string Perfil { get; internal set; }
-
         private Usuario()
         {
 
         }
 
-        public Usuario (CadastrarUsuarioEntrada cadastrarEntrada)
+        public Usuario (CadastrarUsuarioEntrada entrada)
         {
-            if (cadastrarEntrada.Invalido)
+            if (entrada.Invalido)
                 return;
 
-            this.Nome          = cadastrarEntrada.Nome;
-            this.Senha         = cadastrarEntrada.Senha.MD5();
-            this.Email         = cadastrarEntrada.Email;
-            this.Cpf           = cadastrarEntrada.Cpf;
-            this.Rg            = cadastrarEntrada.Rg;
-            this.Celular       = cadastrarEntrada.Celular;
+            this.Nome          = entrada.Nome;
+            this.Senha         = entrada.Senha.MD5();
+            this.Email         = entrada.Email;
+            this.Cpf           = entrada.Cpf;
+            this.Rg            = entrada.Rg;
+            this.Celular       = entrada.Celular;
             this.Ativo         = true;
-            this.Administrador = cadastrarEntrada.Perfil == TipoPerfil.Administrador;
-            this.Perfil        = cadastrarEntrada.Perfil;
+            this.Administrador = entrada.Administrador;
         }
 
         public void Alterar(AlterarUsuarioEntrada entrada)
@@ -87,6 +82,15 @@ namespace K2.Dominio.Entidades
             this.Rg      = entrada.Rg;
             this.Celular = entrada.Celular;
             this.Ativo   = entrada.Ativo;
+        }
+
+        public string RefefinirSenha()
+        {
+            var senhaTemp = Guid.NewGuid().ToString().Substring(0, 8);
+
+            this.Senha = senhaTemp.MD5();
+
+            return senhaTemp;
         }
 
         public override string ToString()

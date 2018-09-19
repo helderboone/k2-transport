@@ -1,4 +1,6 @@
-﻿using JNogueira.Infraestrutura.Utilzao;
+﻿using JNogueira.Infraestrutura.NotifiqueMe;
+using JNogueira.Infraestrutura.Utilzao;
+using K2.Dominio.Resources;
 
 namespace K2.Dominio.Comandos.Entrada
 {
@@ -13,7 +15,7 @@ namespace K2.Dominio.Comandos.Entrada
         public int Id { get; }
 
         /// <summary>
-        /// Número da CNH do cliente
+        /// Número da CNH do motorista
         /// </summary>
         public string Cnh { get; }
 
@@ -26,15 +28,22 @@ namespace K2.Dominio.Comandos.Entrada
             string celular,
             bool ativo,
             string cnh)
-            : base(nome, email, cpf, rg, celular, ativo)
+            : base(id, nome, email, cpf, rg, celular, ativo)
         {
             Id  = id;
             Cnh = cnh?.RemoverCaracter(".", "-", "/");
+
+            this.Validar();
         }
 
         public override string ToString()
         {
             return this.Nome.ToUpper();
+        }
+
+        private void Validar()
+        {
+            this.NotificarSeNuloOuVazio(this.Cnh, MotoristaResource.Cnh_Obrigatorio_Nao_Informado);
         }
     }
 }

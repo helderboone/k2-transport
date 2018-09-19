@@ -1,4 +1,6 @@
-﻿using JNogueira.Infraestrutura.Utilzao;
+﻿using JNogueira.Infraestrutura.NotifiqueMe;
+using JNogueira.Infraestrutura.Utilzao;
+using K2.Dominio.Resources;
 
 namespace K2.Dominio.Comandos.Entrada
 {
@@ -20,14 +22,21 @@ namespace K2.Dominio.Comandos.Entrada
             string rg,
             string celular,
             string cnh)
-            : base(nome, email, senha, cpf, rg, celular, TipoPerfil.Motorista)
+            : base(nome, email, senha, cpf, rg, celular)
         {
             Cnh = cnh?.RemoverCaracter(".", "-", "/");
+
+            this.Validar();
         }
 
         public override string ToString()
         {
             return this.Nome.ToUpper();
+        }
+
+        private void Validar()
+        {
+            this.NotificarSeNuloOuVazio(this.Cnh, MotoristaResource.Cnh_Obrigatorio_Nao_Informado);
         }
     }
 }

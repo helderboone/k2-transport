@@ -1,4 +1,6 @@
-﻿using K2.Dominio.Entidades;
+﻿using K2.Dominio.Comandos.Entrada;
+using K2.Dominio.Comandos.Saida;
+using K2.Dominio.Entidades;
 using System.Threading.Tasks;
 
 namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
@@ -6,9 +8,19 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
     public interface IUsuarioRepositorio
     {
         /// <summary>
+        /// Obtém um usuário a partir do seu ID
+        /// </summary>
+        Task<Usuario> ObterPorId(int id, bool habilitarTracking = false);
+
+        /// <summary>
         /// Obtém um usuário a partir do seu e-mail e senha
         /// </summary>
         Task<Usuario> ObterPorEmailSenha(string email, string senha, bool habilitarTracking = false);
+
+        /// <summary>
+        /// Obtém os usuários baseados nos parâmetros de procura
+        /// </summary>
+        Task<ProcurarSaida> Procurar(ProcurarUsuarioEntrada entrada);
 
         /// <summary>
         /// Verifica se existe um usuário com o mesmo e-mail

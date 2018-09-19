@@ -41,19 +41,19 @@ namespace K2.Dominio.Comandos.Entrada
         public string Celular { get; }
 
         /// <summary>
-        /// Nome do perfil de acesso do usuário
+        /// Indica que o usuário é um administrador
         /// </summary>
-        public string Perfil { get; }
+        public bool Administrador { get; }
 
-        public CadastrarUsuarioEntrada(string nome, string email, string senha, string cpf, string rg, string celular, string perfil)
+        public CadastrarUsuarioEntrada(string nome, string email, string senha, string cpf, string rg, string celular, bool administrador = false)
         {
-            Nome    = nome?.ToUpper();
-            Email   = email?.ToLower();
-            Senha   = senha;
-            Cpf     = cpf?.RemoverCaracter(".", "-", "/");
-            Rg      = rg?.ToUpper().RemoverCaracter(".", "-", "/");
-            Celular = celular?.RemoverCaracter("(", "-", ")");
-            Perfil  = perfil;
+            Nome          = nome?.ToUpper();
+            Email         = email?.ToLower();
+            Senha         = senha;
+            Cpf           = cpf?.RemoverCaracter(".", "-", "/");
+            Rg            = rg?.ToUpper().RemoverCaracter(".", "-", "/");
+            Celular       = celular?.RemoverCaracter("(", "-", ")");
+            Administrador = administrador;
 
             Validar();
         }
@@ -66,8 +66,7 @@ namespace K2.Dominio.Comandos.Entrada
                 .NotificarSeNuloOuVazio(this.Senha, UsuarioResource.Senha_Obrigatoria_Nao_Informada)
                 .NotificarSeNuloOuVazio(this.Cpf, UsuarioResource.Cpf_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.Rg, UsuarioResource.Rg_Obrigatorio_Nao_Informado)
-                .NotificarSeNuloOuVazio(this.Celular, UsuarioResource.Celular_Obrigatorio_Nao_Informado)
-                .NotificarSeNuloOuVazio(this.Perfil, UsuarioResource.Perfil_Obrigatorio_Nao_Informado);
+                .NotificarSeNuloOuVazio(this.Celular, UsuarioResource.Celular_Obrigatorio_Nao_Informado);
 
             if (!string.IsNullOrEmpty(this.Email))
                 this.NotificarSeEmailInvalido(this.Email, UsuarioResource.Email_Invalido);

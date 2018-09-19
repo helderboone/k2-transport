@@ -25,6 +25,87 @@ namespace K2.Api.Controllers
         }
 
         /// <summary>
+        /// Realiza uma procura por usuarios a partir dos parâmetros informados
+        /// </summary>
+        [Authorize(Policy = "Administrador")]
+        [HttpPost]
+        [Route("v1/usuarios/procurar")]
+        public async Task<ISaida> Procurar([FromBody] ProcurarUsuarioEntrada model)
+        {
+            var entrada = new ProcurarUsuarioEntrada(model?.OrdenarPor, model?.OrdenarSentido, model?.PaginaIndex, model?.PaginaTamanho)
+            {
+                Nome  = model?.Nome,
+                Email = model?.Email,
+                Cpf   = model?.Cpf,
+                Rg    = model?.Rg
+            };
+
+            return await _usuarioServico.ProcurarUsuarios(entrada);
+        }
+
+        /// <summary>
+        /// Realiza o cadastro de um novo usuario
+        /// </summary>
+        [Authorize(Policy = "Administrador")]
+        [HttpPost]
+        [Route("v1/usuarios/cadastrar")]
+        public async Task<ISaida> Cadastrar([FromBody] CadastrarUsuarioEntrada model)
+        {
+            var entrada = new CadastrarUsuarioEntrada(
+                model.Nome,
+                model.Email,
+                "k2",
+                model.Cpf,
+                model.Rg,
+                model.Celular,
+                model.Administrador);
+
+            return await _usuarioServico.CadastrarUsuario(entrada);
+        }
+
+        /// <summary>
+        /// Realiza a alteração de um usuario
+        /// </summary>
+        [Authorize(Policy = "Administrador")]
+        [HttpPut]
+        [Route("v1/usuarios/alterar")]
+        public async Task<ISaida> Alterar([FromBody] AlterarUsuarioEntrada model)
+        {
+            var entrada = new AlterarUsuarioEntrada(
+                model.IdUsuario,
+                model.Nome,
+                model.Email,
+                model.Cpf,
+                model.Rg,
+                model.Celular,
+                model.Ativo);
+
+            return await _usuarioServico.AlterarUsuario(entrada);
+        }
+
+        /// <summary>
+        /// Obtém um usuario a partir do seu ID
+        /// </summary>
+        [Authorize(Policy = "Administrador")]
+        [HttpGet]
+        [Route("v1/usuarios/obter-por-id/{id:int}")]
+        public async Task<ISaida> ObterPorId(int id)
+        {
+            return await _usuarioServico.ObterUsuarioPorId(id);
+        }
+
+        /// <summary>
+        /// Realiza a exclusão de um usuario.
+        /// </summary>
+        [Authorize(Policy = "Administrador")]
+        [HttpDelete]
+        [Route("v1/usuarios/excluir/{id:int}")]
+        public async Task<ISaida> ExcluirUsuario(int id)
+        {
+            return await _usuarioServico.ExcluirUsuario(id);
+        }
+
+        /// <summary>
         /// Realiza a autenticação do usuário, a partir do e-mail e senha informados.
         /// </summary>
         [AllowAnonymous]
@@ -62,9 +143,18 @@ namespace K2.Api.Controllers
 
             var entrada = new AlterarSenhaUsuarioEntrada(emailUsuario, model.SenhaAtual, model.SenhaNova, model.ConfirmacaoSenhaNova, model.EnviarEmailSenhaNova);
 
-            var saida = await _usuarioServico.AlterarSenha(entrada);
+            return await _usuarioServico.AlterarSenha(entrada);
+        }
 
-            return new Saida(saida.Sucesso, saida.Mensagens, saida.Retorno);
+        /// <summary>
+        /// Redefine a senha de acesso do usuário para uma senha temporária
+        /// </summary>
+        [Authorize(Policy = "Administrador")]
+        [HttpPut]
+        [Route("v1/usuarios/redefinir-senha/{id:int}")]
+        public async Task<ISaida> RedefinirSenha(int id)
+        {
+            return await _usuarioServico.RedefinirSenha(id);
         }
 
         private ISaida CriarResponseTokenJwt(UsuarioSaida usuario, DateTime dataCriacaoToken, DateTime dataExpiracaoToken, JwtTokenConfig tokenConfig)

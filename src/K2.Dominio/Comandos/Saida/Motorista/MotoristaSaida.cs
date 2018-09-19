@@ -13,6 +13,11 @@ namespace K2.Dominio.Comandos.Saida
         public int Id { get; }
 
         /// <summary>
+        /// Id do Usuario
+        /// </summary>
+        public int IdUsuario { get; }
+
+        /// <summary>
         /// Indica se o motorista está ativo
         /// </summary>
         public bool Ativo { get; }
@@ -49,14 +54,15 @@ namespace K2.Dominio.Comandos.Saida
 
         public MotoristaSaida(Motorista motorista)
         {
-            this.Id      = motorista.Id;
-            this.Ativo   = motorista.Usuario.Ativo;
-            this.Nome    = motorista.Usuario.Nome;
-            this.Email   = motorista.Usuario.Email;
-            this.Cpf     = motorista.Usuario.Cpf;
-            this.Rg      = motorista.Usuario.Rg;
-            this.Celular = motorista.Usuario.Celular;
-            this.Cnh     = motorista.Cnh;
+            this.Id        = motorista.Id;
+            this.IdUsuario = motorista.IdUsuario;
+            this.Ativo     = motorista.Usuario.Ativo;
+            this.Nome      = motorista.Usuario.Nome;
+            this.Email     = motorista.Usuario.Email;
+            this.Cpf       = motorista.Usuario.Cpf;
+            this.Rg        = motorista.Usuario.Rg;
+            this.Celular   = motorista.Usuario.Celular;
+            this.Cnh       = motorista.Cnh;
         }
 
         public override string ToString()

@@ -22,14 +22,14 @@ namespace K2.Infraestrutura
             _senhaSmtp = senhaSmtp;
         }
 
-        public void EnviarEmail(string emailRemetente, ICollection<string> emailDestinatarios, string assunto, string mensagem, string nomeRemetente = "K2 Transport")
+        public void EnviarEmail(ICollection<string> emailDestinatarios, string assunto, string mensagem, string nomeRemetente = "K2 Transport")
         {
             var smtpClient = new SmtpClient(_servidor, Convert.ToInt32(_porta)) {
                 Credentials = new NetworkCredential(_usuarioSmtp, _senhaSmtp),
                 Timeout = 10000
             };
 
-            var smtpUtil = new SmtpUtil(emailRemetente, emailDestinatarios, mensagem, smtpClient)
+            var smtpUtil = new SmtpUtil(_usuarioSmtp, emailDestinatarios, mensagem, smtpClient)
             {
                 Assunto = assunto,
                 NomeRemetente = nomeRemetente,

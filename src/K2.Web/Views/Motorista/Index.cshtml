@@ -13,20 +13,23 @@
     <div class="m-portlet__head m-portlet__head--k2">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon">
+                    <i class="fa fa-address-card"></i>
+                </span>
                 <h3 class="m-portlet__head-text">
-                    Clientes
+                    Motoristas
                 </h3>
             </div>
         </div>
         <div class="m-portlet__head-tools">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button type="button" class="m-btn btn btn-secondary" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Novo cliente" id="bCadastrar"><i class="la la-plus-square"></i></button>
+                <button type="button" class="m-btn btn btn-secondary" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Novo motorista" id="bCadastrar"><i class="la la-plus-square"></i></button>
                 <button type="button" class="m-btn btn btn-secondary" data-toggle="modal" data-target="#modal_Procurar"><i class="la la-search" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Procurar"></i></button>
             </div>
         </div>
     </div>
     <div class="m-portlet__body">
-        <table class="table table-bordered table-hover table-striped table-condensed nowrap" id="tblCliente">
+        <table class="table table-bordered table-hover table-striped table-condensed nowrap" id="tblMotorista">
             <thead>
                 <tr>
                     <th data-priority="1">Nome</th>
@@ -34,6 +37,7 @@
                     <th>Email</th>
                     <th>CPF</th>
                     <th>RG</th>
+                    <th>CNH</th>
                     <th>Ativo</th>
                     <th data-priority="2">Ações</th>
                 </tr>
@@ -58,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-                <form id="frmProcurarCliente" class="m-form m-form--state m-form--label-align-right">
+                <form id="frmProcurarMotorista" class="m-form m-form--state m-form--label-align-right">
                     <div class="m-portlet__body">
                         <div class="form-group m-form__group m-form__group--md row">
                             <div class="col-lg-12 m-form__group-sub">
@@ -80,12 +84,20 @@
                         <div class="form-group m-form__group m-form__group--md row">
                             <div class="col-lg-6 m-form__group-sub">
                                 <label>CPF</label>
-                                <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarCpf" name="iCpf">
+                                <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarCpf" name="iProcurarCpf">
                             </div>
                             <div class="col-lg-6 m-form__group-sub">
                                 <label>RG</label>
-                                <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarRg" name="iRg" maxlength="20" style="text-transform:uppercase;">
+                                <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarRg" name="iProcurarRg" maxlength="20" style="text-transform:uppercase;">
                                 <span class="m-form__help">Procura por palavra</span>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group m-form__group--md row">
+                            <div class="col-lg-6 m-form__group-sub">
+                                <label>CNH</label>
+                                <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarCnh" name="iProcurarCnh">
+                            </div>
+                            <div class="col-lg-6 m-form__group-sub">
                             </div>
                         </div>
                     </div>
@@ -102,7 +114,7 @@
 </div>		        
 
 @section VendorsJs
-    {
+{
     <script src="~/assets/vendors/custom/datatables/datatables.bundle.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $.extend($.fn.dataTable.defaults, {
@@ -134,9 +146,9 @@
 @section PaginaJS
     {
     <environment include="Development">
-        <script src="~/assets/js/views/cliente.js" type="text/javascript"></script>
+        <script src="~/assets/js/views/motorista.js" type="text/javascript"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/assets/js/views/cliente.min.js" type="text/javascript"></script>
+        <script src="~/assets/js/views/motorista.min.js" type="text/javascript"></script>
     </environment>
 }

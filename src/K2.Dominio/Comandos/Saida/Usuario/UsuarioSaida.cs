@@ -52,25 +52,25 @@ namespace K2.Dominio.Comandos.Saida
         /// </summary>
         public string Perfil { get; }
 
-        public UsuarioSaida(Usuario usuario)
+        public UsuarioSaida(Usuario usuario, string tipoPerfil = TipoPerfil.Administrador)
         {
             if (usuario == null)
                 return;
 
-            this.Id               = usuario.Id;
-            this.Nome             = usuario.Nome.ToUpper();
-            this.Email            = usuario.Email.ToLower();
-            this.Cpf              = usuario.Cpf;
-            this.Rg               = usuario.Rg;
-            this.Celular          = usuario.Celular;
-            this.Ativo            = usuario.Ativo;
-            this.Administrador    = usuario.Administrador;
-            this.Perfil           = usuario.Perfil;
+            this.Id            = usuario.Id;
+            this.Nome          = usuario.Nome.ToUpper();
+            this.Email         = usuario.Email.ToLower();
+            this.Cpf           = usuario.Cpf;
+            this.Rg            = usuario.Rg;
+            this.Celular       = usuario.Celular;
+            this.Ativo         = usuario.Ativo;
+            this.Administrador = usuario.Administrador;
+            this.Perfil        = tipoPerfil;
         }
 
         public override string ToString()
         {
-            return this.Nome;
+            return $"{this.Nome} - {this.Perfil}";
         }
     }
 }

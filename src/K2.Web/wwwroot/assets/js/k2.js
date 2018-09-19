@@ -57,6 +57,22 @@
             //            });
             //    });
             //});
+        },
+
+        redefinirSenha: function (id) {
+            App.exibirConfirm("<b>Deseja realmente redefinir a senha de acesso?</b><br/><br/>Uma nova senha temporária será criada e enviada para o usuário por e-mail.", "Redefinir senha", "Cancelar", function ()
+            {
+                App.bloquear();
+
+                $.post(App.corrigirPathRota("redefinir-senha/" + id), function (feedbackResult) {
+                    var feedback = Feedback.converter(feedbackResult);
+                    feedback.exibirModal();
+                })
+                    .fail(function (jqXhr) {
+                        var feedback = Feedback.converter(jqXhr.responseJSON);
+                        feedback.exibirModal();
+                    });
+            });
         }
     };
 }();
