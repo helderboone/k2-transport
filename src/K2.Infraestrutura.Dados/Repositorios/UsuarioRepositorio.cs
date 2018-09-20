@@ -79,6 +79,9 @@ namespace K2.Infraestrutura.Dados.Repositorios
             if (!string.IsNullOrEmpty(entrada.Rg))
                 query = query.Where(x => x.Rg.IndexOf(entrada.Rg, StringComparison.InvariantCultureIgnoreCase) != -1);
 
+            if (entrada.Administrador.HasValue)
+                query = query.Where(x => x.Administrador == entrada.Administrador.Value);
+
             query = query.OrderByProperty(entrada.OrdenarPor, entrada.OrdenarSentido);
 
             if (entrada.Paginar())

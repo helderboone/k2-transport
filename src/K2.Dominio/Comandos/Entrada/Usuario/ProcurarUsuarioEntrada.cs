@@ -27,6 +27,8 @@ namespace K2.Dominio.Comandos.Entrada
             set => _rg = value;
         }
 
+        public bool? Administrador { get; set; }
+
         public ProcurarUsuarioEntrada(string ordenarPor,
             string ordenarSentido,
             int? paginaIndex = null,

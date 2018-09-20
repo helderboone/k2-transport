@@ -83,7 +83,7 @@ namespace K2.Dominio.Servicos
             UsuarioSaida usuarioSaida = null;
 
             if (usuario.Administrador)
-                usuarioSaida = new UsuarioSaida(usuario);
+                usuarioSaida = new UsuarioSaida(usuario, TipoPerfil.Administrador);
             else if (await _clienteRepositorio.VerificarExistenciaPorIdUsuario(usuario.Id))
                 usuarioSaida = new UsuarioSaida(usuario, TipoPerfil.Cliente);
             else if (await _motoristaRepositorio.VerificarExistenciaPorIdUsuario(usuario.Id))

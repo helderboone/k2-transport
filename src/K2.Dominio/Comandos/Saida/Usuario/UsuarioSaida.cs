@@ -52,7 +52,7 @@ namespace K2.Dominio.Comandos.Saida
         /// </summary>
         public string Perfil { get; }
 
-        public UsuarioSaida(Usuario usuario, string tipoPerfil = TipoPerfil.Administrador)
+        public UsuarioSaida(Usuario usuario, string tipoPerfil = null)
         {
             if (usuario == null)
                 return;

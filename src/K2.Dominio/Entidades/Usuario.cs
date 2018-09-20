@@ -76,12 +76,13 @@ namespace K2.Dominio.Entidades
 
         public void Alterar(AlterarUsuarioEntrada entrada)
         {
-            this.Nome    = entrada.Nome;
-            this.Email   = entrada.Email;
-            this.Cpf     = entrada.Cpf;
-            this.Rg      = entrada.Rg;
-            this.Celular = entrada.Celular;
-            this.Ativo   = entrada.Ativo;
+            this.Nome          = entrada.Nome;
+            this.Email         = entrada.Email;
+            this.Cpf           = entrada.Cpf;
+            this.Rg            = entrada.Rg;
+            this.Celular       = entrada.Celular;
+            this.Ativo         = entrada.Ativo;
+            this.Administrador = entrada.Administrador;
         }
 
         public string RefefinirSenha()

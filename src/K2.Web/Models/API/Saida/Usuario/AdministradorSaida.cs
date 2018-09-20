@@ -6,15 +6,15 @@ namespace K2.Web.Models
     /// <summary>
     /// Classe que reflete as informações de saída de um cliente
     /// </summary>
-    public class ClienteSaida : Saida
+    public class AdministradorSaida : Saida
     {
-        public ClienteSaida(bool sucesso, IEnumerable<string> mensagens, ClienteRetorno retorno)
+        public AdministradorSaida(bool sucesso, IEnumerable<string> mensagens, AdministradorRetorno retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
 
-        public ClienteRetorno ObterRetorno() => (ClienteRetorno)this.Retorno;
+        public AdministradorRetorno ObterRetorno() => (AdministradorRetorno)this.Retorno;
 
         public new static ClienteSaida Obter(string json)
         {
@@ -24,7 +24,7 @@ namespace K2.Web.Models
         }
     }
 
-    public class ClienteRetorno
+    public class AdministradorRetorno
     {
         /// <summary>
         /// Indica se o cliente está ativo
@@ -32,14 +32,9 @@ namespace K2.Web.Models
         public bool Ativo { get; }
 
         /// <summary>
-        /// Id do cliente
+        /// Id do usuário
         /// </summary>
         public int Id { get; }
-
-        /// <summary>
-        /// Id do Usuario
-        /// </summary>
-        public int IdUsuario { get; }
 
         /// <summary>
         /// Nome do usuário
@@ -65,39 +60,16 @@ namespace K2.Web.Models
         /// Celular do usuário
         /// </summary>
         public string Celular { get; }
+        
 
-        /// <summary>
-        /// CEP do cliente
-        /// </summary>
-        public string Cep { get; }
-
-        /// <summary>
-        /// Descrição do endereço do cliente
-        /// </summary>
-        public string Endereco { get; }
-
-        /// <summary>
-        /// Nome do município do cliente
-        /// </summary>
-        public string Municipio { get; }
-
-        /// <summary>
-        /// Sigla da UF do cliente
-        /// </summary>
-        public string Uf { get; }
-
-        public ClienteRetorno(
+        public AdministradorRetorno(
             int id,
             bool ativo,
             string nome,
             string email,
             string cpf,
             string rg,
-            string celular,
-            string cep,
-            string endereco,
-            string municipio,
-            string uf)
+            string celular)
         {
             Ativo     = ativo;
             Id        = id;
@@ -106,10 +78,6 @@ namespace K2.Web.Models
             Cpf       = cpf;
             Rg        = rg;
             Celular   = celular;
-            Cep       = cep;
-            Endereco  = endereco;
-            Municipio = municipio;
-            Uf        = uf;
         }
     }
 }

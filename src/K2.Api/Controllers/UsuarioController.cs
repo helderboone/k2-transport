@@ -34,10 +34,11 @@ namespace K2.Api.Controllers
         {
             var entrada = new ProcurarUsuarioEntrada(model?.OrdenarPor, model?.OrdenarSentido, model?.PaginaIndex, model?.PaginaTamanho)
             {
-                Nome  = model?.Nome,
-                Email = model?.Email,
-                Cpf   = model?.Cpf,
-                Rg    = model?.Rg
+                Nome          = model?.Nome,
+                Email         = model?.Email,
+                Cpf           = model?.Cpf,
+                Rg            = model?.Rg,
+                Administrador = model?.Administrador
             };
 
             return await _usuarioServico.ProcurarUsuarios(entrada);
@@ -78,7 +79,8 @@ namespace K2.Api.Controllers
                 model.Cpf,
                 model.Rg,
                 model.Celular,
-                model.Ativo);
+                model.Ativo,
+                model.Administrador);
 
             return await _usuarioServico.AlterarUsuario(entrada);
         }

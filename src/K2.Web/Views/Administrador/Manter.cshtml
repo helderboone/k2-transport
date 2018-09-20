@@ -1,0 +1,73 @@
+﻿@using K2.Web.Helpers
+
+@model K2.Web.Models.AdministradorRetorno
+
+<div class="m-portlet m-portlet--primary m-portlet-lg" style="border: 1px solid #ccc; margin:0 auto;">
+    <div class="m-portlet__head" style="border-bottom: 1px solid #8DD2F1;">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon">
+                    <i class="la  @(Model == null ? "la-plus-square" : "la-edit")"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    @(Model == null ? "Cadastrar" : "Alterar") administrador
+                </h3>
+            </div>
+        </div>
+    </div>
+    <form id="frmManterAdministrador" class="m-form m-form--fit m-form--state" novalidate="novalidate">
+        <input type="hidden" id="iIdAdministrador" name="iIdAdministrador" value="@(Model != null ? Model.Id.ToString() : string.Empty)">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Nome <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iNome" name="iNome" maxlength="500" style="text-transform:uppercase;" value="@Model?.Nome">
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Email <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="input-group m-input-group m-input-group--square m-input-group--air">
+                        <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
+                        <input type="text" class="form-control m-input" id="iEmail" name="iEmail" maxlength="500" style="text-transform:lowercase;" value="@Model?.Email">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>CPF <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iCpf" name="iCpf" value="@Model?.Cpf">
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>RG <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iRg" name="iRg" maxlength="20" style="text-transform:uppercase;" value="@Model?.Rg"> 
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Telefone celular <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="input-group m-input-group m-input-group--square m-input-group--air">
+                        <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-phone"></i></span></div>
+                        <input type="text" class="form-control m-input" id="iCelular" name="iCelular" value="@Model?.Celular">
+                    </div>
+                    <span class="m-form__help">DDD + Número</span>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label class="form-control-label">Ativo</label>
+                    <div class="m-checkbox-list">
+                        <span class="m-switch m-switch--outline m-switch--info">
+                            <label>
+                                <input type="checkbox" @(Model == null ? "checked disabled" : (Model.Ativo ? "checked" : string.Empty)) name="cAtivo" id="cAtivo">
+                                <span></span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid m-form__actions--right">
+                <button type="button" class="btn m-btn--square btn-secondary btn-fechar">Cancelar</button>
+                <button type="submit" class="btn m-btn--square btn-info">Salvar</button>
+            </div>
+        </div>
+    </form>
+</div>

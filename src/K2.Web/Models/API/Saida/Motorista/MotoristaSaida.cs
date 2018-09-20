@@ -24,9 +24,6 @@ namespace K2.Web.Models
         }
     }
 
-    /// <summary>
-    /// Classe que reflete as informações do token JWT retornado no processo de autenticação
-    /// </summary>
     public class MotoristaRetorno
     {
         /// <summary>

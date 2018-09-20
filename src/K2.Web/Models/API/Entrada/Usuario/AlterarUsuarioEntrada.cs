@@ -39,5 +39,15 @@
         /// Indica se o usuário está ativo
         /// </summary>
         public bool Ativo { get; set; }
+
+        /// <summary>
+        /// Indica se o usuário é um administrador
+        /// </summary>
+        public bool Administrador { get; }
+
+        public AlterarUsuarioEntrada()
+        {
+            this.Administrador = true;
+        }
     }
 }

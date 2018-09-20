@@ -68,5 +68,11 @@
     "inputFiles": [
       "wwwroot/assets/js/views/motorista.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/views/administrador.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/views/administrador.js"
+    ]
   }
 ]

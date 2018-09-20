@@ -45,15 +45,21 @@ namespace K2.Dominio.Comandos.Entrada
         /// </summary>
         public bool Ativo { get; }
 
-        public AlterarUsuarioEntrada(int id, string nome, string email, string cpf, string rg, string celular, bool ativo)
+        /// <summary>
+        /// Indica que o usuário é um administrador
+        /// </summary>
+        public bool Administrador { get; }
+
+        public AlterarUsuarioEntrada(int id, string nome, string email, string cpf, string rg, string celular, bool ativo, bool administrador)
         {
-            IdUsuario = id;
-            Nome      = nome?.ToUpper();
-            Email     = email?.ToLower();
-            Cpf       = cpf?.RemoverCaracter(".", "-", "/");
-            Rg        = rg?.ToUpper().RemoverCaracter(".", "-", "/");
-            Celular   = celular?.RemoverCaracter("(", "-", ")");
-            Ativo     = ativo;
+            IdUsuario     = id;
+            Nome          = nome?.ToUpper();
+            Email         = email?.ToLower();
+            Cpf           = cpf?.RemoverCaracter(".", "-", "/");
+            Rg            = rg?.ToUpper().RemoverCaracter(".", "-", "/");
+            Celular       = celular?.RemoverCaracter("(", "-", ")");
+            Ativo         = ativo;
+            Administrador = administrador;
 
             Validar();
         }

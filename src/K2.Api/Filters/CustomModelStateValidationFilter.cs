@@ -36,11 +36,11 @@ namespace K2.Api.Filters
 
     public class ValidationResultModel
     {
-        public List<ValidationError> Errors { get; }
+        public List<ValidationError> Erros { get; }
 
         public ValidationResultModel(ModelStateDictionary modelState)
         {
-            Errors = modelState.Keys
+            Erros = modelState.Keys
                     .SelectMany(key => modelState[key].Errors.Select(x => new ValidationError(key, string.IsNullOrEmpty(x.ErrorMessage) ? x.Exception?.Message : x.ErrorMessage)))
                     .ToList();
         }

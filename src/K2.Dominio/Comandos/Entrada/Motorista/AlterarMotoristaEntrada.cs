@@ -28,7 +28,7 @@ namespace K2.Dominio.Comandos.Entrada
             string celular,
             bool ativo,
             string cnh)
-            : base(id, nome, email, cpf, rg, celular, ativo)
+            : base(id, nome, email, cpf, rg, celular, ativo, false)
         {
             Id  = id;
             Cnh = cnh?.RemoverCaracter(".", "-", "/");
