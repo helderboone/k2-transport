@@ -50,9 +50,9 @@ namespace K2.Dominio.Comandos.Entrada
         /// </summary>
         public bool Administrador { get; }
 
-        public AlterarUsuarioEntrada(int id, string nome, string email, string cpf, string rg, string celular, bool ativo, bool administrador)
+        public AlterarUsuarioEntrada(int idUsuario, string nome, string email, string cpf, string rg, string celular, bool ativo, bool administrador)
         {
-            IdUsuario     = id;
+            IdUsuario     = idUsuario;
             Nome          = nome?.ToUpper();
             Email         = email?.ToLower();
             Cpf           = cpf?.RemoverCaracter(".", "-", "/");

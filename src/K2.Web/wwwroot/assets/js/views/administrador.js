@@ -151,7 +151,7 @@
                 submitHandler: function () {
 
                     var administrador = {
-                        Id: $("#iIdAdministrador").val(),
+                        IdUsuario: $("#iIdAdministrador").val(),
                         Nome: $("#iNome").val(),
                         Email: $("#iEmail").val(),
                         Cpf: $("#iCpf").val(),

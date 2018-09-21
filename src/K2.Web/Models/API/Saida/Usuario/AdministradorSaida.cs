@@ -16,10 +16,10 @@ namespace K2.Web.Models
 
         public AdministradorRetorno ObterRetorno() => (AdministradorRetorno)this.Retorno;
 
-        public new static ClienteSaida Obter(string json)
+        public new static AdministradorSaida Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
-                ? JsonConvert.DeserializeObject<ClienteSaida>(json)
+                ? JsonConvert.DeserializeObject<AdministradorSaida>(json)
                 : null;
         }
     }

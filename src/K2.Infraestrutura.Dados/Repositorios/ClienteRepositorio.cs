@@ -33,7 +33,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
 
         public async Task<bool> VerificarExistenciaPorIdUsuario(int id)
         {
-            return await _efContext.Clientes.AnyAsync(x => x.Id == id);
+            return await _efContext.Clientes.AnyAsync(x => x.IdUsuario == id);
         }
 
         public async Task<ProcurarSaida> Procurar(ProcurarClienteEntrada entrada)
