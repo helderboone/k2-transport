@@ -4,35 +4,35 @@ using System.Collections.Generic;
 namespace K2.Web.Models
 {
     /// <summary>
-    /// Classe que reflete as informações de saída de um motorista
+    /// Classe que reflete as informações de saída de um proprietário
     /// </summary>
-    public class MotoristaSaida : Saida
+    public class ProprietarioCarroSaida : Saida
     {
-        public MotoristaSaida(bool sucesso, IEnumerable<string> mensagens, MotoristaRetorno retorno)
+        public ProprietarioCarroSaida(bool sucesso, IEnumerable<string> mensagens, ProprietarioCarroRetorno retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
 
-        public MotoristaRetorno ObterRetorno() => (MotoristaRetorno)this.Retorno;
+        public ProprietarioCarroRetorno ObterRetorno() => (ProprietarioCarroRetorno)this.Retorno;
 
-        public new static MotoristaSaida Obter(string json)
+        public new static ProprietarioCarroSaida Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
-                ? JsonConvert.DeserializeObject<MotoristaSaida>(json)
+                ? JsonConvert.DeserializeObject<ProprietarioCarroSaida>(json)
                 : null;
         }
     }
 
-    public class MotoristaRetorno
+    public class ProprietarioCarroRetorno
     {
         /// <summary>
-        /// Indica se o motorista está ativo
+        /// Indica se o proprietário está ativo
         /// </summary>
         public bool Ativo { get; }
 
         /// <summary>
-        /// Id do motorista
+        /// Id do proprietario
         /// </summary>
         public int Id { get; }
 
@@ -66,20 +66,14 @@ namespace K2.Web.Models
         /// </summary>
         public string Celular { get; }
 
-        /// <summary>
-        /// CNH do motorista
-        /// </summary>
-        public string Cnh { get; }
-
-        public MotoristaRetorno(
+        public ProprietarioCarroRetorno(
             int id,
             bool ativo,
             string nome,
             string email,
             string cpf,
             string rg,
-            string celular,
-            string cnh)
+            string celular)
         {
             Ativo     = ativo;
             Id        = id;
@@ -88,7 +82,6 @@ namespace K2.Web.Models
             Cpf       = cpf;
             Rg        = rg;
             Celular   = celular;
-            Cnh       = cnh;
         }
     }
 }

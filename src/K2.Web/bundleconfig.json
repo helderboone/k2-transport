@@ -74,5 +74,11 @@
     "inputFiles": [
       "wwwroot/assets/js/views/administrador.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/views/proprietario-carro.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/views/proprietario-carro.js"
+    ]
   }
 ]

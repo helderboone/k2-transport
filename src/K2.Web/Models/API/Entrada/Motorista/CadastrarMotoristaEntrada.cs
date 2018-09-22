@@ -6,11 +6,6 @@
     public class CadastrarMotoristaEntrada : CadastrarUsuarioEntrada
     {
         /// <summary>
-        /// CEP do motorista
-        /// </summary>
-        public string Cep { get; set; }
-
-        /// <summary>
         /// Número da CNH do motorista
         /// </summary>
         public string Cnh { get; set; }

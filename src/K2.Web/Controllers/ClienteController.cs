@@ -98,7 +98,7 @@ namespace K2.Web.Controllers
             var saida = ClienteSaida.Obter(apiResponse.Content);
 
             if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações do cliente.", new[] { "Não foi possível recuperar as informações do cliente." }));
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações do cliente.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações do cliente.", saida.Mensagens));
@@ -141,7 +141,7 @@ namespace K2.Web.Controllers
             var saida = Saida.Obter(apiResponse.Content);
 
             if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir o cliente.", new[] { "Não foi possível recuperar as informações do cliente." }));
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir o cliente.", new[] { "A API não retornou nenhuma resposta." }));
 
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir o cliente.", saida.Mensagens))

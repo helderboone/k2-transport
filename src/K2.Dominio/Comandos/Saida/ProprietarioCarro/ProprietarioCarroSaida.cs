@@ -3,12 +3,12 @@
 namespace K2.Dominio.Comandos.Saida
 {
     /// <summary>
-    /// Classe que representa um motorista
+    /// Classe que representa um proprietário
     /// </summary>
-    public class MotoristaSaida
+    public class ProprietarioCarroSaida
     {
         /// <summary>
-        /// Id do motorista
+        /// Id do proprietário
         /// </summary>
         public int Id { get; }
 
@@ -18,7 +18,7 @@ namespace K2.Dominio.Comandos.Saida
         public int IdUsuario { get; }
 
         /// <summary>
-        /// Indica se o motorista está ativo
+        /// Indica se o proprietário está ativo
         /// </summary>
         public bool Ativo { get; }
 
@@ -47,22 +47,16 @@ namespace K2.Dominio.Comandos.Saida
         /// </summary>
         public string Celular { get; }
 
-        /// <summary>
-        /// Número da CNH do motorista
-        /// </summary>
-        public string Cnh { get; }
-
-        public MotoristaSaida(Motorista motorista)
+        public ProprietarioCarroSaida(ProprietarioCarro proprietario)
         {
-            this.Id        = motorista.Id;
-            this.IdUsuario = motorista.IdUsuario;
-            this.Ativo     = motorista.Usuario.Ativo;
-            this.Nome      = motorista.Usuario.Nome;
-            this.Email     = motorista.Usuario.Email;
-            this.Cpf       = motorista.Usuario.Cpf;
-            this.Rg        = motorista.Usuario.Rg;
-            this.Celular   = motorista.Usuario.Celular;
-            this.Cnh       = motorista.Cnh;
+            this.Id        = proprietario.Id;
+            this.IdUsuario = proprietario.IdUsuario;
+            this.Ativo     = proprietario.Usuario.Ativo;
+            this.Nome      = proprietario.Usuario.Nome;
+            this.Email     = proprietario.Usuario.Email;
+            this.Cpf       = proprietario.Usuario.Cpf;
+            this.Rg        = proprietario.Usuario.Rg;
+            this.Celular   = proprietario.Usuario.Celular;
         }
 
         public override string ToString()

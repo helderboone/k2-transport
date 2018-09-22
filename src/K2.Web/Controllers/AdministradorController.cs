@@ -141,7 +141,7 @@ namespace K2.Web.Controllers
             var saida = Saida.Obter(apiResponse.Content);
 
             if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir o administrador.", new[] { "Não foi possível recuperar as informações do administrador." }));
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir o administrador.", new[] { "A API não retornou nenhuma resposta." }));
 
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir o administrador.", saida.Mensagens))

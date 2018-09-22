@@ -19,18 +19,27 @@ namespace K2.Dominio.Servicos
         private readonly IUsuarioRepositorio _usuarioRepositorio;
         private readonly IClienteRepositorio _clienteRepositorio;
         private readonly IMotoristaRepositorio _motoristaRepositorio;
+        private readonly IProprietarioCarroRepositorio _proprietarioCarroRepositorio;
         private readonly IEmailHelper _emailUtil;
         private readonly ILogger _logger;
         private readonly IUow _uow;
 
-        public UsuarioServico(IUsuarioRepositorio usuarioRepositorio, IClienteRepositorio clienteRepositorio, IMotoristaRepositorio motoristaRepositorio, IUow uow, IEmailHelper emailUtil, ILogger<UsuarioServico> logger)
+        public UsuarioServico(
+            IUsuarioRepositorio usuarioRepositorio,
+            IClienteRepositorio clienteRepositorio,
+            IMotoristaRepositorio motoristaRepositorio,
+            IProprietarioCarroRepositorio proprietarioCarroRepositorio,
+            IUow uow,
+            IEmailHelper emailUtil,
+            ILogger<UsuarioServico> logger)
         {
-            _usuarioRepositorio   = usuarioRepositorio;
-            _clienteRepositorio   = clienteRepositorio;
-            _motoristaRepositorio = motoristaRepositorio;
-            _uow                  = uow;
-            _emailUtil            = emailUtil;
-            _logger               = logger;
+            _usuarioRepositorio           = usuarioRepositorio;
+            _clienteRepositorio           = clienteRepositorio;
+            _motoristaRepositorio         = motoristaRepositorio;
+            _proprietarioCarroRepositorio = proprietarioCarroRepositorio;
+            _uow                          = uow;
+            _emailUtil                    = emailUtil;
+            _logger                       = logger;
         }
 
         public async Task<ISaida> ObterUsuarioPorId(int id)
@@ -56,6 +65,8 @@ namespace K2.Dominio.Servicos
                 usuarioSaida = new UsuarioSaida(usuario, TipoPerfil.Cliente);
             else if (await _motoristaRepositorio.VerificarExistenciaPorIdUsuario(usuario.Id))
                 usuarioSaida = new UsuarioSaida(usuario, TipoPerfil.Motorista);
+            else if (await _proprietarioCarroRepositorio.VerificarExistenciaPorIdUsuario(usuario.Id))
+                usuarioSaida = new UsuarioSaida(usuario, TipoPerfil.ProprietarioCarro);
 
             return new Saida(true, new[] { UsuarioResource.Usuario_Encontrado_Com_Sucesso }, usuarioSaida);
         }
@@ -88,6 +99,8 @@ namespace K2.Dominio.Servicos
                 usuarioSaida = new UsuarioSaida(usuario, TipoPerfil.Cliente);
             else if (await _motoristaRepositorio.VerificarExistenciaPorIdUsuario(usuario.Id))
                 usuarioSaida = new UsuarioSaida(usuario, TipoPerfil.Motorista);
+            else if (await _proprietarioCarroRepositorio.VerificarExistenciaPorIdUsuario(usuario.Id))
+                usuarioSaida = new UsuarioSaida(usuario, TipoPerfil.ProprietarioCarro);
 
             return new Saida(true, new[] { UsuarioResource.Usuario_Autenticado_Com_Sucesso }, usuarioSaida);
         }

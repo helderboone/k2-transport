@@ -11,6 +11,8 @@ namespace K2.Infraestrutura.Dados
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Motorista> Motoristas { get; set; }
+        public DbSet<ProprietarioCarro> Proprietarios { get; set; }
+        public DbSet<Localidade> Localidades { get; set; }
 
         public EfDataContext(string connectionString)
         {
@@ -28,6 +30,8 @@ namespace K2.Infraestrutura.Dados
             modelBuilder.ApplyConfiguration(new UsuarioMap());
             modelBuilder.ApplyConfiguration(new ClienteMap());
             modelBuilder.ApplyConfiguration(new MotoristaMap());
+            modelBuilder.ApplyConfiguration(new ProprietarioCarroMap());
+            modelBuilder.ApplyConfiguration(new LocalidadeMap());
         }
     }
 }

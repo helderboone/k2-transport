@@ -98,7 +98,7 @@ namespace K2.Web.Controllers
             var saida = MotoristaSaida.Obter(apiResponse.Content);
 
             if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações do motorista.", new[] { "Não foi possível recuperar as informações do motorista." }));
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações do motorista.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações do motorista.", saida.Mensagens));
@@ -141,7 +141,7 @@ namespace K2.Web.Controllers
             var saida = Saida.Obter(apiResponse.Content);
 
             if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir o motorista.", new[] { "Não foi possível recuperar as informações do motorista." }));
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir o motorista.", new[] { "A API não retornou nenhuma resposta." }));
 
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir o motorista.", saida.Mensagens))

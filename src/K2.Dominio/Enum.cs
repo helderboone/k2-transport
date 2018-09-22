@@ -10,5 +10,7 @@
         public const string Motorista = "Motorista";
 
         public const string Cliente = "Cliente";
+
+        public const string ProprietarioCarro = "ProprietarioCarro";
     }
 }

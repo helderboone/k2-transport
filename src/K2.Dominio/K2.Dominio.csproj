@@ -22,10 +22,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ClienteResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\LocalidadeResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LocalidadeResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\MotoristaResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MotoristaResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ProprietarioCarroResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProprietarioCarroResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\UsuarioResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -39,9 +49,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ClienteResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\LocalidadeResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalidadeResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\MotoristaResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MotoristaResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProprietarioCarroResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProprietarioCarroResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\UsuarioResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
