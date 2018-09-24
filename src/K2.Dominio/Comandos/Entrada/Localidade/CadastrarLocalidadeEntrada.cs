@@ -23,7 +23,7 @@ namespace K2.Dominio.Comandos.Entrada
             string nome,
             string uf)
         {
-            Nome = nome?.ToUpper();
+            Nome = nome;
             Uf = uf?.ToUpper();
 
             this.Validar();

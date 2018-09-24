@@ -19,6 +19,13 @@ namespace K2.Web
             _totalRegistros = saida.ObterRetorno().TotalRegistros;
         }
 
+        public DatatablesResult(int draw, int totalRegistros, ICollection registros)
+        {
+            _draw = draw;
+            _itens = registros;
+            _totalRegistros = totalRegistros;
+        }
+
         public async Task ExecuteResultAsync(ActionContext context)
         {
             var jsonResult = new JsonResult(new

@@ -31,7 +31,7 @@ namespace K2.Dominio.Comandos.Entrada
             this.OrdenarPor = ordenarPor;
             this.OrdenarSentido = !string.Equals(ordenarSentido, "ASC", StringComparison.InvariantCultureIgnoreCase) && !string.Equals(ordenarSentido, "DESC", StringComparison.InvariantCultureIgnoreCase)
                 ? "ASC"
-                : ordenarSentido;
+                : ordenarSentido.ToUpper();
             this.PaginaIndex = paginaIndex;
             this.PaginaTamanho = paginaTamanho;
 

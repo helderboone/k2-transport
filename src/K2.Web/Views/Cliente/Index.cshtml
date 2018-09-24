@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = string.Empty;
+    ViewData["Title"] = "Clientes";
     Layout = "Template";
 }
 
@@ -13,15 +13,10 @@
     <div class="m-portlet__head m-portlet__head--k2">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
-                <h3 class="m-portlet__head-text">
-                    Clientes
-                </h3>
-            </div>
-        </div>
-        <div class="m-portlet__head-tools">
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button type="button" class="m-btn btn btn-secondary" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Novo cliente" id="bCadastrar"><i class="la la-plus-square"></i></button>
-                <button type="button" class="m-btn btn btn-secondary" data-toggle="modal" data-target="#modal_Procurar"><i class="la la-search" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Procurar"></i></button>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-secondary m-btn m-btn--custom m-btn--label-brand" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Novo cliente" id="bCadastrar"><i class="fa fa-plus-circle"></i></button>
+                    <button type="button" class="btn btn-secondary m-btn m-btn--custom m-btn--label-brand" data-toggle="modal" data-target="#modal_Procurar"><i class="la la-search" data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Procurar"></i></button>
+                </div>
             </div>
         </div>
     </div>

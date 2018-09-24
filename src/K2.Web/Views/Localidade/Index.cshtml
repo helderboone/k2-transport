@@ -1,11 +1,12 @@
-﻿
+﻿@using K2.Web.Helpers
+
 @{
-    ViewData["Title"] = "Administradores";
+    ViewData["Title"] = "Localidades";
     Layout = "Template";
 }
 
 @section VendorsCss
-{
+    {
     <link href="~/assets/vendors/custom/datatables/datatables.bundle.min.css" rel="stylesheet" type="text/css" />
 }
 
@@ -21,20 +22,11 @@
         </div>
     </div>
     <div class="m-portlet__body">
-        <div class="alert m-alert--default alert-dismissible fade show" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-            <strong>Administradores</strong> | São usuários que possuem acesso a todas as funcionalidades do sistema.
-        </div>
-
-        <table class="table table-bordered table-hover table-striped table-condensed nowrap" id="tblAdministrador">
+        <table class="table table-bordered table-hover table-striped table-condensed nowrap" id="tblLocalidade">
             <thead>
                 <tr>
                     <th data-priority="1">Nome</th>
-                    <th>Celular</th>
-                    <th>Email</th>
-                    <th>CPF</th>
-                    <th>RG</th>
-                    <th>Ativo</th>
+                    <th>Estado</th>
                     <th data-priority="2">Ações</th>
                 </tr>
             </thead>
@@ -42,7 +34,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal_Procurar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modal_Procurar" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="m-portlet m-portlet--primary m-portlet--k2-modal" style="margin:0 auto; width:100%;">
@@ -55,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <form id="frmProcurarAdministrador" class="m-form m-form--state m-form--label-align-right">
+                <form id="frmProcurarLocalidade" class="m-form m-form--state m-form--label-align-right">
                     <div class="m-portlet__body">
                         <div class="form-group m-form__group m-form__group--md row">
                             <div class="col-lg-12 m-form__group-sub">
@@ -66,23 +58,11 @@
                         </div>
                         <div class="form-group m-form__group m-form__group--md row">
                             <div class="col-lg-12 m-form__group-sub">
-                                <label>Email</label>
-                                <div class="input-group m-input-group m-input-group--square m-input-group--air">
-                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
-                                    <input type="text" class="form-control m-input" id="iProcurarEmail" name="iProcurarEmail" maxlength="500" style="text-transform:lowercase;">
+                                <label>Estado</label>
+                                <div class="m-select2 m-select2--square m-select2--air">
+                                    @HtmlHelpers.DropDownUf("sProcurarEstado", "form-control m-select2", string.Empty)
+                                    <span class="m-form__help"></span>
                                 </div>
-                                <span class="m-form__help">Procura por palavra</span>
-                            </div>
-                        </div>
-                        <div class="form-group m-form__group m-form__group--md row">
-                            <div class="col-lg-6 m-form__group-sub">
-                                <label>CPF</label>
-                                <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarCpf" name="iCpf">
-                            </div>
-                            <div class="col-lg-6 m-form__group-sub">
-                                <label>RG</label>
-                                <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarRg" name="iRg" maxlength="20" style="text-transform:uppercase;">
-                                <span class="m-form__help">Procura por palavra</span>
                             </div>
                         </div>
                     </div>
@@ -96,21 +76,17 @@
             </div>
         </div>
     </div>
-</div>		        
+</div>
 
 @section VendorsJs
     {
     <script src="~/assets/vendors/custom/datatables/datatables.bundle.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $.extend($.fn.dataTable.defaults, {
-            //processing: false,
-            //responsive: false,
             autoWidth: true,
             lengthMenu: [[10, 25, 50], [10, 25, 50]],
             pagingType: "full_numbers",
             language: {
-                //sLengthMenu: '_MENU_ registros por p&aacute;gina',
-                //sProcessing: '<i class="fa fa-spinner fa-pulse"></i> Carregando',
                 infoEmpty: "Nenhum registro encontrado.",
                 info: "Exibindo _START_ até _END_ de _TOTAL_ registros",
                 paginate: {
@@ -120,7 +96,6 @@
                     last: ">>",
                     zeroRecords: "Nenhum registro encontrado."
                 },
-                //infoFiltered: "(filtrado a partir do total de _MAX_ registros)",
                 emptyTable: "Nenhum registro encontrado.",
                 zeroRecords: "Nenhum registro encontrado."
             }
@@ -129,11 +104,11 @@
 }
 
 @section PaginaJS
-{
+    {
     <environment include="Development">
-        <script src="~/assets/js/views/administrador.js" type="text/javascript"></script>
+        <script src="~/assets/js/views/localidade.js" type="text/javascript"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/assets/js/views/administrador.min.js" type="text/javascript"></script>
+        <script src="~/assets/js/views/localidade.min.js" type="text/javascript"></script>
     </environment>
 }

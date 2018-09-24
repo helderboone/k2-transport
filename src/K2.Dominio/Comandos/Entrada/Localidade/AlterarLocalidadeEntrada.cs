@@ -30,7 +30,7 @@ namespace K2.Dominio.Comandos.Entrada
             string uf)
         {
             Id   = id;
-            Nome = nome?.ToUpper();
+            Nome = nome;
             Uf   = uf?.ToUpper();
 
             this.Validar();

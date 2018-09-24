@@ -243,3 +243,15 @@ table.dataTable > tbody > tr.child ul.dtr-details {
     width: 1px;
     white-space: nowrap;
 }
+
+.select2-selection__clear {
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #f4516c;
+    font-weight: bold;
+    color: #fff !important;
+    font-size: 1.2rem !important;
+}
+.m-nav__item--home {
+    margin-right: -14px;
+}

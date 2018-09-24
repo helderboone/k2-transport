@@ -16,6 +16,7 @@ namespace K2.Web.Helpers
 
             html.AppendLine(">");
 
+            html.AppendLine("<option value=\"\"></option>");
             html.AppendLine("<option value=\"AC\"" + (valor == "AC" ? " selected" : string.Empty) + ">Acre</option>");
             html.AppendLine("<option value=\"AL\"" + (valor == "AL" ? " selected" : string.Empty) + ">Alagoas</option>");
             html.AppendLine("<option value=\"AP\"" + (valor == "AP" ? " selected" : string.Empty) + ">Amapá</option>");

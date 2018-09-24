@@ -49,6 +49,12 @@
     <Content Update="Views\Administrador\Manter.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Localidade\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Localidade\Manter.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Motorista\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

@@ -1,0 +1,42 @@
+﻿@using K2.Web.Helpers
+
+@model K2.Web.Models.LocalidadeRetorno
+
+<div class="m-portlet m-portlet--primary m-portlet-md" style="border: 1px solid #ccc; margin:0 auto;">
+    <div class="m-portlet__head" style="border-bottom: 1px solid #8DD2F1;">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    @(Model == null ? "Cadastrar" : "Alterar") localidade
+                </h3>
+            </div>
+        </div>
+    </div>
+    <form id="frmManterLocalidade" class="m-form m-form--fit m-form--state" novalidate="novalidate">
+        <input type="hidden" id="iIdLocalidade" name="iIdLocalidade" value="@(Model != null ? Model.Id.ToString() : string.Empty)">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-12 m-form__group-sub">
+                    <label>Nome <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iNome" name="iNome" maxlength="100" value="@Model?.Nome">
+                    <span class="m-form__help">Nome da localidade (por exemplo, <i>"Guriri"</i> ou <i>"Guriri - São Mateus"</i>)</span>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-12 m-form__group-sub">
+                    <label>Estado <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="m-select2 m-select2--square m-select2--air">
+                        @HtmlHelpers.DropDownUf("sEstado", "form-control m-select2", Model == null ? "ES" : Model.Uf)
+                        <span class="m-form__help">Estado onde a localidade está</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid m-form__actions--right">
+                <button type="button" class="btn m-btn--square btn-secondary btn-fechar">Cancelar</button>
+                <button type="submit" class="btn m-btn--square btn-info">Salvar</button>
+            </div>
+        </div>
+    </form>
+</div>
