@@ -13,6 +13,7 @@ namespace K2.Infraestrutura.Dados
         public DbSet<Motorista> Motoristas { get; set; }
         public DbSet<ProprietarioCarro> Proprietarios { get; set; }
         public DbSet<Localidade> Localidades { get; set; }
+        public DbSet<Carro> Carros { get; set; }
 
         public EfDataContext(string connectionString)
         {
@@ -26,12 +27,12 @@ namespace K2.Infraestrutura.Dados
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Mapeamentos para utilização do Entity Framework
             modelBuilder.ApplyConfiguration(new UsuarioMap());
             modelBuilder.ApplyConfiguration(new ClienteMap());
             modelBuilder.ApplyConfiguration(new MotoristaMap());
             modelBuilder.ApplyConfiguration(new ProprietarioCarroMap());
             modelBuilder.ApplyConfiguration(new LocalidadeMap());
+            modelBuilder.ApplyConfiguration(new CarroMap());
         }
     }
 }

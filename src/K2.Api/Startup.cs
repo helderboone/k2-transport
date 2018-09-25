@@ -61,12 +61,14 @@ namespace K2.Api
             services.AddTransient<IClienteRepositorio, ClienteRepositorio>();
             services.AddTransient<IMotoristaRepositorio, MotoristaRepositorio>();
             services.AddTransient<IProprietarioCarroRepositorio, ProprietarioCarroRepositorio>();
+            services.AddTransient<ICarroRepositorio, CarroRepositorio>();
             services.AddTransient<ILocalidadeRepositorio, LocalidadeRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
             services.AddTransient<IClienteServico, ClienteServico>();
             services.AddTransient<IMotoristaServico, MotoristaServico>();
             services.AddTransient<IProprietarioCarroServico, ProprietarioCarroServico>();
+            services.AddTransient<ICarroServico, CarroServico>();
             services.AddTransient<ILocalidadeServico, LocalidadeServico>();
 
             services
@@ -102,7 +104,8 @@ namespace K2.Api
             services.AddAuthorization(options =>
             {
                 // Adiciona as policies de acesso, definindo os claimns existentes em cada policy.
-                options.AddPolicy(TipoPerfil.Administrador, policy => policy.RequireClaim("Perfil", "Administrador").AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(TipoPerfil.Administrador, policy => policy.RequireClaim("Perfil", TipoPerfil.Administrador).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(TipoPerfil.ProprietarioCarro, policy => policy.RequireAssertion(context => context.User.HasClaim(c => c.Type == "Perfil" && (c.Value == TipoPerfil.ProprietarioCarro || c.Value == TipoPerfil.Administrador))).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             services

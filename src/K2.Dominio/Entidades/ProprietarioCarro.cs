@@ -1,4 +1,5 @@
 ﻿using K2.Dominio.Comandos.Entrada;
+using System.Collections.Generic;
 
 namespace K2.Dominio.Entidades
 {
@@ -22,6 +23,11 @@ namespace K2.Dominio.Entidades
         /// </summary>
         public Usuario Usuario { get; private set; }
 
+        /// <summary>
+        /// Carros do proprietário
+        /// </summary>
+        public IEnumerable<Carro> Carros { get; private set; }
+
         public string Nome { get { return Usuario?.Nome; } }
 
         public string Email => this.Usuario?.Email;
@@ -34,10 +40,11 @@ namespace K2.Dominio.Entidades
 
         private ProprietarioCarro()
         {
-
+            this.Carros = new List<Carro>();
         }
 
         public ProprietarioCarro(CadastrarProprietarioCarroEntrada entrada)
+            : this()
         {
             if (entrada.Invalido)
                 return;

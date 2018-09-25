@@ -1,4 +1,5 @@
-﻿using K2.Dominio.Comandos.Entrada;
+﻿using K2.Dominio;
+using K2.Dominio.Comandos.Entrada;
 using K2.Dominio.Comandos.Saida;
 using K2.Dominio.Interfaces.Comandos;
 using K2.Dominio.Interfaces.Servicos;
@@ -27,68 +28,40 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza uma procura por usuarios a partir dos parâmetros informados
         /// </summary>
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("v1/usuarios/procurar")]
-        public async Task<ISaida> Procurar([FromBody] ProcurarUsuarioEntrada model)
+        public async Task<ISaida> Procurar([FromBody] ProcurarUsuarioEntrada entrada)
         {
-            var entrada = new ProcurarUsuarioEntrada(model?.OrdenarPor, model?.OrdenarSentido, model?.PaginaIndex, model?.PaginaTamanho)
-            {
-                Nome          = model?.Nome,
-                Email         = model?.Email,
-                Cpf           = model?.Cpf,
-                Rg            = model?.Rg,
-                Administrador = model?.Administrador
-            };
-
             return await _usuarioServico.ProcurarUsuarios(entrada);
         }
 
         /// <summary>
         /// Realiza o cadastro de um novo usuario
         /// </summary>
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("v1/usuarios/cadastrar")]
-        public async Task<ISaida> Cadastrar([FromBody] CadastrarUsuarioEntrada model)
+        public async Task<ISaida> Cadastrar([FromBody] CadastrarUsuarioEntrada entrada)
         {
-            var entrada = new CadastrarUsuarioEntrada(
-                model.Nome,
-                model.Email,
-                "k2",
-                model.Cpf,
-                model.Rg,
-                model.Celular,
-                model.Administrador);
-
             return await _usuarioServico.CadastrarUsuario(entrada);
         }
 
         /// <summary>
         /// Realiza a alteração de um usuario
         /// </summary>
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPut]
         [Route("v1/usuarios/alterar")]
-        public async Task<ISaida> Alterar([FromBody] AlterarUsuarioEntrada model)
+        public async Task<ISaida> Alterar([FromBody] AlterarUsuarioEntrada entrada)
         {
-            var entrada = new AlterarUsuarioEntrada(
-                model.IdUsuario,
-                model.Nome,
-                model.Email,
-                model.Cpf,
-                model.Rg,
-                model.Celular,
-                model.Ativo,
-                model.Administrador);
-
             return await _usuarioServico.AlterarUsuario(entrada);
         }
 
         /// <summary>
         /// Obtém um usuario a partir do seu ID
         /// </summary>
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("v1/usuarios/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)
@@ -99,7 +72,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a exclusão de um usuario.
         /// </summary>
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpDelete]
         [Route("v1/usuarios/excluir/{id:int}")]
         public async Task<ISaida> ExcluirUsuario(int id)
@@ -151,7 +124,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Redefine a senha de acesso do usuário para uma senha temporária
         /// </summary>
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPut]
         [Route("v1/usuarios/redefinir-senha/{id:int}")]
         public async Task<ISaida> RedefinirSenha(int id)
