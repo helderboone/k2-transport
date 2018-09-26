@@ -55,7 +55,7 @@ namespace K2.Dominio.Comandos.Saida
         /// <summary>
         /// Proprietário do carro
         /// </summary>
-        public ProprietarioCarroSaida Proprietario { get; }
+        public object Proprietario { get; }
 
         public CarroSaida(Carro carro)
         {
@@ -69,7 +69,13 @@ namespace K2.Dominio.Comandos.Saida
             this.Renavam           = carro.Renavam;
             this.Caracteristicas   = carro.Caracteristicas?.Split(";".ToCharArray());
 
-            this.Proprietario = new ProprietarioCarroSaida(carro.Proprietario);
+            this.Proprietario = new
+            {
+                carro.Proprietario.Nome,
+                carro.Proprietario.Cpf,
+                carro.Proprietario.Rg,
+                carro.Proprietario.Celular
+            };
         }
     }
 }

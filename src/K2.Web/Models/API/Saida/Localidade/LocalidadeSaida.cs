@@ -27,31 +27,12 @@ namespace K2.Web.Models
 
     public class LocalidadeRetorno
     {
-        /// <summary>
-        /// Id da localidade
-        /// </summary>
-        public int Id { get; }
+        public int Id { get; set; }
 
-        /// <summary>
-        /// Nome da localidade
-        /// </summary>
-        public string Nome { get; }
+        public string Nome { get; set; }
 
-        /// <summary>
-        /// UF da localidade
-        /// </summary>
-        public string Uf { get; }
+        public string Uf { get; set; }
 
         public string NomeUf => this.Uf.ObterNomeUfPorSiglaUf();
-
-        public LocalidadeRetorno(
-            int id,
-            string nome,
-            string uf)
-        {
-            Id   = id;
-            Nome = nome;
-            Uf   = uf;
-        }
     }
 }

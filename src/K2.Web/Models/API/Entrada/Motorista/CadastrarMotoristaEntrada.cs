@@ -9,5 +9,10 @@
         /// Número da CNH do motorista
         /// </summary>
         public string Cnh { get; set; }
+
+        public CadastrarMotoristaEntrada()
+        {
+            base.Senha = "k2";
+        }
     }
 }

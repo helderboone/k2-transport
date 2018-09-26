@@ -26,90 +26,28 @@ namespace K2.Web.Models
 
     public class ClienteRetorno
     {
-        /// <summary>
-        /// Indica se o cliente está ativo
-        /// </summary>
-        public bool Ativo { get; }
+        public bool Ativo { get; set; }
 
-        /// <summary>
-        /// Id do cliente
-        /// </summary>
-        public int Id { get; }
+        public int Id { get; set; }
 
-        /// <summary>
-        /// Id do Usuario
-        /// </summary>
-        public int IdUsuario { get; }
+        public int IdUsuario { get; set; }
 
-        /// <summary>
-        /// Nome do usuário
-        /// </summary>
-        public string Nome { get; }
+        public string Nome { get; set; }
 
-        /// <summary>
-        /// E-mail do usuário
-        /// </summary>
-        public string Email { get; }
+        public string Email { get; set; }
 
-        /// <summary>
-        /// CPF do usuário
-        /// </summary>
-        public string Cpf { get; }
+        public string Cpf { get; set; }
 
-        /// <summary>
-        /// RG do usuário
-        /// </summary>
-        public string Rg { get; }
+        public string Rg { get; set; }
 
-        /// <summary>
-        /// Celular do usuário
-        /// </summary>
-        public string Celular { get; }
+        public string Celular { get; set; }
 
-        /// <summary>
-        /// CEP do cliente
-        /// </summary>
-        public string Cep { get; }
+        public string Cep { get; set; }
 
-        /// <summary>
-        /// Descrição do endereço do cliente
-        /// </summary>
-        public string Endereco { get; }
+        public string Endereco { get; set; }
 
-        /// <summary>
-        /// Nome do município do cliente
-        /// </summary>
-        public string Municipio { get; }
+        public string Municipio { get; set; }
 
-        /// <summary>
-        /// Sigla da UF do cliente
-        /// </summary>
-        public string Uf { get; }
-
-        public ClienteRetorno(
-            int id,
-            bool ativo,
-            string nome,
-            string email,
-            string cpf,
-            string rg,
-            string celular,
-            string cep,
-            string endereco,
-            string municipio,
-            string uf)
-        {
-            Ativo     = ativo;
-            Id        = id;
-            Nome      = nome;
-            Email     = email;
-            Cpf       = cpf;
-            Rg        = rg;
-            Celular   = celular;
-            Cep       = cep;
-            Endereco  = endereco;
-            Municipio = municipio;
-            Uf        = uf;
-        }
+        public string Uf { get; set; }
     }
 }

@@ -26,58 +26,18 @@ namespace K2.Web.Models
 
     public class AdministradorRetorno
     {
-        /// <summary>
-        /// Indica se o cliente está ativo
-        /// </summary>
-        public bool Ativo { get; }
+        public bool Ativo { get; set; }
 
-        /// <summary>
-        /// Id do usuário
-        /// </summary>
-        public int Id { get; }
+        public int Id { get; set; }
 
-        /// <summary>
-        /// Nome do usuário
-        /// </summary>
-        public string Nome { get; }
+        public string Nome { get; set; }
 
-        /// <summary>
-        /// E-mail do usuário
-        /// </summary>
-        public string Email { get; }
+        public string Email { get; set; }
 
-        /// <summary>
-        /// CPF do usuário
-        /// </summary>
-        public string Cpf { get; }
+        public string Cpf { get; set; }
 
-        /// <summary>
-        /// RG do usuário
-        /// </summary>
-        public string Rg { get; }
+        public string Rg { get; set; }
 
-        /// <summary>
-        /// Celular do usuário
-        /// </summary>
-        public string Celular { get; }
-        
-
-        public AdministradorRetorno(
-            int id,
-            bool ativo,
-            string nome,
-            string email,
-            string cpf,
-            string rg,
-            string celular)
-        {
-            Ativo     = ativo;
-            Id        = id;
-            Nome      = nome;
-            Email     = email;
-            Cpf       = cpf;
-            Rg        = rg;
-            Celular   = celular;
-        }
+        public string Celular { get; set; }
     }
 }

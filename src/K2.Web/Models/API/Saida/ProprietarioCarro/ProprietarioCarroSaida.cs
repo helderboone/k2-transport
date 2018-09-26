@@ -26,62 +26,41 @@ namespace K2.Web.Models
 
     public class ProprietarioCarroRetorno
     {
-        /// <summary>
-        /// Indica se o proprietário está ativo
-        /// </summary>
-        public bool Ativo { get; }
+        public bool Ativo { get; set; }
 
-        /// <summary>
-        /// Id do proprietario
-        /// </summary>
-        public int Id { get; }
+        public int Id { get; set; }
 
-        /// <summary>
-        /// Id do Usuario
-        /// </summary>
-        public int IdUsuario { get; }
+        public int IdUsuario { get; set; }
 
-        /// <summary>
-        /// Nome do usuário
-        /// </summary>
-        public string Nome { get; }
+        public string Nome { get; set; }
 
-        /// <summary>
-        /// E-mail do usuário
-        /// </summary>
-        public string Email { get; }
+        public string Email { get; set; }
 
-        /// <summary>
-        /// CPF do usuário
-        /// </summary>
-        public string Cpf { get; }
+        public string Cpf { get; set; }
 
-        /// <summary>
-        /// RG do usuário
-        /// </summary>
-        public string Rg { get; }
+        public string Rg { get; set; }
 
-        /// <summary>
-        /// Celular do usuário
-        /// </summary>
-        public string Celular { get; }
+        public string Celular { get; set; }
 
-        public ProprietarioCarroRetorno(
-            int id,
-            bool ativo,
-            string nome,
-            string email,
-            string cpf,
-            string rg,
-            string celular)
-        {
-            Ativo     = ativo;
-            Id        = id;
-            Nome      = nome;
-            Email     = email;
-            Cpf       = cpf;
-            Rg        = rg;
-            Celular   = celular;
-        }
+        public IEnumerable<ProprietarioCarroCarroRetorno> Carros { get; set; }
+    }
+
+    public class ProprietarioCarroCarroRetorno
+    {
+        public int Id { get; set; }
+
+        public string Descricao { get; set; }
+
+        public string NomeFabricante { get; set; }
+
+        public string AnoModelo { get; set; }
+
+        public int QuantidadeLugares { get; set; }
+
+        public string Placa { get; set; }
+
+        public string Renavam { get; set; }
+
+        public string[] Caracteristicas { get; set; }
     }
 }

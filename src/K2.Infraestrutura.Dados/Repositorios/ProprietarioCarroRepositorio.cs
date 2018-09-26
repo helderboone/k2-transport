@@ -23,6 +23,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
         {
             var query = _efContext.Proprietarios
                     .Include(x => x.Usuario)
+                    .Include(x => x.Carros)
                     .AsQueryable();
 
             if (!habilitarTracking)
@@ -45,6 +46,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
         {
             var query = _efContext.Proprietarios
                 .Include(x => x.Usuario)
+                .Include(x => x.Carros)
                 .AsNoTracking()
                 .AsQueryable();
 

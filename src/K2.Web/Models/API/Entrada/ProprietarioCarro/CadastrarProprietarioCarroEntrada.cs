@@ -5,6 +5,9 @@
     /// </summary>
     public class CadastrarProprietarioCarroEntrada : CadastrarUsuarioEntrada
     {
-
+        public CadastrarProprietarioCarroEntrada()
+        {
+            base.Senha = "k2";
+        }
     }
 }

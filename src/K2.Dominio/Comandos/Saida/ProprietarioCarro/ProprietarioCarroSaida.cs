@@ -1,4 +1,6 @@
 ﻿using K2.Dominio.Entidades;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace K2.Dominio.Comandos.Saida
 {
@@ -47,6 +49,11 @@ namespace K2.Dominio.Comandos.Saida
         /// </summary>
         public string Celular { get; }
 
+        /// <summary>
+        /// Carros do proprietário
+        /// </summary>
+        public IEnumerable<object> Carros { get; }
+
         public ProprietarioCarroSaida(ProprietarioCarro proprietario)
         {
             this.Id        = proprietario.Id;
@@ -57,6 +64,19 @@ namespace K2.Dominio.Comandos.Saida
             this.Cpf       = proprietario.Usuario.Cpf;
             this.Rg        = proprietario.Usuario.Rg;
             this.Celular   = proprietario.Usuario.Celular;
+            this.Carros = proprietario.Carros.Select(x => new
+            {
+                x.Id,
+                x.Descricao,
+                x.NomeFabricante,
+                x.AnoModelo,
+                x.QuantidadeLugares,
+                x.Placa,
+                x.Renavam,
+                Caracteristicas = !string.IsNullOrEmpty(x.Caracteristicas)
+                    ? x.Caracteristicas.Split(";".ToCharArray())
+                    : null
+            }).ToList();
         }
 
         public override string ToString()

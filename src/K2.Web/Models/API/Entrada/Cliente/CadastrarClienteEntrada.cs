@@ -24,5 +24,10 @@
         /// UF do cliente
         /// </summary>
         public string Uf { get; set; }
+
+        public CadastrarClienteEntrada()
+        {
+            base.Senha = "k2";
+        }
     }
 }
