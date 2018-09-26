@@ -9,11 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\assets\js\views\carro.min.js" />
     <Content Remove="wwwroot\assets\js\views\cliente - Copy.min.js" />
     <Content Remove="wwwroot\assets\js\views\cliente.min.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\assets\js\views\carro.min.js" />
     <_ContentIncludedByDefault Remove="wwwroot\assets\js\views\cliente.min.js" />
   </ItemGroup>
 
@@ -39,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\assets\js\views\carro.min.js" />
     <None Include="wwwroot\assets\js\views\cliente.min.js" />
   </ItemGroup>
 
@@ -47,6 +50,12 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Administrador\Manter.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Carro\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Carro\Manter.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Localidade\Index.cshtml">

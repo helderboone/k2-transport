@@ -1,5 +1,6 @@
 ﻿using K2.Infraestrutura.Logging.Database;
 using K2.Infraestrutura.Logging.Slack;
+using K2.Web.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +24,10 @@ namespace K2.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddTransient<RestSharpHelper, RestSharpHelper>();
+            services.AddTransient<DatatablesHelper, DatatablesHelper>();
+            services.AddTransient<CookieHelper, CookieHelper>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options =>

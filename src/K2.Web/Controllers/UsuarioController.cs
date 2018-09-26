@@ -1,12 +1,11 @@
 ﻿using K2.Web.Filters;
+using K2.Web.Helpers;
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using RestSharp;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +18,8 @@ namespace K2.Web.Controllers
     [Authorize]
     public class UsuarioController : BaseController
     {
-        public UsuarioController(IConfiguration configuration, ILogger<UsuarioController> logger, IHttpContextAccessor httpContextAccessor)
-            : base(configuration, logger, httpContextAccessor)
+        public UsuarioController(CookieHelper cookieHelper, RestSharpHelper restSharpHelper)
+            : base(cookieHelper, restSharpHelper)
         {
             
         }

@@ -22,6 +22,23 @@
             columns: [
                 { data: "nome", title: "Nome", orderable: true, className: "all" },
                 {
+                    data: null,
+                    title: "Carros",
+                    orderable: false,
+                    render: function (data, type, row) {
+                        if (row.carros === null || row.carros.length === 0)
+                            return "<i>Nenhum carro relacionado.</i>";
+
+                        var html = "";
+
+                        for (var i = 0; i < row.carros.length; i++) {
+                            html += "- " + row.carros[i].descricao + "<br/>";
+                        }
+
+                        return html;
+                    }
+                },
+                {
                     data: "celular",
                     title: "Celular",
                     orderable: false,
@@ -61,6 +78,7 @@
                     }
                 }
             ],
+            select: true,
             serverSide: true,
             responsive: true,
             pagingType: 'full_numbers',

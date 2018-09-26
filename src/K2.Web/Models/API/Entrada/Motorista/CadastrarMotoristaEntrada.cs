@@ -5,9 +5,6 @@
     /// </summary>
     public class CadastrarMotoristaEntrada : CadastrarUsuarioEntrada
     {
-        /// <summary>
-        /// Número da CNH do motorista
-        /// </summary>
         public string Cnh { get; set; }
 
         public CadastrarMotoristaEntrada()

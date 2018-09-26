@@ -2,10 +2,7 @@
 using K2.Web.Helpers;
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using RestSharp;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,20 +11,22 @@ namespace K2.Web.Controllers
 {
     public class ClienteController : BaseController
     {
-        public ClienteController(IConfiguration configuration, ILogger<ClienteController> logger, IHttpContextAccessor httpContextAccessor)
-            : base(configuration, logger, httpContextAccessor)
-        {
+        private readonly DatatablesHelper _datatablesHelper;
 
+        public ClienteController(DatatablesHelper datatablesHelper, CookieHelper cookieHelper, RestSharpHelper restSharpHelper)
+            : base(cookieHelper, restSharpHelper)
+        {
+            _datatablesHelper = datatablesHelper;
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [Route("clientes")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("listar-clientes")]
         [FeedbackExceptionFilter("Ocorreu um erro ao obter as lista clientes cadastrados.", TipoAcaoAoOcultarFeedback.Ocultar)]
@@ -36,12 +35,10 @@ namespace K2.Web.Controllers
             if (filtro == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações para a procura não foram preenchidas.", tipoAcao: TipoAcaoAoOcultarFeedback.Ocultar));
 
-            var dataTablesParams = new DatatablesHelper(_httpContextAccessor);
-
-            filtro.OrdenarPor     = dataTablesParams.OrdenarPor;
-            filtro.OrdenarSentido = dataTablesParams.OrdenarSentido;
-            filtro.PaginaIndex    = dataTablesParams.PaginaIndex;
-            filtro.PaginaTamanho  = dataTablesParams.PaginaTamanho;
+            filtro.OrdenarPor     = _datatablesHelper.OrdenarPor;
+            filtro.OrdenarSentido = _datatablesHelper.OrdenarSentido;
+            filtro.PaginaIndex    = _datatablesHelper.PaginaIndex;
+            filtro.PaginaTamanho  = _datatablesHelper.PaginaTamanho;
 
             var parametros = new Parameter[]
             {
@@ -52,10 +49,10 @@ namespace K2.Web.Controllers
 
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
-            return new DatatablesResult(dataTablesParams.Draw, saida);
+            return new DatatablesResult(_datatablesHelper.Draw, saida);
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("cadastrar-cliente")]
         public IActionResult CadastrarCliente()
@@ -63,7 +60,7 @@ namespace K2.Web.Controllers
             return PartialView("Manter", null);
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("cadastrar-cliente")]
         public async Task<IActionResult> CadastrarCliente(CadastrarClienteEntrada entrada)
@@ -88,7 +85,7 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("alterar-cliente/{id:int:min(1)}")]
         public async Task<IActionResult> AlterarCliente(int id)
@@ -106,7 +103,7 @@ namespace K2.Web.Controllers
             return PartialView("Manter", saida.ObterRetorno());
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("alterar-cliente")]
         public async Task<IActionResult> AlterarCliente(AlterarClienteEntrada entrada)
@@ -131,7 +128,7 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("excluir-cliente/{id:int}")]
         public async Task<IActionResult> ExcluirCliente(int id)

@@ -63,6 +63,7 @@
                     }
                 }
             ],
+            select: true,
             serverSide: true,
             responsive: true,
 			pagingType: 'full_numbers',

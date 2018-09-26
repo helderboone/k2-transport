@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ano_Modelo_Obrigatorio_Nao_Informado" xml:space="preserve">
-    <value>O ano / modelo é obrigatório e não foi informado.</value>
-  </data>
   <data name="Carro_Alterado_Com_Sucesso" xml:space="preserve">
     <value>O carro foi alterado com sucesso.</value>
   </data>
@@ -144,11 +141,11 @@
   <data name="Id_Usuario_Procura_Invalido" xml:space="preserve">
     <value>O ID do usuário responsável pela procura é inválido.</value>
   </data>
-  <data name="Nome_Fabricante_Obrigatorio_Nao_Informado" xml:space="preserve">
-    <value>O nome do fabricante é obrigatório e não foi informado.</value>
-  </data>
   <data name="Perfil_Usuario_Procura_Obrigatorio_Nao_Informado" xml:space="preserve">
     <value>O perfil do usuário responsável pela procura é obrigatório e não foi informado.</value>
+  </data>
+  <data name="Placa_Obrigatoria_Nao_Informado" xml:space="preserve">
+    <value>O número da placa é obrigatório e não foi informado.</value>
   </data>
   <data name="Quantidade_Lugares_Invalida" xml:space="preserve">
     <value>A quantidade de lugares informada é inválida.</value>

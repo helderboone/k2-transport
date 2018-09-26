@@ -5,9 +5,6 @@
     /// </summary>
     public class AlterarProprietarioCarroEntrada : AlterarUsuarioEntrada
     {
-        /// <summary>
-        /// ID do proprietário
-        /// </summary>
         public int Id { get; set; }
     }
 }

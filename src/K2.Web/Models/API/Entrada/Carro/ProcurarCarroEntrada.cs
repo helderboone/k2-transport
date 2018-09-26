@@ -10,12 +10,8 @@
 
         public string AnoModelo { get; set; }
 
-        public int? QuantidadeLugares { get; set; }
-
         public string Placa { get; set; }
 
         public string Renavam { get; set; }
-
-        public string Caracteristicas { get; set; }
     }
 }

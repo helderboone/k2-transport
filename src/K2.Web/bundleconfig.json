@@ -86,5 +86,11 @@
     "inputFiles": [
       "wwwroot/assets/js/views/localidade.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/views/carro.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/views/carro.js"
+    ]
   }
 ]

@@ -2,10 +2,7 @@
 using K2.Web.Helpers;
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using RestSharp;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,20 +11,22 @@ namespace K2.Web.Controllers
 {
     public class MotoristaController : BaseController
     {
-        public MotoristaController(IConfiguration configuration, ILogger<MotoristaController> logger, IHttpContextAccessor httpContextAccessor)
-            : base(configuration, logger, httpContextAccessor)
-        {
+        private readonly DatatablesHelper _datatablesHelper;
 
+        public MotoristaController(DatatablesHelper datatablesHelper, CookieHelper cookieHelper, RestSharpHelper restSharpHelper)
+            : base(cookieHelper, restSharpHelper)
+        {
+            _datatablesHelper = datatablesHelper;
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [Route("motoristas")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("listar-motoristas")]
         [FeedbackExceptionFilter("Ocorreu um erro ao obter as lista motoristas cadastrados.", TipoAcaoAoOcultarFeedback.Ocultar)]
@@ -55,7 +54,7 @@ namespace K2.Web.Controllers
             return new DatatablesResult(dataTablesParams.Draw, saida);
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("cadastrar-motorista")]
         public IActionResult CadastrarMotorista()
@@ -63,7 +62,7 @@ namespace K2.Web.Controllers
             return PartialView("Manter", null);
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("cadastrar-motorista")]
         public async Task<IActionResult> CadastrarMotorista(CadastrarMotoristaEntrada entrada)
@@ -88,7 +87,7 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("alterar-motorista/{id:int:min(1)}")]
         public async Task<IActionResult> AlterarMotorista(int id)
@@ -106,7 +105,7 @@ namespace K2.Web.Controllers
             return PartialView("Manter", saida.ObterRetorno());
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("alterar-motorista")]
         public async Task<IActionResult> AlterarMotorista(AlterarMotoristaEntrada entrada)
@@ -131,7 +130,7 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("excluir-motorista/{id:int}")]
         public async Task<IActionResult> ExcluirMotorista(int id)

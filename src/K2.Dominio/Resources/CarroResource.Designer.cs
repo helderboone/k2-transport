@@ -61,15 +61,6 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O ano / modelo é obrigatório e não foi informado..
-        /// </summary>
-        public static string Ano_Modelo_Obrigatorio_Nao_Informado {
-            get {
-                return ResourceManager.GetString("Ano_Modelo_Obrigatorio_Nao_Informado", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to O carro foi alterado com sucesso..
         /// </summary>
         public static string Carro_Alterado_Com_Sucesso {
@@ -142,20 +133,20 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O nome do fabricante é obrigatório e não foi informado..
-        /// </summary>
-        public static string Nome_Fabricante_Obrigatorio_Nao_Informado {
-            get {
-                return ResourceManager.GetString("Nome_Fabricante_Obrigatorio_Nao_Informado", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to O perfil do usuário responsável pela procura é obrigatório e não foi informado..
         /// </summary>
         public static string Perfil_Usuario_Procura_Obrigatorio_Nao_Informado {
             get {
                 return ResourceManager.GetString("Perfil_Usuario_Procura_Obrigatorio_Nao_Informado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O número da placa é obrigatório e não foi informado..
+        /// </summary>
+        public static string Placa_Obrigatoria_Nao_Informado {
+            get {
+                return ResourceManager.GetString("Placa_Obrigatoria_Nao_Informado", resourceCulture);
             }
         }
         

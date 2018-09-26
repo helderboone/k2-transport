@@ -3,10 +3,7 @@ using K2.Web.Filters;
 using K2.Web.Helpers;
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System.Linq;
@@ -16,20 +13,22 @@ namespace K2.Web.Controllers
 {
     public class LocalidadeController : BaseController
     {
-        public LocalidadeController(IConfiguration configuration, ILogger<LocalidadeController> logger, IHttpContextAccessor httpContextAccessor)
-            : base(configuration, logger, httpContextAccessor)
-        {
+        private readonly DatatablesHelper _datatablesHelper;
 
+        public LocalidadeController(DatatablesHelper datatablesHelper, CookieHelper cookieHelper, RestSharpHelper restSharpHelper)
+            : base(cookieHelper, restSharpHelper)
+        {
+            _datatablesHelper = datatablesHelper;
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [Route("localidades")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("listar-localidades")]
         [FeedbackExceptionFilter("Ocorreu um erro ao obter as lista localidades cadastradas.", TipoAcaoAoOcultarFeedback.Ocultar)]
@@ -38,12 +37,10 @@ namespace K2.Web.Controllers
             if (filtro == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações para a procura não foram preenchidas.", tipoAcao: TipoAcaoAoOcultarFeedback.Ocultar));
 
-            var dataTablesParams = new DatatablesHelper(_httpContextAccessor);
-
-            filtro.OrdenarPor     = dataTablesParams.OrdenarPor;
-            filtro.OrdenarSentido = dataTablesParams.OrdenarSentido;
-            filtro.PaginaIndex    = dataTablesParams.PaginaIndex;
-            filtro.PaginaTamanho  = dataTablesParams.PaginaTamanho;
+            filtro.OrdenarPor     = _datatablesHelper.OrdenarPor;
+            filtro.OrdenarSentido = _datatablesHelper.OrdenarSentido;
+            filtro.PaginaIndex    = _datatablesHelper.PaginaIndex;
+            filtro.PaginaTamanho  = _datatablesHelper.PaginaTamanho;
 
             var parametros = new Parameter[]
             {
@@ -55,7 +52,7 @@ namespace K2.Web.Controllers
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
             if (!saida.Sucesso)
-                return new DatatablesResult(dataTablesParams.Draw, saida);
+                return new DatatablesResult(_datatablesHelper.Draw, saida);
 
             var registros = saida.ObterRetorno().Registros;
 
@@ -66,10 +63,10 @@ namespace K2.Web.Controllers
                 uf = ((JObject)x)["uf"].Value<string>().ObterNomeUfPorSiglaUf()
             }).ToList();
 
-            return new DatatablesResult(dataTablesParams.Draw, lst.Count, lst);
+            return new DatatablesResult(_datatablesHelper.Draw, lst.Count, lst);
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("cadastrar-localidade")]
         public IActionResult CadastrarLocalidade()
@@ -77,7 +74,7 @@ namespace K2.Web.Controllers
             return PartialView("Manter", null);
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("cadastrar-localidade")]
         public async Task<IActionResult> CadastrarLocalidade(CadastrarLocalidadeEntrada entrada)
@@ -102,7 +99,7 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("alterar-localidade/{id:int:min(1)}")]
         public async Task<IActionResult> AlterarLocalidade(int id)
@@ -120,7 +117,7 @@ namespace K2.Web.Controllers
             return PartialView("Manter", saida.ObterRetorno());
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("alterar-localidade")]
         public async Task<IActionResult> AlterarLocalidade(AlterarLocalidadeEntrada entrada)
@@ -145,7 +142,7 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("excluir-localidade/{id:int}")]
         public async Task<IActionResult> ExcluirLocalidade(int id)

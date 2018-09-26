@@ -5,14 +5,8 @@
     /// </summary>
     public class CadastrarLocalidadeEntrada : BaseModel
     {
-        /// <summary>
-        /// Nome da localidade
-        /// </summary>
         public string Nome { get; set; }
 
-        /// <summary>
-        /// Sigla da UF da localidade
-        /// </summary>
         public string Uf { get; set; }
     }
 }

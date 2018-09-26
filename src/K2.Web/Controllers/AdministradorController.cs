@@ -2,10 +2,7 @@
 using K2.Web.Helpers;
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using RestSharp;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,20 +11,22 @@ namespace K2.Web.Controllers
 {
     public class AdministradorController : BaseController
     {
-        public AdministradorController(IConfiguration configuration, ILogger<AdministradorController> logger, IHttpContextAccessor httpContextAccessor)
-            : base(configuration, logger, httpContextAccessor)
-        {
+        private readonly DatatablesHelper _datatablesHelper;
 
+        public AdministradorController(DatatablesHelper datatablesHelper, CookieHelper cookieHelper, RestSharpHelper restSharpHelper)
+            : base(cookieHelper, restSharpHelper)
+        {
+            _datatablesHelper = datatablesHelper;
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [Route("administradores")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("listar-administradores")]
         [FeedbackExceptionFilter("Ocorreu um erro ao obter as lista administradores cadastrados.", TipoAcaoAoOcultarFeedback.Ocultar)]
@@ -36,12 +35,10 @@ namespace K2.Web.Controllers
             if (filtro == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações para a procura não foram preenchidas.", tipoAcao: TipoAcaoAoOcultarFeedback.Ocultar));
 
-            var dataTablesParams = new DatatablesHelper(_httpContextAccessor);
-
-            filtro.OrdenarPor     = dataTablesParams.OrdenarPor;
-            filtro.OrdenarSentido = dataTablesParams.OrdenarSentido;
-            filtro.PaginaIndex    = dataTablesParams.PaginaIndex;
-            filtro.PaginaTamanho  = dataTablesParams.PaginaTamanho;
+            filtro.OrdenarPor     = _datatablesHelper.OrdenarPor;
+            filtro.OrdenarSentido = _datatablesHelper.OrdenarSentido;
+            filtro.PaginaIndex    = _datatablesHelper.PaginaIndex;
+            filtro.PaginaTamanho  = _datatablesHelper.PaginaTamanho;
 
             var parametros = new Parameter[]
             {
@@ -52,10 +49,10 @@ namespace K2.Web.Controllers
 
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
-            return new DatatablesResult(dataTablesParams.Draw, saida);
+            return new DatatablesResult(_datatablesHelper.Draw, saida);
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("cadastrar-administrador")]
         public IActionResult CadastrarAdministrador()
@@ -63,7 +60,7 @@ namespace K2.Web.Controllers
             return PartialView("Manter", null);
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("cadastrar-administrador")]
         public async Task<IActionResult> CadastrarAdministrador(CadastrarUsuarioEntrada entrada)
@@ -88,7 +85,7 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("alterar-administrador/{id:int:min(1)}")]
         public async Task<IActionResult> AlterarAdministrador(int id)
@@ -106,7 +103,7 @@ namespace K2.Web.Controllers
             return PartialView("Manter", saida.ObterRetorno());
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("alterar-administrador")]
         public async Task<IActionResult> AlterarAdministrador(AlterarUsuarioEntrada entrada)
@@ -131,7 +128,7 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("excluir-administrador/{id:int}")]
         public async Task<IActionResult> ExcluirAdministrador(int id)

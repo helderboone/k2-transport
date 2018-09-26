@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Html
 @using K2.Web.Helpers
-
+@inject CookieHelper cookieHelper
 @{
     var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
 }
@@ -98,6 +98,7 @@
                                                                 <li class="m-menu__item @VerificarCssClassMenuItemAtivo("administradores")" m-menu-link-redirect="1" aria-haspopup="true"><a href="administradores" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Administradores</span></a></li>
                                                                 <li class="m-menu__item @VerificarCssClassMenuItemAtivo("motoristas")" m-menu-link-redirect="1" aria-haspopup="true"><a href="motoristas" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Motoristas</span></a></li>
                                                                 <li class="m-menu__item @VerificarCssClassMenuItemAtivo("proprietarios")" m-menu-link-redirect="1" aria-haspopup="true"><a href="proprietarios" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Proprietários</span></a></li>
+                                                                <li class="m-menu__item @VerificarCssClassMenuItemAtivo("carros")" m-menu-link-redirect="1" aria-haspopup="true"><a href="carros" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Carros</span></a></li>
                                                                 <li class="m-menu__item @VerificarCssClassMenuItemAtivo("localidades")" m-menu-link-redirect="1" aria-haspopup="true"><a href="localidades" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Localidades</span></a></li>
                                                             </ul>
                                                         </div>
@@ -254,7 +255,7 @@
                                     </li>
                                     <li class="m-nav__item m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                                         <a href="#" class="m-nav__link m-dropdown__toggle">
-                                            <span class="m-topbar__username m--hidden-mobile">@(new CookieHelper(Context).ObterPrimeiroNomeUsuario())</span>
+                                            <span class="m-topbar__username m--hidden-mobile">@(cookieHelper.ObterPrimeiroNomeUsuario())</span>
                                             <span class="m-topbar__userpic">
                                                 <i class="fa fa-user-circle"></i>
                                             </span>
@@ -271,8 +272,8 @@
                                                             <i class="fa fa-user-circle" style="font-size:4rem; color:#333;"></i>
                                                         </div>
                                                         <div class="m-card-user__details">
-                                                            <span class="m-card-user__name m--font-weight-500">@(new CookieHelper(Context).ObterNomeUsuario())</span>
-                                                            <a href="" class="m-card-user__email m--font-weight-300 m-link">@(new CookieHelper(Context).ObterPerfilUsuario())</a>
+                                                            <span class="m-card-user__name m--font-weight-500">@(cookieHelper.ObterNomeUsuario())</span>
+                                                            <a href="" class="m-card-user__email m--font-weight-300 m-link">@(cookieHelper.ObterPerfilUsuario())</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -438,64 +439,74 @@
 </html>
 
 @functions {
-    public string VerificarCssClassMenuItemAtivo(params string[] palavrasChaves)
+public string VerificarCssClassMenuItemAtivo(params string[] palavrasChaves)
+{
+    var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
+
+    foreach (var palavra in palavrasChaves)
     {
-        var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
-
-        foreach (var palavra in palavrasChaves)
-        {
-            if (url.Contains(palavra))
-                return "m-menu__item--active";
-        }
-
-        return string.Empty;
+        if (url.Contains(palavra))
+            return "m-menu__item--active";
     }
 
-    public IHtmlContent ObterCaminho()
+    return string.Empty;
+}
+
+public IHtmlContent ObterCaminho()
+{
+    var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
+
+    if (url.Contains("administradores"))
     {
-        var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
-
-        if (url.Contains("administradores"))
-        {
-            return Html.Raw(
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__item\"><a href=\"administradores\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Administradores</span></a></li>");
-        }
-        else if (url.Contains("motoristas"))
-        {
-            return Html.Raw(
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__item\"><a href=\"motoristas\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Motoristas</span></a></li>");
-        }
-        else if (url.Contains("proprietarios"))
-        {
-            return Html.Raw(
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__item\"><a href=\"proprietarios\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Proprietários</span></a></li>");
-        }
-        else if (url.Contains("localidades"))
-        {
-            return Html.Raw(
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__item\"><a href=\"localidades\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Localidades</span></a></li>");
-        }
-
-        return Html.Raw(string.Empty);
+        return Html.Raw(
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__item\"><a href=\"administradores\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Administradores</span></a></li>");
     }
+    else if (url.Contains("motoristas"))
+    {
+        return Html.Raw(
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__item\"><a href=\"motoristas\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Motoristas</span></a></li>");
+    }
+    else if (url.Contains("proprietarios"))
+    {
+        return Html.Raw(
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__item\"><a href=\"proprietarios\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Proprietários</span></a></li>");
+    }
+    else if (url.Contains("carros"))
+    {
+        return Html.Raw(
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__item\"><a href=\"carros\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Carros</span></a></li>");
+    }
+    else if (url.Contains("localidades"))
+    {
+        return Html.Raw(
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__item\"><a href=\"localidades\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Localidades</span></a></li>");
+    }
+
+    return Html.Raw(string.Empty);
+}
 }

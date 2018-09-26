@@ -11,9 +11,9 @@ namespace K2.Web.Helpers
     {
         private readonly HttpContext _context;
 
-        public CookieHelper(HttpContext context)
+        public CookieHelper(IHttpContextAccessor httpContextAccessor)
         {
-            _context = context;
+            _context = httpContextAccessor.HttpContext;
         }
 
         /// <summary>

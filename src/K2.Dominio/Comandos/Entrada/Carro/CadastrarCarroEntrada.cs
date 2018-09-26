@@ -81,8 +81,7 @@ namespace K2.Dominio.Comandos.Entrada
             this
                 .NotificarSeMenorOuIgualA(this.IdProprietario, 0, CarroResource.Id_Proprietario_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.Descricao, CarroResource.Descricao_Obrigatoria_Nao_Informada)
-                .NotificarSeNuloOuVazio(this.NomeFabricante, CarroResource.Nome_Fabricante_Obrigatorio_Nao_Informado)
-                .NotificarSeNuloOuVazio(this.AnoModelo, CarroResource.Ano_Modelo_Obrigatorio_Nao_Informado)
+                .NotificarSeNuloOuVazio(this.Placa, CarroResource.Placa_Obrigatoria_Nao_Informado)
                 .NotificarSeMenorOuIgualA(this.QuantidadeLugares, 0, CarroResource.Quantidade_Lugares_Invalida);
         }
     }

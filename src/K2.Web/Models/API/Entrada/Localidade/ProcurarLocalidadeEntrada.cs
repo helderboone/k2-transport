@@ -5,14 +5,8 @@
     /// </summary>
     public class ProcurarLocalidadeEntrada : ProcurarEntrada
     {
-        /// <summary>
-        /// Nome da localidade
-        /// </summary>
         public string Nome { get; set; }
 
-        /// <summary>
-        /// UF da localidade
-        /// </summary>
         public string Uf { get; set; }
     }
 }
