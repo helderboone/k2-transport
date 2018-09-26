@@ -24,27 +24,11 @@ namespace K2.Api.Controllers
         [Authorize(Policy = TipoPerfil.ProprietarioCarro)]
         [HttpPost]
         [Route("v1/carros/procurar")]
-        public async Task<ISaida> Procurar([FromBody] Models.Entrada.ProcurarCarroEntrada model)
+        public async Task<ISaida> Procurar([FromBody] ProcurarCarroEntrada entrada)
         {
-            var entrada = new ProcurarCarroEntrada(
-                base.ObterIdUsuario(),
-                base.ObterPerfilUsuario(),
-                model?.OrdenarPor,
-                model?.OrdenarSentido,
-                model?.PaginaIndex,
-                model?.PaginaTamanho)
-            {
-                IdProprietario    = model?.IdProprietario,
-                Descricao         = model?.Descricao,
-                NomeFabricante    = model?.NomeFabricante,
-                AnoModelo         = model?.AnoModelo,
-                QuantidadeLugares = model?.QuantidadeLugares,
-                Placa             = model?.Placa,
-                Renavam           = model?.Renavam,
-                Caracteristicas   = model?.Caracteristicas
-            };
+            var credencial = new CredencialUsuarioEntrada(base.ObterIdUsuario(), base.ObterPerfilUsuario());
 
-            return await _carroServico.ProcurarCarros(entrada);
+            return await _carroServico.ProcurarCarros(entrada, credencial);
         }
 
         /// <summary>
@@ -55,7 +39,7 @@ namespace K2.Api.Controllers
         [Route("v1/carros/cadastrar")]
         public async Task<ISaida> Cadastrar([FromBody] CadastrarCarroEntrada entrada)
         {
-           return await _carroServico.CadastrarCarro(entrada);
+            return await _carroServico.CadastrarCarro(entrada);
         }
 
         /// <summary>
@@ -66,7 +50,9 @@ namespace K2.Api.Controllers
         [Route("v1/carros/alterar")]
         public async Task<ISaida> Alterar([FromBody] AlterarCarroEntrada entrada)
         {
-            return await _carroServico.AlterarCarro(entrada);
+            var credencial = new CredencialUsuarioEntrada(base.ObterIdUsuario(), base.ObterPerfilUsuario());
+
+            return await _carroServico.AlterarCarro(entrada, credencial);
         }
 
         /// <summary>
@@ -77,7 +63,9 @@ namespace K2.Api.Controllers
         [Route("v1/carros/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)
         {
-            return await _carroServico.ObterCarroPorId(id);
+            var credencial = new CredencialUsuarioEntrada(base.ObterIdUsuario(), base.ObterPerfilUsuario());
+
+            return await _carroServico.ObterCarroPorId(id, credencial);
         }
 
         /// <summary>
@@ -88,7 +76,9 @@ namespace K2.Api.Controllers
         [Route("v1/carros/excluir/{id:int}")]
         public async Task<ISaida> ExcluirCarro(int id)
         {
-            return await _carroServico.ExcluirCarro(id);
+            var credencial = new CredencialUsuarioEntrada(base.ObterIdUsuario(), base.ObterPerfilUsuario());
+
+            return await _carroServico.ExcluirCarro(id, credencial);
         }
     }
 }

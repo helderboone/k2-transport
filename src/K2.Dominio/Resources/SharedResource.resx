@@ -117,49 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ano_Modelo_Obrigatorio_Nao_Informado" xml:space="preserve">
-    <value>O ano / modelo é obrigatório e não foi informado.</value>
-  </data>
-  <data name="Carro_Alterado_Com_Sucesso" xml:space="preserve">
-    <value>O carro foi alterado com sucesso.</value>
-  </data>
-  <data name="Carro_Cadastrado_Com_Sucesso" xml:space="preserve">
-    <value>O carro foi cadastrado com sucesso.</value>
-  </data>
-  <data name="Carro_Encontrado_Com_Sucesso" xml:space="preserve">
-    <value>O carro com o ID informado foi encontrado com sucesso.</value>
-  </data>
-  <data name="Carro_Excluido_Com_Sucesso" xml:space="preserve">
-    <value>O carro foi excluído com sucesso.</value>
-  </data>
-  <data name="Descricao_Obrigatoria_Nao_Informada" xml:space="preserve">
-    <value>A descrição é obrigatória e não foi informada.</value>
-  </data>
-  <data name="Id_Carro_Nao_Existe" xml:space="preserve">
-    <value>O carro com o ID informado não existe.</value>
-  </data>
-  <data name="Id_Proprietario_Obrigatorio_Nao_Informado" xml:space="preserve">
-    <value>O ID do proprietário é obrigatório e não foi informado.</value>
-  </data>
-  <data name="Id_Usuario_Procura_Invalido" xml:space="preserve">
-    <value>O ID do usuário responsável pela procura é inválido.</value>
-  </data>
-  <data name="Nome_Fabricante_Obrigatorio_Nao_Informado" xml:space="preserve">
-    <value>O nome do fabricante é obrigatório e não foi informado.</value>
-  </data>
-  <data name="Perfil_Usuario_Procura_Obrigatorio_Nao_Informado" xml:space="preserve">
-    <value>O perfil do usuário responsável pela procura é obrigatório e não foi informado.</value>
-  </data>
-  <data name="Quantidade_Lugares_Invalida" xml:space="preserve">
-    <value>A quantidade de lugares informada é inválida.</value>
-  </data>
-  <data name="Usuario_Sem_Perfil_Acesso_Alterar_Informacao" xml:space="preserve">
-    <value>O usuário não possui perfil de acesso para alterar as informações desse carro.</value>
-  </data>
-  <data name="Usuario_Sem_Perfil_Acesso_Excluir_Informacao" xml:space="preserve">
-    <value>O usuário não possui perfil de acesso para excluir esse carro.</value>
-  </data>
-  <data name="Usuario_Sem_Perfil_Acesso_Obter_Informacao" xml:space="preserve">
-    <value>O usuário não possui perfil de acesso para obter as informações desse carro.</value>
+  <data name="Credencial_Usuario_Obrigatoria_Nao_Informada" xml:space="preserve">
+    <value>As credencial do usuário é obrigatória e não foi informada.</value>
   </data>
 </root>

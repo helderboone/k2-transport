@@ -16,7 +16,7 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         /// <summary>
         /// Obtém os carros baseados nos parâmetros de procura
         /// </summary>
-        Task<ProcurarSaida> Procurar(ProcurarCarroEntrada entrada);
+        Task<ProcurarSaida> Procurar(ProcurarCarroEntrada entrada, CredencialUsuarioEntrada credencial);
 
         /// <summary>
         /// Insere um novo carro

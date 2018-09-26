@@ -42,6 +42,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ProprietarioCarroResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\SharedResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SharedResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\UsuarioResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -69,6 +74,10 @@
     <EmbeddedResource Update="Resources\ProprietarioCarroResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProprietarioCarroResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SharedResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\UsuarioResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

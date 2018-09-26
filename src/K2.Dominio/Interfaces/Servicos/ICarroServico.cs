@@ -22,7 +22,7 @@ namespace K2.Dominio.Interfaces.Servicos
         /// <summary>
         /// Realiza o cadastro de um novo carro.
         /// </summary>
-        Task<ISaida> CadastrarCarro(CadastrarCarroEntrada entrada, CredencialUsuarioEntrada credencial);
+        Task<ISaida> CadastrarCarro(CadastrarCarroEntrada entrada);
 
         /// <summary>
         /// Realiza a alteração de um carro.

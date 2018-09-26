@@ -167,5 +167,32 @@ namespace K2.Dominio.Resources {
                 return ResourceManager.GetString("Quantidade_Lugares_Invalida", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O usuário não possui perfil de acesso para alterar as informações desse carro..
+        /// </summary>
+        public static string Usuario_Sem_Perfil_Acesso_Alterar_Informacao {
+            get {
+                return ResourceManager.GetString("Usuario_Sem_Perfil_Acesso_Alterar_Informacao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O usuário não possui perfil de acesso para excluir esse carro..
+        /// </summary>
+        public static string Usuario_Sem_Perfil_Acesso_Excluir_Informacao {
+            get {
+                return ResourceManager.GetString("Usuario_Sem_Perfil_Acesso_Excluir_Informacao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O usuário não possui perfil de acesso para obter as informações desse carro..
+        /// </summary>
+        public static string Usuario_Sem_Perfil_Acesso_Obter_Informacao {
+            get {
+                return ResourceManager.GetString("Usuario_Sem_Perfil_Acesso_Obter_Informacao", resourceCulture);
+            }
+        }
     }
 }

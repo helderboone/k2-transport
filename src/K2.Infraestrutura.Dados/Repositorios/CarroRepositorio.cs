@@ -24,6 +24,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
         {
             var query = _efContext.Carros
                     .Include(x => x.Proprietario)
+                    .ThenInclude(x => x.Usuario)
                     .AsQueryable();
 
             if (!habilitarTracking)
@@ -32,15 +33,16 @@ namespace K2.Infraestrutura.Dados.Repositorios
             return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<ProcurarSaida> Procurar(ProcurarCarroEntrada entrada)
+        public async Task<ProcurarSaida> Procurar(ProcurarCarroEntrada entrada, CredencialUsuarioEntrada credencial)
         {
             var query = _efContext.Carros
                 .Include(x => x.Proprietario)
+                .ThenInclude(x => x.Usuario)
                 .AsNoTracking()
                 .AsQueryable();
 
-            if (entrada.PerfilUsuario == TipoPerfil.ProprietarioCarro)
-                query = query.Where(x => x.IdProprietario == entrada.IdUsuario); // Quando a procura é feita por um proprietário, somente seus carros devem ser retornados.
+            if (credencial.PerfilUsuario == TipoPerfil.ProprietarioCarro)
+                query = query.Where(x => x.Proprietario.IdUsuario == credencial.IdUsuario); // Quando a procura é feita por um proprietário, somente seus carros devem ser retornados.
             else if (entrada.IdProprietario.HasValue)
                 query = query.Where(x => x.IdProprietario == entrada.IdProprietario.Value);
 

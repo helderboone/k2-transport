@@ -67,11 +67,11 @@ namespace K2.Dominio.Comandos.Entrada
         {
             Id                = id;
             IdProprietario    = idProprietario;
-            Descricao         = descricao;
-            NomeFabricante    = nomeFabricante;
+            Descricao         = descricao?.ToUpper();
+            NomeFabricante    = nomeFabricante?.ToUpper();
             AnoModelo         = anoModelo;
             QuantidadeLugares = quantidadeLugares;
-            Placa             = placa;
+            Placa             = placa?.ToUpper();
             Renavam           = renavam;
             Caracteristicas   = caracteristicas;
 
