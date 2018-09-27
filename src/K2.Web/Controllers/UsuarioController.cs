@@ -47,7 +47,7 @@ namespace K2.Web.Controllers
                 new Parameter{ Name = "senha", Value = senha, Type = ParameterType.QueryString }
             };
 
-            var apiResponse = await base.ChamarApi("usuarios/autenticar", Method.POST, parametros, false);
+            var apiResponse = await _restSharpHelper.ChamarApi("usuarios/autenticar", Method.POST, parametros, false);
 
             var saida = AutenticarSaida.Obter(apiResponse.Content);
 
@@ -75,7 +75,7 @@ namespace K2.Web.Controllers
             {
                 AllowRefresh = true,
                 IsPersistent = permanecerLogado,
-                ExpiresUtc = saida.ObterRetorno().DataExpiracaoToken
+                ExpiresUtc = saida.Retorno.DataExpiracaoToken
             };
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);
@@ -112,7 +112,7 @@ namespace K2.Web.Controllers
                 EnviarEmailSenhaNova = enviarEmailSenhaNova
             };
 
-            var apiResponse = await base.ChamarApi("usuarios/alterar-senha", Method.PUT, new[] { new Parameter { Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" } });
+            var apiResponse = await _restSharpHelper.ChamarApi("usuarios/alterar-senha", Method.PUT, new[] { new Parameter { Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" } });
 
             var saida = Saida.Obter(apiResponse.Content);
 
@@ -129,7 +129,7 @@ namespace K2.Web.Controllers
         [FeedbackExceptionFilter("Ocorreu um erro na tentativa de redefinir a senha de acesso.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> RedefinirSenha(int id)
         {
-            var apiResponse = await base.ChamarApi("usuarios/redefinir-senha/" + id, Method.PUT);
+            var apiResponse = await _restSharpHelper.ChamarApi("usuarios/redefinir-senha/" + id, Method.PUT);
 
             var saida = Saida.Obter(apiResponse.Content);
 

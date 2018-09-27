@@ -6,17 +6,15 @@ namespace K2.Web.Models
     /// <summary>
     /// Classe que reflete as informações de saída de um motorista
     /// </summary>
-    public class MotoristaSaida : Saida
+    public class MotoristaSaida : Saida<MotoristaRegistro>
     {
-        public MotoristaSaida(bool sucesso, IEnumerable<string> mensagens, MotoristaRetorno retorno)
+        public MotoristaSaida(bool sucesso, IEnumerable<string> mensagens, MotoristaRegistro retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
 
-        public MotoristaRetorno ObterRetorno() => (MotoristaRetorno)this.Retorno;
-
-        public new static MotoristaSaida Obter(string json)
+        public static MotoristaSaida Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<MotoristaSaida>(json)
@@ -24,7 +22,7 @@ namespace K2.Web.Models
         }
     }
 
-    public class MotoristaRetorno
+    public class MotoristaRegistro
     {
         public bool Ativo { get; set; }
 

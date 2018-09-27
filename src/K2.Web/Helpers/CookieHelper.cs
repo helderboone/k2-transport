@@ -24,7 +24,7 @@ namespace K2.Web.Helpers
         /// <summary>
         /// Obtém o nome do usuário
         /// </summary>
-        public string ObterNomeUsuario() => Convert.ToString(_context.User.Claims.First(x => x.Type == "Nome").Value);
+        public string ObterNomeUsuario() => _context.User.Claims.First(x => x.Type == "Nome").Value;
 
         /// <summary>
         /// Obtém o primeiro nome do usuário
@@ -36,16 +36,37 @@ namespace K2.Web.Helpers
         /// Obtém o e-mail do usuário
         /// </summary>
         /// <returns></returns>
-        public string ObterEmailUsuario() => Convert.ToString(_context.User.Claims.ElementAt(1).Value);
+        public string ObterEmailUsuario() => _context.User.Claims.ElementAt(1).Value;
 
         /// <summary>
         /// Obtém o perfil associado ao usuário
         /// </summary>
-        public string ObterPerfilUsuario() => Convert.ToString(_context.User.Claims.First(x => x.Type == "Perfil").Value);
+        public string ObterPerfilUsuario()
+        {
+            return _context.User.Claims.First(x => x.Type == "Perfil").Value;
+        }
+
+        /// <summary>
+        /// Obtém o nome do perfil associado ao usuário
+        /// </summary>
+        public string ObterNomePerfilUsuario()
+        {
+            switch (ObterPerfilUsuario())
+            {
+                case TipoPerfil.Administrador:
+                case TipoPerfil.Cliente:
+                case TipoPerfil.Motorista:
+                    return ObterPerfilUsuario();
+                case TipoPerfil.ProprietarioCarro:
+                    return "Proprietário de carro";
+                default:
+                    return string.Empty;
+            }
+        }
 
         /// <summary>
         /// Obtém o token JWT associado ao cookie
         /// </summary>
-        public string ObterTokenJwt() => _context.User.Claims.FirstOrDefault(x => x.Type == "jwtToken")?.Value;
+        public string ObterTokenJwt() => _context.User.Claims.First(x => x.Type == "jwtToken").Value;
     }
 }

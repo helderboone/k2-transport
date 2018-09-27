@@ -6,17 +6,15 @@ namespace K2.Web.Models
     /// <summary>
     /// Classe que reflete as informações de saída de um proprietário
     /// </summary>
-    public class CarroSaida : Saida
+    public class CarroSaida : Saida<CarroRegistro>
     {
-        public CarroSaida(bool sucesso, IEnumerable<string> mensagens, CarroRetorno retorno)
+        public CarroSaida(bool sucesso, IEnumerable<string> mensagens, CarroRegistro retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
 
-        public CarroRetorno ObterRetorno() => (CarroRetorno)this.Retorno;
-
-        public new static CarroSaida Obter(string json)
+        public static CarroSaida Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<CarroSaida>(json)
@@ -24,7 +22,7 @@ namespace K2.Web.Models
         }
     }
 
-    public class CarroRetorno
+    public class CarroRegistro
     {
         public int Id { get; set; }
 
@@ -44,10 +42,10 @@ namespace K2.Web.Models
 
         public string[] Caracteristicas { get; set; }
 
-        public CarroProprietarioCarroRetorno Proprietario { get; set; }
+        public CarroProprietarioCarroRegistro Proprietario { get; set; }
     }
 
-    public class CarroProprietarioCarroRetorno
+    public class CarroProprietarioCarroRegistro
     {
         public string Nome { get; set; }
 

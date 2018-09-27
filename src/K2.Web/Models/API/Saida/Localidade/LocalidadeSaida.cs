@@ -7,17 +7,15 @@ namespace K2.Web.Models
     /// <summary>
     /// Classe que reflete as informações de saída de um motorista
     /// </summary>
-    public class LocalidadeSaida : Saida
+    public class LocalidadeSaida : Saida<LocalidadeRegistro>
     {
-        public LocalidadeSaida(bool sucesso, IEnumerable<string> mensagens, LocalidadeRetorno retorno)
+        public LocalidadeSaida(bool sucesso, IEnumerable<string> mensagens, LocalidadeRegistro retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
 
-        public LocalidadeRetorno ObterRetorno() => (LocalidadeRetorno)this.Retorno;
-
-        public new static LocalidadeSaida Obter(string json)
+        public static LocalidadeSaida Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<LocalidadeSaida>(json)
@@ -25,7 +23,7 @@ namespace K2.Web.Models
         }
     }
 
-    public class LocalidadeRetorno
+    public class LocalidadeRegistro
     {
         public int Id { get; set; }
 

@@ -6,17 +6,15 @@ namespace K2.Web.Models
     /// <summary>
     /// Classe que reflete as informações de saída de um proprietário
     /// </summary>
-    public class ProprietarioCarroSaida : Saida
+    public class ProprietarioCarroSaida : Saida<ProprietarioCarroRegistro>
     {
-        public ProprietarioCarroSaida(bool sucesso, IEnumerable<string> mensagens, ProprietarioCarroRetorno retorno)
+        public ProprietarioCarroSaida(bool sucesso, IEnumerable<string> mensagens, ProprietarioCarroRegistro retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
 
-        public ProprietarioCarroRetorno ObterRetorno() => (ProprietarioCarroRetorno)this.Retorno;
-
-        public new static ProprietarioCarroSaida Obter(string json)
+        public static ProprietarioCarroSaida Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<ProprietarioCarroSaida>(json)
@@ -24,7 +22,7 @@ namespace K2.Web.Models
         }
     }
 
-    public class ProprietarioCarroRetorno
+    public class ProprietarioCarroRegistro
     {
         public bool Ativo { get; set; }
 
@@ -42,10 +40,10 @@ namespace K2.Web.Models
 
         public string Celular { get; set; }
 
-        public IEnumerable<ProprietarioCarroCarroRetorno> Carros { get; set; }
+        public IEnumerable<ProprietarioCarroCarroRegistro> Carros { get; set; }
     }
 
-    public class ProprietarioCarroCarroRetorno
+    public class ProprietarioCarroCarroRegistro
     {
         public int Id { get; set; }
 

@@ -21,6 +21,7 @@
 
         public CadastrarUsuarioEntrada()
         {
+            this.Senha         = "k2";
             this.Administrador = true;
         }
     }

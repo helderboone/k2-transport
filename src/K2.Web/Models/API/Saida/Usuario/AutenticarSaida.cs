@@ -10,20 +10,18 @@ namespace K2.Web.Models
     /// <summary>
     /// Classe que reflete o resultado do processo de autenticação
     /// </summary>
-    public class AutenticarSaida : Saida
+    public class AutenticarSaida : Saida<AutenticarRegistro>
     {
-        public AutenticarSaida(bool sucesso, IEnumerable<string> mensagens, AutenticarRetorno retorno)
+        public AutenticarSaida(bool sucesso, IEnumerable<string> mensagens, AutenticarRegistro retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
 
-        public AutenticarRetorno ObterRetorno() => (AutenticarRetorno)this.Retorno;
-        
         /// <summary>
         /// Obtem o token JWT
         /// </summary>
-        public string ObterToken() => ObterRetorno()?.Token;
+        public string ObterToken() => this.Retorno?.Token;
 
         /// <summary>
         /// Extrai o nome do usuário do token JWT
@@ -38,19 +36,19 @@ namespace K2.Web.Models
             var token = ObterToken();
 
             if (string.IsNullOrEmpty(token))
-                return null;
+                return new List<Claim>();
 
             var jwtHandler = new JwtSecurityTokenHandler();
 
             if (!jwtHandler.CanReadToken(token))
-                return null;
+                return new List<Claim>();
 
             var jwtToken = jwtHandler.ReadJwtToken(token);
 
             return jwtToken.Claims;
         }
 
-        public new static AutenticarSaida Obter(string json)
+        public static AutenticarSaida Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<AutenticarSaida>(json)
@@ -61,7 +59,7 @@ namespace K2.Web.Models
     /// <summary>
     /// Classe que reflete as informações do token JWT retornado no processo de autenticação
     /// </summary>
-    public class AutenticarRetorno
+    public class AutenticarRegistro
     {
         public DateTimeOffset DataCriacaoToken { get; }
 
@@ -69,7 +67,7 @@ namespace K2.Web.Models
 
         public string Token { get; }
 
-        public AutenticarRetorno(DateTimeOffset dataCriacaoToken, DateTimeOffset dataExpiracaoToken, string token)
+        public AutenticarRegistro(DateTimeOffset dataCriacaoToken, DateTimeOffset dataExpiracaoToken, string token)
         {
             DataCriacaoToken = dataCriacaoToken;
             DataExpiracaoToken = dataExpiracaoToken;

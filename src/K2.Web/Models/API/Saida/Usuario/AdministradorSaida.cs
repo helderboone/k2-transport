@@ -6,17 +6,15 @@ namespace K2.Web.Models
     /// <summary>
     /// Classe que reflete as informações de saída de um cliente
     /// </summary>
-    public class AdministradorSaida : Saida
+    public class AdministradorSaida : Saida<AdministradorRegistro>
     {
-        public AdministradorSaida(bool sucesso, IEnumerable<string> mensagens, AdministradorRetorno retorno)
+        public AdministradorSaida(bool sucesso, IEnumerable<string> mensagens, AdministradorRegistro retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
 
-        public AdministradorRetorno ObterRetorno() => (AdministradorRetorno)this.Retorno;
-
-        public new static AdministradorSaida Obter(string json)
+        public static AdministradorSaida Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<AdministradorSaida>(json)
@@ -24,7 +22,7 @@ namespace K2.Web.Models
         }
     }
 
-    public class AdministradorRetorno
+    public class AdministradorRegistro
     {
         public bool Ativo { get; set; }
 

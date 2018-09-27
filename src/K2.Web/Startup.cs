@@ -28,6 +28,7 @@ namespace K2.Web
             services.AddTransient<RestSharpHelper, RestSharpHelper>();
             services.AddTransient<DatatablesHelper, DatatablesHelper>();
             services.AddTransient<CookieHelper, CookieHelper>();
+            services.AddTransient<CustomHtmlHelper, CustomHtmlHelper>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options =>

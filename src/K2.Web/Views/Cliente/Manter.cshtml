@@ -1,6 +1,6 @@
 ﻿@using K2.Web.Helpers
 
-@model K2.Web.Models.ClienteRetorno
+@model K2.Web.Models.ClienteRegistro
 
 <div class="m-portlet m-portlet--primary m-portlet-lg" style="border: 1px solid #ccc; margin:0 auto;">
     <div class="m-portlet__head" style="border-bottom: 1px solid #8DD2F1;">
@@ -80,7 +80,7 @@
                 <div class="col-lg-4 m-form__group-sub">
                     <label>Estado</label>
                     <div class="m-select2 m-select2--square m-select2--air">
-                        @HtmlHelpers.DropDownUf("sEstado", "form-control m-select2", Model == null ? "ES" : Model.Uf)
+                        @CustomHtmlHelper.DropDownUf("sEstado", "form-control m-select2", Model == null ? "ES" : Model.Uf)
                         <span class="m-form__help"></span>
                     </div>
                 </div>

@@ -1,57 +1,64 @@
 ﻿using K2.Web.Models;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using RestSharp;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace K2.Web.Helpers
 {
-    public class HtmlHelpers
+    public class CustomHtmlHelper
     {
-        private readonly IConfiguration _configuration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly RestClient _restClient;
         private readonly CookieHelper _cookieHelper;
+        private readonly RestSharpHelper _restSharpHelper;
 
-        public HtmlHelpers(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public CustomHtmlHelper(RestSharpHelper restSharpHelper, CookieHelper cookieHelper)
         {
-            _configuration = configuration;
-            _restClient = new RestClient(configuration["UrlApi"]);
-            _httpContextAccessor = httpContextAccessor;
+            _restSharpHelper = restSharpHelper;
+            _cookieHelper = cookieHelper;
         }
 
-        //public async Task<HtmlString> DropDownProprietariosCarro(string id, string cssClass, string valor, string atributosHtml = "style=\"width: 100%;\"")
-        //{
-        //    var atribId = !string.IsNullOrEmpty(id) ? " id=\"" + id + "\" name=\"" + id + "\"" : string.Empty;
+        public HtmlString DropDownProprietariosCarro(string id, string cssClass, string valor, string atributosHtml = "style=\"width: 100%;\"")
+        {
+            var atribId = !string.IsNullOrEmpty(id) ? " id=\"" + id + "\" name=\"" + id + "\"" : string.Empty;
 
-        //    var html = new StringBuilder($"<select{atribId} class=\"{cssClass}\"");
+            var html = new StringBuilder($"<select{atribId} class=\"{cssClass}\"");
 
-        //    if (!string.IsNullOrEmpty(atributosHtml))
-        //        html.Append(atributosHtml);
+            if (!string.IsNullOrEmpty(atributosHtml))
+                html.Append(atributosHtml);
 
-        //    html.AppendLine(">");
+            html.AppendLine(">");
 
-        //    var filtro = new ProcurarProprietarioCarroEntrada
-        //    {
-        //        OrdenarPor = "Nome",
-        //        PaginaIndex = null,
-        //        PaginaTamanho = null
-        //    };
+            var filtro = new ProcurarProprietarioCarroEntrada
+            {
+                OrdenarPor = "Nome",
+                PaginaIndex = null,
+                PaginaTamanho = null
+            };
 
-        //    var parametros = new Parameter[]
-        //    {
-        //        new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
-        //    };
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
 
-        //    var apiResponse = await this.ChamarApi("proprietarios-carro/procurar", Method.POST, parametros);
+            var apiResponse = _restSharpHelper.ChamarApi("proprietarios-carro/procurar", Method.POST, parametros).Result;
 
-        //    var saida = ProcurarSaida.Obter(apiResponse.Content);
-        //}
+            var saida = ProcurarSaida.Obter(apiResponse.Content);
+
+            var lstProprietarios = _cookieHelper.ObterPerfilUsuario() == TipoPerfil.Administrador
+                ? saida.ObterRegistros<ProprietarioCarroRegistro>().ToList()
+                : saida.ObterRegistros<ProprietarioCarroRegistro>().Where(x => x.IdUsuario == _cookieHelper.ObterIdUsuario()).ToList();
+
+            html.AppendLine("<option value=\"\"></option>");
+
+            foreach (var proprietario in lstProprietarios)
+            {
+                html.AppendLine($"<option value=\"{proprietario.Id}\" {(valor == proprietario.Id.ToString() ? " selected" : string.Empty)}>{proprietario.Nome}</option>");
+            }
+
+            html.Append("</select>");
+
+            return new HtmlString(html.ToString());
+        }
 
 
         public static HtmlString DropDownUf(string id, string cssClass, string valor, string atributosHtml = "style=\"width: 100%;\"")
@@ -97,40 +104,6 @@ namespace K2.Web.Helpers
             html.Append("</select>");
 
             return new HtmlString(html.ToString());
-        }
-
-        private async Task<IRestResponse> ChamarApi(string rota, Method metodo, ICollection<Parameter> parametros = null, bool usarToken = true)
-        {
-            try
-            {
-                var request = new RestRequest(rota, metodo);
-                request.AddHeader("Content-Type", "application/json");
-
-                if (usarToken)
-                {
-                    var tokenJwt = _cookieHelper.ObterTokenJwt();
-
-                    if (!string.IsNullOrEmpty(tokenJwt))
-                        request.AddHeader("Authorization", "Bearer " + tokenJwt);
-                }
-
-                if (parametros != null && parametros.Any())
-                {
-                    foreach (var parametro in parametros)
-                        request.AddParameter(parametro);
-                }
-
-                var response = await _restClient.ExecuteTaskAsync(request);
-
-                if (!response.IsSuccessful)
-                    throw new Exception("Falha na comunicação com a API.", response.ErrorException);
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Falha na comunicação com a API.", ex);
-            }
         }
     }
 }

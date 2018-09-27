@@ -12,10 +12,10 @@
                     feedback.exibirModal();
                 },
                 data: function (data) {
-                    data.Nome = $("#iProcurarNome").val();
+                    data.Nome  = $("#iProcurarNome").val();
                     data.Email = $("#iProcurarEmail").val();
-                    data.Cpf = $("#iProcurarCpf").val();
-                    data.Rg = $("#iProcurarRg").val();
+                    data.Cpf   = $("#iProcurarCpf").val();
+                    data.Rg    = $("#iProcurarRg").val();
                 }
             },
             info: true,
@@ -78,7 +78,10 @@
                     }
                 }
             ],
-            select: true,
+            select: {
+                style: 'single',
+                info: false
+            },
             serverSide: true,
             responsive: true,
             pagingType: 'full_numbers',

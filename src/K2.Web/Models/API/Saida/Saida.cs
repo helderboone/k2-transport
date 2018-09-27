@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace K2.Web.Models
@@ -6,7 +7,7 @@ namespace K2.Web.Models
     /// <summary>
     /// Classe para padronização das saídas da API
     /// </summary>
-    public class Saida : BaseModel
+    public class Saida<TRetorno> : BaseModel
     {
         /// <summary>
         /// Indica se houve sucesso
@@ -21,13 +22,22 @@ namespace K2.Web.Models
         /// <summary>
         /// Objeto retornado
         /// </summary>
-        public object Retorno { get; set; }
+        public TRetorno Retorno { get; set; }
 
-        public Saida(bool sucesso, IEnumerable<string> mensagens, object retorno)
+        public Saida(bool sucesso, IEnumerable<string> mensagens, TRetorno retorno)
         {
             this.Sucesso   = sucesso;
             this.Mensagens = mensagens;
             this.Retorno   = retorno;
+        }
+    }
+
+    public class Saida : Saida<JObject>
+    {
+        public Saida(bool sucesso, IEnumerable<string> mensagens, JObject retorno)
+            : base(sucesso, mensagens, retorno)
+        {
+
         }
 
         public static Saida Obter(string json)

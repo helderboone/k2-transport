@@ -47,20 +47,20 @@ namespace K2.Web.Controllers
                 new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
-            var apiResponse = await base.ChamarApi("localidades/procurar", Method.POST, parametros);
+            var apiResponse = await _restSharpHelper.ChamarApi("localidades/procurar", Method.POST, parametros);
 
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
             if (!saida.Sucesso)
                 return new DatatablesResult(_datatablesHelper.Draw, saida);
 
-            var registros = saida.ObterRetorno().Registros;
+            var registros = saida.ObterRegistros<LocalidadeRegistro>();
 
             var lst = registros.Select(x => new
             {
-                id = ((JObject)x)["id"].Value<int>(),
-                nome = ((JObject)x)["nome"].Value<string>(),
-                uf = ((JObject)x)["uf"].Value<string>().ObterNomeUfPorSiglaUf()
+                id = x.Id,
+                nome = x.Nome,
+                uf = x.Uf.ObterNomeUfPorSiglaUf()
             }).ToList();
 
             return new DatatablesResult(_datatablesHelper.Draw, lst.Count, lst);
@@ -87,7 +87,7 @@ namespace K2.Web.Controllers
                 new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
-            var apiResponse = await base.ChamarApi("localidades/cadastrar", Method.POST, parametros);
+            var apiResponse = await _restSharpHelper.ChamarApi("localidades/cadastrar", Method.POST, parametros);
 
             var saida = LocalidadeSaida.Obter(apiResponse.Content);
 
@@ -104,7 +104,7 @@ namespace K2.Web.Controllers
         [Route("alterar-localidade/{id:int:min(1)}")]
         public async Task<IActionResult> AlterarLocalidade(int id)
         {
-            var apiResponse = await base.ChamarApi("localidades/obter-por-id/" + id, Method.GET);
+            var apiResponse = await _restSharpHelper.ChamarApi("localidades/obter-por-id/" + id, Method.GET);
 
             var saida = LocalidadeSaida.Obter(apiResponse.Content);
 
@@ -114,7 +114,7 @@ namespace K2.Web.Controllers
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da localidade.", saida.Mensagens));
 
-            return PartialView("Manter", saida.ObterRetorno());
+            return PartialView("Manter", saida.Retorno);
         }
 
         [Authorize(Policy = TipoPerfil.Administrador)]
@@ -130,7 +130,7 @@ namespace K2.Web.Controllers
                 new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
-            var apiResponse = await base.ChamarApi("localidades/alterar", Method.PUT, parametros);
+            var apiResponse = await _restSharpHelper.ChamarApi("localidades/alterar", Method.PUT, parametros);
 
             var saida = Saida.Obter(apiResponse.Content);
 
@@ -147,7 +147,7 @@ namespace K2.Web.Controllers
         [Route("excluir-localidade/{id:int}")]
         public async Task<IActionResult> ExcluirLocalidade(int id)
         {
-            var apiResponse = await base.ChamarApi("localidades/excluir/" + id, Method.DELETE);
+            var apiResponse = await _restSharpHelper.ChamarApi("localidades/excluir/" + id, Method.DELETE);
 
             var saida = Saida.Obter(apiResponse.Content);
 

@@ -15,8 +15,8 @@ namespace K2.Web
         public DatatablesResult(int draw, ProcurarSaida saida)
         {
             _draw = draw;
-            _itens = saida.ObterRetorno().Registros.ToList();
-            _totalRegistros = saida.ObterRetorno().TotalRegistros;
+            _itens = saida.Retorno.Registros.ToList();
+            _totalRegistros = saida.Retorno.TotalRegistros;
         }
 
         public DatatablesResult(int draw, int totalRegistros, ICollection registros)

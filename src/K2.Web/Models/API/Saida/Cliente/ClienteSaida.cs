@@ -6,17 +6,15 @@ namespace K2.Web.Models
     /// <summary>
     /// Classe que reflete as informações de saída de um cliente
     /// </summary>
-    public class ClienteSaida : Saida
+    public class ClienteSaida : Saida<ClienteRegistro>
     {
-        public ClienteSaida(bool sucesso, IEnumerable<string> mensagens, ClienteRetorno retorno)
+        public ClienteSaida(bool sucesso, IEnumerable<string> mensagens, ClienteRegistro retorno)
             : base(sucesso, mensagens, retorno)
         {
             
         }
 
-        public ClienteRetorno ObterRetorno() => (ClienteRetorno)this.Retorno;
-
-        public new static ClienteSaida Obter(string json)
+        public static ClienteSaida Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<ClienteSaida>(json)
@@ -24,7 +22,7 @@ namespace K2.Web.Models
         }
     }
 
-    public class ClienteRetorno
+    public class ClienteRegistro
     {
         public bool Ativo { get; set; }
 

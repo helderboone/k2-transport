@@ -35,23 +35,21 @@ namespace K2.Web.Controllers
             if (filtro == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações para a procura não foram preenchidas.", tipoAcao: TipoAcaoAoOcultarFeedback.Ocultar));
 
-            var dataTablesParams = new DatatablesHelper(_httpContextAccessor);
-
-            filtro.OrdenarPor     = dataTablesParams.OrdenarPor;
-            filtro.OrdenarSentido = dataTablesParams.OrdenarSentido;
-            filtro.PaginaIndex    = dataTablesParams.PaginaIndex;
-            filtro.PaginaTamanho  = dataTablesParams.PaginaTamanho;
+            filtro.OrdenarPor     = _datatablesHelper.OrdenarPor;
+            filtro.OrdenarSentido = _datatablesHelper.OrdenarSentido;
+            filtro.PaginaIndex    = _datatablesHelper.PaginaIndex;
+            filtro.PaginaTamanho  = _datatablesHelper.PaginaTamanho;
 
             var parametros = new Parameter[]
             {
                 new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
-            var apiResponse = await base.ChamarApi("motoristas/procurar", Method.POST, parametros);
+            var apiResponse = await _restSharpHelper.ChamarApi("motoristas/procurar", Method.POST, parametros);
 
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
-            return new DatatablesResult(dataTablesParams.Draw, saida);
+            return new DatatablesResult(_datatablesHelper.Draw, saida);
         }
 
         [Authorize(Policy = TipoPerfil.Administrador)]
@@ -75,7 +73,7 @@ namespace K2.Web.Controllers
                 new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
-            var apiResponse = await base.ChamarApi("motoristas/cadastrar", Method.POST, parametros);
+            var apiResponse = await _restSharpHelper.ChamarApi("motoristas/cadastrar", Method.POST, parametros);
 
             var saida = Saida.Obter(apiResponse.Content);
 
@@ -92,7 +90,7 @@ namespace K2.Web.Controllers
         [Route("alterar-motorista/{id:int:min(1)}")]
         public async Task<IActionResult> AlterarMotorista(int id)
         {
-            var apiResponse = await base.ChamarApi("motoristas/obter-por-id/" + id, Method.GET);
+            var apiResponse = await _restSharpHelper.ChamarApi("motoristas/obter-por-id/" + id, Method.GET);
 
             var saida = MotoristaSaida.Obter(apiResponse.Content);
 
@@ -102,7 +100,7 @@ namespace K2.Web.Controllers
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações do motorista.", saida.Mensagens));
 
-            return PartialView("Manter", saida.ObterRetorno());
+            return PartialView("Manter", saida.Retorno);
         }
 
         [Authorize(Policy = TipoPerfil.Administrador)]
@@ -118,7 +116,7 @@ namespace K2.Web.Controllers
                 new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
-            var apiResponse = await base.ChamarApi("motoristas/alterar", Method.PUT, parametros);
+            var apiResponse = await _restSharpHelper.ChamarApi("motoristas/alterar", Method.PUT, parametros);
 
             var saida = Saida.Obter(apiResponse.Content);
 
@@ -135,7 +133,7 @@ namespace K2.Web.Controllers
         [Route("excluir-motorista/{id:int}")]
         public async Task<IActionResult> ExcluirMotorista(int id)
         {
-            var apiResponse = await base.ChamarApi("motoristas/excluir/" + id, Method.DELETE);
+            var apiResponse = await _restSharpHelper.ChamarApi("motoristas/excluir/" + id, Method.DELETE);
 
             var saida = Saida.Obter(apiResponse.Content);
 

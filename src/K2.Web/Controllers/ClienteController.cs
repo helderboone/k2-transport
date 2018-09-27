@@ -45,7 +45,7 @@ namespace K2.Web.Controllers
                 new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
-            var apiResponse = await base.ChamarApi("clientes/procurar", Method.POST, parametros);
+            var apiResponse = await _restSharpHelper.ChamarApi("clientes/procurar", Method.POST, parametros);
 
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
@@ -73,7 +73,7 @@ namespace K2.Web.Controllers
                 new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
-            var apiResponse = await base.ChamarApi("clientes/cadastrar", Method.POST, parametros);
+            var apiResponse = await _restSharpHelper.ChamarApi("clientes/cadastrar", Method.POST, parametros);
 
             var saida = Saida.Obter(apiResponse.Content);
 
@@ -90,7 +90,7 @@ namespace K2.Web.Controllers
         [Route("alterar-cliente/{id:int:min(1)}")]
         public async Task<IActionResult> AlterarCliente(int id)
         {
-            var apiResponse = await base.ChamarApi("clientes/obter-por-id/" + id, Method.GET);
+            var apiResponse = await _restSharpHelper.ChamarApi("clientes/obter-por-id/" + id, Method.GET);
 
             var saida = ClienteSaida.Obter(apiResponse.Content);
 
@@ -100,7 +100,7 @@ namespace K2.Web.Controllers
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações do cliente.", saida.Mensagens));
 
-            return PartialView("Manter", saida.ObterRetorno());
+            return PartialView("Manter", saida.Retorno);
         }
 
         [Authorize(Policy = TipoPerfil.Administrador)]
@@ -116,7 +116,7 @@ namespace K2.Web.Controllers
                 new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
-            var apiResponse = await base.ChamarApi("clientes/alterar", Method.PUT, parametros);
+            var apiResponse = await _restSharpHelper.ChamarApi("clientes/alterar", Method.PUT, parametros);
 
             var saida = Saida.Obter(apiResponse.Content);
 
@@ -133,7 +133,7 @@ namespace K2.Web.Controllers
         [Route("excluir-cliente/{id:int}")]
         public async Task<IActionResult> ExcluirCliente(int id)
         {
-            var apiResponse = await base.ChamarApi("clientes/excluir/" + id, Method.DELETE);
+            var apiResponse = await _restSharpHelper.ChamarApi("clientes/excluir/" + id, Method.DELETE);
 
             var saida = Saida.Obter(apiResponse.Content);
 

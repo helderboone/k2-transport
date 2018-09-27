@@ -32,7 +32,7 @@
                 },
                 { data: "nomeFabricante", title: "Fabricante", orderable: true },
                 { data: "anoModelo", title: "Ano / modelo", orderable: true },
-                { data: "quantidadeLugares", title: "Qtd. lugares", orderable: true },
+                { data: "quantidadeLugares", title: "Qtd. passageiros", orderable: true },
                 { data: "placa", title: "Placa", orderable: true },
                 { data: "renavam", title: "Renavam", orderable: false },
                 {
@@ -93,10 +93,33 @@
         var cadastro = id === null || id === 0;
 
         App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-carro/" + id) : App.corrigirPathRota("cadastrar-carro")), function () {
-            //$("#sEstado").select2({
-            //    placeholder: "Selecione um estado",
-            //    dropdownParent: $('.jc-bs3-container')
-            //});
+            $("#sProprietario").select2({
+                placeholder: "Selecione um proprietário",
+                dropdownParent: $('.jc-bs3-container')
+            });
+
+            $("#sCaracteristicas").select2({
+                placeholder: "Selecione as características",
+                dropdownParent: $('.jc-bs3-container')
+            });
+
+            $("#iQuantidadeLugares").inputmask({
+                "mask": "9",
+                "repeat": 2,
+                "greedy": false
+            });
+
+            $("#iPlaca").inputmask({
+                "mask": "aaa-9999"
+            });
+
+            $("#iAnoModelo").inputmask({
+                "mask": "9999/99"
+            });
+
+            $("#iRenavam").inputmask({
+                "mask": "99999999999"
+            });
 
             $("#frmManterCarro").validate({
                 rules: {
@@ -169,7 +192,7 @@
         init: function () {
             initDataTable();
 
-            $("#iPlaca, #iProcurarPlaca").inputmask({
+            $("#iProcurarPlaca").inputmask({
                 "mask": "aaa-9999"
             });
 

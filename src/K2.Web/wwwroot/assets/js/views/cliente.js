@@ -61,7 +61,10 @@
                     }
                 }
             ],
-            select: true,
+            select: {
+                style: 'single',
+                info: false
+            },
             serverSide: true,
             responsive: true,
 			pagingType: 'full_numbers',

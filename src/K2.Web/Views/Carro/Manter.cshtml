@@ -1,8 +1,9 @@
 ﻿@using K2.Web.Helpers
 
-@model K2.Web.Models.CarroRetorno
+@inject CustomHtmlHelper customHtmlHelper
+@model K2.Web.Models.CarroRegistro
 
-<div class="m-portlet m-portlet--primary m-portlet-md" style="border: 1px solid #ccc; margin:0 auto;">
+<div class="m-portlet m-portlet--primary m-portlet-lg" style="border: 1px solid #ccc; margin:0 auto;">
     <div class="m-portlet__head" style="border-bottom: 1px solid #8DD2F1;">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
@@ -16,26 +17,57 @@
         <input type="hidden" id="iIdCarro" name="iIdCarro" value="@(Model != null ? Model.Id.ToString() : string.Empty)">
         <div class="m-portlet__body">
             <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-12 m-form__group-sub">
+                <div class="col-lg-6 m-form__group-sub">
                     <label>Descrição <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iDescrição" name="iDescrição" maxlength="200" value="@Model?.Descricao">
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iDescrição" name="iDescrição" maxlength="200" value="@Model?.Descricao" style="text-transform:uppercase;">
                     <span class="m-form__help">Nome de identificação do carro</span>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Proprietário <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="m-select2 m-select2--square m-select2--air">
+                        @customHtmlHelper.DropDownProprietariosCarro("sProprietario", "form-control m-select2", Model == null ? string.Empty : Model.IdProprietario.ToString())
+                        <span class="m-form__help">Selecione o proprietário do veículo</span>
+                    </div>
                 </div>
             </div>
             <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>Estado <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <div class="m-select2 m-select2--square m-select2--air">
-                        @HtmlHelpers.DropDownUf("sEstado", "form-control m-select2", Model == null ? "ES" : Model.Uf)
-                        <span class="m-form__help">Estado onde a localidade está</span>
-                    </div>
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Quantidade de passageiros <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iQuantidadeLugares" name="iQuantidadeLugares" maxlength="2" value="@Model?.QuantidadeLugares">
+                    <span class="m-form__help">Qtd. máxima de passageiros suportada.</span>
                 </div>
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>Estado <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <div class="m-select2 m-select2--square m-select2--air">
-                        @HtmlHelpers.DropDownUf("sEstado", "form-control m-select2", Model == null ? "ES" : Model.Uf)
-                        <span class="m-form__help">Estado onde a localidade está</span>
-                    </div>
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Placa <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iPlaca" name="iPlaca" maxlength="8" value="@Model?.Placa" style="text-transform:uppercase;">
+                </div>
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Fabricante</label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iNomeFabricante" name="iNomeFabricante" maxlength="200" value="@Model?.NomeFabricante" style="text-transform:uppercase;">
+                    <span class="m-form__help">Nome do fabricante.</span>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Ano / modelo</label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iAnoModelo" name="iAnoModelo" maxlength="9" value="@Model?.AnoModelo">
+                    <span class="m-form__help">Ano / modelo de fabricação.</span>
+                </div>
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Renavam</label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iRenavam" name="iRenavam" maxlength="30" value="@Model?.Renavam">
+                    <span class="m-form__help">Número do Renavam.</span>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-12 m-form__group-sub">
+                    <label>Características </label>
+                    <select class="form-control m-select2" id="sCaracteristicas" name="sCaracteristicas" multiple="multiple">
+                        <option value="Ar condicionado">Ar condicionado</option>
+                        <option value="Banco reclinável">Banco reclinável</option>
+                        <option value="DVD">DVD</option>
+                        <option value="Maleiro">Maleiro</option>
+                        <option value="Wi-Fi">Wi-Fi</option>
+                    </select>
                 </div>
             </div>
         </div>
