@@ -1,0 +1,50 @@
+﻿@model K2.Web.Models.ProprietarioCarroRegistro
+
+
+<div class="m-portlet m-portlet-md m-portlet--brand m-portlet--head-solid-bg" style="margin:0 auto;">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Informações do proprietário
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div id="frmManterProprietarioCarro" class="m-form m-form--fit m-form--state  m-form--group-seperator-dashed" novalidate="novalidate">
+        <div class="m-portlet__body m-form m-form--fit m-form--state  m-form--group-seperator-dashed">
+            <div class="form-group m-form__group m-form__group--sm">
+                <label>Nome:</label>
+                <p class="form-control-static">@Model.Nome</p>
+            </div>
+            <div class="form-group m-form__group m-form__group--sm">
+                <label>Email:</label>
+                <p class="form-control-static">@Model.Email</p>
+            </div>
+            <div class="form-group m-form__group m-form__group--sm row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>CPF:</label>
+                    <p class="form-control-static cpf">@Model.Cpf</p>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>RG:</label>
+                    <p class="form-control-static">@Model.Rg</p>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--sm row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Celular:</label>
+                    <p class="form-control-static celular">@Model.Celular</p>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid m-form__actions--right">
+                <button type="button" class="btn m-btn--square btn-secondary btn-fechar">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

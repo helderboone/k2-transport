@@ -19,7 +19,7 @@
             <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-6 m-form__group-sub">
                     <label>Descrição <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iDescrição" name="iDescrição" maxlength="200" value="@Model?.Descricao" style="text-transform:uppercase;">
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iDescricao" name="iDescricao" maxlength="200" value="@Model?.Descricao" style="text-transform:uppercase;">
                     <span class="m-form__help">Nome de identificação do carro</span>
                 </div>
                 <div class="col-lg-6 m-form__group-sub">
@@ -61,12 +61,37 @@
             <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-12 m-form__group-sub">
                     <label>Características </label>
-                    <select class="form-control m-select2" id="sCaracteristicas" name="sCaracteristicas" multiple="multiple">
-                        <option value="Ar condicionado">Ar condicionado</option>
-                        <option value="Banco reclinável">Banco reclinável</option>
-                        <option value="DVD">DVD</option>
-                        <option value="Maleiro">Maleiro</option>
-                        <option value="Wi-Fi">Wi-Fi</option>
+                    @{ 
+                        var caracteristicas = new List<SelectListItem>
+                        {
+                            new SelectListItem
+                            {
+                                Value = "Ar condicionado",
+                                Text = "Ar condicionado",
+                            },
+                            new SelectListItem
+                            {
+                                Value = "Banco reclinável",
+                                Text = "Banco reclinável",
+                            },
+                            new SelectListItem
+                            {
+                                Value = "DVD",
+                                Text = "DVD",
+                            },
+                            new SelectListItem
+                            {
+                                Value = "Maleiro",
+                                Text = "Maleiro",
+                            },
+                            new SelectListItem
+                            {
+                                Value = "Wi-Fi",
+                                Text = "Wi-Fi",
+                            }
+                        };
+                    }
+                    <select class="form-control m-select2" asp-for="Caracteristicas" id="sCaracteristicas" name="sCaracteristicas" multiple="multiple" asp-items="@caracteristicas">
                     </select>
                 </div>
             </div>

@@ -68,10 +68,22 @@
                     var feedback = Feedback.converter(feedbackResult);
                     feedback.exibirModal();
                 })
-                    .fail(function (jqXhr) {
-                        var feedback = Feedback.converter(jqXhr.responseJSON);
-                        feedback.exibirModal();
-                    });
+                .fail(function (jqXhr) {
+                    var feedback = Feedback.converter(jqXhr.responseJSON);
+                    feedback.exibirModal();
+                });
+            });
+        },
+
+        visualizarProprietarioCarro: function (id) {
+            App.exibirModalPorRota(App.corrigirPathRota("visualizar-proprietario/" + id), function () {
+                $(".cpf").inputmask({
+                    "mask": "999.999.999-99"
+                });
+
+                $(".celular").inputmask({
+                    "mask": "(99) 99999-9999"
+                });
             });
         }
     };

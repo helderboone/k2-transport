@@ -12,6 +12,7 @@
                     feedback.exibirModal();
                 },
                 data: function (data) {
+                    data.IdProprietario = $("#sProcurarProprietario").val();
                     data.Descricao = $("#iProcurarDescricao").val();
                     data.NomeFabricante = $("#iProcurarNomeFabricante").val();
                     data.AnoModelo = $("#iProcurarAnoModelo").val();
@@ -27,7 +28,7 @@
                     title: "Proprietário",
                     orderable: false,
                     render: function (data, type, row) {
-                        return row.proprietario.nome;
+                        return row.proprietario.nome + ' <a href="#" data-id="' + row.idProprietario + '" class="visualizar-proprietario btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Visualizar"><i class="la la-search"></i></a> ';
                     }
                 },
                 { data: "nomeFabricante", title: "Fabricante", orderable: true },
@@ -41,8 +42,8 @@
                     orderable: false,
                     width: "70px",
                     render: function (data, type, row) {
-                        return '<a href="#" data-id="' + row.id + '" class="alterar-carro m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Alterar"><i class="la la-edit"></i></a>' +
-                            '<a href="#" data-id="' + row.id + '" class="excluir-carro m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Excluir"><i class="la la-trash"></i></a>';
+                        return '<a href="#" data-id="' + row.id + '" class="alterar-carro btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Alterar"><i class="la la-edit"></i></a>' +
+                            '<a href="#" data-id="' + row.id + '" class="excluir-carro btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Excluir"><i class="la la-trash"></i></a>';
                     }
                 }
             ],
@@ -60,6 +61,14 @@
             pageLength: 25
         }).on("draw.dt", function () {
             mApp.initTooltips();
+
+            $("a[class*='visualizar-proprietario']").each(function () {
+                var id = $(this).data("id");
+
+                $(this).click(function () {
+                    K2.visualizarProprietarioCarro(id);
+                });
+            });
 
             $("a[class*='alterar-carro']").each(function () {
                 var id = $(this).data("id");
@@ -118,7 +127,9 @@
             });
 
             $("#iRenavam").inputmask({
-                "mask": "99999999999"
+                "mask": "9",
+                "repeat": 11,
+                "greedy": false
             });
 
             $("#frmManterCarro").validate({
@@ -135,8 +146,14 @@
 
                     var carro = {
                         Id: $("#iIdCarro").val(),
-                        Nome: $("#iNome").val(),
-                        Uf: $("#sEstado").val()
+                        Descricao: $("#iDescricao").val(),
+                        IdProprietario: $("#sProprietario").val(),
+                        QuantidadeLugares: $("#iQuantidadeLugares").val(),
+                        NomeFabricante: $("#iNomeFabricante").val(),
+                        AnoModelo: $("#iAnoModelo").val(),
+                        Placa: $("#iPlaca").val(),
+                        Renavam: $("#iRenavam").val(),
+                        Caracteristicas: $("#sCaracteristicas").val()
                     };
 
                     App.bloquear($("#frmManterCarro"));
@@ -192,8 +209,9 @@
         init: function () {
             initDataTable();
 
-            $("#iProcurarPlaca").inputmask({
-                "mask": "aaa-9999"
+            $("#sProcurarProprietario").select2({
+                placeholder: "Selecione um proprietário",
+                allowClear: true
             });
 
             $("#bCadastrar").click(function () {

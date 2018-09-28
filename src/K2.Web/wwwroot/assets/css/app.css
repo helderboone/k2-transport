@@ -255,3 +255,7 @@ table.dataTable > tbody > tr.child ul.dtr-details {
 .m-nav__item--home {
     margin-right: -14px;
 }
+
+.m-form__group-dashed {
+    border-bottom: 1px dashed #ebedf2;
+}
