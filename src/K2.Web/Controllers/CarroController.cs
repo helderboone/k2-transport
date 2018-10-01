@@ -144,5 +144,23 @@ namespace K2.Web.Controllers
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir o carro.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Carro excluído com sucesso."));
         }
+
+        [Authorize(Policy = TipoPerfil.ProprietarioCarro)]
+        [HttpGet]
+        [Route("visualizar-carro/{id:int}")]
+        public async Task<IActionResult> VisualizarCarro(int id)
+        {
+            var apiResponse = await _restSharpHelper.ChamarApi("carros/obter-por-id/" + id, Method.GET);
+
+            var saida = CarroSaida.Obter(apiResponse.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações do carro.", new[] { "A API não retornou nenhuma resposta." }));
+
+            if (!saida.Sucesso)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações do carro.", saida.Mensagens));
+
+            return PartialView("Visualizar", saida.Retorno);
+        }
     }
 }

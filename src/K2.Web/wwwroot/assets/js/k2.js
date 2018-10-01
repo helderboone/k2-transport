@@ -85,6 +85,10 @@
                     "mask": "(99) 99999-9999"
                 });
             });
+        },
+
+        visualizarCarro: function (id) {
+            App.exibirModalPorRota(App.corrigirPathRota("visualizar-carro/" + id));
         }
     };
 }();

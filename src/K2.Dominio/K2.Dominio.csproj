@@ -52,6 +52,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>UsuarioResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ViagemResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ViagemResource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -82,6 +87,10 @@
     <EmbeddedResource Update="Resources\UsuarioResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UsuarioResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViagemResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ViagemResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

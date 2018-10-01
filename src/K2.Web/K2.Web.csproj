@@ -58,6 +58,9 @@
     <Content Update="Views\Carro\Manter.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Carro\Visualizar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Localidade\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

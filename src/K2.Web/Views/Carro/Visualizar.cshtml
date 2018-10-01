@@ -1,0 +1,73 @@
+﻿@model K2.Web.Models.CarroRegistro
+
+
+<div class="m-portlet m-portlet-md m-portlet--brand m-portlet--head-solid-bg" style="margin:0 auto;">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Informações do carro
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div id="frmManterProprietarioCarro" class="m-form m-form--fit m-form--state  m-form--group-seperator-dashed--k2" novalidate="novalidate">
+        <div class="m-portlet__body m-form m-form--fit m-form--state m-form--group-seperator-dashed" style="padding: 0px;">
+            <div class="form-group m-form__group m-form__group--sm">
+                <label>Descrição:</label>
+                <p class="form-control-static font-weight-bold">@Model.Descricao</p>
+            </div>
+            <div class="form-group m-form__group m-form__group--sm row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Qtd. passageiros:</label>
+                    <p class="form-control-static">@Model.QuantidadeLugares</p>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Placa:</label>
+                    <p class="form-control-static">@Model.Placa</p>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--sm row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Fabricante:</label>
+                    <p class="form-control-static">@Model.NomeFabricante</p>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Ano/modelo:</label>
+                    <p class="form-control-static">@Model.AnoModelo</p>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--sm row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Renavam:</label>
+                    <p class="form-control-static">@Model.Renavam</p>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Características:</label>
+                    <p class="form-control-static">
+                        @{ 
+                            if (Model.Caracteristicas.Any())
+                            {
+                                <ul>
+                                    @foreach (var item in Model.Caracteristicas)
+                                    {
+                                        <li>@item</li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span class="font-italic">Nenhuma característica informada.</span>
+                            }
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid m-form__actions--right">
+                <button type="button" class="btn m-btn--square btn-secondary btn-fechar">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

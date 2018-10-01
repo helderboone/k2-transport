@@ -259,3 +259,24 @@ table.dataTable > tbody > tr.child ul.dtr-details {
 .m-form__group-dashed {
     border-bottom: 1px dashed #ebedf2;
 }
+
+.m-form.m-form--group-seperator-dashed--k2 .m-form__group {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.m-form.m-form--group-seperator-dashed--k2 .m-form__group p {
+    margin-bottom:0;
+}
+
+.m-btn--icon.m-btn--icon-only--sm {
+    display: inline-block;
+    position: relative;
+    padding: 0 !important;
+    width: 20px;
+    height: 20px;
+}
+
+.m-btn--icon.m-btn--icon-only--sm i{
+    font-size: 1.0rem;
+}

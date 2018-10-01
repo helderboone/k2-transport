@@ -28,7 +28,7 @@
                     title: "Proprietário",
                     orderable: false,
                     render: function (data, type, row) {
-                        return row.proprietario.nome + ' <a href="#" data-id="' + row.idProprietario + '" class="visualizar-proprietario btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Visualizar"><i class="la la-search"></i></a> ';
+                        return row.proprietario.nome + ' <a href="#" data-id="' + row.idProprietario + '" class="visualizar-proprietario btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only--sm m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Informações"><i class="fa fa-info"></i></a>';
                     }
                 },
                 { data: "nomeFabricante", title: "Fabricante", orderable: true },

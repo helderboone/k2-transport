@@ -32,7 +32,7 @@
                         var html = "";
 
                         for (var i = 0; i < row.carros.length; i++) {
-                            html += "- " + row.carros[i].descricao + "<br/>";
+                            html += "- " + row.carros[i].descricao + ' <a href="#" data-id="' + row.carros[i].id + '" class="visualizar-carro btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only--sm m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Informações"><i class="fa fa-info"></i></a><br/>';
                         }
 
                         return html;
@@ -106,6 +106,14 @@
 
                 $(this).click(function () {
                     K2.redefinirSenha(id);
+                });
+            });
+
+            $("a[class*='visualizar-carro']").each(function () {
+                var id = $(this).data("id");
+
+                $(this).click(function () {
+                    K2.visualizarCarro(id);
                 });
             });
 
