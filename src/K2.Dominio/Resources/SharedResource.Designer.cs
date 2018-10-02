@@ -61,11 +61,11 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to As credencial do usuário é obrigatória e não foi informada..
+        ///   Looks up a localized string similar to As credenciais do usuário são obrigatórias e não foram informadas..
         /// </summary>
-        public static string Credencial_Usuario_Obrigatoria_Nao_Informada {
+        public static string Credenciais_Usuario_Obrigatorias_Nao_Informadas {
             get {
-                return ResourceManager.GetString("Credencial_Usuario_Obrigatoria_Nao_Informada", resourceCulture);
+                return ResourceManager.GetString("Credenciais_Usuario_Obrigatorias_Nao_Informadas", resourceCulture);
             }
         }
     }

@@ -27,7 +27,7 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         /// <summary>
         /// Obtém as viagems baseadas nos parâmetros de procura
         /// </summary>
-        Task<ProcurarSaida> Procurar(ProcurarViagemEntrada entrada);
+        Task<ProcurarSaida> Procurar(ProcurarViagemEntrada entrada, CredencialUsuarioEntrada credencial);
 
         /// <summary>
         /// Insere uma nova viagem

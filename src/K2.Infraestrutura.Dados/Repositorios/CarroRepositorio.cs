@@ -41,10 +41,17 @@ namespace K2.Infraestrutura.Dados.Repositorios
                 .AsNoTracking()
                 .AsQueryable();
 
-            if (credencial.PerfilUsuario == TipoPerfil.ProprietarioCarro)
-                query = query.Where(x => x.Proprietario.IdUsuario == credencial.IdUsuario); // Quando a procura é feita por um proprietário, somente seus carros devem ser retornados.
-            else if (entrada.IdProprietario.HasValue)
-                query = query.Where(x => x.IdProprietario == entrada.IdProprietario.Value);
+            switch (credencial.PerfilUsuario)
+            {
+                case TipoPerfil.ProprietarioCarro:
+                    // Quando a procura é feita por um proprietário, somente seus carros devem ser retornados.
+                    query = query.Where(x => x.Proprietario.IdUsuario == credencial.IdUsuario);
+                    break;
+                default:
+                    if (entrada.IdProprietario.HasValue)
+                        query = query.Where(x => x.IdProprietario == entrada.IdProprietario.Value);
+                    break;
+            }
 
             if (!string.IsNullOrEmpty(entrada.Descricao))
                 query = query.Where(x => x.Descricao.IndexOf(entrada.Descricao, StringComparison.InvariantCultureIgnoreCase) != -1);
@@ -74,7 +81,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
                 var pagedList = await query.ToPagedListAsync(entrada.PaginaIndex.Value, entrada.PaginaTamanho.Value);
 
                 return new ProcurarSaida(
-                    pagedList.ToList().Select(x => new CarroSaida(x)),
+                    pagedList.AsEnumerable().Select(x => new CarroSaida(x)),
                     entrada.OrdenarPor,
                     entrada.OrdenarSentido,
                     pagedList.TotalItemCount,

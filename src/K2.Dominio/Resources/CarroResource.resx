@@ -147,16 +147,16 @@
   <data name="Placa_Obrigatoria_Nao_Informado" xml:space="preserve">
     <value>O número da placa é obrigatório e não foi informado.</value>
   </data>
+  <data name="Proprietario_Sem_Permissao_Alterar" xml:space="preserve">
+    <value>Você não é o proprietário do carro, logo não é possível alterar as informações do mesmo.</value>
+  </data>
+  <data name="Proprietario_Sem_Permissao_Excluir" xml:space="preserve">
+    <value>Você não é o proprietário do carro, logo não é possível excluir as informações do mesmo.</value>
+  </data>
+  <data name="Proprietario_Sem_Permissao_Obter" xml:space="preserve">
+    <value>Você não é o proprietário do carro, logo não é possível visualzar as informações do mesmo.</value>
+  </data>
   <data name="Quantidade_Lugares_Invalida" xml:space="preserve">
     <value>A quantidade de lugares informada é inválida.</value>
-  </data>
-  <data name="Usuario_Sem_Perfil_Acesso_Alterar_Informacao" xml:space="preserve">
-    <value>O usuário não possui perfil de acesso para alterar as informações desse carro.</value>
-  </data>
-  <data name="Usuario_Sem_Perfil_Acesso_Excluir_Informacao" xml:space="preserve">
-    <value>O usuário não possui perfil de acesso para excluir esse carro.</value>
-  </data>
-  <data name="Usuario_Sem_Perfil_Acesso_Obter_Informacao" xml:space="preserve">
-    <value>O usuário não possui perfil de acesso para obter as informações desse carro.</value>
   </data>
 </root>

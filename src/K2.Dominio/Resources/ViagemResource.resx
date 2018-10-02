@@ -138,7 +138,34 @@
   <data name="Localidade_Embarque_Nao_Existe" xml:space="preserve">
     <value>A localidade de embarque com o ID informado não existe.</value>
   </data>
+  <data name="Motorista_Sem_Permissao_Obter" xml:space="preserve">
+    <value>Você não é o motorista escalado para a viagem, logo não é possível visualzar as informações da mesma.</value>
+  </data>
+  <data name="Proprietario_Sem_Permissao_Obter" xml:space="preserve">
+    <value>Você não é o proprietário do carro escalado para a viagem, logo não é possível visualzar as informações da mesma.</value>
+  </data>
+  <data name="Usuario_Sem_Perfil_Acesso_Obter_Informacao" xml:space="preserve">
+    <value>O usuário não possui perfil de acesso para obter as informações dessa viagem.</value>
+  </data>
   <data name="Valor_Passagem_Obrigatorio_Nao_Informada" xml:space="preserve">
     <value>O valor da passagem é obrigatório e não foi informado.</value>
+  </data>
+  <data name="Viagem_Alterada_Com_Sucesso" xml:space="preserve">
+    <value>A viagem foi alterada com sucesso.</value>
+  </data>
+  <data name="Viagem_Cadastrada_Com_Sucesso" xml:space="preserve">
+    <value>A viagem foi cadastrada com sucesso.</value>
+  </data>
+  <data name="Viagem_Encontrada_Com_Sucesso" xml:space="preserve">
+    <value>A viagem com o ID informado foi encontrada com sucesso.</value>
+  </data>
+  <data name="Viagem_Excluida_Com_Sucesso" xml:space="preserve">
+    <value>A viagem foi excluída com sucesso.</value>
+  </data>
+  <data name="Viagem_Ja_Existe_Para_Carro_Data_Saida" xml:space="preserve">
+    <value>Já existe uma viagem cadastrada para esse carro na data de saída informada.</value>
+  </data>
+  <data name="Viagem_Ja_Existe_Para_Motorista_Data_Saida" xml:space="preserve">
+    <value>Já existe uma viagem cadastrada para esse motorista na data de saída informada.</value>
   </data>
 </root>

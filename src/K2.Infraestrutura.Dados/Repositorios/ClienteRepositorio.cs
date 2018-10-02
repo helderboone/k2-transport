@@ -79,7 +79,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
                 var pagedList = await query.ToPagedListAsync(entrada.PaginaIndex.Value, entrada.PaginaTamanho.Value);
 
                 return new ProcurarSaida(
-                    pagedList.ToList().Select(x => new ClienteSaida(x)),
+                    pagedList.AsEnumerable().Select(x => new ClienteSaida(x)),
                     entrada.OrdenarPor,
                     entrada.OrdenarSentido,
                     pagedList.TotalItemCount,

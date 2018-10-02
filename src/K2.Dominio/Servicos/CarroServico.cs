@@ -27,6 +27,7 @@ namespace K2.Dominio.Servicos
         public async Task<ISaida> ObterCarroPorId(int id, CredencialUsuarioEntrada credencial)
         {
             this.NotificarSeMenorOuIgualA(id, 0, CarroResource.Id_Carro_Nao_Existe);
+            this.NotificarSeNulo(credencial, SharedResource.Credenciais_Usuario_Obrigatorias_Nao_Informadas);
 
             this.AdicionarNotificacoes(credencial?.Notificacoes);
 
@@ -42,7 +43,12 @@ namespace K2.Dominio.Servicos
                 return new Saida(false, this.Mensagens, null);
 
             // Verifica se o usuário possui as permissões para obter a informação.
-            this.NotificarSeVerdadeiro(credencial.PerfilUsuario != TipoPerfil.Administrador && carro.Proprietario.IdUsuario != credencial.IdUsuario, CarroResource.Usuario_Sem_Perfil_Acesso_Obter_Informacao);
+            switch (credencial.PerfilUsuario)
+            {
+                case TipoPerfil.ProprietarioCarro:
+                    this.NotificarSeVerdadeiro(carro.Proprietario.IdUsuario != credencial.IdUsuario, CarroResource.Proprietario_Sem_Permissao_Obter);
+                    break;
+            }
 
             return this.Invalido
                 ? new Saida(false, this.Mensagens, null)
@@ -51,6 +57,8 @@ namespace K2.Dominio.Servicos
 
         public async Task<ISaida> ProcurarCarros(ProcurarCarroEntrada entrada, CredencialUsuarioEntrada credencial)
         {
+            this.NotificarSeNulo(credencial, SharedResource.Credenciais_Usuario_Obrigatorias_Nao_Informadas);
+
             this.AdicionarNotificacoes(entrada?.Notificacoes);
             this.AdicionarNotificacoes(credencial?.Notificacoes);
 
@@ -86,6 +94,8 @@ namespace K2.Dominio.Servicos
 
         public async Task<ISaida> AlterarCarro(AlterarCarroEntrada entrada, CredencialUsuarioEntrada credencial)
         {
+            this.NotificarSeNulo(credencial, SharedResource.Credenciais_Usuario_Obrigatorias_Nao_Informadas);
+
             this.AdicionarNotificacoes(entrada?.Notificacoes);
             this.AdicionarNotificacoes(credencial?.Notificacoes);
 
@@ -100,18 +110,23 @@ namespace K2.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            // Verifica se o usuário possui as permissões para alterar a informação.
-            this.NotificarSeVerdadeiro(credencial.PerfilUsuario != TipoPerfil.Administrador && carro.Proprietario.IdUsuario != credencial.IdUsuario, CarroResource.Usuario_Sem_Perfil_Acesso_Alterar_Informacao);
-
-            if (this.Invalido)
-                return new Saida(false, this.Mensagens, null);
-
             // Verifica se o proprietário com o ID informado existe
             this.NotificarSeFalso(await _proprietarioCarroRepositorio.VerificarExistenciaPorId(entrada.IdProprietario), ProprietarioCarroResource.Id_Proprietario_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
+            // Verifica se o usuário possui as permissões para alterar a informação.
+            switch (credencial.PerfilUsuario)
+            {
+                case TipoPerfil.ProprietarioCarro:
+                    this.NotificarSeVerdadeiro(carro.Proprietario.IdUsuario != credencial.IdUsuario, CarroResource.Proprietario_Sem_Permissao_Alterar);
+                    break;
+            }
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+            
             // Altera o carro
             carro.Alterar(entrada);
 
@@ -125,6 +140,7 @@ namespace K2.Dominio.Servicos
         public async Task<ISaida> ExcluirCarro(int id, CredencialUsuarioEntrada credencial)
         {
             this.NotificarSeMenorOuIgualA(id, 0, CarroResource.Id_Carro_Nao_Existe);
+            this.NotificarSeNulo(credencial, SharedResource.Credenciais_Usuario_Obrigatorias_Nao_Informadas);
 
             this.AdicionarNotificacoes(credencial?.Notificacoes);
 
@@ -139,8 +155,13 @@ namespace K2.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            // Verifica se o usuário possui as permissões para excluir a informação.
-            this.NotificarSeVerdadeiro(credencial.PerfilUsuario != TipoPerfil.Administrador && carro.Proprietario.IdUsuario != credencial.IdUsuario, CarroResource.Usuario_Sem_Perfil_Acesso_Excluir_Informacao);
+            // Verifica se o usuário possui as permissões para alterar a informação.
+            switch (credencial.PerfilUsuario)
+            {
+                case TipoPerfil.ProprietarioCarro:
+                    this.NotificarSeVerdadeiro(carro.Proprietario.IdUsuario != credencial.IdUsuario, CarroResource.Proprietario_Sem_Permissao_Excluir);
+                    break;
+            }
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);

@@ -63,6 +63,7 @@ namespace K2.Api
             services.AddTransient<IProprietarioCarroRepositorio, ProprietarioCarroRepositorio>();
             services.AddTransient<ICarroRepositorio, CarroRepositorio>();
             services.AddTransient<ILocalidadeRepositorio, LocalidadeRepositorio>();
+            services.AddTransient<IViagemRepositorio, ViagemRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
             services.AddTransient<IClienteServico, ClienteServico>();
@@ -70,6 +71,7 @@ namespace K2.Api
             services.AddTransient<IProprietarioCarroServico, ProprietarioCarroServico>();
             services.AddTransient<ICarroServico, CarroServico>();
             services.AddTransient<ILocalidadeServico, LocalidadeServico>();
+            services.AddTransient<IViagemServico, ViagemServico>();
 
             services
                 // AddAuthentication: especificará os schemas utilizados para a autenticação do tipo Bearer
@@ -106,6 +108,8 @@ namespace K2.Api
                 // Adiciona as policies de acesso, definindo os claimns existentes em cada policy.
                 options.AddPolicy(TipoPerfil.Administrador, policy => policy.RequireClaim("Perfil", TipoPerfil.Administrador).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(TipoPerfil.ProprietarioCarro, policy => policy.RequireAssertion(context => context.User.HasClaim(c => c.Type == "Perfil" && (c.Value == TipoPerfil.ProprietarioCarro || c.Value == TipoPerfil.Administrador))).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(TipoPerfil.Motorista, policy => policy.RequireAssertion(context => context.User.HasClaim(c => c.Type == "Perfil" && (c.Value == TipoPerfil.Motorista || c.Value == TipoPerfil.Administrador))).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy("MotoristaOuProprietarioCarro", policy => policy.RequireAssertion(context => context.User.HasClaim(c => c.Type == "Perfil" && (c.Value == TipoPerfil.Motorista || c.Value == TipoPerfil.ProprietarioCarro || c.Value == TipoPerfil.Administrador))).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             services

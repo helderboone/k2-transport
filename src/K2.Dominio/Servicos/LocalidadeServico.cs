@@ -41,6 +41,9 @@ namespace K2.Dominio.Servicos
 
         public async Task<ISaida> ProcurarLocalidades(ProcurarLocalidadeEntrada entrada)
         {
+            if (entrada.Invalido)
+                return new Saida(false, entrada.Mensagens, null);
+
             // Verifica se os parâmetros para a procura foram informadas corretamente
             return entrada.Invalido
                 ? new Saida(false, entrada.Mensagens, null)

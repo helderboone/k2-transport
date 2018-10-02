@@ -124,11 +124,92 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você não é o motorista escalado para a viagem, logo não é possível visualzar as informações da mesma..
+        /// </summary>
+        public static string Motorista_Sem_Permissao_Obter {
+            get {
+                return ResourceManager.GetString("Motorista_Sem_Permissao_Obter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você não é o proprietário do carro escalado para a viagem, logo não é possível visualzar as informações da mesma..
+        /// </summary>
+        public static string Proprietario_Sem_Permissao_Obter {
+            get {
+                return ResourceManager.GetString("Proprietario_Sem_Permissao_Obter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O usuário não possui perfil de acesso para obter as informações dessa viagem..
+        /// </summary>
+        public static string Usuario_Sem_Perfil_Acesso_Obter_Informacao {
+            get {
+                return ResourceManager.GetString("Usuario_Sem_Perfil_Acesso_Obter_Informacao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O valor da passagem é obrigatório e não foi informado..
         /// </summary>
         public static string Valor_Passagem_Obrigatorio_Nao_Informada {
             get {
                 return ResourceManager.GetString("Valor_Passagem_Obrigatorio_Nao_Informada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A viagem foi alterada com sucesso..
+        /// </summary>
+        public static string Viagem_Alterada_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Viagem_Alterada_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A viagem foi cadastrada com sucesso..
+        /// </summary>
+        public static string Viagem_Cadastrada_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Viagem_Cadastrada_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A viagem com o ID informado foi encontrada com sucesso..
+        /// </summary>
+        public static string Viagem_Encontrada_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Viagem_Encontrada_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A viagem foi excluída com sucesso..
+        /// </summary>
+        public static string Viagem_Excluida_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Viagem_Excluida_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Já existe uma viagem cadastrada para esse carro na data de saída informada..
+        /// </summary>
+        public static string Viagem_Ja_Existe_Para_Carro_Data_Saida {
+            get {
+                return ResourceManager.GetString("Viagem_Ja_Existe_Para_Carro_Data_Saida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Já existe uma viagem cadastrada para esse motorista na data de saída informada..
+        /// </summary>
+        public static string Viagem_Ja_Existe_Para_Motorista_Data_Saida {
+            get {
+                return ResourceManager.GetString("Viagem_Ja_Existe_Para_Motorista_Data_Saida", resourceCulture);
             }
         }
     }

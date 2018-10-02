@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Credencial_Usuario_Obrigatoria_Nao_Informada" xml:space="preserve">
-    <value>As credencial do usuário é obrigatória e não foi informada.</value>
+  <data name="Credenciais_Usuario_Obrigatorias_Nao_Informadas" xml:space="preserve">
+    <value>As credenciais do usuário são obrigatórias e não foram informadas.</value>
   </data>
 </root>

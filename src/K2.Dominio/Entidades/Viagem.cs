@@ -100,6 +100,8 @@ namespace K2.Dominio.Entidades
             this.Desembarques            = entrada.LocaisDesembarque != null && entrada.LocaisDesembarque.Any()
                 ? string.Join(";", entrada.LocaisDesembarque)
                 : null;
+
+            this.Situacao = (int)TipoSituacaoViagem.PendenteConfirmacao;
         }
 
         public void Alterar(AlterarViagemEntrada entrada)
@@ -121,6 +123,11 @@ namespace K2.Dominio.Entidades
             this.Desembarques            = entrada.LocaisDesembarque != null && entrada.LocaisDesembarque.Any()
                 ? string.Join(";", entrada.LocaisDesembarque)
                 : null;
+        }
+
+        public TipoSituacaoViagem ObterTipoSituacao()
+        {
+            return JNogueira.Infraestrutura.Utilzao.ExtensionMethods.ConverterParaEnum(this.Situacao, TipoSituacaoViagem.PendenteConfirmacao);
         }
 
         public override string ToString()

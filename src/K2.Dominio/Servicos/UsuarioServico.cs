@@ -134,7 +134,7 @@ namespace K2.Dominio.Servicos
                     return new Saida(true, new[] { UsuarioResource.Senha_Alterada_Com_Erro_Envio_Email }, null);
                 }
 
-                new Saida(true, new[] { UsuarioResource.Senha_Alterada_Com_Sucesso }, null);
+                return new Saida(true, new[] { UsuarioResource.Senha_Alterada_Com_Sucesso }, null);
             }
 
             return _uow.Invalido
@@ -176,6 +176,9 @@ namespace K2.Dominio.Servicos
 
         public async Task<ISaida> ProcurarUsuarios(ProcurarUsuarioEntrada entrada)
         {
+            if (entrada.Invalido)
+                return new Saida(false, entrada.Mensagens, null);
+
             // Verifica se os parâmetros para a procura foram informadas corretamente
             return entrada.Invalido
                 ? new Saida(false, entrada.Mensagens, null)

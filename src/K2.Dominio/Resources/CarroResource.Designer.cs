@@ -151,38 +151,38 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você não é o proprietário do carro, logo não é possível alterar as informações do mesmo..
+        /// </summary>
+        public static string Proprietario_Sem_Permissao_Alterar {
+            get {
+                return ResourceManager.GetString("Proprietario_Sem_Permissao_Alterar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você não é o proprietário do carro, logo não é possível excluir as informações do mesmo..
+        /// </summary>
+        public static string Proprietario_Sem_Permissao_Excluir {
+            get {
+                return ResourceManager.GetString("Proprietario_Sem_Permissao_Excluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Você não é o proprietário do carro, logo não é possível visualzar as informações do mesmo..
+        /// </summary>
+        public static string Proprietario_Sem_Permissao_Obter {
+            get {
+                return ResourceManager.GetString("Proprietario_Sem_Permissao_Obter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A quantidade de lugares informada é inválida..
         /// </summary>
         public static string Quantidade_Lugares_Invalida {
             get {
                 return ResourceManager.GetString("Quantidade_Lugares_Invalida", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O usuário não possui perfil de acesso para alterar as informações desse carro..
-        /// </summary>
-        public static string Usuario_Sem_Perfil_Acesso_Alterar_Informacao {
-            get {
-                return ResourceManager.GetString("Usuario_Sem_Perfil_Acesso_Alterar_Informacao", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O usuário não possui perfil de acesso para excluir esse carro..
-        /// </summary>
-        public static string Usuario_Sem_Perfil_Acesso_Excluir_Informacao {
-            get {
-                return ResourceManager.GetString("Usuario_Sem_Perfil_Acesso_Excluir_Informacao", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O usuário não possui perfil de acesso para obter as informações desse carro..
-        /// </summary>
-        public static string Usuario_Sem_Perfil_Acesso_Obter_Informacao {
-            get {
-                return ResourceManager.GetString("Usuario_Sem_Perfil_Acesso_Obter_Informacao", resourceCulture);
             }
         }
     }
