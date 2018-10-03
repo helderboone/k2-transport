@@ -133,6 +133,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não é possível excluir uma viagem que possua pelo menos uma reserva cadastrada. Exclua todas as reservas da viagem antes de excluí-la..
+        /// </summary>
+        public static string Nao_Possivel_Excluir_Viagem_Com_Reservas {
+            get {
+                return ResourceManager.GetString("Nao_Possivel_Excluir_Viagem_Com_Reservas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Você não é o proprietário do carro escalado para a viagem, logo não é possível visualzar as informações da mesma..
         /// </summary>
         public static string Proprietario_Sem_Permissao_Obter {

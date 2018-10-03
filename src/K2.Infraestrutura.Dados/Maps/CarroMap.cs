@@ -13,7 +13,8 @@ namespace K2.Infraestrutura.Dados.Maps
             builder.Property(x => x.Id).HasColumnName("IdCarro");
             builder.HasOne(x => x.Proprietario)
                 .WithMany(y => y.Carros)
-                .HasForeignKey(x => x.IdProprietario);
+                .HasForeignKey(x => x.IdProprietario)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(x => x.Descricao);
             builder.Property(x => x.NomeFabricante);

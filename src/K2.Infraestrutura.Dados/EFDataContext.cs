@@ -15,6 +15,8 @@ namespace K2.Infraestrutura.Dados
         public DbSet<Localidade> Localidades { get; set; }
         public DbSet<Carro> Carros { get; set; }
         public DbSet<Viagem> Viagens { get; set; }
+        public DbSet<Reserva> Reservas { get; set; }
+        public DbSet<ReservaDependente> ReservaDependentes { get; set; }
 
         public EfDataContext(string connectionString)
         {
@@ -35,6 +37,8 @@ namespace K2.Infraestrutura.Dados
             modelBuilder.ApplyConfiguration(new LocalidadeMap());
             modelBuilder.ApplyConfiguration(new CarroMap());
             modelBuilder.ApplyConfiguration(new ViagemMap());
+            modelBuilder.ApplyConfiguration(new ReservaMap());
+            modelBuilder.ApplyConfiguration(new ReservaDependenteMap());
         }
     }
 }

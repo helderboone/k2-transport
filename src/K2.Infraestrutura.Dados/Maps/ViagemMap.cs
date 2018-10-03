@@ -14,19 +14,23 @@ namespace K2.Infraestrutura.Dados.Maps
 
             builder.HasOne(x => x.Carro)
                 .WithMany()
-                .HasForeignKey(x => x.IdCarro);
+                .HasForeignKey(x => x.IdCarro)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.Motorista)
                .WithMany()
-               .HasForeignKey(x => x.IdMotorista);
+               .HasForeignKey(x => x.IdMotorista)
+               .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.LocalidadeEmbarque)
                .WithMany()
-               .HasForeignKey(x => x.IdLocalidadeEmbarque);
+               .HasForeignKey(x => x.IdLocalidadeEmbarque)
+               .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.LocalidadeDesembarque)
                .WithMany()
-               .HasForeignKey(x => x.IdLocalidadeDesembarque);
+               .HasForeignKey(x => x.IdLocalidadeDesembarque)
+               .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(x => x.Descricao);
             builder.Property(x => x.ValorPassagem);

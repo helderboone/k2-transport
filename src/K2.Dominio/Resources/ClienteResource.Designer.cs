@@ -104,5 +104,14 @@ namespace K2.Dominio.Resources {
                 return ResourceManager.GetString("Id_Cliente_Nao_Existe", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não é possível excluir um cliente que possua reservas cadastradas. Exclua todas as reservas do cliente antes de excluí-lo..
+        /// </summary>
+        public static string Nao_Possivel_Excluir_Cliente_Com_Reservas {
+            get {
+                return ResourceManager.GetString("Nao_Possivel_Excluir_Cliente_Com_Reservas", resourceCulture);
+            }
+        }
     }
 }

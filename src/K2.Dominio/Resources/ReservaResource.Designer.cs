@@ -22,14 +22,14 @@ namespace K2.Dominio.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class LocalidadeResource {
+    public class ReservaResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal LocalidadeResource() {
+        internal ReservaResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace K2.Dominio.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("K2.Dominio.Resources.LocalidadeResource", typeof(LocalidadeResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("K2.Dominio.Resources.ReservaResource", typeof(ReservaResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,83 +61,92 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A localidade com o ID informado não existe..
+        ///   Looks up a localized string similar to A reserva com o ID informado não existe..
         /// </summary>
-        public static string Id_Localidade_Nao_Existe {
+        public static string Id_Reserva_Nao_Existe {
             get {
-                return ResourceManager.GetString("Id_Localidade_Nao_Existe", resourceCulture);
+                return ResourceManager.GetString("Id_Reserva_Nao_Existe", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A localidade foi alterada com sucesso..
+        ///   Looks up a localized string similar to Você não é o motorista escalado para a viagem, logo não é possível visualzar as informações da reserva..
         /// </summary>
-        public static string Localidade_Alterada_Com_Sucesso {
+        public static string Motorista_Sem_Permissao_Obter {
             get {
-                return ResourceManager.GetString("Localidade_Alterada_Com_Sucesso", resourceCulture);
+                return ResourceManager.GetString("Motorista_Sem_Permissao_Obter", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A localidade foi cadastrada com sucesso..
+        ///   Looks up a localized string similar to Você não é o proprietário do carro escalado para a viagem, logo não é possível visualzar as informações da reserva..
         /// </summary>
-        public static string Localidade_Cadastrada_Com_Sucesso {
+        public static string Proprietario_Sem_Permissao_Obter {
             get {
-                return ResourceManager.GetString("Localidade_Cadastrada_Com_Sucesso", resourceCulture);
+                return ResourceManager.GetString("Proprietario_Sem_Permissao_Obter", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A localidade com o ID informado foi encontrada com sucesso..
+        ///   Looks up a localized string similar to A reserva foi alterada com sucesso..
         /// </summary>
-        public static string Localidade_Encontrada_Com_Sucesso {
+        public static string Reserva_Alterada_Com_Sucesso {
             get {
-                return ResourceManager.GetString("Localidade_Encontrada_Com_Sucesso", resourceCulture);
+                return ResourceManager.GetString("Reserva_Alterada_Com_Sucesso", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A localidade foi excluída com sucesso..
+        ///   Looks up a localized string similar to A reseva foi cadastrada com sucesso..
         /// </summary>
-        public static string Localidade_Excluida_Com_Sucesso {
+        public static string Reserva_Cadastrada_Com_Sucesso {
             get {
-                return ResourceManager.GetString("Localidade_Excluida_Com_Sucesso", resourceCulture);
+                return ResourceManager.GetString("Reserva_Cadastrada_Com_Sucesso", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Já existe uma localidade cadastrada com o nome e estado informados..
+        ///   Looks up a localized string similar to A reserva com o ID informado foi encontrada com sucesso..
         /// </summary>
-        public static string Localidade_Ja_Existe_Por_Nome_Uf {
+        public static string Reserva_Encontrada_Com_Sucesso {
             get {
-                return ResourceManager.GetString("Localidade_Ja_Existe_Por_Nome_Uf", resourceCulture);
+                return ResourceManager.GetString("Reserva_Encontrada_Com_Sucesso", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não é possível excluir uma localidade que esteja associada a pelo menos uma viagem cadastrada. Exclua todas as viagens associadas a localidade antes de excluí-la..
+        ///   Looks up a localized string similar to A reserva foi excluída com sucesso..
         /// </summary>
-        public static string Nao_Possivel_Excluir_Localidade_Com_Viagens {
+        public static string Reserva_Excluida_Com_Sucesso {
             get {
-                return ResourceManager.GetString("Nao_Possivel_Excluir_Localidade_Com_Viagens", resourceCulture);
+                return ResourceManager.GetString("Reserva_Excluida_Com_Sucesso", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O nome da localidade é obrigatório e não foi informado..
+        ///   Looks up a localized string similar to Já existe uma reserva cadastrada para esse cliente na viagem informada..
         /// </summary>
-        public static string Nome_Obrigatorio_Nao_Informado {
+        public static string Reserva_Ja_Existe_Para_Cliente_Viagem {
             get {
-                return ResourceManager.GetString("Nome_Obrigatorio_Nao_Informado", resourceCulture);
+                return ResourceManager.GetString("Reserva_Ja_Existe_Para_Cliente_Viagem", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O estado da localidade é obrigatório e não foi informado..
+        ///   Looks up a localized string similar to As reservas da viagem com o ID informado foram encontradas com sucesso..
         /// </summary>
-        public static string Uf_Obrigatoria_Nao_Informado {
+        public static string Reservas_Viagem_Encontradas_Com_Sucesso {
             get {
-                return ResourceManager.GetString("Uf_Obrigatoria_Nao_Informado", resourceCulture);
+                return ResourceManager.GetString("Reservas_Viagem_Encontradas_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O valor pago da reserva é inválido. Informe um valor maior que zero..
+        /// </summary>
+        public static string Valor_Pago_Invalido {
+            get {
+                return ResourceManager.GetString("Valor_Pago_Invalido", resourceCulture);
             }
         }
     }

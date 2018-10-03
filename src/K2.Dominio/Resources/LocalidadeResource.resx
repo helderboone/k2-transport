@@ -135,6 +135,9 @@
   <data name="Localidade_Ja_Existe_Por_Nome_Uf" xml:space="preserve">
     <value>Já existe uma localidade cadastrada com o nome e estado informados.</value>
   </data>
+  <data name="Nao_Possivel_Excluir_Localidade_Com_Viagens" xml:space="preserve">
+    <value>Não é possível excluir uma localidade que esteja associada a pelo menos uma viagem cadastrada. Exclua todas as viagens associadas a localidade antes de excluí-la.</value>
+  </data>
   <data name="Nome_Obrigatorio_Nao_Informado" xml:space="preserve">
     <value>O nome da localidade é obrigatório e não foi informado.</value>
   </data>

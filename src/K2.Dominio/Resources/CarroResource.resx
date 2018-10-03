@@ -141,6 +141,9 @@
   <data name="Id_Usuario_Procura_Invalido" xml:space="preserve">
     <value>O ID do usuário responsável pela procura é inválido.</value>
   </data>
+  <data name="Nao_Possivel_Excluir_Carro_Com_Viagens" xml:space="preserve">
+    <value>Não é possível excluir um carro que esteja associado a pelo menos uma viagem cadastrada. Exclua todas as viagens associadas ao carro antes de excluí-lo.</value>
+  </data>
   <data name="Perfil_Usuario_Procura_Obrigatorio_Nao_Informado" xml:space="preserve">
     <value>O perfil do usuário responsável pela procura é obrigatório e não foi informado.</value>
   </data>

@@ -43,7 +43,9 @@ namespace K2.Dominio.Comandos.Entrada
 
         private void Validar()
         {
-            this.NotificarSeNuloOuVazio(this.Cnh, MotoristaResource.Cnh_Obrigatorio_Nao_Informado);
+            this
+                .NotificarSeMenorOuIgualA(this.Id, 0, MotoristaResource.Id_Motorista_Nao_Existe)
+                .NotificarSeNuloOuVazio(this.Cnh, MotoristaResource.Cnh_Obrigatorio_Nao_Informado);
         }
     }
 }

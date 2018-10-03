@@ -141,6 +141,9 @@
   <data name="Motorista_Sem_Permissao_Obter" xml:space="preserve">
     <value>Você não é o motorista escalado para a viagem, logo não é possível visualzar as informações da mesma.</value>
   </data>
+  <data name="Nao_Possivel_Excluir_Viagem_Com_Reservas" xml:space="preserve">
+    <value>Não é possível excluir uma viagem que possua pelo menos uma reserva cadastrada. Exclua todas as reservas da viagem antes de excluí-la.</value>
+  </data>
   <data name="Proprietario_Sem_Permissao_Obter" xml:space="preserve">
     <value>Você não é o proprietário do carro escalado para a viagem, logo não é possível visualzar as informações da mesma.</value>
   </data>

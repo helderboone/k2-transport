@@ -14,6 +14,11 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         Task<Motorista> ObterPorId(int id, bool habilitarTracking = false);
 
         /// <summary>
+        /// Verifica se existe um motorista com o ID informado
+        /// </summary>
+        Task<bool> VerificarExistenciaPorId(int id);
+
+        /// <summary>
         /// Verifica se existe um motorista com o ID do usuário informado
         /// </summary>
         Task<bool> VerificarExistenciaPorIdUsuario(int id);

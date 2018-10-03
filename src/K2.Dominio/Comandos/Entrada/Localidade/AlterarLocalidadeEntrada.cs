@@ -44,6 +44,7 @@ namespace K2.Dominio.Comandos.Entrada
         private void Validar()
         {
             this
+                .NotificarSeMenorOuIgualA(this.Id, 0, LocalidadeResource.Id_Localidade_Nao_Existe)
                 .NotificarSeNuloOuVazio(this.Nome, LocalidadeResource.Nome_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.Uf, LocalidadeResource.Uf_Obrigatoria_Nao_Informado);
         }

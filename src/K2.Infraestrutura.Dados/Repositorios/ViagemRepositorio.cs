@@ -36,6 +36,11 @@ namespace K2.Infraestrutura.Dados.Repositorios
             return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<bool> VerificarExistenciaPorId(int id)
+        {
+            return await _efContext.Viagens.AnyAsync(x => x.Id == id);
+        }
+
         public async Task<bool> VerificarExistenciaPorMotoristaDataHorarioSaida(int idMotorista, DateTime dataHorarioSaida, int? idViagem = null)
         {
             return idViagem.HasValue

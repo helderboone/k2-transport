@@ -14,11 +14,22 @@ namespace K2.Dominio.Servicos
     public class ViagemServico : Notificavel, IViagemServico
     {
         private readonly IViagemRepositorio _viagemRepositorio;
-        private readonly IUow _uow;
+        private readonly ICarroRepositorio _carroRepositorio;
+        private readonly IMotoristaRepositorio _motoristaRepositorio;
+        private readonly ILocalidadeRepositorio _localidadeRepositorio;
+        private readonly IUow _uow;        
 
-        public ViagemServico(IViagemRepositorio viagemRepositorio, IUow uow)
+        public ViagemServico(
+            IViagemRepositorio viagemRepositorio,
+            ICarroRepositorio carroRepositorio,
+            IMotoristaRepositorio motoristaRepositorio,
+            ILocalidadeRepositorio localidadeRepositorio,
+            IUow uow)
         {
-            _viagemRepositorio = viagemRepositorio;
+            _viagemRepositorio     = viagemRepositorio;
+            _carroRepositorio      = carroRepositorio;
+            _motoristaRepositorio  = motoristaRepositorio;
+            _localidadeRepositorio = localidadeRepositorio;
             _uow                   = uow;
         }
 
@@ -75,6 +86,21 @@ namespace K2.Dominio.Servicos
             if (entrada.Invalido)
                 return new Saida(false, entrada.Mensagens, null);
 
+            // Verifica se o carro com o ID informado existe
+            this.NotificarSeFalso(await _carroRepositorio.VerificarExistenciaPorId(entrada.IdCarro), CarroResource.Id_Carro_Nao_Existe);
+
+            // Verifica se o motorista com o ID informado existe
+            this.NotificarSeFalso(await _motoristaRepositorio.VerificarExistenciaPorId(entrada.IdMotorista), MotoristaResource.Id_Motorista_Nao_Existe);
+
+            // Verifica se a localidade de embarque com o ID informado existe
+            this.NotificarSeFalso(await _localidadeRepositorio.VerificarExistenciaPorId(entrada.IdLocalidadeEmbarque), ViagemResource.Localidade_Embarque_Nao_Existe);
+
+            // Verifica se a localidade de desembarque com o ID informado existe
+            this.NotificarSeFalso(await _localidadeRepositorio.VerificarExistenciaPorId(entrada.IdLocalidadeDesembarque), ViagemResource.Localidade_Desembarque_Nao_Existe);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
             // Verifica se já existe uma viagem para o mesmo carro na data de saída
             this.NotificarSeVerdadeiro(await _viagemRepositorio.VerificarExistenciaPorCarroDataHorarioSaida(entrada.IdCarro, entrada.DataHorarioSaida), ViagemResource.Viagem_Ja_Existe_Para_Carro_Data_Saida);
 
@@ -106,6 +132,21 @@ namespace K2.Dominio.Servicos
 
             // Verifica se a viagem existe
             this.NotificarSeNulo(viagem, ViagemResource.Id_Viagem_Nao_Existe);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Verifica se o carro com o ID informado existe
+            this.NotificarSeFalso(await _carroRepositorio.VerificarExistenciaPorId(entrada.IdCarro), CarroResource.Id_Carro_Nao_Existe);
+
+            // Verifica se o motorista com o ID informado existe
+            this.NotificarSeFalso(await _motoristaRepositorio.VerificarExistenciaPorId(entrada.IdMotorista), MotoristaResource.Id_Motorista_Nao_Existe);
+
+            // Verifica se a localidade de embarque com o ID informado existe
+            this.NotificarSeFalso(await _localidadeRepositorio.VerificarExistenciaPorId(entrada.IdLocalidadeEmbarque), ViagemResource.Localidade_Embarque_Nao_Existe);
+
+            // Verifica se a localidade de desembarque com o ID informado existe
+            this.NotificarSeFalso(await _localidadeRepositorio.VerificarExistenciaPorId(entrada.IdLocalidadeDesembarque), ViagemResource.Localidade_Desembarque_Nao_Existe);
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);

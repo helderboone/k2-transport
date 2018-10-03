@@ -14,6 +14,11 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         Task<Cliente> ObterPorId(int id, bool habilitarTracking = false);
 
         /// <summary>
+        /// Verifica se existe um cliente com o ID informado
+        /// </summary>
+        Task<bool> VerificarExistenciaPorId(int id);
+
+        /// <summary>
         /// Verifica se existe um cliente com o ID do usuário informado
         /// </summary>
         Task<bool> VerificarExistenciaPorIdUsuario(int id);

@@ -15,6 +15,11 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         Task<Viagem> ObterPorId(int id, bool habilitarTracking = false);
 
         /// <summary>
+        /// Verifica se existe uma viagem com o ID informado
+        /// </summary>
+        Task<bool> VerificarExistenciaPorId(int id);
+
+        /// <summary>
         /// Verifica se existe uma viagem com o motorista e data de saída informados
         /// </summary>
         Task<bool> VerificarExistenciaPorMotoristaDataHorarioSaida(int idMotorista, DateTime dataHorarioSaida, int? idViagem = null);

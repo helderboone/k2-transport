@@ -14,6 +14,11 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         Task<Localidade> ObterPorId(int id, bool habilitarTracking = false);
 
         /// <summary>
+        /// Verifica se existe uma localidade com o ID informado
+        /// </summary>
+        Task<bool> VerificarExistenciaPorId(int id);
+
+        /// <summary>
         /// Verifica se existe uma localidade com o nome e UF informados
         /// </summary>
         Task<bool> VerificarExistenciaPorNomeUf(string nome, string uf, int? idLocalidade = null);

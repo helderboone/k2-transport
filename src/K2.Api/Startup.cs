@@ -64,6 +64,8 @@ namespace K2.Api
             services.AddTransient<ICarroRepositorio, CarroRepositorio>();
             services.AddTransient<ILocalidadeRepositorio, LocalidadeRepositorio>();
             services.AddTransient<IViagemRepositorio, ViagemRepositorio>();
+            services.AddTransient<IReservaRepositorio, ReservaRepositorio>();
+            services.AddTransient<IReservaDependenteRepositorio, ReservaDependenteRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
             services.AddTransient<IClienteServico, ClienteServico>();
@@ -72,6 +74,7 @@ namespace K2.Api
             services.AddTransient<ICarroServico, CarroServico>();
             services.AddTransient<ILocalidadeServico, LocalidadeServico>();
             services.AddTransient<IViagemServico, ViagemServico>();
+            services.AddTransient<IReservaServico, ReservaServico>();
 
             services
                 // AddAuthentication: especificará os schemas utilizados para a autenticação do tipo Bearer

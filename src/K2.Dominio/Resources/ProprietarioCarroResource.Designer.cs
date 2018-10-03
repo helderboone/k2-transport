@@ -70,6 +70,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não é possível excluir um proprietário que possua carros cadastradas. Exclua todos os carros do proprietário antes de excluí-lo..
+        /// </summary>
+        public static string Nao_Possivel_Excluir_Proprietario_Com_Carros {
+            get {
+                return ResourceManager.GetString("Nao_Possivel_Excluir_Proprietario_Com_Carros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O proprietário foi alterado com sucesso..
         /// </summary>
         public static string Proprietario_Alterado_Com_Sucesso {

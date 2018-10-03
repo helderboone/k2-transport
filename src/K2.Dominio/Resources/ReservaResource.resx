@@ -117,25 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cnh_Obrigatorio_Nao_Informado" xml:space="preserve">
-    <value>O número da CNH é obrigatório e não foi informado.</value>
+  <data name="Id_Reserva_Nao_Existe" xml:space="preserve">
+    <value>A reserva com o ID informado não existe.</value>
   </data>
-  <data name="Id_Motorista_Nao_Existe" xml:space="preserve">
-    <value>O motorista com o ID informado não existe.</value>
+  <data name="Motorista_Sem_Permissao_Obter" xml:space="preserve">
+    <value>Você não é o motorista escalado para a viagem, logo não é possível visualzar as informações da reserva.</value>
   </data>
-  <data name="Motorista_Alterado_Com_Sucesso" xml:space="preserve">
-    <value>O motorista foi alterado com sucesso.</value>
+  <data name="Proprietario_Sem_Permissao_Obter" xml:space="preserve">
+    <value>Você não é o proprietário do carro escalado para a viagem, logo não é possível visualzar as informações da reserva.</value>
   </data>
-  <data name="Motorista_Cadastrado_Com_Sucesso" xml:space="preserve">
-    <value>O motorista foi cadastrado com sucesso.</value>
+  <data name="Reservas_Viagem_Encontradas_Com_Sucesso" xml:space="preserve">
+    <value>As reservas da viagem com o ID informado foram encontradas com sucesso.</value>
   </data>
-  <data name="Motorista_Encontrado_Com_Sucesso" xml:space="preserve">
-    <value>O motorista com o ID informado foi encontrado com sucesso.</value>
+  <data name="Reserva_Alterada_Com_Sucesso" xml:space="preserve">
+    <value>A reserva foi alterada com sucesso.</value>
   </data>
-  <data name="Motorista_Excluido_Com_Sucesso" xml:space="preserve">
-    <value>O motorista foi excluído com sucesso.</value>
+  <data name="Reserva_Cadastrada_Com_Sucesso" xml:space="preserve">
+    <value>A reseva foi cadastrada com sucesso.</value>
   </data>
-  <data name="Nao_Possivel_Excluir_Motorista_Com_Viagens" xml:space="preserve">
-    <value>Não é possível excluir um motorista que esteja associado a pelo menos uma viagem cadastrada. Exclua todas as viagens associadas ao motorista antes de excluí-lo.</value>
+  <data name="Reserva_Encontrada_Com_Sucesso" xml:space="preserve">
+    <value>A reserva com o ID informado foi encontrada com sucesso.</value>
+  </data>
+  <data name="Reserva_Excluida_Com_Sucesso" xml:space="preserve">
+    <value>A reserva foi excluída com sucesso.</value>
+  </data>
+  <data name="Reserva_Ja_Existe_Para_Cliente_Viagem" xml:space="preserve">
+    <value>Já existe uma reserva cadastrada para esse cliente na viagem informada.</value>
+  </data>
+  <data name="Valor_Pago_Invalido" xml:space="preserve">
+    <value>O valor pago da reserva é inválido. Informe um valor maior que zero.</value>
   </data>
 </root>

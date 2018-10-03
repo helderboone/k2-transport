@@ -1,5 +1,6 @@
 ﻿using K2.Dominio.Comandos.Entrada;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace K2.Dominio.Entidades
@@ -69,20 +70,38 @@ namespace K2.Dominio.Entidades
         /// </summary>
         public string DescricaoCancelamento { get; private set; }
 
+        /// <summary>
+        /// Carro designado para realizar a viagem
+        /// </summary>
         public Carro Carro { get; private set; }
 
+        /// <summary>
+        /// Motorista designado para realizar a viagem
+        /// </summary>
         public Motorista Motorista { get; private set; }
 
+        /// <summary>
+        /// Localidade de embarque da viagem
+        /// </summary>
         public Localidade LocalidadeEmbarque { get; private set; }
 
+        /// <summary>
+        /// Localidade de desembarque da viagem
+        /// </summary>
         public Localidade LocalidadeDesembarque { get; private set; }
+
+        /// <summary>
+        /// Reservas realizadas para a viagem
+        /// </summary>
+        public IEnumerable<Reserva> Reservas { get; private set; }
 
         private Viagem()
         {
-
+            this.Reservas = new List<Reserva>();
         }
 
         public Viagem(CadastrarViagemEntrada entrada)
+            : base()
         {
             if (entrada.Invalido)
                 return;

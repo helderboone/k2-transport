@@ -132,4 +132,7 @@
   <data name="Id_Cliente_Nao_Existe" xml:space="preserve">
     <value>O cliente com o ID informado não existe.</value>
   </data>
+  <data name="Nao_Possivel_Excluir_Cliente_Com_Reservas" xml:space="preserve">
+    <value>Não é possível excluir um cliente que possua reservas cadastradas. Exclua todas as reservas do cliente antes de excluí-lo.</value>
+  </data>
 </root>

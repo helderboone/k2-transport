@@ -133,6 +133,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não é possível excluir um carro que esteja associado a pelo menos uma viagem cadastrada. Exclua todas as viagens associadas ao carro antes de excluí-lo..
+        /// </summary>
+        public static string Nao_Possivel_Excluir_Carro_Com_Viagens {
+            get {
+                return ResourceManager.GetString("Nao_Possivel_Excluir_Carro_Com_Viagens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O perfil do usuário responsável pela procura é obrigatório e não foi informado..
         /// </summary>
         public static string Perfil_Usuario_Procura_Obrigatorio_Nao_Informado {

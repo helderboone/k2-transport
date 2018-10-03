@@ -120,6 +120,9 @@
   <data name="Id_Proprietario_Nao_Existe" xml:space="preserve">
     <value>O proprietário com o ID informado não existe.</value>
   </data>
+  <data name="Nao_Possivel_Excluir_Proprietario_Com_Carros" xml:space="preserve">
+    <value>Não é possível excluir um proprietário que possua carros cadastradas. Exclua todos os carros do proprietário antes de excluí-lo.</value>
+  </data>
   <data name="Proprietario_Alterado_Com_Sucesso" xml:space="preserve">
     <value>O proprietário foi alterado com sucesso.</value>
   </data>

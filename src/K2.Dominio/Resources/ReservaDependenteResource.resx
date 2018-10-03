@@ -117,25 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cnh_Obrigatorio_Nao_Informado" xml:space="preserve">
-    <value>O número da CNH é obrigatório e não foi informado.</value>
+  <data name="Data_Nascimento_Obrigatoria_Nao_Informado" xml:space="preserve">
+    <value>A data de nascimento é obrigatória e não foi informada.</value>
   </data>
-  <data name="Id_Motorista_Nao_Existe" xml:space="preserve">
-    <value>O motorista com o ID informado não existe.</value>
+  <data name="Dependente_Alterado_Com_Sucesso" xml:space="preserve">
+    <value>O dependente foi alterado com sucesso.</value>
   </data>
-  <data name="Motorista_Alterado_Com_Sucesso" xml:space="preserve">
-    <value>O motorista foi alterado com sucesso.</value>
+  <data name="Dependente_Cadastrado_Com_Sucesso" xml:space="preserve">
+    <value>O dependente foi cadastrado com sucesso.</value>
   </data>
-  <data name="Motorista_Cadastrado_Com_Sucesso" xml:space="preserve">
-    <value>O motorista foi cadastrado com sucesso.</value>
+  <data name="Dependente_Encontrado_Com_Sucesso" xml:space="preserve">
+    <value>O dependente da reserva com o ID informado foi encontrado com sucesso.</value>
   </data>
-  <data name="Motorista_Encontrado_Com_Sucesso" xml:space="preserve">
-    <value>O motorista com o ID informado foi encontrado com sucesso.</value>
+  <data name="Dependente_Excluido_Com_Sucesso" xml:space="preserve">
+    <value>O dependente foi excluído com sucesso.</value>
   </data>
-  <data name="Motorista_Excluido_Com_Sucesso" xml:space="preserve">
-    <value>O motorista foi excluído com sucesso.</value>
+  <data name="Dependente_Nao_Existe" xml:space="preserve">
+    <value>Não existe dependente para a reserva com o ID informado.</value>
   </data>
-  <data name="Nao_Possivel_Excluir_Motorista_Com_Viagens" xml:space="preserve">
-    <value>Não é possível excluir um motorista que esteja associado a pelo menos uma viagem cadastrada. Exclua todas as viagens associadas ao motorista antes de excluí-lo.</value>
+  <data name="Idade_Maxima_Superior_6_Anos" xml:space="preserve">
+    <value>Segundo resolução da ANTT, a idade máxima permitida para um dependente é de 6 anos. Pela a data de nascimento informada, o dependente possui idade superior a esse valor.</value>
+  </data>
+  <data name="Nome_Obrigatorio_Nao_Informado" xml:space="preserve">
+    <value>O nome é obrigatório e não foi informado.</value>
+  </data>
+  <data name="Somente_Um_Dependente_Permitido_Por_Reserva" xml:space="preserve">
+    <value>A reserva já possui um dependente. Somente um dependente é permitido por reserva.</value>
   </data>
 </root>

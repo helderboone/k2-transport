@@ -14,6 +14,11 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         Task<Carro> ObterPorId(int id, bool habilitarTracking = false);
 
         /// <summary>
+        /// Verifica se existe um carro com o ID informado
+        /// </summary>
+        Task<bool> VerificarExistenciaPorId(int id);
+
+        /// <summary>
         /// Obtém os carros baseados nos parâmetros de procura
         /// </summary>
         Task<ProcurarSaida> Procurar(ProcurarCarroEntrada entrada, CredencialUsuarioEntrada credencial);

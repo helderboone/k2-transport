@@ -22,14 +22,14 @@ namespace K2.Dominio.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class LocalidadeResource {
+    public class ReservaDependenteResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal LocalidadeResource() {
+        internal ReservaDependenteResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace K2.Dominio.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("K2.Dominio.Resources.LocalidadeResource", typeof(LocalidadeResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("K2.Dominio.Resources.ReservaDependenteResource", typeof(ReservaDependenteResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,70 +61,70 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A localidade com o ID informado não existe..
+        ///   Looks up a localized string similar to A data de nascimento é obrigatória e não foi informada..
         /// </summary>
-        public static string Id_Localidade_Nao_Existe {
+        public static string Data_Nascimento_Obrigatoria_Nao_Informado {
             get {
-                return ResourceManager.GetString("Id_Localidade_Nao_Existe", resourceCulture);
+                return ResourceManager.GetString("Data_Nascimento_Obrigatoria_Nao_Informado", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A localidade foi alterada com sucesso..
+        ///   Looks up a localized string similar to O dependente foi alterado com sucesso..
         /// </summary>
-        public static string Localidade_Alterada_Com_Sucesso {
+        public static string Dependente_Alterado_Com_Sucesso {
             get {
-                return ResourceManager.GetString("Localidade_Alterada_Com_Sucesso", resourceCulture);
+                return ResourceManager.GetString("Dependente_Alterado_Com_Sucesso", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A localidade foi cadastrada com sucesso..
+        ///   Looks up a localized string similar to O dependente foi cadastrado com sucesso..
         /// </summary>
-        public static string Localidade_Cadastrada_Com_Sucesso {
+        public static string Dependente_Cadastrado_Com_Sucesso {
             get {
-                return ResourceManager.GetString("Localidade_Cadastrada_Com_Sucesso", resourceCulture);
+                return ResourceManager.GetString("Dependente_Cadastrado_Com_Sucesso", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A localidade com o ID informado foi encontrada com sucesso..
+        ///   Looks up a localized string similar to O dependente da reserva com o ID informado foi encontrado com sucesso..
         /// </summary>
-        public static string Localidade_Encontrada_Com_Sucesso {
+        public static string Dependente_Encontrado_Com_Sucesso {
             get {
-                return ResourceManager.GetString("Localidade_Encontrada_Com_Sucesso", resourceCulture);
+                return ResourceManager.GetString("Dependente_Encontrado_Com_Sucesso", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A localidade foi excluída com sucesso..
+        ///   Looks up a localized string similar to O dependente foi excluído com sucesso..
         /// </summary>
-        public static string Localidade_Excluida_Com_Sucesso {
+        public static string Dependente_Excluido_Com_Sucesso {
             get {
-                return ResourceManager.GetString("Localidade_Excluida_Com_Sucesso", resourceCulture);
+                return ResourceManager.GetString("Dependente_Excluido_Com_Sucesso", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Já existe uma localidade cadastrada com o nome e estado informados..
+        ///   Looks up a localized string similar to Não existe dependente para a reserva com o ID informado..
         /// </summary>
-        public static string Localidade_Ja_Existe_Por_Nome_Uf {
+        public static string Dependente_Nao_Existe {
             get {
-                return ResourceManager.GetString("Localidade_Ja_Existe_Por_Nome_Uf", resourceCulture);
+                return ResourceManager.GetString("Dependente_Nao_Existe", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não é possível excluir uma localidade que esteja associada a pelo menos uma viagem cadastrada. Exclua todas as viagens associadas a localidade antes de excluí-la..
+        ///   Looks up a localized string similar to Segundo resolução da ANTT, a idade máxima permitida para um dependente é de 6 anos. Pela a data de nascimento informada, o dependente possui idade superior a esse valor..
         /// </summary>
-        public static string Nao_Possivel_Excluir_Localidade_Com_Viagens {
+        public static string Idade_Maxima_Superior_6_Anos {
             get {
-                return ResourceManager.GetString("Nao_Possivel_Excluir_Localidade_Com_Viagens", resourceCulture);
+                return ResourceManager.GetString("Idade_Maxima_Superior_6_Anos", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O nome da localidade é obrigatório e não foi informado..
+        ///   Looks up a localized string similar to O nome é obrigatório e não foi informado..
         /// </summary>
         public static string Nome_Obrigatorio_Nao_Informado {
             get {
@@ -133,11 +133,11 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O estado da localidade é obrigatório e não foi informado..
+        ///   Looks up a localized string similar to A reserva já possui um dependente. Somente um dependente é permitido por reserva..
         /// </summary>
-        public static string Uf_Obrigatoria_Nao_Informado {
+        public static string Somente_Um_Dependente_Permitido_Por_Reserva {
             get {
-                return ResourceManager.GetString("Uf_Obrigatoria_Nao_Informado", resourceCulture);
+                return ResourceManager.GetString("Somente_Um_Dependente_Permitido_Por_Reserva", resourceCulture);
             }
         }
     }

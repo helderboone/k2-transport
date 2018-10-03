@@ -9,6 +9,17 @@
         Confirmada = 1,
         Cancelada = -1
     }
+
+    /// <summary>
+    /// Situação de uma reserva
+    /// </summary>
+    public enum TipoSituacaoReserva
+    {
+        AguardandoConfirmacao = 0,
+        Confirmada = 1,
+        Paga = 2,
+        Cancelada = -1
+    }
     
     /// <summary>
     /// Classe que armazena as perfis de acesso.
@@ -36,6 +47,22 @@
                     return "Confirmada";
                 case TipoSituacaoViagem.Cancelada:
                     return "Cancelada";
+                default: return string.Empty;
+            }
+        }
+
+        public static string ObterDescricao(this TipoSituacaoReserva tipoSituacao)
+        {
+            switch (tipoSituacao)
+            {
+                case TipoSituacaoReserva.AguardandoConfirmacao:
+                    return "Aguardando confirmação da viagem";
+                case TipoSituacaoReserva.Cancelada:
+                    return "Cancelada";
+                case TipoSituacaoReserva.Confirmada:
+                    return "Confirmada";
+                case TipoSituacaoReserva.Paga:
+                    return "Paga";
                 default: return string.Empty;
             }
         }
