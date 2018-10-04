@@ -95,7 +95,17 @@ namespace K2.Dominio.Entidades
         /// </summary>
         public IEnumerable<Reserva> Reservas { get; private set; }
 
-        private Viagem()
+        /// <summary>
+        /// Percentual de disponibilidade da viagem
+        /// </summary>
+        public decimal PercentualDisponibilidade => !this.Reservas.Any() ? 100 : 100 - (this.Reservas.Count() * 100 / this.Carro.QuantidadeLugares);
+
+        /// <summary>
+        /// Quantidade de lugares disponíveis
+        /// </summary>
+        public int QuantidadeLugaresDisponiveis => this.Carro.QuantidadeLugares - this.Reservas.Count();
+
+        protected Viagem()
         {
             this.Reservas = new List<Reserva>();
         }
@@ -113,10 +123,10 @@ namespace K2.Dominio.Entidades
             this.Descricao               = entrada.Descricao;
             this.ValorPassagem           = entrada.ValorPassagem;
             this.DataHorarioSaida        = entrada.DataHorarioSaida;
-            this.Embarques               = entrada.LocaisEmbarque != null && entrada.LocaisEmbarque.Any()
+            this.Embarques               = entrada.LocaisEmbarque?.Any() == true
                 ? string.Join(";", entrada.LocaisEmbarque)
                 : null;
-            this.Desembarques            = entrada.LocaisDesembarque != null && entrada.LocaisDesembarque.Any()
+            this.Desembarques            = entrada.LocaisDesembarque?.Any() == true
                 ? string.Join(";", entrada.LocaisDesembarque)
                 : null;
 
@@ -136,10 +146,10 @@ namespace K2.Dominio.Entidades
             this.Descricao               = entrada.Descricao;
             this.ValorPassagem           = entrada.ValorPassagem;
             this.DataHorarioSaida        = entrada.DataHorarioSaida;
-            this.Embarques               = entrada.LocaisEmbarque != null && entrada.LocaisEmbarque.Any()
+            this.Embarques               = entrada.LocaisEmbarque?.Any() == true
                 ? string.Join(";", entrada.LocaisEmbarque)
                 : null;
-            this.Desembarques            = entrada.LocaisDesembarque != null && entrada.LocaisDesembarque.Any()
+            this.Desembarques            = entrada.LocaisDesembarque?.Any() == true
                 ? string.Join(";", entrada.LocaisDesembarque)
                 : null;
         }

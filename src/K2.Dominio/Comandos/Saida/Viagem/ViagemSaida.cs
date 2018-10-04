@@ -93,6 +93,16 @@ namespace K2.Dominio.Comandos.Saida
         /// </summary>
         public object LocalidadeDesembarque { get; }
 
+        /// <summary>
+        /// Percentual de ocupação da viagem
+        /// </summary>
+        public string PercentualDisponibilidade { get; }
+
+        /// <summary>
+        /// Quantidade de lugares disponíveis
+        /// </summary>
+        public int QuantidadeLugaresDisponiveis { get; }
+
         public ViagemSaida(Viagem viagem)
         {
             Id                      = viagem.Id;
@@ -131,6 +141,8 @@ namespace K2.Dominio.Comandos.Saida
                 viagem.LocalidadeDesembarque.Nome,
                 viagem.LocalidadeDesembarque.Uf
             };
+            QuantidadeLugaresDisponiveis = viagem.QuantidadeLugaresDisponiveis;
+            PercentualDisponibilidade    = viagem.PercentualDisponibilidade.ToString("N0") + "%";
         }
 
         public override string ToString()

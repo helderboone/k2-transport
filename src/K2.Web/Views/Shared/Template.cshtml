@@ -94,7 +94,7 @@
                                                 <span class="m-menu__arrow m-menu__arrow--adjust"></span>
                                                 <ul class="m-menu__subnav">
                                                     <li class="m-menu__item @VerificarCssClassMenuItemAtivo("administradores", "motoristas", "proprietarios", "localidades") m-menu__item--submenu" m-menu-submenu-toggle="hover" m-menu-link-redirect="1" aria-haspopup="true">
-                                                        <a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Cadastros</span><i class="m-menu__hor-arrow la la-angle-right"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a>
+                                                        <a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Cadastros auxiliares</span><i class="m-menu__hor-arrow la la-angle-right"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a>
                                                         <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--right">
                                                             <span class="m-menu__arrow "></span>
                                                             <ul class="m-menu__subnav">
@@ -442,74 +442,74 @@
 </html>
 
 @functions {
-public string VerificarCssClassMenuItemAtivo(params string[] palavrasChaves)
-{
-    var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
+    public string VerificarCssClassMenuItemAtivo(params string[] palavrasChaves)
+    {
+        var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
 
-    foreach (var palavra in palavrasChaves)
-    {
-        if (url.Contains(palavra))
-            return "m-menu__item--active";
-    }
+        foreach (var palavra in palavrasChaves)
+        {
+            if (url.Contains(palavra))
+                return "m-menu__item--active";
+        }
 
-    return string.Empty;
-}
-
-public IHtmlContent ObterCaminho()
-{
-    var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
-
-    if (url.Contains("administradores"))
-    {
-        return Html.Raw(
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__item\"><a href=\"administradores\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Administradores</span></a></li>");
-    }
-    else if (url.Contains("motoristas"))
-    {
-        return Html.Raw(
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__item\"><a href=\"motoristas\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Motoristas</span></a></li>");
-    }
-    else if (url.Contains("proprietarios"))
-    {
-        return Html.Raw(
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__item\"><a href=\"proprietarios\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Proprietários</span></a></li>");
-    }
-    else if (url.Contains("carros"))
-    {
-        return Html.Raw(
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__item\"><a href=\"carros\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Carros</span></a></li>");
-    }
-    else if (url.Contains("localidades"))
-    {
-        return Html.Raw(
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                "<li class=\"m-nav__separator\">-</li>" +
-                "<li class=\"m-nav__item\"><a href=\"localidades\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Localidades</span></a></li>");
+        return string.Empty;
     }
 
-    return Html.Raw(string.Empty);
-}
+    public IHtmlContent ObterCaminho()
+    {
+        var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
+
+        if (url.Contains("administradores"))
+        {
+            return Html.Raw(
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__item\"><a href=\"administradores\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Administradores</span></a></li>");
+        }
+        else if (url.Contains("motoristas"))
+        {
+            return Html.Raw(
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__item\"><a href=\"motoristas\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Motoristas</span></a></li>");
+        }
+        else if (url.Contains("proprietarios"))
+        {
+            return Html.Raw(
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__item\"><a href=\"proprietarios\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Proprietários</span></a></li>");
+        }
+        else if (url.Contains("carros"))
+        {
+            return Html.Raw(
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__item\"><a href=\"carros\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Carros</span></a></li>");
+        }
+        else if (url.Contains("localidades"))
+        {
+            return Html.Raw(
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                    "<li class=\"m-nav__separator\">-</li>" +
+                    "<li class=\"m-nav__item\"><a href=\"localidades\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Localidades</span></a></li>");
+        }
+
+        return Html.Raw(string.Empty);
+    }
 }

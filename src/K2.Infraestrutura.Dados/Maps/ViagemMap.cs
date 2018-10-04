@@ -39,6 +39,9 @@ namespace K2.Infraestrutura.Dados.Maps
             builder.Property(x => x.Embarques);
             builder.Property(x => x.Desembarques);
             builder.Property(x => x.DescricaoCancelamento);
+
+            builder.Ignore(x => x.PercentualDisponibilidade);
+            builder.Ignore(x => x.QuantidadeLugaresDisponiveis);
         }
     }
 }

@@ -4,7 +4,6 @@ using K2.Web.Helpers;
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using RestSharp;
 using System.Linq;
 using System.Threading.Tasks;

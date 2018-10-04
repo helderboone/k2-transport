@@ -92,5 +92,11 @@
     "inputFiles": [
       "wwwroot/assets/js/views/carro.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/views/viagem.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/views/viagem.js"
+    ]
   }
 ]

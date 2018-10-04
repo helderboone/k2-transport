@@ -280,3 +280,7 @@ table.dataTable > tbody > tr.child ul.dtr-details {
 .m-btn--icon.m-btn--icon-only--sm i{
     font-size: 1.0rem;
 }
+
+.m-accordion .m-accordion__item--brand .m-accordion__item-head, .m-accordion .m-accordion__item--brand .m-accordion__item-head:hover {
+    background-color: #007AAD !important;
+}

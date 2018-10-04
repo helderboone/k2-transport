@@ -28,6 +28,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
                     .ThenInclude(x => x.Usuario)
                 .Include(x => x.LocalidadeEmbarque)
                 .Include(x => x.LocalidadeDesembarque)
+                .Include(x => x.Reservas)
                 .AsQueryable();
 
             if (!habilitarTracking)
@@ -64,6 +65,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
                     .ThenInclude(x => x.Usuario)
                 .Include(x => x.LocalidadeEmbarque)
                 .Include(x => x.LocalidadeDesembarque)
+                .Include(x => x.Reservas)
                 .AsNoTracking()
                 .AsQueryable();
 
