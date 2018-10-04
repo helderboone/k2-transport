@@ -1,0 +1,52 @@
+﻿@model IEnumerable<K2.Web.Models.ViagemRegistro>
+
+<div class="m-portlet" style="-webkit-box-shadow: none; box-shadow:none;">
+    <div class="m-portlet__body" style="padding:0;">
+        <!--begin::m-widget5-->
+        <div class="m-widget5">
+            @foreach (var viagem in Model)
+            {
+                <div class="m-widget5__item">
+                    <div class="m-widget5__content">
+                        <div class="m-widget5__section" style="padding-left:0;">
+                            <h4 class="m-widget5__title">
+                                @viagem.Descricao
+                            </h4>
+                            <span class="m-widget5__desc">
+                                Make Metronic Great  Again.Lorem Ipsum Amet
+                            </span>
+                            <div class="m-widget5__info">
+                                <span class="m-widget5__author">
+                                    Author:
+                                </span>
+                                <span class="m-widget5__info-label">
+                                    author:
+                                </span>
+                                <span class="m-widget5__info-author-name">
+                                    Fly themes
+                                </span>
+                                <span class="m-widget5__info-label">
+                                    Released:
+                                </span>
+                                <span class="m-widget5__info-date m--font-info">
+                                    23.08.17
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-widget5__content">
+                        <div class="m-widget5__stats1">
+                            <span class="m-widget5__number">19,200</span><br>
+                            <span class="m-widget5__sales">sales</span>
+                        </div>
+                        <div class="m-widget5__stats2">
+                            <span class="m-widget5__number">1046</span><br>
+                            <span class="m-widget5__votes">votes</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <!--end::m-widget5-->
+    </div>
+</div>

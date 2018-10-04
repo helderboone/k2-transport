@@ -5,7 +5,7 @@ using JNogueira.Infraestrutura.Utilzao;
 namespace K2.Web.Models
 {
     /// <summary>
-    /// Classe que reflete as informações de saída de um motorista
+    /// Classe que reflete as informações de saída de uma localidade
     /// </summary>
     public class LocalidadeSaida : Saida<LocalidadeRegistro>
     {

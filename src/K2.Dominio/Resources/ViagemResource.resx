@@ -171,4 +171,7 @@
   <data name="Viagem_Ja_Existe_Para_Motorista_Data_Saida" xml:space="preserve">
     <value>Já existe uma viagem cadastrada para esse motorista na data de saída informada.</value>
   </data>
+  <data name="Viagens_Encontradas_Com_Sucesso" xml:space="preserve">
+    <value>As viagens foram encontradas com sucesso.</value>
+  </data>
 </root>

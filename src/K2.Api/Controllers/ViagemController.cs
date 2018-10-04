@@ -32,6 +32,32 @@ namespace K2.Api.Controllers
         }
 
         /// <summary>
+        /// Obtém as viagens ainda previstas
+        /// </summary>
+        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [HttpGet]
+        [Route("v1/viagens/obter-previstas")]
+        public async Task<ISaida> ObterPrevistas()
+        {
+            var credencial = new CredencialUsuarioEntrada(base.ObterIdUsuario(), base.ObterPerfilUsuario());
+
+            return await _viagemServico.ObterViagensPrevistas(credencial);
+        }
+
+        /// <summary>
+        /// Obtém as viagens realizadas ou canceladas
+        /// </summary>
+        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [HttpGet]
+        [Route("v1/viagens/obter-realizadas-ou-canceladas")]
+        public async Task<ISaida> ObterRealizadasOuCanceladas()
+        {
+            var credencial = new CredencialUsuarioEntrada(base.ObterIdUsuario(), base.ObterPerfilUsuario());
+
+            return await _viagemServico.ObterViagensRealizadasOuCanceladas(credencial);
+        }
+
+        /// <summary>
         /// Realiza uma procura por viagens a partir dos parâmetros informados
         /// </summary>
         [Authorize(Policy = "MotoristaOuProprietarioCarro")]

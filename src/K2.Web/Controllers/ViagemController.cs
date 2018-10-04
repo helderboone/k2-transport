@@ -5,6 +5,7 @@ using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,6 +26,23 @@ namespace K2.Web.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [HttpGet]
+        [Route("viagens-previstas")]
+        public async Task<IActionResult> ViagensPrevistas()
+        {
+            var apiResponse = await _restSharpHelper.ChamarApi("viagens/obter-previstas", Method.GET);
+
+            var saida = ViagensSaida.Obter(apiResponse.Content);
+
+            if (!saida.Sucesso)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível obter as viagens previstas.", saida.Mensagens, TipoAcaoAoOcultarFeedback.Ocultar));
+
+            var registros = saida.Retorno;
+
+            return View(registros);
         }
 
         //[Authorize(Policy = TipoPerfil.Administrador)]

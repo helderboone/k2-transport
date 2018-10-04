@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace K2.Web
@@ -19,6 +20,9 @@ namespace K2.Web
             if (context.HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 var jsonResult = new JsonResult(_feedback);
+
+                if (_feedback.Tipo == TipoFeedback.Erro)
+                    jsonResult.StatusCode = (int)HttpStatusCode.BadRequest;
 
                 await jsonResult.ExecuteResultAsync(context);
             }

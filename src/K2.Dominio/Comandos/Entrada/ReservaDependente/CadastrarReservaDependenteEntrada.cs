@@ -54,7 +54,7 @@ namespace K2.Dominio.Comandos.Entrada
 
         private void Validar()
         {
-            var dataHoraBrasilia = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
+            var dataHoraBrasilia = DateTimeHelper.ObterHorarioAtualBrasilia();
 
             this
                 .NotificarSeMenorOuIgualA(this.IdReserva, 0, ReservaResource.Id_Reserva_Nao_Existe)

@@ -221,5 +221,14 @@ namespace K2.Dominio.Resources {
                 return ResourceManager.GetString("Viagem_Ja_Existe_Para_Motorista_Data_Saida", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As viagens foram encontradas com sucesso..
+        /// </summary>
+        public static string Viagens_Encontradas_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Viagens_Encontradas_Com_Sucesso", resourceCulture);
+            }
+        }
     }
 }

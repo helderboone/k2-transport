@@ -5,6 +5,7 @@ using K2.Dominio.Entidades;
 using K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
@@ -35,6 +36,66 @@ namespace K2.Infraestrutura.Dados.Repositorios
                 query = query.AsNoTracking();
 
             return await query.FirstOrDefaultAsync(x => x.Id == id);
+        }
+        
+        public async Task<IEnumerable<Viagem>> ObterPrevistas(CredencialUsuarioEntrada credencial)
+        {
+            var query = _efContext.Viagens
+                .Include(x => x.Carro)
+                    .ThenInclude(x => x.Proprietario)
+                .Include(x => x.Motorista)
+                    .ThenInclude(x => x.Usuario)
+                .Include(x => x.LocalidadeEmbarque)
+                .Include(x => x.LocalidadeDesembarque)
+                .Include(x => x.Reservas)
+                .AsNoTracking()
+                .AsQueryable();
+
+            switch (credencial.PerfilUsuario)
+            {
+                case TipoPerfil.Motorista:
+                    // Quando a consulta é feita por um motorista, somente seus viagens devem ser retornadas.
+                    query = query.Where(x => x.Motorista.IdUsuario == credencial.IdUsuario);
+                    break;
+                case TipoPerfil.ProprietarioCarro:
+                    // Quando a consulta é feita por um proprietário, somente as viagens associadas a um de seus carros devem ser retornadas.
+                    query = query.Where(x => x.Carro.Proprietario.IdUsuario == credencial.IdUsuario);
+                    break;
+            }
+
+            query = query.Where(x => x.DataHorarioSaida >= DateTimeHelper.ObterHorarioAtualBrasilia() && x.Situacao != (int)TipoSituacaoViagem.Cancelada);
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Viagem>> ObterRealizadasOuCanceladas(CredencialUsuarioEntrada credencial)
+        {
+            var query = _efContext.Viagens
+                .Include(x => x.Carro)
+                    .ThenInclude(x => x.Proprietario)
+                .Include(x => x.Motorista)
+                    .ThenInclude(x => x.Usuario)
+                .Include(x => x.LocalidadeEmbarque)
+                .Include(x => x.LocalidadeDesembarque)
+                .Include(x => x.Reservas)
+                .AsNoTracking()
+                .AsQueryable();
+
+            switch (credencial.PerfilUsuario)
+            {
+                case TipoPerfil.Motorista:
+                    // Quando a consulta é feita por um motorista, somente seus viagens devem ser retornadas.
+                    query = query.Where(x => x.Motorista.IdUsuario == credencial.IdUsuario);
+                    break;
+                case TipoPerfil.ProprietarioCarro:
+                    // Quando a consulta é feita por um proprietário, somente as viagens associadas a um de seus carros devem ser retornadas.
+                    query = query.Where(x => x.Carro.Proprietario.IdUsuario == credencial.IdUsuario);
+                    break;
+            }
+
+            query = query.Where(x => x.DataHorarioSaida < DateTimeHelper.ObterHorarioAtualBrasilia() || x.Situacao == (int)TipoSituacaoViagem.Cancelada);
+
+            return await query.ToListAsync();
         }
 
         public async Task<bool> VerificarExistenciaPorId(int id)

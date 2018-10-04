@@ -7,6 +7,7 @@ using K2.Dominio.Interfaces.Dados;
 using K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios;
 using K2.Dominio.Interfaces.Servicos;
 using K2.Dominio.Resources;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace K2.Dominio.Servicos
@@ -65,6 +66,32 @@ namespace K2.Dominio.Servicos
             return this.Invalido
                 ? new Saida(false, this.Mensagens, null)
                 : new Saida(true, new[] { ViagemResource.Viagem_Encontrada_Com_Sucesso }, new ViagemSaida(viagem));
+        }
+
+        public async Task<ISaida> ObterViagensPrevistas(CredencialUsuarioEntrada credencial)
+        {
+            this.NotificarSeNulo(credencial, SharedResource.Credenciais_Usuario_Obrigatorias_Nao_Informadas);
+
+            this.AdicionarNotificacoes(credencial?.Notificacoes);
+
+            var viagens = await _viagemRepositorio.ObterPrevistas(credencial);
+
+            return this.Invalido
+                ? new Saida(false, this.Mensagens, null)
+                : new Saida(true, new[] { ViagemResource.Viagens_Encontradas_Com_Sucesso }, viagens.Select(x => new ViagemSaida(x)).ToList());
+        }
+
+        public async Task<ISaida> ObterViagensRealizadasOuCanceladas(CredencialUsuarioEntrada credencial)
+        {
+            this.NotificarSeNulo(credencial, SharedResource.Credenciais_Usuario_Obrigatorias_Nao_Informadas);
+
+            this.AdicionarNotificacoes(credencial?.Notificacoes);
+
+            var viagens = await _viagemRepositorio.ObterRealizadasOuCanceladas(credencial);
+
+            return this.Invalido
+                ? new Saida(false, this.Mensagens, null)
+                : new Saida(true, new[] { ViagemResource.Viagens_Encontradas_Com_Sucesso }, viagens.Select(x => new ViagemSaida(x)).ToList());
         }
 
         public async Task<ISaida> ProcurarViagens(ProcurarViagemEntrada entrada, CredencialUsuarioEntrada credencial)
