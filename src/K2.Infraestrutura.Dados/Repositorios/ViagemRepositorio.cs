@@ -25,8 +25,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
         {
             var query = _efContext.Viagens
                 .Include(x => x.Carro)
-                .Include(x => x.Motorista)
-                    .ThenInclude(x => x.Usuario)
+                .Include(x => x.Motorista.Usuario)
                 .Include(x => x.LocalidadeEmbarque)
                 .Include(x => x.LocalidadeDesembarque)
                 .Include(x => x.Reservas)
@@ -41,13 +40,12 @@ namespace K2.Infraestrutura.Dados.Repositorios
         public async Task<IEnumerable<Viagem>> ObterPrevistas(CredencialUsuarioEntrada credencial)
         {
             var query = _efContext.Viagens
-                .Include(x => x.Carro)
-                    .ThenInclude(x => x.Proprietario)
-                .Include(x => x.Motorista)
-                    .ThenInclude(x => x.Usuario)
+                .Include(x => x.Carro.Proprietario)
+                .Include(x => x.Motorista.Usuario)
                 .Include(x => x.LocalidadeEmbarque)
                 .Include(x => x.LocalidadeDesembarque)
                 .Include(x => x.Reservas)
+                    .ThenInclude(x => x.Cliente.Usuario)
                 .AsNoTracking()
                 .AsQueryable();
 
@@ -71,13 +69,12 @@ namespace K2.Infraestrutura.Dados.Repositorios
         public async Task<IEnumerable<Viagem>> ObterRealizadasOuCanceladas(CredencialUsuarioEntrada credencial)
         {
             var query = _efContext.Viagens
-                .Include(x => x.Carro)
-                    .ThenInclude(x => x.Proprietario)
-                .Include(x => x.Motorista)
-                    .ThenInclude(x => x.Usuario)
+                .Include(x => x.Carro.Proprietario)
+                .Include(x => x.Motorista.Usuario)
                 .Include(x => x.LocalidadeEmbarque)
                 .Include(x => x.LocalidadeDesembarque)
                 .Include(x => x.Reservas)
+                    .ThenInclude(x => x.Cliente.Usuario)
                 .AsNoTracking()
                 .AsQueryable();
 
@@ -120,13 +117,12 @@ namespace K2.Infraestrutura.Dados.Repositorios
         public async Task<ProcurarSaida> Procurar(ProcurarViagemEntrada entrada, CredencialUsuarioEntrada credencial)
         {
             var query = _efContext.Viagens
-                .Include(x => x.Carro)
-                    .ThenInclude(x => x.Proprietario)
-                .Include(x => x.Motorista)
-                    .ThenInclude(x => x.Usuario)
+                .Include(x => x.Carro.Proprietario)
+                .Include(x => x.Motorista.Usuario)
                 .Include(x => x.LocalidadeEmbarque)
                 .Include(x => x.LocalidadeDesembarque)
                 .Include(x => x.Reservas)
+                    .ThenInclude(x => x.Cliente.Usuario)
                 .AsNoTracking()
                 .AsQueryable();
 

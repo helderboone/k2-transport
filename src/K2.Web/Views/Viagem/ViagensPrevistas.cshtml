@@ -1,47 +1,81 @@
 ﻿@model IEnumerable<K2.Web.Models.ViagemRegistro>
 
-<div class="m-portlet" style="-webkit-box-shadow: none; box-shadow:none;">
+<div class="m-portlet" style="-webkit-box-shadow: none; box-shadow:none; margin-bottom:0;">
     <div class="m-portlet__body" style="padding:0;">
         <!--begin::m-widget5-->
         <div class="m-widget5">
+                        
             @foreach (var viagem in Model)
             {
                 <div class="m-widget5__item">
                     <div class="m-widget5__content">
                         <div class="m-widget5__section" style="padding-left:0;">
                             <h4 class="m-widget5__title">
-                                @viagem.Descricao
+                                @(viagem.Descricao)
+                                <span class="dropdown">
+                                    <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="la la-ellipsis-h"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-left" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-196px, 27px, 0px);">
+                                        <a class="dropdown-item" data-id="@viagem.Id" href="#"><i class="la la-info"></i> Informações</a>
+                                        <a class="dropdown-item" data-id="@viagem.Id" href="#"><i class="la la-edit"></i> Alterar</a>
+                                        <a class="dropdown-item" data-id="@viagem.Id" href="#"><i class="la la-trash"></i> Excluir</a>
+                                    </div>
+                                </span>
                             </h4>
-                            <span class="m-widget5__desc">
-                                Make Metronic Great  Again.Lorem Ipsum Amet
+                        @*<span class="m-widget5__desc">
+                            Make Metronic Great  Again.Lorem Ipsum Amet
+                        </span>*@
+                        <div class="m-widget5__info">
+                            <span class="m-widget5__author">
+                                Saída:
                             </span>
-                            <div class="m-widget5__info">
-                                <span class="m-widget5__author">
-                                    Author:
-                                </span>
-                                <span class="m-widget5__info-label">
-                                    author:
-                                </span>
-                                <span class="m-widget5__info-author-name">
-                                    Fly themes
-                                </span>
-                                <span class="m-widget5__info-label">
-                                    Released:
-                                </span>
-                                <span class="m-widget5__info-date m--font-info">
-                                    23.08.17
-                                </span>
-                            </div>
+                            <span class="m-widget5__info-author m--font-brand">
+                                @viagem.DataHorarioSaida.ToString("dd/MM/yyyy HH:mm (dddd)")
+                            </span>
+                        </div>
+                        <div class="m-widget5__info">
+                            <span class="m-widget5__author">
+                                Embarque:
+                            </span>
+                            <span class="m-widget5__info-author">
+                                @viagem.LocalidadeEmbarque.Nome
+                            </span>
+                            <span class="m-widget5__info-label">
+                                Desembarque:
+                            </span>
+                            <span class="m-widget5__info-date">
+                                @viagem.LocalidadeDesembarque.Nome
+                            </span>
+                        </div>
+                        <div class="m-widget5__info">
+                            <span class="m-widget5__author">
+                                Carro:
+                            </span>
+                            <span class="m-widget5__info-author font-weight-normal">
+                                @viagem.Carro.Descricao
+                            </span>
+                            <span class="m-widget5__info-label">
+                                Motorista:
+                            </span>
+                            <span class="m-widget5__info-date font-weight-normal">
+                                @viagem.Motorista.Nome
+                            </span>
+                        </div>
                         </div>
                     </div>
                     <div class="m-widget5__content">
                         <div class="m-widget5__stats1">
-                            <span class="m-widget5__number">19,200</span><br>
-                            <span class="m-widget5__sales">sales</span>
+                            <span class="m-widget5__sales">reservas</span><br>
+                            <span class="m-widget5__number m--font-brand">@viagem.Reservas.Count()</span>
+                        </div>
+                        <div class="m-widget5__stats2" style="margin-left: 20px;">
+                            <span class="m-widget5__sales" style="white-space: nowrap;">lugares disponíveis</span><br>
+                            <span class="m-widget5__number m--font-brand">@viagem.QuantidadeLugaresDisponiveis</span>
                         </div>
                         <div class="m-widget5__stats2">
-                            <span class="m-widget5__number">1046</span><br>
-                            <span class="m-widget5__votes">votes</span>
+                            <span class="m-widget5__votes">disponibilidade</span><br>
+                            <span class="m-widget5__number">@viagem.PercentualDisponibilidade</span>
                         </div>
                     </div>
                 </div>

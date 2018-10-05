@@ -284,3 +284,7 @@ table.dataTable > tbody > tr.child ul.dtr-details {
 .m-accordion .m-accordion__item--brand .m-accordion__item-head, .m-accordion .m-accordion__item--brand .m-accordion__item-head:hover {
     background-color: #007AAD !important;
 }
+
+.m-widget5 .m-widget5__item .m-widget5__content .m-widget5__stats2 {
+    width: 9rem;
+}

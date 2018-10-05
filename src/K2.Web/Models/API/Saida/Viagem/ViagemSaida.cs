@@ -70,16 +70,62 @@ namespace K2.Web.Models
 
         public string DescricaoCancelamento { get; set; }
 
-        public object Carro { get; set; }
+        public ViagemCarroRetorno Carro { get; set; }
 
-        public object Motorista { get; set; }
+        public ViagemMotoristaRetorno Motorista { get; set; }
 
-        public object LocalidadeEmbarque { get; set; }
+        public ViagemLocalidadeRetorno LocalidadeEmbarque { get; set; }
 
-        public object LocalidadeDesembarque { get; set; }
+        public ViagemLocalidadeRetorno LocalidadeDesembarque { get; set; }
+
+        public IEnumerable<ViagemReservaRetorno> Reservas { get; set; }
 
         public string PercentualDisponibilidade { get; set; }
 
         public int QuantidadeLugaresDisponiveis { get; set; }
+    }
+
+    public class ViagemCarroRetorno
+    {
+        public string Descricao { get; set; }
+
+        public string Placa { get; set; }
+
+        public int QuantidadeLugares { get; set; }
+    }
+
+    public class ViagemMotoristaRetorno
+    {
+        public string Nome { get; set; }
+
+        public string Cnh { get; set; }
+
+        public string Cpf { get; set; }
+
+        public string Celular { get; set; }
+    }
+
+    public class ViagemLocalidadeRetorno
+    {
+        public string Nome  { get; set; }
+
+        public string Uf { get; set; }
+    }
+
+    public class ViagemReservaRetorno
+    {
+        public int Id { get; set; }
+
+        public int IdCliente { get; set; }
+
+        public string NomeCliente { get; set; }
+
+        public int Situacao { get; set; }
+
+        public string DescricaoSituacao { get; set; }
+
+        public string Observacao { get; set; }
+
+        public decimal? ValorPago { get; set; }
     }
 }

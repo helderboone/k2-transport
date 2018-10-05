@@ -42,7 +42,7 @@ namespace K2.Web.Controllers
 
             var registros = saida.Retorno;
 
-            return View(registros);
+            return View(registros.OrderBy(x => x.DataHorarioSaida));
         }
 
         //[Authorize(Policy = TipoPerfil.Administrador)]

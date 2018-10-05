@@ -1,5 +1,7 @@
 ﻿using K2.Dominio.Entidades;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace K2.Dominio.Comandos.Saida
 {
@@ -94,6 +96,11 @@ namespace K2.Dominio.Comandos.Saida
         public object LocalidadeDesembarque { get; }
 
         /// <summary>
+        /// Reservas da viagem
+        /// </summary>
+        public IEnumerable<object> Reservas { get; }
+
+        /// <summary>
         /// Percentual de ocupação da viagem
         /// </summary>
         public string PercentualDisponibilidade { get; }
@@ -141,6 +148,16 @@ namespace K2.Dominio.Comandos.Saida
                 viagem.LocalidadeDesembarque.Nome,
                 viagem.LocalidadeDesembarque.Uf
             };
+            Reservas = viagem.Reservas.Select(x => new
+            {
+                x.Id,
+                x.IdCliente,
+                NomeCliente = x.Cliente.Nome,
+                x.Situacao,
+                DescricaoSituacao = x.ObterTipoSituacao().ObterDescricao(),
+                x.Observacao,
+                x.ValorPago
+            }).ToArray();
             QuantidadeLugaresDisponiveis = viagem.QuantidadeLugaresDisponiveis;
             PercentualDisponibilidade    = viagem.PercentualDisponibilidade.ToString("N0") + "%";
         }
