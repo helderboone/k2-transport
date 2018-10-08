@@ -288,3 +288,9 @@ table.dataTable > tbody > tr.child ul.dtr-details {
 .m-widget5 .m-widget5__item .m-widget5__content .m-widget5__stats2 {
     width: 9rem;
 }
+
+@media (max-width: 1200px) {
+    .m-timeline-1 .m-timeline-1__items .m-timeline-1__item.m-timeline-1__item--left .m-timeline-1__item-time {
+        right: unset;
+   }
+}

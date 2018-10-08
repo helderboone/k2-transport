@@ -1,0 +1,108 @@
+﻿@using K2.Web.Helpers
+
+@model K2.Web.Models.ViagemRegistro
+@inject CustomHtmlHelper customHtmlHelper
+<div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet-lg" style="margin:0 auto;">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    @(Model == null ? "Cadastrar" : "Alterar") viagem
+                </h3>
+            </div>
+        </div>
+    </div>
+    <form id="frmManterViagem" class="m-form m-form--fit m-form--state" novalidate="novalidate">
+        <input type="hidden" id="iIdViagem" name="iIdViagem" value="@(Model != null ? Model.Id.ToString() : string.Empty)">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Descrição <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iDescricao" name="iDescricao" maxlength="200" style="text-transform:uppercase;" value="@Model?.Descricao">
+                    <span class="m-form__help">Nome de identificação da viagem</span>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Data da saída <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="input-group m-input-group--square m-input-group--air date">
+                        <input type="text" class="form-control m-input" readonly id="iDataHorarioSaida" name="iDataHorarioSaida" data-startdate="@DateTime.Now.ToString("yyyy-MM-dd HH:mm")" value="@(Model == null ? string.Empty : Model.DataHorarioSaida.ToString("dd/MM/yyyy HH:mm"))">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="la la-calendar glyphicon-th"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <span class="m-form__help">Data/horário do início da viagem</span>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Motorista <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="m-select2 m-select2--square m-select2--air">
+                        @customHtmlHelper.DropDownMotoristas("sMotorista", "form-control m-select2", Model == null ? string.Empty : Model.IdMotorista.ToString())
+                        <span class="m-form__help">Motorista responsável pela viagem</span>
+                    </div>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Carro <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="m-select2 m-select2--square m-select2--air">
+                        @customHtmlHelper.DropDownCarros("sCarro", "form-control m-select2", Model == null ? string.Empty : Model.IdCarro.ToString())
+                        <span class="m-form__help">Carro que realizará a viagem</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Valor da passagem <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="input-group m-input-group--square m-input-group--air">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                R$
+                            </span>
+                        </div>
+                        <input type="text" class="form-control m-input m-input--square m-input--air" id="iValorPassagem" name="iValorPassagem" value="@Model?.ValorPassagem.ToString("N2")">
+                    </div>
+                    <span class="m-form__help">Valor da passagem em reais</span>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Embarque (localidade) <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="m-select2 m-select2--square m-select2--air">
+                        @customHtmlHelper.DropDownLocalidades("sLocalidadeEmbarque", "form-control m-select2", Model == null ? string.Empty : Model.IdLocalidadeEmbarque.ToString())
+                        <span class="m-form__help">Localidade de embarque</span>
+                    </div>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Desembarque (localidade) <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="m-select2 m-select2--square m-select2--air">
+                        @customHtmlHelper.DropDownLocalidades("sLocalidadeDesembarque", "form-control m-select2", Model == null ? string.Empty : Model.IdLocalidadeDesembarque.ToString())
+                        <span class="m-form__help">Localidade de desembarque</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Locais de embarque</label>
+                    <textarea class="form-control m-input--square m-input--air" rows="3"></textarea>
+                    <span class="m-form__help">Nome dos locais de desembarque <span class="font-italic">(exemplo: Goiabeiras)</span></span>
+                    <span class="m-form__help">Digite somente um local por linha</span>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Locais de desembarque</label>
+                    <textarea class="form-control m-input--square m-input--air" rows="3"></textarea>
+                    <span class="m-form__help">Nome dos locais de desembarque <span class="font-italic">(exemplo: Goiabeiras)</span></span>
+                    <span class="m-form__help">Digite somente um local por linha</span>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid m-form__actions--right">
+                <button type="button" class="btn m-btn--square btn-secondary btn-fechar">Cancelar</button>
+                <button type="submit" class="btn m-btn--square btn-info">Salvar</button>
+            </div>
+        </div>
+    </form>
+</div>

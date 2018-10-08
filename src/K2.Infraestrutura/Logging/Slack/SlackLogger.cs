@@ -79,7 +79,7 @@ namespace K2.Infraestrutura.Logging.Slack
                 var logExcpetion = new LogException(exception, _httpContextAccessor);
 
                 if (logExcpetion.Request != null)
-                    slackInfoAdicionais.Add(new KeyValuePair<string, string>("Rotal", logExcpetion.Request.Rota));
+                    slackInfoAdicionais.Add(new KeyValuePair<string, string>("Rota", logExcpetion.Request.Rota));
 
                 _slackUtil.Postar(slackMensagem, exception, slackInfoAdicionais);
             }

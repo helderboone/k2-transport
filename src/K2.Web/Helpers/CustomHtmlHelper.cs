@@ -60,6 +60,124 @@ namespace K2.Web.Helpers
             return new HtmlString(html.ToString());
         }
 
+        public HtmlString DropDownMotoristas(string id, string cssClass, string valor, string atributosHtml = "style=\"width: 100%;\"")
+        {
+            var atribId = !string.IsNullOrEmpty(id) ? " id=\"" + id + "\" name=\"" + id + "\"" : string.Empty;
+
+            var html = new StringBuilder($"<select{atribId} class=\"{cssClass}\"");
+
+            if (!string.IsNullOrEmpty(atributosHtml))
+                html.Append(atributosHtml);
+
+            html.AppendLine(">");
+
+            var filtro = new ProcurarMotoristaEntrada
+            {
+                OrdenarPor = "Nome",
+                PaginaIndex = null,
+                PaginaTamanho = null
+            };
+
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
+
+            var apiResponse = _restSharpHelper.ChamarApi("motoristas/procurar", Method.POST, parametros).Result;
+
+            var saida = ProcurarSaida.Obter(apiResponse.Content);
+
+            html.AppendLine("<option value=\"\"></option>");
+
+            foreach (var motorista in saida.ObterRegistros<MotoristaRegistro>())
+            {
+                html.AppendLine($"<option value=\"{motorista.Id}\" {(valor == motorista.Id.ToString() ? " selected" : string.Empty)}>{motorista.Nome}</option>");
+            }
+
+            html.Append("</select>");
+
+            return new HtmlString(html.ToString());
+        }
+
+        public HtmlString DropDownCarros(string id, string cssClass, string valor, string atributosHtml = "style=\"width: 100%;\"")
+        {
+            var atribId = !string.IsNullOrEmpty(id) ? " id=\"" + id + "\" name=\"" + id + "\"" : string.Empty;
+
+            var html = new StringBuilder($"<select{atribId} class=\"{cssClass}\"");
+
+            if (!string.IsNullOrEmpty(atributosHtml))
+                html.Append(atributosHtml);
+
+            html.AppendLine(">");
+
+            var filtro = new ProcurarCarroEntrada
+            {
+                OrdenarPor = "Descricao",
+                PaginaIndex = null,
+                PaginaTamanho = null
+            };
+
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
+
+            var apiResponse = _restSharpHelper.ChamarApi("carros/procurar", Method.POST, parametros).Result;
+
+            var saida = ProcurarSaida.Obter(apiResponse.Content);
+
+            html.AppendLine("<option value=\"\"></option>");
+
+            foreach (var carro in saida.ObterRegistros<CarroRegistro>())
+            {
+                html.AppendLine($"<option value=\"{carro.Id}\" {(valor == carro.Id.ToString() ? " selected" : string.Empty)}>{carro.Descricao}</option>");
+            }
+
+            html.Append("</select>");
+
+            return new HtmlString(html.ToString());
+        }
+
+        public HtmlString DropDownLocalidades(string id, string cssClass, string valor, string atributosHtml = "style=\"width: 100%;\"")
+        {
+            var atribId = !string.IsNullOrEmpty(id) ? " id=\"" + id + "\" name=\"" + id + "\"" : string.Empty;
+
+            var html = new StringBuilder($"<select{atribId} class=\"{cssClass}\"");
+
+            if (!string.IsNullOrEmpty(atributosHtml))
+                html.Append(atributosHtml);
+
+            html.AppendLine(">");
+
+            var filtro = new ProcurarLocalidadeEntrada
+            {
+                OrdenarPor = "Nome",
+                PaginaIndex = null,
+                PaginaTamanho = null
+            };
+
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
+
+            var apiResponse = _restSharpHelper.ChamarApi("localidades/procurar", Method.POST, parametros).Result;
+
+            var saida = ProcurarSaida.Obter(apiResponse.Content);
+
+            html.AppendLine("<option value=\"\"></option>");
+
+            foreach (var localidade in saida.ObterRegistros<LocalidadeRegistro>())
+            {
+                html.AppendLine($"<option value=\"{localidade.Id}\" {(valor == localidade.Id.ToString() ? " selected" : string.Empty)}>{localidade.Nome}</option>");
+            }
+
+            html.Append("</select>");
+
+            return new HtmlString(html.ToString());
+        }
+
+
 
         public static HtmlString DropDownUf(string id, string cssClass, string valor, string atributosHtml = "style=\"width: 100%;\"")
         {

@@ -47,8 +47,8 @@ namespace K2.Web.Controllers
 
         //[Authorize(Policy = TipoPerfil.Administrador)]
         //[HttpPost]
-        //[Route("listar-localidades")]
-        //[FeedbackExceptionFilter("Ocorreu um erro ao obter as lista localidades cadastradas.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        //[Route("listar-viagems")]
+        //[FeedbackExceptionFilter("Ocorreu um erro ao obter as lista viagems cadastradas.", TipoAcaoAoOcultarFeedback.Ocultar)]
         //public async Task<IActionResult> ListarViagems(ProcurarViagemEntrada filtro)
         //{
         //    if (filtro == null)
@@ -64,7 +64,7 @@ namespace K2.Web.Controllers
         //        new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
         //    };
 
-        //    var apiResponse = await _restSharpHelper.ChamarApi("localidades/procurar", Method.POST, parametros);
+        //    var apiResponse = await _restSharpHelper.ChamarApi("viagems/procurar", Method.POST, parametros);
 
         //    var saida = ProcurarSaida.Obter(apiResponse.Content);
 
@@ -83,96 +83,96 @@ namespace K2.Web.Controllers
         //    return new DatatablesResult(_datatablesHelper.Draw, lst.Count, lst);
         //}
 
+        [Authorize(Policy = TipoPerfil.Administrador)]
+        [HttpGet]
+        [Route("cadastrar-viagem")]
+        public IActionResult CadastrarViagem()
+        {
+            return PartialView("Manter", null);
+        }
+
+        [Authorize(Policy = TipoPerfil.Administrador)]
+        [HttpPost]
+        [Route("cadastrar-viagem")]
+        public async Task<IActionResult> CadastrarViagem(CadastrarViagemEntrada entrada)
+        {
+            if (entrada == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações do viagem não foram preenchidas.", new[] { "Verifique se todas as informações do viagem foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
+
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
+
+            var apiResponse = await _restSharpHelper.ChamarApi("viagems/cadastrar", Method.POST, parametros);
+
+            var saida = ViagemSaida.Obter(apiResponse.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível cadastrar a viagem.", new[] { "A API não retornou nenhuma resposta." }));
+
+            return !saida.Sucesso
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar a viagem.", saida.Mensagens))
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
+        }
+
         //[Authorize(Policy = TipoPerfil.Administrador)]
         //[HttpGet]
-        //[Route("cadastrar-localidade")]
-        //public IActionResult CadastrarViagem()
-        //{
-        //    return PartialView("Manter", null);
-        //}
-
-        //[Authorize(Policy = TipoPerfil.Administrador)]
-        //[HttpPost]
-        //[Route("cadastrar-localidade")]
-        //public async Task<IActionResult> CadastrarViagem(CadastrarViagemEntrada entrada)
-        //{
-        //    if (entrada == null)
-        //        return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações do localidade não foram preenchidas.", new[] { "Verifique se todas as informações do localidade foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
-
-        //    var parametros = new Parameter[]
-        //    {
-        //        new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
-        //    };
-
-        //    var apiResponse = await _restSharpHelper.ChamarApi("localidades/cadastrar", Method.POST, parametros);
-
-        //    var saida = ViagemSaida.Obter(apiResponse.Content);
-
-        //    if (saida == null)
-        //        return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível cadastrar a localidade.", new[] { "A API não retornou nenhuma resposta." }));
-
-        //    return !saida.Sucesso
-        //        ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar a localidade.", saida.Mensagens))
-        //        : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
-        //}
-
-        //[Authorize(Policy = TipoPerfil.Administrador)]
-        //[HttpGet]
-        //[Route("alterar-localidade/{id:int:min(1)}")]
+        //[Route("alterar-viagem/{id:int:min(1)}")]
         //public async Task<IActionResult> AlterarViagem(int id)
         //{
-        //    var apiResponse = await _restSharpHelper.ChamarApi("localidades/obter-por-id/" + id, Method.GET);
+        //    var apiResponse = await _restSharpHelper.ChamarApi("viagems/obter-por-id/" + id, Method.GET);
 
         //    var saida = ViagemSaida.Obter(apiResponse.Content);
 
         //    if (saida == null)
-        //        return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações da localidade.", new[] { "A API não retornou nenhuma resposta." }));
+        //        return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações da viagem.", new[] { "A API não retornou nenhuma resposta." }));
 
         //    if (!saida.Sucesso)
-        //        return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da localidade.", saida.Mensagens));
+        //        return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da viagem.", saida.Mensagens));
 
         //    return PartialView("Manter", saida.Retorno);
         //}
 
         //[Authorize(Policy = TipoPerfil.Administrador)]
         //[HttpPost]
-        //[Route("alterar-localidade")]
+        //[Route("alterar-viagem")]
         //public async Task<IActionResult> AlterarViagem(AlterarViagemEntrada entrada)
         //{
         //    if (entrada == null)
-        //        return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações da localidade não foram preenchidas.", new[] { "Verifique se todas as informações da localidade foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
+        //        return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações da viagem não foram preenchidas.", new[] { "Verifique se todas as informações da viagem foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
 
         //    var parametros = new Parameter[]
         //    {
         //        new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
         //    };
 
-        //    var apiResponse = await _restSharpHelper.ChamarApi("localidades/alterar", Method.PUT, parametros);
+        //    var apiResponse = await _restSharpHelper.ChamarApi("viagems/alterar", Method.PUT, parametros);
 
         //    var saida = Saida.Obter(apiResponse.Content);
 
         //    if (saida == null)
-        //        return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar a localidade.", new[] { "A API não retornou nenhuma resposta." }));
+        //        return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar a viagem.", new[] { "A API não retornou nenhuma resposta." }));
 
         //    return !saida.Sucesso
-        //        ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar a localidade.", saida.Mensagens))
+        //        ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar a viagem.", saida.Mensagens))
         //        : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         //}
 
         //[Authorize(Policy = TipoPerfil.Administrador)]
         //[HttpPost]
-        //[Route("excluir-localidade/{id:int}")]
+        //[Route("excluir-viagem/{id:int}")]
         //public async Task<IActionResult> ExcluirViagem(int id)
         //{
-        //    var apiResponse = await _restSharpHelper.ChamarApi("localidades/excluir/" + id, Method.DELETE);
+        //    var apiResponse = await _restSharpHelper.ChamarApi("viagems/excluir/" + id, Method.DELETE);
 
         //    var saida = Saida.Obter(apiResponse.Content);
 
         //    if (saida == null)
-        //        return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir a localidade.", new[] { "A API não retornou nenhuma resposta." }));
+        //        return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir a viagem.", new[] { "A API não retornou nenhuma resposta." }));
 
         //    return !saida.Sucesso
-        //        ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir a localidade.", saida.Mensagens))
+        //        ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir a viagem.", saida.Mensagens))
         //        : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Viagem excluída com sucesso."));
         //}
     }

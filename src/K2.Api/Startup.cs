@@ -13,6 +13,7 @@ using K2.Infraestrutura.Logging.Slack;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -136,6 +137,8 @@ namespace K2.Api
                 .AddMySqlLoggerProvider(Configuration["K2ConnectionString"], httpContextAccessor)
                 // Adiciona o logger para mandar mensagem pelo Slack.
                 .AddSlackLoggerProvider(Configuration["Slack:Webhook"], Configuration["Slack:Channel"], httpContextAccessor, Configuration["Slack:UserName"]);
+
+            app.UseRequestLocalization(x => x.DefaultRequestCulture = new RequestCulture("pt-BR"));
 
             app.UsePathBase("/api");
 

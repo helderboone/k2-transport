@@ -1,17 +1,24 @@
 ﻿@model IEnumerable<K2.Web.Models.ViagemRegistro>
-
+@{ 
+    var alinhamentoItemTimeline = string.Empty;
+}
 <div class="m-portlet" style="-webkit-box-shadow: none; box-shadow:none; margin-bottom:0;">
     <div class="m-portlet__body" style="padding:0;">
-        <!--begin::m-widget5-->
-        <div class="m-widget5">
-                        
-            @foreach (var viagem in Model)
-            {
-                <div class="m-widget5__item">
-                    <div class="m-widget5__content">
-                        <div class="m-widget5__section" style="padding-left:0;">
-                            <h4 class="m-widget5__title">
-                                @(viagem.Descricao)
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-secondary m-btn m-btn--custom m-btn--label-brand" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Novo administrador" id="bCadastrar"><i class="fa fa-plus-circle"></i></button>
+        </div>
+        <div class="m-timeline-1 m-timeline-1--fixed" style="width: 95%;">
+            <div class="m-timeline-1__items">
+                <div class="m-timeline-1__marker"></div>
+                @foreach (var viagem in Model)
+                {
+                    <div class="m-timeline-1__item @(string.IsNullOrEmpty(alinhamentoItemTimeline) ? "m-timeline-1__item--left m-timeline-1__item--first" : alinhamentoItemTimeline)">
+                        <div class="m-timeline-1__item-circle"><div class="m--bg-danger"></div></div>
+                        <div class="m-timeline-1__item-arrow"></div>
+                        <span class="m-timeline-1__item-time m--font-brand">@viagem.DataHorarioSaida.ToString("dddd,")<span class="m--font-info">@viagem.DataHorarioSaida.ToString("dd/MM/yyyy HH:mm")</span></span>
+                        <div class="m-timeline-1__item-content">
+                            <div class="m-timeline-1__item-title">
+                                <span class="m--font-boldest">@viagem.Descricao</span>
                                 <span class="dropdown">
                                     <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="false">
                                         <i class="la la-ellipsis-h"></i>
@@ -22,65 +29,44 @@
                                         <a class="dropdown-item" data-id="@viagem.Id" href="#"><i class="la la-trash"></i> Excluir</a>
                                     </div>
                                 </span>
-                            </h4>
-                        @*<span class="m-widget5__desc">
-                            Make Metronic Great  Again.Lorem Ipsum Amet
-                        </span>*@
-                        <div class="m-widget5__info">
-                            <span class="m-widget5__author">
-                                Saída:
-                            </span>
-                            <span class="m-widget5__info-author m--font-brand">
-                                @viagem.DataHorarioSaida.ToString("dd/MM/yyyy HH:mm (dddd)")
-                            </span>
-                        </div>
-                        <div class="m-widget5__info">
-                            <span class="m-widget5__author">
-                                Embarque:
-                            </span>
-                            <span class="m-widget5__info-author">
-                                @viagem.LocalidadeEmbarque.Nome
-                            </span>
-                            <span class="m-widget5__info-label">
-                                Desembarque:
-                            </span>
-                            <span class="m-widget5__info-date">
-                                @viagem.LocalidadeDesembarque.Nome
-                            </span>
-                        </div>
-                        <div class="m-widget5__info">
-                            <span class="m-widget5__author">
-                                Carro:
-                            </span>
-                            <span class="m-widget5__info-author font-weight-normal">
-                                @viagem.Carro.Descricao
-                            </span>
-                            <span class="m-widget5__info-label">
-                                Motorista:
-                            </span>
-                            <span class="m-widget5__info-date font-weight-normal">
-                                @viagem.Motorista.Nome
-                            </span>
-                        </div>
+                                <br />
+                                <span class="m--font-bold m--font-normal">@(viagem.LocalidadeEmbarque.Nome) > @(viagem.LocalidadeDesembarque.Nome)</span><br />
+                            </div>
+                            <div class="m-timeline-1__item-body">
+                                
+                                <div class="m-list-timeline">
+                                    <div class="m-list-timeline__items">
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
+                                            <span class="m-list-timeline__text">Reservas</span>
+                                            <span class="m-list-timeline__time"><span class="m--font-boldest" style="font-size: 1.2rem;">@viagem.Reservas.Count()</span></span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
+                                            <span class="m-list-timeline__text">Lugares disponíveis</span>
+                                            <span class="m-list-timeline__time"><span class="m--font-boldest" style="font-size: 1.2rem;">@viagem.QuantidadeLugaresDisponiveis</span></span>
+                                        </div>
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
+                                            <span class="m-list-timeline__text">Disponibilidade</span>
+                                            <span class="m-list-timeline__time"><span class="m--font-boldest m--font-brand" style="font-size: 1.3rem;">@viagem.PercentualDisponibilidade</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="m-widget5__content">
-                        <div class="m-widget5__stats1">
-                            <span class="m-widget5__sales">reservas</span><br>
-                            <span class="m-widget5__number m--font-brand">@viagem.Reservas.Count()</span>
-                        </div>
-                        <div class="m-widget5__stats2" style="margin-left: 20px;">
-                            <span class="m-widget5__sales" style="white-space: nowrap;">lugares disponíveis</span><br>
-                            <span class="m-widget5__number m--font-brand">@viagem.QuantidadeLugaresDisponiveis</span>
-                        </div>
-                        <div class="m-widget5__stats2">
-                            <span class="m-widget5__votes">disponibilidade</span><br>
-                            <span class="m-widget5__number">@viagem.PercentualDisponibilidade</span>
-                        </div>
-                    </div>
-                </div>
-            }
+
+                    if (alinhamentoItemTimeline == "m-timeline-1__item--left" || string.IsNullOrEmpty(alinhamentoItemTimeline))
+                    {
+                        alinhamentoItemTimeline = "m-timeline-1__item--right";
+                    }
+                    else
+                    {
+                        alinhamentoItemTimeline = "m-timeline-1__item--left";
+                    }
+                }
+            </div>
         </div>
-        <!--end::m-widget5-->
     </div>
 </div>

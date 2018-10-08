@@ -4,6 +4,7 @@ using K2.Web.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -58,6 +59,8 @@ namespace K2.Web
                 .AddMySqlLoggerProvider(Configuration["K2ConnectionString"], httpContextAccessor)
                 // Adiciona o logger para mandar mensagem pelo Slack.
                 .AddSlackLoggerProvider(Configuration["Slack:Webhook"], Configuration["Slack:Channel"], httpContextAccessor, Configuration["Slack:UserName"]);
+
+            app.UseRequestLocalization(x => x.DefaultRequestCulture = new RequestCulture("pt-BR"));
 
             app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
 
