@@ -23,6 +23,10 @@ namespace K2.Dominio.Comandos.Entrada
 
         public DateTime? DataSaidaFim { get; set; }
 
+        public bool? SomentePrevistas { get; set; }
+
+        public bool? SomenteRealizadasOuCanceladas { get; set; }
+
         public ProcurarViagemEntrada(string ordenarPor,
             string ordenarSentido,
             int? paginaIndex = null,

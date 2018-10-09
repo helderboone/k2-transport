@@ -22,5 +22,9 @@ namespace K2.Web.Models
         public DateTime? DataSaidaInicio { get; set; }
 
         public DateTime? DataSaidaFim { get; set; }
+
+        public bool? SomentePrevistas { get; set; }
+
+        public bool? SomenteRealizadasOuCanceladas { get; set; }
     }
 }

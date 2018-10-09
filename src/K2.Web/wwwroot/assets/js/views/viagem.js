@@ -8,10 +8,31 @@
                 manterViagem(null);
             });
 
-            mApp.initTooltips();
+            $("a[class*='excluir-viagem']").each(function () {
+                var id = $(this).data("id");
+
+                $(this).click(function () {
+                    App.exibirConfirm("Deseja realmente excluir essa viagem?", "Sim", "Não", function () { excluirViagem(id, true); });
+                });
+            });
+
+            $("a[class*='listar-reservas']").each(function () {
+                var id = $(this).data("id");
+
+                $(this).click(function () {
+                    obterReservasPorViagem(id);
+                });
+            });
+
         }).fail(function (jqXhr) {
             var feedback = Feedback.converter(jqXhr.responseJSON);
             feedback.exibirModal();
+        });
+    };
+
+    var obterReservasPorViagem = function (idViagem) {
+        App.exibirModalPorRota(App.corrigirPathRota("listar-por-viagem/" + idViagem), function () {
+
         });
     };
 
@@ -171,8 +192,8 @@
                         Descricao: $("#iDescricao").val(),
                         ValorPassagem: $("#iValorPassagem").val(),
                         DataHorarioSaida: $("#iDataHorarioSaida").val(),
-                        LocaisEmbarque: "",
-                        LocaisDesembarque: ""
+                        LocaisEmbarque: $("#tLocaisEmbarque").val().split('\n'),
+                        LocaisDesembarque: $("#tLocaisDesembarque").val().split('\n')
                     };
 
                     App.bloquear($("#frmManterViagem"));
@@ -183,7 +204,7 @@
 
                             if (feedback.Tipo.Nome == Tipo.Sucesso) {
                                 feedback.exibirModal(function () {
-                                    $("#tblViagem").DataTable().ajax.reload();
+                                    obterViagensPrevistas();
                                     App.ocultarModal();
                                 });
                             }
@@ -202,7 +223,7 @@
         });
     };
 
-    var excluirViagem = function (id) {
+    var excluirViagem = function (id, prevista) {
         App.bloquear();
 
         $.post(App.corrigirPathRota("excluir-viagem/" + id), function (feedbackResult) {
@@ -210,7 +231,10 @@
 
             if (feedback.Tipo.Nome == Tipo.Sucesso) {
                 feedback.exibirModal(function () {
-                    $("#tblViagem").DataTable().ajax.reload();
+                    if (prevista)
+                        obterViagensPrevistas();
+                    else
+                        $("#tblViagem").DataTable().ajax.reload();
                     App.ocultarModal();
                 });
             }

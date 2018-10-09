@@ -18,7 +18,7 @@
             <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-6 m-form__group-sub">
                     <label>Descrição <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iDescricao" name="iDescricao" maxlength="200" style="text-transform:uppercase;" value="@Model?.Descricao">
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iDescricao" name="iDescricao" maxlength="200" value="@Model?.Descricao">
                     <span class="m-form__help">Nome de identificação da viagem</span>
                 </div>
                 <div class="col-lg-6 m-form__group-sub">
@@ -86,13 +86,13 @@
             <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-6 m-form__group-sub">
                     <label>Locais de embarque</label>
-                    <textarea class="form-control m-input--square m-input--air" rows="3"></textarea>
+                    <textarea class="form-control m-input--square m-input--air" rows="3" id="tLocaisEmbarque"></textarea>
                     <span class="m-form__help">Nome dos locais de desembarque <span class="font-italic">(exemplo: Goiabeiras)</span></span>
                     <span class="m-form__help">Digite somente um local por linha</span>
                 </div>
                 <div class="col-lg-6 m-form__group-sub">
                     <label>Locais de desembarque</label>
-                    <textarea class="form-control m-input--square m-input--air" rows="3"></textarea>
+                    <textarea class="form-control m-input--square m-input--air" rows="3" id="tLocaisDesembarque"></textarea>
                     <span class="m-form__help">Nome dos locais de desembarque <span class="font-italic">(exemplo: Goiabeiras)</span></span>
                     <span class="m-form__help">Digite somente um local por linha</span>
                 </div>

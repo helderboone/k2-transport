@@ -135,6 +135,9 @@
   <data name="Localidade_Desembarque_Nao_Existe" xml:space="preserve">
     <value>A localidade de desembarque com o ID informado não existe.</value>
   </data>
+  <data name="Localidade_Embarque_Desembarque_Nao_Podem_Ser_Iguais" xml:space="preserve">
+    <value>As localidades de embarque e desembarque da viagem não podem ser iguais.</value>
+  </data>
   <data name="Localidade_Embarque_Nao_Existe" xml:space="preserve">
     <value>A localidade de embarque com o ID informado não existe.</value>
   </data>

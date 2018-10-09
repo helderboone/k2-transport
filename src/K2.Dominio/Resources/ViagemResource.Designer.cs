@@ -115,6 +115,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to As localidades de embarque e desembarque da viagem não podem ser iguais..
+        /// </summary>
+        public static string Localidade_Embarque_Desembarque_Nao_Podem_Ser_Iguais {
+            get {
+                return ResourceManager.GetString("Localidade_Embarque_Desembarque_Nao_Podem_Ser_Iguais", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A localidade de embarque com o ID informado não existe..
         /// </summary>
         public static string Localidade_Embarque_Nao_Existe {

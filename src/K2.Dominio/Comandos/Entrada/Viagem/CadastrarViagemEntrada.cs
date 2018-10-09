@@ -93,6 +93,9 @@ namespace K2.Dominio.Comandos.Entrada
                 .NotificarSeMenorOuIgualA(this.IdLocalidadeDesembarque, 0, ViagemResource.Localidade_Desembarque_Nao_Existe)
                 .NotificarSeNuloOuVazio(this.Descricao, ViagemResource.Descricao_Obrigatoria_Nao_Informada)
                 .NotificarSeMenorOuIgualA(this.ValorPassagem, 0, ViagemResource.Valor_Passagem_Obrigatorio_Nao_Informada);
+
+            if (this.IdLocalidadeEmbarque > 0 && this.IdLocalidadeDesembarque > 0 && this.IdLocalidadeEmbarque == this.IdLocalidadeDesembarque)
+                this.AdicionarNotificacao(ViagemResource.Localidade_Embarque_Desembarque_Nao_Podem_Ser_Iguais);
         }
     }
 }

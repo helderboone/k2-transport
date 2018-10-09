@@ -33,16 +33,27 @@ namespace K2.Web.Controllers
         [Route("viagens-previstas")]
         public async Task<IActionResult> ViagensPrevistas()
         {
-            var apiResponse = await _restSharpHelper.ChamarApi("viagens/obter-previstas", Method.GET);
+            var filtro = new ProcurarViagemEntrada
+            {
+                OrdenarPor = "DataHorarioSaida",
+                SomentePrevistas = true
+            };
 
-            var saida = ViagensSaida.Obter(apiResponse.Content);
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
+
+            var apiResponse = await _restSharpHelper.ChamarApi("viagens/procurar", Method.POST, parametros);
+
+            var saida = ProcurarSaida.Obter(apiResponse.Content);
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível obter as viagens previstas.", saida.Mensagens, TipoAcaoAoOcultarFeedback.Ocultar));
 
-            var registros = saida.Retorno;
+            var registros = saida.ObterRegistros<ViagemRegistro>();
 
-            return View(registros.OrderBy(x => x.DataHorarioSaida));
+            return View(registros);
         }
 
         //[Authorize(Policy = TipoPerfil.Administrador)]
@@ -94,6 +105,7 @@ namespace K2.Web.Controllers
         [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("cadastrar-viagem")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao cadastrar a viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> CadastrarViagem(CadastrarViagemEntrada entrada)
         {
             if (entrada == null)
@@ -104,7 +116,7 @@ namespace K2.Web.Controllers
                 new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
             };
 
-            var apiResponse = await _restSharpHelper.ChamarApi("viagems/cadastrar", Method.POST, parametros);
+            var apiResponse = await _restSharpHelper.ChamarApi("viagens/cadastrar", Method.POST, parametros);
 
             var saida = ViagemSaida.Obter(apiResponse.Content);
 
@@ -159,21 +171,21 @@ namespace K2.Web.Controllers
         //        : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         //}
 
-        //[Authorize(Policy = TipoPerfil.Administrador)]
-        //[HttpPost]
-        //[Route("excluir-viagem/{id:int}")]
-        //public async Task<IActionResult> ExcluirViagem(int id)
-        //{
-        //    var apiResponse = await _restSharpHelper.ChamarApi("viagems/excluir/" + id, Method.DELETE);
+        [Authorize(Policy = TipoPerfil.Administrador)]
+        [HttpPost]
+        [Route("excluir-viagem/{id:int}")]
+        public async Task<IActionResult> ExcluirViagem(int id)
+        {
+            var apiResponse = await _restSharpHelper.ChamarApi("viagens/excluir/" + id, Method.DELETE);
 
-        //    var saida = Saida.Obter(apiResponse.Content);
+            var saida = Saida.Obter(apiResponse.Content);
 
-        //    if (saida == null)
-        //        return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir a viagem.", new[] { "A API não retornou nenhuma resposta." }));
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir a viagem.", new[] { "A API não retornou nenhuma resposta." }));
 
-        //    return !saida.Sucesso
-        //        ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir a viagem.", saida.Mensagens))
-        //        : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Viagem excluída com sucesso."));
-        //}
+            return !saida.Sucesso
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir a viagem.", saida.Mensagens))
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Viagem excluída com sucesso."));
+        }
     }
 }

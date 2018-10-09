@@ -15,16 +15,6 @@ namespace K2.Dominio.Interfaces.Servicos
         Task<ISaida> ObterViagemPorId(int id, CredencialUsuarioEntrada credencial);
 
         /// <summary>
-        /// Obtém as viagens ainda previstas (não canceladas ou data de saída menor que a data atual).
-        /// </summary>
-        Task<ISaida> ObterViagensPrevistas(CredencialUsuarioEntrada credencial);
-
-        /// <summary>
-        /// Obtém as viagens já realizadas (data de saída maior que a data atual) ou canceladas.
-        /// </summary>
-        Task<ISaida> ObterViagensRealizadasOuCanceladas(CredencialUsuarioEntrada credencial);
-
-        /// <summary>
         /// Obtém as viagems baseadas nos parâmetros de procura
         /// </summary>
         Task<ISaida> ProcurarViagens(ProcurarViagemEntrada entrada, CredencialUsuarioEntrada credencial);

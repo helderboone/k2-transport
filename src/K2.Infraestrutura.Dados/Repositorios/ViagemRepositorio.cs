@@ -24,11 +24,12 @@ namespace K2.Infraestrutura.Dados.Repositorios
         public async Task<Viagem> ObterPorId(int id, bool habilitarTracking = false)
         {
             var query = _efContext.Viagens
-                .Include(x => x.Carro)
+                .Include(x => x.Carro.Proprietario)
                 .Include(x => x.Motorista.Usuario)
                 .Include(x => x.LocalidadeEmbarque)
                 .Include(x => x.LocalidadeDesembarque)
                 .Include(x => x.Reservas)
+                    .ThenInclude(x => x.Cliente.Usuario)
                 .AsQueryable();
 
             if (!habilitarTracking)
@@ -37,64 +38,6 @@ namespace K2.Infraestrutura.Dados.Repositorios
             return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
         
-        public async Task<IEnumerable<Viagem>> ObterPrevistas(CredencialUsuarioEntrada credencial)
-        {
-            var query = _efContext.Viagens
-                .Include(x => x.Carro.Proprietario)
-                .Include(x => x.Motorista.Usuario)
-                .Include(x => x.LocalidadeEmbarque)
-                .Include(x => x.LocalidadeDesembarque)
-                .Include(x => x.Reservas)
-                    .ThenInclude(x => x.Cliente.Usuario)
-                .AsNoTracking()
-                .AsQueryable();
-
-            switch (credencial.PerfilUsuario)
-            {
-                case TipoPerfil.Motorista:
-                    // Quando a consulta é feita por um motorista, somente seus viagens devem ser retornadas.
-                    query = query.Where(x => x.Motorista.IdUsuario == credencial.IdUsuario);
-                    break;
-                case TipoPerfil.ProprietarioCarro:
-                    // Quando a consulta é feita por um proprietário, somente as viagens associadas a um de seus carros devem ser retornadas.
-                    query = query.Where(x => x.Carro.Proprietario.IdUsuario == credencial.IdUsuario);
-                    break;
-            }
-
-            query = query.Where(x => x.DataHorarioSaida >= DateTimeHelper.ObterHorarioAtualBrasilia() && x.Situacao != (int)TipoSituacaoViagem.Cancelada);
-
-            return await query.ToListAsync();
-        }
-
-        public async Task<IEnumerable<Viagem>> ObterRealizadasOuCanceladas(CredencialUsuarioEntrada credencial)
-        {
-            var query = _efContext.Viagens
-                .Include(x => x.Carro.Proprietario)
-                .Include(x => x.Motorista.Usuario)
-                .Include(x => x.LocalidadeEmbarque)
-                .Include(x => x.LocalidadeDesembarque)
-                .Include(x => x.Reservas)
-                    .ThenInclude(x => x.Cliente.Usuario)
-                .AsNoTracking()
-                .AsQueryable();
-
-            switch (credencial.PerfilUsuario)
-            {
-                case TipoPerfil.Motorista:
-                    // Quando a consulta é feita por um motorista, somente seus viagens devem ser retornadas.
-                    query = query.Where(x => x.Motorista.IdUsuario == credencial.IdUsuario);
-                    break;
-                case TipoPerfil.ProprietarioCarro:
-                    // Quando a consulta é feita por um proprietário, somente as viagens associadas a um de seus carros devem ser retornadas.
-                    query = query.Where(x => x.Carro.Proprietario.IdUsuario == credencial.IdUsuario);
-                    break;
-            }
-
-            query = query.Where(x => x.DataHorarioSaida < DateTimeHelper.ObterHorarioAtualBrasilia() || x.Situacao == (int)TipoSituacaoViagem.Cancelada);
-
-            return await query.ToListAsync();
-        }
-
         public async Task<bool> VerificarExistenciaPorId(int id)
         {
             return await _efContext.Viagens.AnyAsync(x => x.Id == id);
@@ -145,6 +88,17 @@ namespace K2.Infraestrutura.Dados.Repositorios
                     break;
             }
 
+            if (entrada.SomentePrevistas.HasValue && entrada.SomentePrevistas.Value)
+            {
+                query = query.Where(x => x.DataHorarioSaida >= DateTimeHelper.ObterHorarioAtualBrasilia() && x.Situacao != (int)TipoSituacaoViagem.Cancelada);
+            }
+            else if (entrada.SomenteRealizadasOuCanceladas.HasValue && entrada.SomenteRealizadasOuCanceladas.Value)
+            {
+                query = query.Where(x => x.DataHorarioSaida < DateTimeHelper.ObterHorarioAtualBrasilia() || x.Situacao == (int)TipoSituacaoViagem.Cancelada);
+            }
+            else if (entrada.DataSaidaInicio.HasValue && entrada.DataSaidaFim.HasValue)
+                query = query.Where(x => x.DataHorarioSaida >= entrada.DataSaidaInicio.Value && x.DataHorarioSaida <= entrada.DataSaidaFim.Value);
+
             if (entrada.IdLocalidadeEmbarque.HasValue)
                 query = query.Where(x => x.IdLocalidadeEmbarque == entrada.IdLocalidadeEmbarque.Value);
 
@@ -177,10 +131,12 @@ namespace K2.Infraestrutura.Dados.Repositorios
             }
             else
             {
+                var pagedList = await query.ToPagedListAsync(null, 1000);
+
                 var totalRegistros = await query.CountAsync();
 
                 return new ProcurarSaida(
-                    (await query.ToListAsync()).Select(x => new ViagemSaida(x)),
+                    pagedList.AsEnumerable().Select(x => new ViagemSaida(x)),
                     entrada.OrdenarPor,
                     entrada.OrdenarSentido,
                     totalRegistros);

@@ -18,11 +18,13 @@ namespace K2.Infraestrutura.Dados.Maps
 
             builder.HasOne(x => x.Viagem)
                 .WithMany(y => y.Reservas)
-                .HasForeignKey(x => x.IdViagem);
+                .HasForeignKey(x => x.IdViagem)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.Dependente)
                 .WithOne()
-                .HasForeignKey<ReservaDependente>(x => x.IdReserva);
+                .HasForeignKey<ReservaDependente>(x => x.IdReserva)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(x => x.IdViagem);
             builder.Property(x => x.ValorPago);

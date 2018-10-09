@@ -4,11 +4,11 @@ using K2.Web.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Globalization;
 using System.Net;
 
 namespace K2.Web
@@ -60,7 +60,10 @@ namespace K2.Web
                 // Adiciona o logger para mandar mensagem pelo Slack.
                 .AddSlackLoggerProvider(Configuration["Slack:Webhook"], Configuration["Slack:Channel"], httpContextAccessor, Configuration["Slack:UserName"]);
 
-            app.UseRequestLocalization(x => x.DefaultRequestCulture = new RequestCulture("pt-BR"));
+            var cultureInfo = new CultureInfo("pt-BR");
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             app.UseExceptionHandler($"/feedback/{(int)HttpStatusCode.InternalServerError}");
 
