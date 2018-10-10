@@ -28,16 +28,6 @@ namespace K2.Dominio.Comandos.Saida
         public string Observacao { get; }
 
         /// <summary>
-        /// Situação da reserva
-        /// </summary>
-        public int Situacao { get; }
-
-        /// <summary>
-        /// Descrição da situação da reserva
-        /// </summary>
-        public string DescricaoSituacao { get; }
-
-        /// <summary>
         /// Cliente relacionado a reserva
         /// </summary>
         public object Cliente { get; }
@@ -58,8 +48,6 @@ namespace K2.Dominio.Comandos.Saida
             IdCliente         = reserva.IdCliente;
             ValorPago         = reserva.ValorPago;
             Observacao        = reserva.Observacao;
-            Situacao          = reserva.Situacao;
-            DescricaoSituacao = reserva.ObterTipoSituacao().ObterDescricao();
             Cliente = new
             {
                 reserva.Cliente.Nome,

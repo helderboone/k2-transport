@@ -4,6 +4,8 @@
         $.get(App.corrigirPathRota("viagens-previstas"), function (html) {
             $(".viagens-previstas").html(html);
 
+            mApp.initTooltips();
+
             $("#bCadastrar").click(function () {
                 manterViagem(null);
             });
@@ -31,84 +33,195 @@
     };
 
     var obterReservasPorViagem = function (idViagem) {
-        App.exibirModalPorRota(App.corrigirPathRota("listar-por-viagem/" + idViagem), function () {
+        App.exibirModalPorRota(App.corrigirPathRota("reservas-por-viagem/" + idViagem), function () {
+            App.bloquear($("#portletReserva"));
 
-        });
-    };
-
-    var initDataTable = function () {
-        App.bloquear();
-
-        $("#tblViagem").DataTable({
-            ajax: {
-                url: App.corrigirPathRota("listar-viagens"),
-                type: "POST",
-                error: function (jqXhr) {
-                    var feedback = Feedback.converter(jqXhr.responseJSON);
-                    feedback.exibirModal();
-                },
-                data: function (data) {
-                    data.Nome = $("#iProcurarNome").val();
-                    data.Uf = $("#sProcurarEstado").val();
-                }
-            },
-            info: true,
-            columns: [
-                { data: "nome", title: "Nome", orderable: true, className: "all" },
-                { data: "uf", title: "Estado", orderable: true },
-                {
-                    data: null,
-                    className: "td-actions dt-center",
-                    orderable: false,
-                    width: "70px",
-                    render: function (data, type, row) {
-                        return '<a href="#" data-id="' + row.id + '" class="alterar-viagem m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Alterar"><i class="la la-edit"></i></a>' +
-                            '<a href="#" data-id="' + row.id + '" class="excluir-viagem m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Excluir"><i class="la la-trash"></i></a>';
+            $("#tblReserva").DataTable({
+                ajax: {
+                    url: App.corrigirPathRota("listar-reservas-por-viagem/" + idViagem),
+                    type: "POST",
+                    error: function (jqXhr) {
+                        var feedback = Feedback.converter(jqXhr.responseJSON);
+                        feedback.exibirModal();
                     }
-                }
-            ],
-            select: {
-                style: 'single',
-                info: false
-            },
-            serverSide: true,
-            responsive: true,
-            pagingType: 'full_numbers',
-            order: [0, "asc"],
-            searching: false,
-            paging: true,
-            lengthChange: false,
-            pageLength: 25
-        }).on("draw.dt", function () {
-            mApp.initTooltips();
+                },
+                columns: [
+                    {
+                        data: null,
+                        title: "Cliente",
+                        orderable: false,
+                        className: "all",
+                        render: function (data, type, row) {
+                            return '<span class="m--font-boldest">' + data.cliente.nome + '</span><br/>' +
+                                'CPF: <span class="cpf">' + data.cliente.cpf + '</span><br/>' +
+                                'RG: ' + data.cliente.rg + '<br/>' +
+                                'Celular: <span class="celular">' + data.cliente.celular + '</span>';
+                        }
+                    },
+                    {
+                        data: null,
+                        title: "Dependente",
+                        className: "min-tablet",
+                        orderable: false,
+                        render: function (data, type, row) {
+                            if (data.dependente === null)
+                                return '<a href="#" data-id="' + row.id + '" class="cadastrar-reserva-dependente m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Cadastrar dependente"><i class="la la-plus"></i></a>';
+                            else {
+                                return '<span class="m--font-bold">' + data.dependente.nome + '</span><br/>' +
+                                    'Data de nascimento: ' + data.dependente.dataNascimentoToString + '<br/>' +
+                                    '<a href="#" data-id="' + row.id + '" class="alterar-reserva-dependente m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Alterar dependente"><i class="la la-edit"></i></a>' +
+                                    '<a href="#" data-id="' + row.id + '" class="excluir-reserva-dependente m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Excluir dependente"><i class="la la-trash"></i></a><br/>';
+                            }
+                        }
+                    },
+                    {
+                        data: null,
+                        title: "Valor pago",
+                        orderable: false,
+                        className: "dt-right min-tablet",
+                        render: function (data, type, row) {
+                            return accounting.formatMoney(data.valorPago, "R$ ", 2, ".", ",");
+                        }
+                    },
+                    { data: "observacao", className: "min-tablet", title: "Observação", orderable: false },
+                    {
+                        data: null,
+                        className: "td-actions dt-center min-tablet",
+                        orderable: false,
+                        width: "70px",
+                        render: function (data, type, row) {
+                            return '<a href="#" data-id="' + row.id + '" class="alterar-reserva m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Alterar reserva"><i class="la la-edit"></i></a>' +
+                                '<a href="#" data-id="' + row.id + '" class="excluir-reserva m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Excluir reserva"><i class="la la-trash"></i></a>';
+                        }
+                    }
+                ],
+                select: {
+                    style: 'single',
+                    info: false
+                },
+                autoWidth: false,
+                info: false,
+                serverSide: true,
+                responsive: true,
+                order: [0, "asc"],
+                searching: false,
+                paging: false,
+                lengthChange: false,
+                pageLength: 25
+            }).on("draw.dt", function () {
 
-            $("a[class*='alterar-viagem']").each(function () {
-                var id = $(this).data("id");
+                mApp.initTooltips();
 
-                $(this).click(function () {
-                    manterViagem(id);
+                $(".cpf").inputmask({
+                    "mask": "999.999.999-99"
                 });
-            });
 
-            $("a[class*='excluir-viagem']").each(function () {
-                var id = $(this).data("id");
-
-                $(this).click(function () {
-                    App.exibirConfirm("Deseja realmente excluir essa viagem?", "Sim", "Não", function () { excluirViagem(id); });
+                $(".celular").inputmask({
+                    "mask": "(99) 99999-9999"
                 });
+
+                $("a[class*='cadastrar-reserva-dependente']").each(function () {
+                    var idReserva = $(this).data("id");
+
+                    $(this).click(function () {
+                        manterReservaDependente(idReserva, true);
+                    });
+                });
+
+                $("a[class*='alterar-reserva-dependente']").each(function () {
+                    var idReserva = $(this).data("id");
+
+                    $(this).click(function () {
+                        manterReservaDependente(idReserva, false);
+                    });
+                });
+
+                $("a[class*='excluir-reserva-dependente']").each(function () {
+                    var idReserva = $(this).data("id");
+
+                    $(this).click(function () {
+                        App.exibirConfirm("Deseja realmente excluir o dependente dessa reserva?", "Sim", "Não", function () { excluirReservaDependente(idReserva); });
+                    });
+                });
+            }).on("processing.dt", function () {
+                    App.desbloquear($("#portletReserva"));
             });
-        }).on("processing.dt", function () {
-            App.bloquear();
-        });
+        }, true, "modal-reservas-por-viagem");
     };
 
-    var procurarViagem = function () {
-        $("#frmProcurarViagem").validate({
-            submitHandler: function () {
-                $("#tblViagem").DataTable().ajax.reload();
-            }
-        });
-    };
+    //var initDataTable = function () {
+    //    App.bloquear();
+
+    //    $("#tblViagem").DataTable({
+    //        ajax: {
+    //            url: App.corrigirPathRota("listar-viagens"),
+    //            type: "POST",
+    //            error: function (jqXhr) {
+    //                var feedback = Feedback.converter(jqXhr.responseJSON);
+    //                feedback.exibirModal();
+    //            },
+    //            data: function (data) {
+    //                data.Nome = $("#iProcurarNome").val();
+    //                data.Uf = $("#sProcurarEstado").val();
+    //            }
+    //        },
+    //        info: true,
+    //        columns: [
+    //            { data: "nome", title: "Nome", orderable: true, className: "all" },
+    //            { data: "uf", title: "Estado", orderable: true },
+    //            {
+    //                data: null,
+    //                className: "td-actions dt-center",
+    //                orderable: false,
+    //                width: "70px",
+    //                render: function (data, type, row) {
+    //                    return '<a href="#" data-id="' + row.id + '" class="alterar-viagem m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Alterar"><i class="la la-edit"></i></a>' +
+    //                        '<a href="#" data-id="' + row.id + '" class="excluir-viagem m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Excluir"><i class="la la-trash"></i></a>';
+    //                }
+    //            }
+    //        ],
+    //        select: {
+    //            style: 'single',
+    //            info: false
+    //        },
+    //        serverSide: true,
+    //        responsive: true,
+    //        pagingType: 'full_numbers',
+    //        order: [0, "asc"],
+    //        searching: false,
+    //        paging: true,
+    //        lengthChange: false,
+    //        pageLength: 25
+    //    }).on("draw.dt", function () {
+    //        mApp.initTooltips();
+
+    //        $("a[class*='alterar-viagem']").each(function () {
+    //            var id = $(this).data("id");
+
+    //            $(this).click(function () {
+    //                manterViagem(id);
+    //            });
+    //        });
+
+    //        $("a[class*='excluir-viagem']").each(function () {
+    //            var id = $(this).data("id");
+
+    //            $(this).click(function () {
+    //                App.exibirConfirm("Deseja realmente excluir essa viagem?", "Sim", "Não", function () { excluirViagem(id); });
+    //            });
+    //        });
+    //    }).on("processing.dt", function () {
+    //        App.bloquear();
+    //    });
+    //};
+
+    //var procurarViagem = function () {
+    //    $("#frmProcurarViagem").validate({
+    //        submitHandler: function () {
+    //            $("#tblViagem").DataTable().ajax.reload();
+    //        }
+    //    });
+    //};
 
     var manterViagem = function (id) {
         var cadastro = id === null || id === 0;
@@ -202,7 +315,7 @@
                         .done(function (feedbackResult) {
                             var feedback = Feedback.converter(feedbackResult);
 
-                            if (feedback.Tipo.Nome == Tipo.Sucesso) {
+                            if (feedback.Tipo.Nome === Tipo.Sucesso) {
                                 feedback.exibirModal(function () {
                                     obterViagensPrevistas();
                                     App.ocultarModal();
@@ -223,13 +336,73 @@
         });
     };
 
+    var manterReservaDependente = function (idReserva, cadastro) {
+
+        App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-reserva-dependente/" + idReserva) : App.corrigirPathRota("cadastrar-reserva-dependente/" + idReserva)), function () {
+
+            $("#iCpfDependente").inputmask({
+                "mask": "999.999.999-99"
+            });
+
+            $("#iDataNascimentoDependente").inputmask("dd/mm/yyyy", {
+                placeholder: "_"
+            });
+
+            $("#frmManterReservaDependente").validate({
+                rules: {
+                    iNomeDependente: {
+                        required: true
+                    },
+                    iDataNascimentoDependente: {
+                        required: true
+                    }
+                },
+
+                submitHandler: function () {
+
+                    var reservaDependente = {
+                        IdReserva: $("#iIdReserva").val(),
+                        Nome: $("#iNomeDependente").val(),
+                        DataNascimento: $("#iDataNascimentoDependente").val(),
+                        Cpf: $("#iCpfDependente").val(),
+                        Rg: $("#iRgDependente").val()
+                    };
+
+                    App.bloquear($("#frmManterReservaDependente"));
+
+                    $.post(App.corrigirPathRota(cadastro ? "cadastrar-reserva-dependente" : "alterar-reserva-dependente"), { entrada: reservaDependente })
+                        .done(function (feedbackResult) {
+                            var feedback = Feedback.converter(feedbackResult);
+
+                            if (feedback.Tipo.Nome === Tipo.Sucesso) {
+                                feedback.exibirModal(function () {
+                                    $("#tblReserva").DataTable().ajax.reload();
+                                    App.ocultarModalPorTitulo("manter-dependente");
+                                });
+                            }
+                            else
+                                feedback.exibirModal();
+                        })
+                        .fail(function (jqXhr) {
+                            var feedback = Feedback.converter(jqXhr.responseJSON);
+                            feedback.exibirModal();
+                        })
+                        .always(function () {
+                            App.desbloquear($("#frmManterReservaDependente"));
+                        });
+                }
+            });
+
+        }, true, "manter-dependente");
+    };
+
     var excluirViagem = function (id, prevista) {
         App.bloquear();
 
         $.post(App.corrigirPathRota("excluir-viagem/" + id), function (feedbackResult) {
             var feedback = Feedback.converter(feedbackResult);
 
-            if (feedback.Tipo.Nome == Tipo.Sucesso) {
+            if (feedback.Tipo.Nome === Tipo.Sucesso) {
                 feedback.exibirModal(function () {
                     if (prevista)
                         obterViagensPrevistas();
@@ -244,6 +417,29 @@
         .fail(function (jqXhr) {
             var feedback = Feedback.converter(jqXhr.responseJSON);
             feedback.exibirModal();
+        });
+    };
+
+    var excluirReservaDependente = function (idReserva) {
+        App.bloquear($("#frmManterReservaDependente"));
+
+        $.post(App.corrigirPathRota("excluir-reserva-dependente/" + idReserva), function (feedbackResult) {
+            var feedback = Feedback.converter(feedbackResult);
+
+            if (feedback.Tipo.Nome === Tipo.Sucesso) {
+                feedback.exibirModal(function () {
+                    $("#tblReserva").DataTable().ajax.reload();
+                });
+            }
+            else
+                feedback.exibirModal();
+        })
+        .fail(function (jqXhr) {
+            var feedback = Feedback.converter(jqXhr.responseJSON);
+            feedback.exibirModal();
+        })
+        .always(function () {
+            App.desbloquear($("#frmManterReservaDependente"));
         });
     };
 

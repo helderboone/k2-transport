@@ -153,8 +153,6 @@ namespace K2.Dominio.Comandos.Saida
                 x.Id,
                 x.IdCliente,
                 NomeCliente = x.Cliente.Nome,
-                x.Situacao,
-                DescricaoSituacao = x.ObterTipoSituacao().ObterDescricao(),
                 x.Observacao,
                 x.ValorPago
             }).ToArray();

@@ -28,7 +28,6 @@ namespace K2.Infraestrutura.Dados.Maps
 
             builder.Property(x => x.IdViagem);
             builder.Property(x => x.ValorPago);
-            builder.Property(x => x.Situacao);
             builder.Property(x => x.Observacao);
         }
     }

@@ -52,15 +52,11 @@ namespace K2.Web.Models
 
         public string Observacao { get; set; }
 
-        public int Situacao { get; set; }
-
-        public string DescricaoSituacao { get; set; }
-
         public ReservaClienteRetorno Cliente { get; set; }
 
         public ReservaViagemRetorno Viagem { get; set; }
 
-        public ReservaDependenteRetorno Dependente { get; }
+        public ReservaDependenteRetorno Dependente { get; set; }
     }
 
     public class ReservaClienteRetorno
@@ -135,5 +131,7 @@ namespace K2.Web.Models
         public string Cpf { get; set; }
 
         public string Rg { get; set; }
+
+        public string DataNascimentoToString => this.DataNascimento.ToString("dd/MM/yyyy");
     }
 }

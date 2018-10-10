@@ -18,6 +18,11 @@
         box-shadow: none;
     }
 
+.jconfirm-title-hidden {
+    visibility: hidden;
+    display: none;
+}
+
 .jconfirm.jconfirm-white .jconfirm-box, .jconfirm.jconfirm-light .jconfirm-box {
     -webkit-box-shadow: none;
     box-shadow: none;

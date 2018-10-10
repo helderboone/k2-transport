@@ -1,0 +1,56 @@
+﻿@model K2.Web.Models.ViagemRegistro
+
+
+<div class="m-portlet m-portlet-lg m-portlet--brand m-portlet--head-solid-bg" style="margin:0 auto;">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Reservas
+                    <small>@Model.Descricao</small>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="m-form m-form--fit" novalidate="novalidate">
+        <div class="m-portlet__body" style="padding: 15px;" id="portletReserva">
+            <div class="row">
+                <div class="col-sm-8 mt-lg-3">
+                    <button type="button" class="btn m-btn--square btn-info m-btn--wide btn-sm" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Cadastrar reserva" id="bCadastrar">Nova</button>
+                </div>
+                <div class="col-sm-4">
+                    <div class="m-widget29">
+                        <div class="m-widget_content" style="padding:0;">
+                            <div class="m-widget_content-items">
+                                <div class="m-widget_content-item">
+                                    <span style="text-align: center; white-space: nowrap;">Lugares disponíveis</span>
+                                    <span style="text-align: center;">+15%</span>
+                                </div>
+                                <div class="m-widget_content-item">
+                                    <span style="text-align: center;">Reservas</span>
+                                    <span style="text-align: center;">29</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-hovertable-striped table-condensed" id="tblReserva" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th data-priority="1">Cliente</th>
+                        <th>Dependente</th>
+                        <th>Valor pago</th>
+                        <th>Observação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid m-form__actions--right">
+                <button type="button" class="btn m-btn--square btn-secondary btn-fechar">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

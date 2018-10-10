@@ -45,11 +45,12 @@ var App = function () {
 		},
 
         // Exibe um popup utilizando o plugin Jquery Confirm
-		exibirModalPorHtml: function (conteudoHtml, openCallback, fecharAoClicarBg, permanecerAberto) {
+		exibirModalPorHtml: function (conteudoHtml, openCallback, fecharAoClicarBg, permanecerAberto, titulo) {
 
 			var jc = $.dialog({
 				content: conteudoHtml,
-				title: null,
+                title: titulo,
+                titleClass: 'jconfirm-title-hidden',
 				closeIcon: false,
 				backgroundDismiss: (fecharAoClicarBg == null ? false : fecharAoClicarBg),
                 columnClass: 'col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1',
@@ -77,11 +78,11 @@ var App = function () {
 		},
 
 		// Exibe um modal baseado no contéudo de uma rota
-		exibirModalPorRota: function (rota, openCallback, alinharNoTopo, permanecerAberto, titulo) {
+		exibirModalPorRota: function (rota, openCallback, permanecerAberto, titulo) {
 			//this.bloquear();
 
 			$.get(rota, function (html) {
-				App.exibirModalPorHtml(html, openCallback, false, alinharNoTopo, permanecerAberto, titulo);
+				App.exibirModalPorHtml(html, openCallback, false, permanecerAberto, titulo);
             }).fail(function (jqXhr) {
                 var feedback = Feedback.converter(jqXhr.responseJSON);
                 feedback.exibirModal();

@@ -23,11 +23,6 @@ namespace K2.Dominio.Entidades
         public int IdCliente { get; private set; }
 
         /// <summary>
-        /// Situação da reserva
-        /// </summary>
-        public int Situacao { get; private set; }
-
-        /// <summary>
         /// Valor pago da reserva
         /// </summary>
         public decimal? ValorPago { get; private set; }
@@ -66,8 +61,6 @@ namespace K2.Dominio.Entidades
             this.IdCliente = entrada.IdCliente;
             this.ValorPago = entrada.ValorPago;
             this.Observacao = entrada.Observacao;
-
-            this.Situacao = (int)TipoSituacaoReserva.AguardandoConfirmacao;
         }
 
         public void Alterar(AlterarReservaEntrada entrada)
@@ -78,11 +71,6 @@ namespace K2.Dominio.Entidades
             this.IdCliente  = entrada.IdCliente;
             this.ValorPago  = entrada.ValorPago;
             this.Observacao = entrada.Observacao;
-        }
-
-        public TipoSituacaoReserva ObterTipoSituacao()
-        {
-            return JNogueira.Infraestrutura.Utilzao.ExtensionMethods.ConverterParaEnum(this.Situacao, TipoSituacaoReserva.AguardandoConfirmacao);
         }
     }
 }
