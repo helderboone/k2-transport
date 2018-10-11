@@ -143,6 +143,14 @@
                         App.exibirConfirm("Deseja realmente excluir o dependente dessa reserva?", "Sim", "Não", function () { excluirReservaDependente(idReserva); });
                     });
                 });
+
+                $("a[class*='alterar-reserva']").each(function () {
+                    var id = $(this).data("id");
+
+                    $(this).click(function () {
+                        manterReserva(id);
+                    });
+                });
             }).on("processing.dt", function () {
                     App.desbloquear($("#portletReserva"));
             });
@@ -334,6 +342,121 @@
                 }
             });
         });
+    };
+
+    var manterReserva = function (id) {
+        var cadastro = id === null || id === 0;
+
+        App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-reserva/" + id) : App.corrigirPathRota("cadastrar-reserva")), function () {
+            //$("#sCliente").select2({
+            //    placeholder: "Selecione um cliente",
+            //    dropdownParent: $('.jc-bs3-container')
+            //});
+
+            K2.obterDropDownClientes("#sCliente");
+
+            //$("#sCarro").select2({
+            //    placeholder: "Selecione um carro",
+            //    dropdownParent: $('.jc-bs3-container')
+            //});
+
+            //$("#sLocalidadeEmbarque").select2({
+            //    placeholder: "Selecione a localidade de embarque",
+            //    dropdownParent: $('.jc-bs3-container')
+            //});
+
+            //$("#sLocalidadeDesembarque").select2({
+            //    placeholder: "Selecione a localidade de desembarque",
+            //    dropdownParent: $('.jc-bs3-container')
+            //});
+
+            //var startDate = $("#iDataHorarioSaida").data("startdate");
+
+            //$('#iDataHorarioSaida').datetimepicker({
+            //    todayHighlight: false,
+            //    autoclose: true,
+            //    pickerPosition: 'bottom-left',
+            //    format: 'dd/mm/yyyy hh:ii',
+            //    startDate: startDate,
+            //    language: 'pt-BR'
+            //});
+
+            //$('#iValorPassagem').inputmask('decimal', {
+            //    radixPoint: ",",
+            //    groupSeparator: ".",
+            //    autoGroup: true,
+            //    digits: 2,
+            //    digitsOptional: false,
+            //    placeholder: '0',
+            //    rightAlign: false,
+            //    prefix: '',
+            //    onBeforeMask: function (value, opts) {
+            //        return value;
+            //    }
+            //});
+
+            //$("#frmManterViagem").validate({
+            //    rules: {
+            //        iDescricao: {
+            //            required: true
+            //        },
+            //        iDataHorarioSaida: {
+            //            required: true
+            //        },
+            //        sMotorista: {
+            //            required: true
+            //        },
+            //        sCarro: {
+            //            required: true
+            //        },
+            //        sLocalidadeEmbarque: {
+            //            required: true
+            //        },
+            //        sLocalidadeDesembarque: {
+            //            required: true
+            //        }
+            //    },
+
+            //    submitHandler: function () {
+
+            //        var viagem = {
+            //            Id: $("#iIdViagem").val(),
+            //            IdCarro: $("#sCarro").val(),
+            //            IdMotorista: $("#sMotorista").val(),
+            //            IdLocalidadeEmbarque: $("#sLocalidadeEmbarque").val(),
+            //            IdLocalidadeDesembarque: $("#sLocalidadeDesembarque").val(),
+            //            Descricao: $("#iDescricao").val(),
+            //            ValorPassagem: $("#iValorPassagem").val(),
+            //            DataHorarioSaida: $("#iDataHorarioSaida").val(),
+            //            LocaisEmbarque: $("#tLocaisEmbarque").val().split('\n'),
+            //            LocaisDesembarque: $("#tLocaisDesembarque").val().split('\n')
+            //        };
+
+            //        App.bloquear($("#frmManterViagem"));
+
+            //        $.post(App.corrigirPathRota(cadastro ? "cadastrar-viagem" : "alterar-viagem"), { entrada: viagem })
+            //            .done(function (feedbackResult) {
+            //                var feedback = Feedback.converter(feedbackResult);
+
+            //                if (feedback.Tipo.Nome === Tipo.Sucesso) {
+            //                    feedback.exibirModal(function () {
+            //                        obterViagensPrevistas();
+            //                        App.ocultarModal();
+            //                    });
+            //                }
+            //                else
+            //                    feedback.exibirModal();
+            //            })
+            //            .fail(function (jqXhr) {
+            //                var feedback = Feedback.converter(jqXhr.responseJSON);
+            //                feedback.exibirModal();
+            //            })
+            //            .always(function () {
+            //                App.desbloquear($("#frmManterViagem"));
+            //            });
+            //    }
+            //});
+        }, true, "manter-reserva");
     };
 
     var manterReservaDependente = function (idReserva, cadastro) {

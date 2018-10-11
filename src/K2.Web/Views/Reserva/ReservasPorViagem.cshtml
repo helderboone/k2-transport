@@ -24,11 +24,15 @@
                             <div class="m-widget_content-items">
                                 <div class="m-widget_content-item">
                                     <span style="text-align: center; white-space: nowrap;">Lugares disponíveis</span>
-                                    <span style="text-align: center;">+15%</span>
+                                    <span style="text-align: center;">
+                                        <span class="@(Model.QuantidadeLugaresDisponiveis == 0 ? "m--font-danger" : "m--font-success")">@Model.QuantidadeLugaresDisponiveis</span>
+                                    </span>
                                 </div>
                                 <div class="m-widget_content-item">
                                     <span style="text-align: center;">Reservas</span>
-                                    <span style="text-align: center;">29</span>
+                                    <span style="text-align: center;">
+                                        <span class="@(Model.QuantidadeLugaresDisponiveis == 0 ? "m--font-danger" : "m--font-success")">@Model.Reservas.Count()</span>
+                                    </span>
                                 </div>
                             </div>
                         </div>

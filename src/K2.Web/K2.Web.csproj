@@ -79,6 +79,9 @@
     <Content Update="Views\ProprietarioCarro\Manter.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Reserva\Manter.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Viagem\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

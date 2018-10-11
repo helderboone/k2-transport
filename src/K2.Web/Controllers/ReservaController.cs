@@ -115,6 +115,47 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.Ocultar));
         }
 
+
+        [Authorize(Policy = TipoPerfil.Administrador)]
+        [HttpGet]
+        [Route("alterar-reserva/{idReserva:int}")]
+        public IActionResult AlterarReserva(int idReserva)
+        {
+            var apiResponse = _restSharpHelper.ChamarApi("reservas/obter-por-id/" + idReserva, Method.GET).Result;
+
+            var saida = ReservaSaida.Obter(apiResponse.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível obter as informações da reserva.", new[] { "A API não retornou nenhuma resposta." }));
+
+            if (!saida.Sucesso)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível obter as informações da reserva.", saida.Mensagens));
+
+            var reserva = saida.Retorno;
+
+            return PartialView("Manter", reserva);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("alterar-reserva-dependente/{idReserva:int:min(1)}")]

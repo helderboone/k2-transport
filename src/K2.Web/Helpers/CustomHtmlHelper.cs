@@ -1,4 +1,5 @@
-﻿using K2.Web.Models;
+﻿using JNogueira.Infraestrutura.Utilzao;
+using K2.Web.Models;
 using Microsoft.AspNetCore.Html;
 using RestSharp;
 using System.Linq;
@@ -177,7 +178,44 @@ namespace K2.Web.Helpers
             return new HtmlString(html.ToString());
         }
 
+        public HtmlString DropDownClientes(string id, string cssClass, string valor, string atributosHtml = "style=\"width: 100%;\"")
+        {
+            var atribId = !string.IsNullOrEmpty(id) ? " id=\"" + id + "\" name=\"" + id + "\"" : string.Empty;
 
+            var html = new StringBuilder($"<select{atribId} class=\"{cssClass}\"");
+
+            if (!string.IsNullOrEmpty(atributosHtml))
+                html.Append(atributosHtml);
+
+            html.AppendLine(">");
+
+            var filtro = new ProcurarClienteEntrada
+            {
+                OrdenarPor = "Nome",
+                PaginaIndex = null,
+                PaginaTamanho = null
+            };
+
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
+
+            var apiResponse = _restSharpHelper.ChamarApi("clientes/procurar", Method.POST, parametros).Result;
+
+            var saida = ProcurarSaida.Obter(apiResponse.Content);
+
+            html.AppendLine("<option value=\"\"></option>");
+
+            foreach (var cliente in saida.ObterRegistros<ClienteRegistro>())
+            {
+                html.AppendLine($"<option value=\"{cliente.Id}\" {(valor == cliente.Id.ToString() ? " selected" : string.Empty)}>{cliente.Nome}</option>");
+            }
+
+            html.Append("</select>");
+
+            return new HtmlString(html.ToString());
+        }
 
         public static HtmlString DropDownUf(string id, string cssClass, string valor, string atributosHtml = "style=\"width: 100%;\"")
         {

@@ -1,5 +1,4 @@
 ﻿var K2 = function () {
-
     return {
         alterarSenhaUsuario: function () {
             App.exibirModalPorRota(App.corrigirPathRota("alterar-senha"), function () {
