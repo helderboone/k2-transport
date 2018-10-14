@@ -145,29 +145,29 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Cliente excluído com sucesso."));
         }
 
-        //[Authorize(Policy = TipoPerfil.Administrador)]
-        //[HttpGet]
-        //[Route("obter-todos-clientes")]
-        //[FeedbackExceptionFilter("Ocorreu um erro ao obter todos os clientes cadastrados.", TipoAcaoAoOcultarFeedback.Ocultar)]
-        //public async Task<IActionResult> ObterTodosClientes()
-        //{
-        //    var filtro = new ProcurarClienteEntrada
-        //    {
-        //        OrdenarPor    = "Nome",
-        //        PaginaIndex   = null,
-        //        PaginaTamanho = null
-        //    };
+        [Authorize(Policy = TipoPerfil.Administrador)]
+        [HttpGet]
+        [Route("obter-todos-clientes")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter todos os clientes cadastrados.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        public async Task<IActionResult> ObterTodosClientes()
+        {
+            var filtro = new ProcurarClienteEntrada
+            {
+                OrdenarPor = "Nome",
+                PaginaIndex = null,
+                PaginaTamanho = null
+            };
 
-        //    var parametros = new Parameter[]
-        //    {
-        //        new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
-        //    };
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
 
-        //    var apiResponse = await _restSharpHelper.ChamarApi("clientes/procurar", Method.POST, parametros);
+            var apiResponse = await _restSharpHelper.ChamarApi("clientes/procurar", Method.POST, parametros);
 
-        //    var saida = ProcurarSaida.Obter(apiResponse.Content);
+            var saida = ProcurarSaida.Obter(apiResponse.Content);
 
-        //    return new JsonResult(saida.Retorno.Registros);
-        //}
+            return new JsonResult(saida.ObterRegistros<ClienteRegistro>());
+        }
     }
 }

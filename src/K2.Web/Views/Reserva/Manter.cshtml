@@ -1,9 +1,8 @@
 ﻿@using K2.Web.Helpers
 
-@inject CustomHtmlHelper customHtmlHelper
 @model K2.Web.Models.ReservaRegistro
 
-<div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet-md" style="margin:0 auto;">
+<div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet-md" style="margin:0 auto;" id="portlet-manter-reserva">
     <div class="m-portlet__head">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
@@ -20,10 +19,41 @@
             <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-12 m-form__group-sub">
                     <label>Cliente <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <div class="m-select2 m-select2--square m-select2--air">
-                        @customHtmlHelper.DropDownClientes("sCliente", "form-control m-select2", Model == null ? string.Empty : Model.IdCliente.ToString())
-                        <span class="m-form__help">Selecione o cliente</span>
+                    <div class="input-group m-input-group m-input-group--square m-input-group--air">
+                        <select class="form-control m-select2 m-select2--square" id="sClienteReserva" name="sClienteReserva">
+                            @if (Model != null)
+                            {
+                                <option value="@Model.IdCliente" selected>@Model.Cliente.Nome</option>
+                            }
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-info" type="button" data-container="#portlet-manter-reserva" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Cadastrar novo cliente"><i class="fa fa-plus"></i></button>
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Valor pago</label>
+                    <div class="input-group m-input-group--square m-input-group--air">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                R$
+                            </span>
+                        </div>
+                        <input type="text" class="form-control m-input m-input--square m-input--air" id="iValorPagoReserva" name="iValorPagoReserva" value="@Model?.ValorPago?.ToString("N2")">
+                    </div>
+                    <span class="m-form__help">Valor pago pelo cliente</span>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-12 m-form__group-sub">
+                    <label>Observações</label>
+                    <textarea class="form-control m-input--square m-input--air" rows="3" id="tObservacaoReserva"></textarea>
+                    <span class="m-form__help">Observações relacionadas a reserva</span>
                 </div>
             </div>
         </div>

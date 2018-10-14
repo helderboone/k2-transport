@@ -65,7 +65,7 @@
                         orderable: false,
                         render: function (data, type, row) {
                             if (data.dependente === null)
-                                return '<a href="#" data-id="' + row.id + '" class="cadastrar-reserva-dependente m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Cadastrar dependente"><i class="la la-plus"></i></a>';
+                                return '';
                             else {
                                 return '<span class="m--font-bold">' + data.dependente.nome + '</span><br/>' +
                                     'Data de nascimento: ' + data.dependente.dataNascimentoToString + '<br/>' +
@@ -86,12 +86,18 @@
                     { data: "observacao", className: "min-tablet", title: "Observação", orderable: false },
                     {
                         data: null,
-                        className: "td-actions dt-center min-tablet",
+                        className: "td-actions dt-center all",
                         orderable: false,
                         width: "70px",
                         render: function (data, type, row) {
-                            return '<a href="#" data-id="' + row.id + '" class="alterar-reserva m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Alterar reserva"><i class="la la-edit"></i></a>' +
-                                '<a href="#" data-id="' + row.id + '" class="excluir-reserva m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Excluir reserva"><i class="la la-trash"></i></a>';
+                            return '<span class="dropdown">' +
+                                        '<a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="false"><i class="la la-ellipsis-h"></i></a>' + 
+                                        '<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-196px, 27px, 0px);">' +
+                                (data.dependente !== null ? "" : '<a class="cadastrar-reserva-dependente dropdown-item" data-id="' + row.id + '" href="#"><i class="fa fa-plus"></i> Cadastrar dependente</a>') +
+                                            '<a class="alterar-reserva dropdown-item" data-id="' + row.id + '" href="#"><i class="la la-edit"></i> Alterar reserva</a>' +
+                                            '<a class="excluir-reserva dropdown-item" data-id="' + row.id + '" href="#"><i class="la la-trash"></i> Excluir reserva</a>' +
+                                        '</div>' +
+                                    '</span >';
                         }
                     }
                 ],
@@ -348,114 +354,68 @@
         var cadastro = id === null || id === 0;
 
         App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-reserva/" + id) : App.corrigirPathRota("cadastrar-reserva")), function () {
-            //$("#sCliente").select2({
-            //    placeholder: "Selecione um cliente",
-            //    dropdownParent: $('.jc-bs3-container')
-            //});
 
-            K2.obterDropDownClientes("#sCliente");
+            K2.criarSelectClientes("#sClienteReserva", true, "#portlet-manter-reserva");
 
-            //$("#sCarro").select2({
-            //    placeholder: "Selecione um carro",
-            //    dropdownParent: $('.jc-bs3-container')
-            //});
+            mApp.initTooltips();
 
-            //$("#sLocalidadeEmbarque").select2({
-            //    placeholder: "Selecione a localidade de embarque",
-            //    dropdownParent: $('.jc-bs3-container')
-            //});
+            $('#iValorPago').inputmask('decimal', {
+                radixPoint: ",",
+                groupSeparator: ".",
+                autoGroup: true,
+                digits: 2,
+                digitsOptional: false,
+                placeholder: '0',
+                rightAlign: false,
+                prefix: ''
+            });
 
-            //$("#sLocalidadeDesembarque").select2({
-            //    placeholder: "Selecione a localidade de desembarque",
-            //    dropdownParent: $('.jc-bs3-container')
-            //});
+            $("#frmManterReserva").validate({
+                rules: {
+                    sClienteReserva: {
+                        required: true
+                    }
+                },
 
-            //var startDate = $("#iDataHorarioSaida").data("startdate");
+                submitHandler: function () {
 
-            //$('#iDataHorarioSaida').datetimepicker({
-            //    todayHighlight: false,
-            //    autoclose: true,
-            //    pickerPosition: 'bottom-left',
-            //    format: 'dd/mm/yyyy hh:ii',
-            //    startDate: startDate,
-            //    language: 'pt-BR'
-            //});
+                    //var viagem = {
+                    //    Id: $("#iIdViagem").val(),
+                    //    IdCarro: $("#sCarro").val(),
+                    //    IdMotorista: $("#sMotorista").val(),
+                    //    IdLocalidadeEmbarque: $("#sLocalidadeEmbarque").val(),
+                    //    IdLocalidadeDesembarque: $("#sLocalidadeDesembarque").val(),
+                    //    Descricao: $("#iDescricao").val(),
+                    //    ValorPassagem: $("#iValorPassagem").val(),
+                    //    DataHorarioSaida: $("#iDataHorarioSaida").val(),
+                    //    LocaisEmbarque: $("#tLocaisEmbarque").val().split('\n'),
+                    //    LocaisDesembarque: $("#tLocaisDesembarque").val().split('\n')
+                    //};
 
-            //$('#iValorPassagem').inputmask('decimal', {
-            //    radixPoint: ",",
-            //    groupSeparator: ".",
-            //    autoGroup: true,
-            //    digits: 2,
-            //    digitsOptional: false,
-            //    placeholder: '0',
-            //    rightAlign: false,
-            //    prefix: '',
-            //    onBeforeMask: function (value, opts) {
-            //        return value;
-            //    }
-            //});
+                    //App.bloquear($("#frmManterViagem"));
 
-            //$("#frmManterViagem").validate({
-            //    rules: {
-            //        iDescricao: {
-            //            required: true
-            //        },
-            //        iDataHorarioSaida: {
-            //            required: true
-            //        },
-            //        sMotorista: {
-            //            required: true
-            //        },
-            //        sCarro: {
-            //            required: true
-            //        },
-            //        sLocalidadeEmbarque: {
-            //            required: true
-            //        },
-            //        sLocalidadeDesembarque: {
-            //            required: true
-            //        }
-            //    },
+                    //$.post(App.corrigirPathRota(cadastro ? "cadastrar-viagem" : "alterar-viagem"), { entrada: viagem })
+                    //    .done(function (feedbackResult) {
+                    //        var feedback = Feedback.converter(feedbackResult);
 
-            //    submitHandler: function () {
-
-            //        var viagem = {
-            //            Id: $("#iIdViagem").val(),
-            //            IdCarro: $("#sCarro").val(),
-            //            IdMotorista: $("#sMotorista").val(),
-            //            IdLocalidadeEmbarque: $("#sLocalidadeEmbarque").val(),
-            //            IdLocalidadeDesembarque: $("#sLocalidadeDesembarque").val(),
-            //            Descricao: $("#iDescricao").val(),
-            //            ValorPassagem: $("#iValorPassagem").val(),
-            //            DataHorarioSaida: $("#iDataHorarioSaida").val(),
-            //            LocaisEmbarque: $("#tLocaisEmbarque").val().split('\n'),
-            //            LocaisDesembarque: $("#tLocaisDesembarque").val().split('\n')
-            //        };
-
-            //        App.bloquear($("#frmManterViagem"));
-
-            //        $.post(App.corrigirPathRota(cadastro ? "cadastrar-viagem" : "alterar-viagem"), { entrada: viagem })
-            //            .done(function (feedbackResult) {
-            //                var feedback = Feedback.converter(feedbackResult);
-
-            //                if (feedback.Tipo.Nome === Tipo.Sucesso) {
-            //                    feedback.exibirModal(function () {
-            //                        obterViagensPrevistas();
-            //                        App.ocultarModal();
-            //                    });
-            //                }
-            //                else
-            //                    feedback.exibirModal();
-            //            })
-            //            .fail(function (jqXhr) {
-            //                var feedback = Feedback.converter(jqXhr.responseJSON);
-            //                feedback.exibirModal();
-            //            })
-            //            .always(function () {
-            //                App.desbloquear($("#frmManterViagem"));
-            //            });
-            //    }
-            //});
+                    //        if (feedback.Tipo.Nome === Tipo.Sucesso) {
+                    //            feedback.exibirModal(function () {
+                    //                obterViagensPrevistas();
+                    //                App.ocultarModal();
+                    //            });
+                    //        }
+                    //        else
+                    //            feedback.exibirModal();
+                    //    })
+                    //    .fail(function (jqXhr) {
+                    //        var feedback = Feedback.converter(jqXhr.responseJSON);
+                    //        feedback.exibirModal();
+                    //    })
+                    //    .always(function () {
+                    //        App.desbloquear($("#frmManterViagem"));
+                    //    });
+                }
+            });
         }, true, "manter-reserva");
     };
 

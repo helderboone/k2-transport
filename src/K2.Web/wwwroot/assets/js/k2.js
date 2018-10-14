@@ -88,6 +88,47 @@
 
         visualizarCarro: function (id) {
             App.exibirModalPorRota(App.corrigirPathRota("visualizar-carro/" + id));
+        },
+
+        criarSelectClientes: function (selector, obrigatorio, containerSelector) {
+            if (obrigatorio == null)
+                obrigatorio = false;
+
+            if (containerSelector !== null && containerSelector !== "")
+                App.bloquear($(containerSelector));
+
+            $.ajax({
+                type: "GET",
+                url: App.corrigirPathRota("obter-todos-clientes"),
+                dataType: "json",
+                success: function (dados) {
+                    var itens = [];
+
+                    itens.push({ id: "", text: "" });
+
+                    $.each(dados, function (k, item) {
+                        itens.push({ id: item.id, text: item.nome, cpf: item.cpfFormatado, celular: item.celularFormatado });
+                    });
+
+                    $(selector).select2({
+                        allowClear: !obrigatorio,
+                        placeholder: "Selecione uma cliente",
+                        data: itens,
+                        escapeMarkup: function (markup) { return markup; },
+                        templateResult: function (item) {
+                            return '<span class="m--font-bolder">' + item.text + "</span><br/>" +
+                                'Celular: ' + item.celular + '<br/>' +
+                                'CPF: ' + item.cpf;
+                        }
+                    });
+                }
+            }).fail(function (jqXhr) {
+                var feedback = Feedback.converter(jqXhr.responseJSON);
+                feedback.exibirModal();
+            }).always(function () {
+                if (containerSelector !== null && containerSelector !== "")
+                    App.desbloquear($(containerSelector));
+            });;
         }
     };
 }();

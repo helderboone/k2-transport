@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using JNogueira.Infraestrutura.Utilzao;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace K2.Web.Models
@@ -36,9 +37,13 @@ namespace K2.Web.Models
 
         public string Cpf { get; set; }
 
+        public string CpfFormatado => this.Cpf.FormatarCpf();
+
         public string Rg { get; set; }
 
         public string Celular { get; set; }
+
+        public string CelularFormatado => this.Celular.Formatar("(##)######-####");
 
         public string Cep { get; set; }
 
