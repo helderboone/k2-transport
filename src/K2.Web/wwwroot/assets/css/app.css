@@ -309,3 +309,7 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
         right: unset;
    }
 }
+
+.m-nav .m-nav__item + .m-nav__section {
+    margin-top: 10px;
+}

@@ -1,6 +1,4 @@
-﻿@using K2.Web.Helpers
-
-@model K2.Web.Models.ReservaRegistro
+﻿@model K2.Web.Models.ReservaRegistro
 
 <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet-md" style="margin:0 auto;" id="portlet-manter-reserva">
     <div class="m-portlet__head">
@@ -13,7 +11,7 @@
         </div>
     </div>
     <form id="frmManterReserva" class="m-form m-form--fit m-form--state" novalidate="novalidate">
-        <input type="hidden" id="iIdViagem" name="iIdViagem" value="@(Model != null ? string.Empty : ViewData["IdViagem"])">
+        <input type="hidden" id="iIdViagem" name="iIdViagem" value="@(Model != null ? Model.Viagem.Id : ViewData["IdViagem"])">
         <input type="hidden" id="iIdReserva" name="iIdReserva" value="@(Model != null ? Model.Id.ToString() : string.Empty)">
         <div class="m-portlet__body">
             <div class="form-group m-form__group m-form__group--md row">
@@ -27,7 +25,7 @@
                             }
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-info" type="button" data-container="#portlet-manter-reserva" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Cadastrar novo cliente"><i class="fa fa-plus"></i></button>
+                            <button class="btn btn-info" type="button" id="bCadastrarCliente" data-container="#portlet-manter-reserva" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Cadastrar novo cliente"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
                 </div>
@@ -52,7 +50,7 @@
             <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-12 m-form__group-sub">
                     <label>Observações</label>
-                    <textarea class="form-control m-input--square m-input--air" rows="3" id="tObservacaoReserva"></textarea>
+                    <textarea class="form-control m-input--square m-input--air" rows="3" id="tObservacaoReserva">@Model?.Observacao</textarea>
                     <span class="m-form__help">Observações relacionadas a reserva</span>
                 </div>
             </div>

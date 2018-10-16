@@ -181,7 +181,7 @@ namespace K2.Dominio.Servicos
 
             return _uow.Invalido
                 ? new Saida(false, _uow.Mensagens, null)
-                : new Saida(true, new[] { ReservaResource.Reserva_Alterada_Com_Sucesso }, new ReservaSaida(reserva));
+                : new Saida(true, new[] { ReservaResource.Reserva_Alterada_Com_Sucesso }, new ReservaSaida(await _reservaRepositorio.ObterPorId(reserva.Id)));
         }
 
         public async Task<ISaida> ExcluirReserva(int id)

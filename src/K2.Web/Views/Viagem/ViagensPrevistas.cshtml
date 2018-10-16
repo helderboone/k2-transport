@@ -19,16 +19,43 @@
                             <div class="m-timeline-1__item-content">
                                 <div class="m-timeline-1__item-title">
                                     <span class="m--font-boldest">@viagem.Descricao</span>
-                                    <span class="dropdown">
-                                        <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="la la-ellipsis-h"></i>
+                                    <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-center" m-dropdown-toggle="click" aria-expanded="true">
+                                        <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill m-dropdown__toggle">
+                                            <i class="la la-ellipsis-h m--font-brand"></i>
                                         </a>
-                                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-196px, 27px, 0px);">
-                                            <a class="listar-reservas dropdown-item" data-id="@viagem.Id" href="#"><i class="fa fa-handshake"></i> Reservas...</a>
-                                            <a class="dropdown-item" data-id="@viagem.Id" href="#"><i class="la la-edit"></i> Alterar viagem</a>
-                                            <a class="excluir-viagem dropdown-item" data-id="@viagem.Id" href="#"><i class="la la-trash"></i> Excluir viagem</a>
+                                        <div class="m-dropdown__wrapper" style="z-index: 101;">
+                                            <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+                                            <div class="m-dropdown__inner">
+                                                <div class="m-dropdown__body">
+                                                    <div class="m-dropdown__content">
+                                                        <ul class="m-nav">
+                                                            <li class="m-nav__item">
+                                                                <a href="#" class="listar-reservas m-nav__link" data-id="@viagem.Id">
+                                                                    <i class="m-nav__link-icon fa fa-handshake"></i>
+                                                                    <span class="m-nav__link-text">Reservas...</span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="m-nav__section">
+                                                                <span class="m-nav__section-text">Viagem</span>
+                                                            </li>
+                                                            <li class="m-nav__item">
+                                                                <a href="#" class="alterar-viagem m-nav__link" data-id="@viagem.Id">
+                                                                    <i class="m-nav__link-icon la la-edit"></i>
+                                                                    <span class="m-nav__link-text">Alterar</span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="m-nav__item">
+                                                                <a href="#" class="excluir-viagem m-nav__link" data-id="@viagem.Id">
+                                                                    <i class="m-nav__link-icon la la-trash"></i>
+                                                                    <span class="m-nav__link-text">Excluir</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </span>
+                                    </div>
                                     <br />
                                     <span class="m--font-bold m--font-normal">@(viagem.LocalidadeEmbarque.Nome) > @(viagem.LocalidadeDesembarque.Nome)</span><br />
                                 </div>

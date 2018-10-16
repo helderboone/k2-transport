@@ -42,6 +42,13 @@ namespace K2.Web.Models
         }
     }
 
+    public enum TipoReservaPagamento
+    {
+        Pago = 1,
+        Parcial = 2,
+        Pendente = 0
+    }
+
     public class ReservaRegistro
     {
         public int Id { get; set; }
@@ -57,6 +64,12 @@ namespace K2.Web.Models
         public ReservaViagemRetorno Viagem { get; set; }
 
         public ReservaDependenteRetorno Dependente { get; set; }
+
+        public int Pago => this.ValorPago.HasValue && this.ValorPago.Value == this.Viagem.ValorPassagem
+            ? (int)TipoReservaPagamento.Pago
+            : (this.ValorPago.HasValue && this.ValorPago.Value != 0 && this.ValorPago.Value != this.Viagem.ValorPassagem
+                ? (int)TipoReservaPagamento.Parcial
+                : (int)TipoReservaPagamento.Pendente);
     }
 
     public class ReservaClienteRetorno
@@ -79,6 +92,8 @@ namespace K2.Web.Models
         public DateTime DataHorarioSaida { get; set; }
 
         public string DescricaoSituacao { get; set; }
+
+        public decimal ValorPassagem { get; set; }
 
         public ReservaCarroRetorno Carro { get; set; }
 

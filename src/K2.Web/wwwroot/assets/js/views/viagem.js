@@ -36,6 +36,12 @@
         App.exibirModalPorRota(App.corrigirPathRota("reservas-por-viagem/" + idViagem), function () {
             App.bloquear($("#portletReserva"));
 
+            $("#bCadastrarReserva").click(function () {
+                var idViagem = $(this).data("id-viagem");
+
+                manterReserva(null, idViagem);
+            });
+
             $("#tblReserva").DataTable({
                 ajax: {
                     url: App.corrigirPathRota("listar-reservas-por-viagem/" + idViagem),
@@ -46,6 +52,20 @@
                     }
                 },
                 columns: [
+                    {
+                        data: null,
+                        title: "Pago?",
+                        orderable: false,
+                        className: "dt-center",
+                        width: "1px",
+                        render: function (data, type, row) {
+                            switch (data.pago) {
+                                case 0: return '<span class="m-badge m-badge--danger"></span>';
+                                case 1: return '<span class="m-badge m-badge--success"></span>';
+                                case 2: return '<span class="m-badge m-badge--warning"></span>';
+                            }
+                        }
+                    },
                     {
                         data: null,
                         title: "Cliente",
@@ -68,9 +88,7 @@
                                 return '';
                             else {
                                 return '<span class="m--font-bold">' + data.dependente.nome + '</span><br/>' +
-                                    'Data de nascimento: ' + data.dependente.dataNascimentoToString + '<br/>' +
-                                    '<a href="#" data-id="' + row.id + '" class="alterar-reserva-dependente m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Alterar dependente"><i class="la la-edit"></i></a>' +
-                                    '<a href="#" data-id="' + row.id + '" class="excluir-reserva-dependente m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Excluir dependente"><i class="la la-trash"></i></a><br/>';
+                                    'Data de nascimento: ' + data.dependente.dataNascimentoToString;
                             }
                         }
                     },
@@ -90,14 +108,60 @@
                         orderable: false,
                         width: "70px",
                         render: function (data, type, row) {
-                            return '<span class="dropdown">' +
-                                        '<a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="false"><i class="la la-ellipsis-h"></i></a>' + 
-                                        '<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-196px, 27px, 0px);">' +
-                                (data.dependente !== null ? "" : '<a class="cadastrar-reserva-dependente dropdown-item" data-id="' + row.id + '" href="#"><i class="fa fa-plus"></i> Cadastrar dependente</a>') +
-                                            '<a class="alterar-reserva dropdown-item" data-id="' + row.id + '" href="#"><i class="la la-edit"></i> Alterar reserva</a>' +
-                                            '<a class="excluir-reserva dropdown-item" data-id="' + row.id + '" href="#"><i class="la la-trash"></i> Excluir reserva</a>' +
+
+
+                            return '<div class="m-dropdown m-dropdown--inline m-dropdown--up m-dropdown--align-right" m-dropdown-toggle="click" aria-expanded="true">' +
+                                        '<a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill m-dropdown__toggle">' +
+                                            '<i class="la la-ellipsis-h m--font-brand"></i>' +
+                                        '</a>' +
+                                        '<div class="m-dropdown__wrapper" style="z-index: 101;">' +
+                                            '<div class="m-dropdown__inner">' +
+                                                '<div class="m-dropdown__body">' + 
+                                                    '<div class="m-dropdown__content">' + 
+                                                        '<ul class="m-nav">' + 
+                                                            '<li class="m-nav__section m-nav__section--first">' + 
+                                                                '<span class="m-nav__section-text">Reserva</span>' + 
+                                                            '</li>' +
+                                                            '<li class="m-nav__item">' +
+                                                                '<a href="#" class="alterar-reserva m-nav__link" data-id="' + row.id + '">' +
+                                                                    '<i class="m-nav__link-icon la la-edit"></i>' +
+                                                                    '<span class="m-nav__link-text">Alterar</span>' +
+                                                                '</a>' +
+                                                            '</li>' +
+                                                            '<li class="m-nav__item">' +
+                                                                '<a href="#" class="excluir-reserva m-nav__link" data-id="' + row.id + '">' +
+                                                                    '<i class="m-nav__link-icon la la-trash"></i>' +
+                                                                    '<span class="m-nav__link-text">Excluir</span>' +
+                                                                '</a>' +
+                                                            '</li>' +
+                                                            '<li class="m-nav__section">' + 
+                                                                '<span class="m-nav__section-text">Dependente</span>' + 
+                                                            '</li>' +
+                                                            (data.dependente === null ? 
+                                                            '<li class="m-nav__item">' +
+                                                                '<a href="#" class="cadastrar-dependente m-nav__link" data-id="' + row.id + '">' +
+                                                                    '<i class="m-nav__link-icon la la-plus"></i>' +
+                                                                    '<span class="m-nav__link-text">Cadastrar</span>' +
+                                                                '</a>' +
+                                                            '</li>' :
+                                                            '<li class="m-nav__item">' +
+                                                                '<a href="#" class="alterar-dependente m-nav__link" data-id="' + row.id + '">' +
+                                                                    '<i class="m-nav__link-icon la la-edit"></i>' +
+                                                                    '<span class="m-nav__link-text">Alterar</span>' +
+                                                                '</a>' +
+                                                            '</li>' +
+                                                            '<li class="m-nav__item">' +
+                                                                '<a href="#" class="excluir-dependente m-nav__link" data-id="' + row.id + '">' +
+                                                                    '<i class="m-nav__link-icon la la-trash"></i>' +
+                                                                    '<span class="m-nav__link-text">Excluir</span>' +
+                                                                '</a>' +
+                                                            '</li>') +
+                                                        '</ul>' +
+                                                    '</div>' +
+                                               ' </div>' +
+                                            '</div>' +
                                         '</div>' +
-                                    '</span >';
+                                    '</div>';
                         }
                     }
                 ],
@@ -109,7 +173,7 @@
                 info: false,
                 serverSide: true,
                 responsive: true,
-                order: [0, "asc"],
+                ordering: false,
                 searching: false,
                 paging: false,
                 lengthChange: false,
@@ -126,7 +190,7 @@
                     "mask": "(99) 99999-9999"
                 });
 
-                $("a[class*='cadastrar-reserva-dependente']").each(function () {
+                $("a[class*='cadastrar-dependente']").each(function () {
                     var idReserva = $(this).data("id");
 
                     $(this).click(function () {
@@ -134,7 +198,7 @@
                     });
                 });
 
-                $("a[class*='alterar-reserva-dependente']").each(function () {
+                $("a[class*='alterar-dependente']").each(function () {
                     var idReserva = $(this).data("id");
 
                     $(this).click(function () {
@@ -142,7 +206,7 @@
                     });
                 });
 
-                $("a[class*='excluir-reserva-dependente']").each(function () {
+                $("a[class*='excluir-dependente']").each(function () {
                     var idReserva = $(this).data("id");
 
                     $(this).click(function () {
@@ -350,16 +414,20 @@
         });
     };
 
-    var manterReserva = function (id) {
+    var manterReserva = function (id, idViagem) {
         var cadastro = id === null || id === 0;
 
-        App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-reserva/" + id) : App.corrigirPathRota("cadastrar-reserva")), function () {
+        App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-reserva/" + id) : App.corrigirPathRota("cadastrar-reserva/" + idViagem)), function () {
 
             K2.criarSelectClientes("#sClienteReserva", true, "#portlet-manter-reserva");
 
+            $("#bCadastrarCliente").click(function () {
+                K2.manterCliente(null, function () { K2.criarSelectClientes("#sClienteReserva", true, "#portlet-manter-reserva"); });
+            });
+
             mApp.initTooltips();
 
-            $('#iValorPago').inputmask('decimal', {
+            $('#iValorPagoReserva').inputmask('decimal', {
                 radixPoint: ",",
                 groupSeparator: ".",
                 autoGroup: true,
@@ -379,41 +447,38 @@
 
                 submitHandler: function () {
 
-                    //var viagem = {
-                    //    Id: $("#iIdViagem").val(),
-                    //    IdCarro: $("#sCarro").val(),
-                    //    IdMotorista: $("#sMotorista").val(),
-                    //    IdLocalidadeEmbarque: $("#sLocalidadeEmbarque").val(),
-                    //    IdLocalidadeDesembarque: $("#sLocalidadeDesembarque").val(),
-                    //    Descricao: $("#iDescricao").val(),
-                    //    ValorPassagem: $("#iValorPassagem").val(),
-                    //    DataHorarioSaida: $("#iDataHorarioSaida").val(),
-                    //    LocaisEmbarque: $("#tLocaisEmbarque").val().split('\n'),
-                    //    LocaisDesembarque: $("#tLocaisDesembarque").val().split('\n')
-                    //};
+                    var reserva = {
+                        Id: $("#iIdReserva").val(),
+                        IdViagem: $("#iIdViagem").val(),
+                        IdCliente: $("#sClienteReserva").val(),
+                        ValorPago: $("#iValorPagoReserva").val(),
+                        Observacao: $("#tObservacaoReserva").val()
+                    };
 
-                    //App.bloquear($("#frmManterViagem"));
+                    App.bloquear($("#frmManterReserva"));
 
-                    //$.post(App.corrigirPathRota(cadastro ? "cadastrar-viagem" : "alterar-viagem"), { entrada: viagem })
-                    //    .done(function (feedbackResult) {
-                    //        var feedback = Feedback.converter(feedbackResult);
+                    $.post(App.corrigirPathRota(cadastro ? "cadastrar-reserva" : "alterar-reserva"), { entrada: reserva })
+                        .done(function (feedbackResult) {
+                            var feedback = Feedback.converter(feedbackResult);
 
-                    //        if (feedback.Tipo.Nome === Tipo.Sucesso) {
-                    //            feedback.exibirModal(function () {
-                    //                obterViagensPrevistas();
-                    //                App.ocultarModal();
-                    //            });
-                    //        }
-                    //        else
-                    //            feedback.exibirModal();
-                    //    })
-                    //    .fail(function (jqXhr) {
-                    //        var feedback = Feedback.converter(jqXhr.responseJSON);
-                    //        feedback.exibirModal();
-                    //    })
-                    //    .always(function () {
-                    //        App.desbloquear($("#frmManterViagem"));
-                    //    });
+                            if (feedback.Tipo.Nome === Tipo.Sucesso) {
+                                feedback.exibirModal(function () {
+                                   //$("#tblReserva").DataTable().ajax.reload();
+                                    App.ocultarModal(true);
+                                    obterViagensPrevistas();
+                                    obterReservasPorViagem($("#iIdViagem").val());
+                                });
+                            }
+                            else
+                                feedback.exibirModal();
+                        })
+                        .fail(function (jqXhr) {
+                            var feedback = Feedback.converter(jqXhr.responseJSON);
+                            feedback.exibirModal();
+                        })
+                        .always(function () {
+                            App.desbloquear($("#frmManterReserva"));
+                        });
                 }
             });
         }, true, "manter-reserva");

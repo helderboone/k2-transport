@@ -61,6 +61,7 @@ namespace K2.Dominio.Comandos.Saida
                 reserva.Viagem.Descricao,
                 reserva.Viagem.DataHorarioSaida,
                 DescricaoSituacao = reserva.Viagem.ObterTipoSituacao().ObterDescricao(),
+                reserva.Viagem.ValorPassagem,
                 Carro = new
                 {
                     reserva.Viagem.Carro.Descricao,

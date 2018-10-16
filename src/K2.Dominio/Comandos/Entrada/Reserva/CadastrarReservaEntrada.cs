@@ -51,7 +51,7 @@ namespace K2.Dominio.Comandos.Entrada
                 .NotificarSeMenorOuIgualA(this.IdCliente, 0, ClienteResource.Id_Cliente_Nao_Existe);
 
             if (this.ValorPago.HasValue)
-                this.NotificarSeMenorOuIgualA(this.ValorPago.Value, 0, ReservaResource.Valor_Pago_Invalido);
+                this.NotificarSeMenorQue(this.ValorPago.Value, 0, ReservaResource.Valor_Pago_Invalido);
         }
     }
 }
