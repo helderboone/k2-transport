@@ -65,7 +65,7 @@ namespace K2.Web.Models
 
         public ReservaDependenteRetorno Dependente { get; set; }
 
-        public int Pago => this.ValorPago.HasValue && this.ValorPago.Value == this.Viagem.ValorPassagem
+        public int Pago => this.ValorPago.HasValue && this.ValorPago.Value >= this.Viagem.ValorPassagem
             ? (int)TipoReservaPagamento.Pago
             : (this.ValorPago.HasValue && this.ValorPago.Value != 0 && this.ValorPago.Value != this.Viagem.ValorPassagem
                 ? (int)TipoReservaPagamento.Parcial

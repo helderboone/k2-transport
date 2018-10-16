@@ -148,6 +148,23 @@ namespace K2.Web.Controllers
         }
 
         [Authorize(Policy = TipoPerfil.Administrador)]
+        [HttpPost]
+        [Route("excluir-reserva/{id:int}")]
+        public async Task<IActionResult> ExcluirReserva(int id)
+        {
+            var apiResponse = await _restSharpHelper.ChamarApi("reservas/excluir/" + id, Method.DELETE);
+
+            var saida = Saida.Obter(apiResponse.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir a reserva.", new[] { "A API não retornou nenhuma resposta." }));
+
+            return !saida.Sucesso
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir a reserva.", saida.Mensagens))
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Reserva excluída com sucesso."));
+        }
+
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("cadastrar-reserva-dependente/{idReserva:int}")]
         public IActionResult CadastrarReservaDependente(int idReserva)

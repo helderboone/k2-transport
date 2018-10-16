@@ -14,16 +14,15 @@
                     {
                         <div class="m-timeline-1__item @(string.IsNullOrEmpty(alinhamentoItemTimeline) ? "m-timeline-1__item--left m-timeline-1__item--first" : alinhamentoItemTimeline)">
                             <div class="m-timeline-1__item-circle"><div class="m--bg-danger"></div></div>
-                            <div class="m-timeline-1__item-arrow"></div>
                             <span class="m-timeline-1__item-time m--font-brand">@viagem.DataHorarioSaida.ToString("dddd,")<span class="m--font-info">@viagem.DataHorarioSaida.ToString("dd/MM/yyyy HH:mm")</span></span>
                             <div class="m-timeline-1__item-content">
                                 <div class="m-timeline-1__item-title">
                                     <span class="m--font-boldest">@viagem.Descricao</span>
-                                    <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-center" m-dropdown-toggle="click" aria-expanded="true">
+                                    <div class="m-dropdown m-dropdown--inline m-dropdown--align-center" m-dropdown-toggle="click" aria-expanded="true">
                                         <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill m-dropdown__toggle">
                                             <i class="la la-ellipsis-h m--font-brand"></i>
                                         </a>
-                                        <div class="m-dropdown__wrapper" style="z-index: 101;">
+                                        <div class="m-dropdown__wrapper" style="z-index: 101; width: 160px;">
                                             <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
                                             <div class="m-dropdown__inner">
                                                 <div class="m-dropdown__body">

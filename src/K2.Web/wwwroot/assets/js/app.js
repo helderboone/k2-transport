@@ -53,7 +53,7 @@ var App = function () {
                 titleClass: 'jconfirm-title-hidden',
 				closeIcon: false,
 				backgroundDismiss: (fecharAoClicarBg == null ? false : fecharAoClicarBg),
-                columnClass: 'col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1',
+                columnClass: '',
                 offsetTop: 10,
                 offsetBottom: 10,
 				onOpen: function () {

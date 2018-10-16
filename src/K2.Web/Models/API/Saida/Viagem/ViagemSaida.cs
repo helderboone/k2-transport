@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using K2.Infraestrutura;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -83,6 +84,10 @@ namespace K2.Web.Models
         public string PercentualDisponibilidade { get; set; }
 
         public int QuantidadeLugaresDisponiveis { get; set; }
+
+        public string DataHorarioSaidaToString => this.DataHorarioSaida.ToString("dd MMM, yyyy - HH:mm");
+
+        public double QuantidadeDiasSaida => Math.Round(this.DataHorarioSaida.Subtract(DateTimeHelper.ObterHorarioAtualBrasilia()).TotalDays, 0);
     }
 
     public class ViagemCarroRetorno
