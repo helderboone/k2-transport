@@ -3,10 +3,12 @@ using K2.Infraestrutura.Logging.Slack;
 using K2.Web.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Rotativa.AspNetCore;
 using System;
 using System.Globalization;
 using System.Net;
@@ -52,7 +54,7 @@ namespace K2.Web
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IHttpContextAccessor httpContextAccessor)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IHttpContextAccessor httpContextAccessor, IHostingEnvironment env)
         {
             loggerFactory
                 // Adiciona o logger para gravar no banco de dados.
@@ -75,6 +77,8 @@ namespace K2.Web
             app.UseStaticFiles();
 
             app.UseMvc();
+
+            RotativaConfiguration.Setup(env);
         }
     }
 }

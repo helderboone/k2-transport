@@ -1,11 +1,10 @@
-﻿using JNogueira.Infraestrutura.Utilzao;
-using K2.Web.Filters;
+﻿using K2.Web.Filters;
 using K2.Web.Helpers;
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
-using System;
+using Rotativa.AspNetCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -162,6 +161,27 @@ namespace K2.Web.Controllers
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir a viagem.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Viagem excluída com sucesso."));
+        }
+
+        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [HttpGet]
+        [Route("gerar-pdf-relacao-passageiros/{idViagem:int}/{tipo:int}")]
+        public async Task<IActionResult> GerarRelacaoPassageirosPdf(int idViagem, int tipo)
+        {
+            var apiResponse = await _restSharpHelper.ChamarApi("viagens/obter-por-id/" + idViagem, Method.GET);
+
+            var saida = ViagemSaida.Obter(apiResponse.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações da viagem.", new[] { "A API não retornou nenhuma resposta." }));
+
+            if (!saida.Sucesso)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da viagem.", saida.Mensagens));
+
+            if (tipo == 1)
+                return PartialView("RelacaoPassageirosPdf", saida.Retorno);
+
+            return new ViewAsPdf("RelacaoPassageirosPdf", saida.Retorno);
         }
     }
 }

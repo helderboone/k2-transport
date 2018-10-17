@@ -1,4 +1,8 @@
 ﻿
+.jconfirm{
+    z-index: 5000;
+}
+
 .jconfirm .jconfirm-box {
     padding: 0;
     background-color: transparent;
@@ -174,6 +178,8 @@ div.jconfirm-content-pane .jconfirm-content {
     background-color: #ecf7f9;
 }
 
+
+
 table.dataTable > tbody > tr.child ul.dtr-details {
     width: 100%;
 }
@@ -258,6 +264,11 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
 }
 
 .datetimepicker tbody tr > td.day.active {
+    background: #007AAD;
+    color: #ffffff;
+}
+
+.datetimepicker tbody tr > td span.hour.active:hover, .datetimepicker tbody tr > td span.hour.active, .datetimepicker tbody tr > td span.minute.active:hover, .datetimepicker tbody tr > td span.minute.active, .datetimepicker tbody tr > td span.month.active:hover, .datetimepicker tbody tr > td span.month.active {
     background: #007AAD;
     color: #ffffff;
 }

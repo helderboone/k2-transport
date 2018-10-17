@@ -1696,7 +1696,7 @@ var mApp = function() {
                     backgroundColor: options.overlayColor,
                     opacity: options.opacity,
                     cursor: 'wait',
-                    zIndex: '10'
+                    zIndex: '6000'
                 },
                 onUnblock: function() {
                     if (el && el[0]) {

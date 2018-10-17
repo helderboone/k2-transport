@@ -1,0 +1,38 @@
+﻿@model K2.Web.Models.ViagemRegistro
+
+@{
+    Layout = "TemplatePdf";
+}
+
+<table style="width: 100%;">
+    <tr style="border-bottom:5px solid #efefef;">
+        <td style="padding-right:10px; padding-left: 10px; width:1px;">
+            <img src="~/assets/img/favicon.png" style="width: 70px;" />
+        </td>
+        <td class="m--align-center">
+            <h3>RELAÇÃO DE PASSAGEIROS</h3>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="mt-5">
+            <h5 class="m--font-brand">Informações da viagem</h5>
+            <table class="table m-table" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="width: 1px; white-space: nowrap;">Descrição:</td>
+                        <td class="m--font-bold">@Model.Descricao</td>
+                        <td style="width: 1px; white-space: nowrap;">Data / horário de saída:</td>
+                        <td class="m--font-bold">@Model.DataHorarioSaida.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 1px; white-space: nowrap;">Embarque:</td>
+                        <td class="m--font-bold">@(Model.LocalidadeEmbarque.Nome + " - " + Model.LocalidadeEmbarque.Uf)</td>
+                        <td style="width: 1px; white-space: nowrap;">Desembarque:</td>
+                        <td class="m--font-bold">@(Model.LocalidadeDesembarque.Nome + " - " + Model.LocalidadeDesembarque.Uf)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 class="m--font-brand">Informações do motorista</h5>
+        </td>
+    </tr>
+</table>

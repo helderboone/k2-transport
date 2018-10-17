@@ -56,7 +56,7 @@
                     className: "dt-center",
                     width: "1px",
                     render: function (data, type, row) {
-                        return '<span class="m--font-boldest m--font-brand">' + data.reservas.length + '</span>';      
+                        return '<span class="m--font-boldest m--font-brand" style="font-size: 1.45rem;">' + data.reservas.length + '</span>';      
                     }
                 },
                 {
@@ -66,7 +66,7 @@
                     className: "dt-center",
                     width: "1px",
                     render: function (data, type, row) {
-                        return '<span class="m--font-boldest ' + (data.quantidadeLugaresDisponiveis === 0 ? ' m--font-danger' : ' m--font-success') + '">' + data.quantidadeLugaresDisponiveis + '</span>';
+                        return '<span class="m--font-boldest ' + (data.quantidadeLugaresDisponiveis === 0 ? ' m--font-danger' : ' m--font-success') + '" style="font-size: 1.45rem;">' + data.quantidadeLugaresDisponiveis + '</span>';
                     }
                 },
                 {
@@ -84,29 +84,23 @@
                                             '<div class="m-dropdown__body">' +
                                                 '<div class="m-dropdown__content">' +
                                                     '<ul class="m-nav">' +
-                                                        '<li class="m-nav__item">' +
-                                                            '<a href="#" class="listar-reservas m-nav__link" data-id="' + data.id +'">' +
-                                                                '<i class="m-nav__link-icon fa fa-handshake"></i>' +
-                                                                '<span class="m-nav__link-text">Reservas...</span>' +
-                                                            '</a>' +
-                                                        '</li>' +
-                                                        '<li class="m-nav__section">' +
+                                                        '<li class="m-nav__section m-nav__section--first">' +
                                                             '<span class="m-nav__section-text">Viagem</span>' +
                                                         '</li>' +
                                                         '<li class="m-nav__item">' +
-                                                            '<a href="#" class="info-viagem m-nav__link" data-id="' + data.id +'">' +
+                                                            '<a href="#" class="info-viagem m-nav__link" data-id-viagem="' + data.id +'">' +
                                                                 '<i class="m-nav__link-icon la la-info"></i>' +
                                                                 '<span class="m-nav__link-text">Informações</span>' +
                                                             '</a>' +
                                                         '</li>' +
                                                         '<li class="m-nav__item">' +
-                                                            '<a href="#" class="alterar-viagem m-nav__link" data-id="' + data.id +'">' +
+                                                            '<a href="#" class="alterar-viagem m-nav__link" data-id-viagem="' + data.id +'">' +
                                                                 '<i class="m-nav__link-icon la la-edit"></i>' +
                                                                 '<span class="m-nav__link-text">Alterar</span>' +
                                                             '</a>' +
                                                         '</li>' +
                                                         '<li class="m-nav__item">' +
-                                                            '<a href="#" class="excluir-viagem m-nav__link" data-id="' + data.id +'">' +
+                                                            '<a href="#" class="excluir-viagem m-nav__link" data-id-viagem="' + data.id +'">' +
                                                                 '<i class="m-nav__link-icon la la-trash"></i>' +
                                                                 '<span class="m-nav__link-text">Excluir</span>' +
                                                             '</a>' +
@@ -133,36 +127,28 @@
         }).on("draw.dt", function () {
             mApp.initTooltips();
 
-            $("a[class*='listar-reservas']").each(function () {
-                var id = $(this).data("id");
-
-                $(this).click(function () {
-                    obterReservasPorViagem(id);
-                });
-            });
-
             $("a[class*='info-viagem']").each(function () {
-                var id = $(this).data("id");
+                var idViagem = $(this).data("id-viagem");
 
                 $(this).click(function () {
-                    K2.obterInfoViagem(id);
+                    obterInfoViagem(idViagem);
                 });
             });
 
 
             $("a[class*='alterar-viagem']").each(function () {
-                var id = $(this).data("id");
+                var idViagem = $(this).data("id-viagem");
 
                 $(this).click(function () {
-                    manterViagem(id);
+                    manterViagem(idViagem);
                 });
             });
 
             $("a[class*='excluir-viagem']").each(function () {
-                var id = $(this).data("id");
+                var idViagem = $(this).data("id-viagem");
 
                 $(this).click(function () {
-                    App.exibirConfirm('<span class="m--font-boldest">Deseja realmente excluir essa viagem?</span><br/>Ao excluir a viagem, todas as reservas relacionadas também serão excluídas.', "Sim", "Não", function () { excluirViagem(id, true); });
+                    App.exibirConfirm('<span class="m--font-boldest">Deseja realmente excluir essa viagem?</span><br/>Ao excluir a viagem, todas as reservas relacionadas também serão excluídas.', "Sim", "Não", function () { excluirViagem(idViagem, true); });
                 });
             });
         }).on("processing.dt", function () {
@@ -170,14 +156,20 @@
         });
     };
 
-    var obterReservasPorViagem = function (idViagem) {
-        App.exibirModalPorRota(App.corrigirPathRota("reservas-por-viagem/" + idViagem), function () {
-            App.bloquear($("#portletReserva"));
-
+    var obterInfoViagem = function (idViagem) {
+        App.exibirModalPorRota(App.corrigirPathRota("obter-info-viagem/" + idViagem), function () {
             $("#bCadastrarReserva").click(function () {
                 var idViagem = $(this).data("id-viagem");
 
                 manterReserva(null, idViagem);
+            });
+
+            $(".cpf").inputmask({
+                "mask": "999.999.999-99"
+            });
+
+            $(".celular").inputmask({
+                "mask": "(99) 99999-9999"
             });
 
             $("#tblReserva").DataTable({
@@ -192,27 +184,12 @@
                 columns: [
                     {
                         data: null,
-                        title: "Pago?",
-                        orderable: false,
-                        className: "dt-center",
-                        width: "1px",
-                        render: function (data, type, row) {
-                            switch (data.pago) {
-                                case 0: return '<span class="m-badge m-badge--danger"></span>';
-                                case 1: return '<span class="m-badge m-badge--success"></span>';
-                                case 2: return '<span class="m-badge m-badge--warning"></span>';
-                            }
-                        }
-                    },
-                    {
-                        data: null,
                         title: "Cliente",
                         orderable: false,
-                        className: "all",
+                        className: "dt-body-left all",
                         render: function (data, type, row) {
                             return '<span class="m--font-boldest">' + data.cliente.nome + '</span><br/>' +
                                 'CPF: <span class="cpf">' + data.cliente.cpf + '</span><br/>' +
-                                'RG: ' + data.cliente.rg + '<br/>' +
                                 'Celular: <span class="celular">' + data.cliente.celular + '</span>';
                         }
                     },
@@ -232,9 +209,26 @@
                     },
                     {
                         data: null,
+                        title: "Pago?",
+                        orderable: false,
+                        className: "dt-center",
+                        width: "1px",
+                        render: function (data, type, row) {
+                            switch (data.pago) {
+                                case 0: return '<span class="m-badge m-badge--danger"></span>';
+                                case 1: return '<span class="m-badge m-badge--success"></span>';
+                                case 2: return '<span class="m-badge m-badge--warning"></span>';
+                            }
+                        }
+                    },
+                    {
+                        data: null,
                         title: "Valor pago",
                         orderable: false,
-                        className: "dt-right min-tablet",
+                        className: "min-tablet",
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).attr('class', 'm--align-right');
+                        },
                         render: function (data, type, row) {
                             return accounting.formatMoney(data.valorPago, "R$ ", 2, ".", ",");
                         }
@@ -261,13 +255,13 @@
                                                                 '<span class="m-nav__section-text">Reserva</span>' + 
                                                             '</li>' +
                                                             '<li class="m-nav__item">' +
-                                                                '<a href="#" class="alterar-reserva m-nav__link" data-id="' + row.id + '">' +
+                                                                '<a href="#" class="alterar-reserva m-nav__link" data-id-reserva="' + row.id + '" data-id-viagem="' + idViagem + '">' +
                                                                     '<i class="m-nav__link-icon la la-edit"></i>' +
                                                                     '<span class="m-nav__link-text">Alterar</span>' +
                                                                 '</a>' +
                                                             '</li>' +
                                                             '<li class="m-nav__item">' +
-                                                                '<a href="#" class="excluir-reserva m-nav__link" data-id="' + row.id + '">' +
+                                                                    '<a href="#" class="excluir-reserva m-nav__link" data-id-reserva="' + row.id + '" data-id-viagem="' + idViagem + '">' +
                                                                     '<i class="m-nav__link-icon la la-trash"></i>' +
                                                                     '<span class="m-nav__link-text">Excluir</span>' +
                                                                 '</a>' +
@@ -277,26 +271,26 @@
                                                             '</li>' +
                                                             (data.dependente === null ? 
                                                             '<li class="m-nav__item">' +
-                                                                '<a href="#" class="cadastrar-dependente m-nav__link" data-id="' + row.id + '">' +
+                                                                '<a href="#" class="cadastrar-dependente m-nav__link" data-id-reserva="' + row.id + '">' +
                                                                     '<i class="m-nav__link-icon la la-plus"></i>' +
                                                                     '<span class="m-nav__link-text">Cadastrar</span>' +
                                                                 '</a>' +
                                                             '</li>' :
                                                             '<li class="m-nav__item">' +
-                                                                '<a href="#" class="alterar-dependente m-nav__link" data-id="' + row.id + '">' +
+                                                                '<a href="#" class="alterar-dependente m-nav__link" data-id-reserva="' + row.id + '">' +
                                                                     '<i class="m-nav__link-icon la la-edit"></i>' +
                                                                     '<span class="m-nav__link-text">Alterar</span>' +
                                                                 '</a>' +
                                                             '</li>' +
                                                             '<li class="m-nav__item">' +
-                                                                '<a href="#" class="excluir-dependente m-nav__link" data-id="' + row.id + '">' +
+                                                                '<a href="#" class="excluir-dependente m-nav__link" data-id-reserva="' + row.id + '">' +
                                                                     '<i class="m-nav__link-icon la la-trash"></i>' +
                                                                     '<span class="m-nav__link-text">Excluir</span>' +
                                                                 '</a>' +
                                                             '</li>') +
                                                         '</ul>' +
                                                     '</div>' +
-                                               ' </div>' +
+                                                ' </div>' +
                                             '</div>' +
                                         '</div>' +
                                     '</div>';
@@ -329,7 +323,7 @@
                 });
 
                 $("a[class*='cadastrar-dependente']").each(function () {
-                    var idReserva = $(this).data("id");
+                    var idReserva = $(this).data("id-reserva");
 
                     $(this).click(function () {
                         manterReservaDependente(idReserva, true);
@@ -337,7 +331,7 @@
                 });
 
                 $("a[class*='alterar-dependente']").each(function () {
-                    var idReserva = $(this).data("id");
+                    var idReserva = $(this).data("id-reserva");
 
                     $(this).click(function () {
                         manterReservaDependente(idReserva, false);
@@ -345,7 +339,7 @@
                 });
 
                 $("a[class*='excluir-dependente']").each(function () {
-                    var idReserva = $(this).data("id");
+                    var idReserva = $(this).data("id-reserva");
 
                     $(this).click(function () {
                         App.exibirConfirm("Deseja realmente excluir o dependente dessa reserva?", "Sim", "Não", function () { excluirReservaDependente(idReserva); });
@@ -353,24 +347,26 @@
                 });
 
                 $("a[class*='alterar-reserva']").each(function () {
-                    var id = $(this).data("id");
+                    var idReserva = $(this).data("id-reserva");
+                    var idViagem = $(this).data("id-viagem");
 
                     $(this).click(function () {
-                        manterReserva(id);
+                        manterReserva(idReserva, idViagem);
                     });
                 });
 
                 $("a[class*='excluir-reserva']").each(function () {
-                    var idReserva = $(this).data("id");
+                    var idReserva = $(this).data("id-reserva");
+                    var idViagem = $(this).data("id-viagem");
 
                     $(this).click(function () {
-                        App.exibirConfirm("Deseja realmente excluir essa reserva?", "Sim", "Não", function () { excluirReserva(idReserva, true); });
+                        App.exibirConfirm("Deseja realmente excluir essa reserva?", "Sim", "Não", function () { excluirReserva(idReserva, idViagem, true); });
                     });
                 });
             }).on("processing.dt", function () {
                     App.desbloquear($("#portletReserva"));
             });
-        }, true, "modal-reservas-por-viagem");
+        }, true, "modal-info-viagem");
     };
 
     //var procurarViagem = function () {
@@ -490,10 +486,10 @@
         });
     };
 
-    var manterReserva = function (id, idViagem) {
-        var cadastro = id === null || id === 0;
+    var manterReserva = function (idReserva, idViagem) {
+        var cadastro = idReserva === null || idReserva === 0;
 
-        App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-reserva/" + id) : App.corrigirPathRota("cadastrar-reserva/" + idViagem)), function () {
+        App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-reserva/" + idReserva) : App.corrigirPathRota("cadastrar-reserva/" + idViagem)), function () {
 
             K2.criarSelectClientes("#sClienteReserva", true, "#portlet-manter-reserva");
 
@@ -541,7 +537,7 @@
                                 feedback.exibirModal(function () {
                                     App.ocultarModal(true);
                                     $("#tblViagensPrevistas").DataTable().ajax.reload();
-                                    obterReservasPorViagem($("#iIdViagem").val());
+                                    obterInfoViagem(idViagem);
                                 });
                             }
                             else
@@ -643,10 +639,10 @@
         });
     };
 
-    var excluirReserva = function (id, prevista) {
+    var excluirReserva = function (idReserva, idViagem, prevista) {
         App.bloquear();
 
-        $.post(App.corrigirPathRota("excluir-reserva/" + id), function (feedbackResult) {
+        $.post(App.corrigirPathRota("excluir-reserva/" + idReserva), function (feedbackResult) {
             var feedback = Feedback.converter(feedbackResult);
 
             if (feedback.Tipo.Nome === Tipo.Sucesso) {
@@ -655,7 +651,7 @@
                     {
                         App.ocultarModal(true);
                         $("#tblViagensPrevistas").DataTable().ajax.reload();
-                        obterReservasPorViagem($("#iIdViagem").val());
+                        obterInfoViagem(idViagem);
                     }
                     else
                         $("#tblViagem").DataTable().ajax.reload();

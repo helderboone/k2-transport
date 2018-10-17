@@ -86,13 +86,13 @@
             <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-6 m-form__group-sub">
                     <label>Locais de embarque</label>
-                    <textarea class="form-control m-input--square m-input--air" rows="3" id="tLocaisEmbarque"></textarea>
+                    <textarea class="form-control m-input--square m-input--air" rows="3" id="tLocaisEmbarque">@(Model == null || !Model.LocaisEmbarque.Any() ? string.Empty : string.Join("\n", Model.LocaisEmbarque))</textarea>
                     <span class="m-form__help">Nome dos locais de desembarque <span class="font-italic">(exemplo: Goiabeiras)</span></span>
                     <span class="m-form__help">Digite somente um local por linha</span>
                 </div>
                 <div class="col-lg-6 m-form__group-sub">
                     <label>Locais de desembarque</label>
-                    <textarea class="form-control m-input--square m-input--air" rows="3" id="tLocaisDesembarque"></textarea>
+                    <textarea class="form-control m-input--square m-input--air" rows="3" id="tLocaisDesembarque">@(Model == null || !Model.LocaisDesembarque.Any() ? string.Empty : string.Join("\n", Model.LocaisDesembarque))</textarea>
                     <span class="m-form__help">Nome dos locais de desembarque <span class="font-italic">(exemplo: Goiabeiras)</span></span>
                     <span class="m-form__help">Digite somente um local por linha</span>
                 </div>

@@ -213,19 +213,6 @@
                     }
                 });
             });
-        },
-
-        obterInfoViagem: function (id) {
-            App.exibirModalPorRota(App.corrigirPathRota("obter-info-viagem/" + id), function () {
-                $(".cpf").inputmask({
-                    "mask": "999.999.999-99"
-                });
-
-                $(".celular").inputmask({
-                    "mask": "(99) 99999-9999"
-                });
- 
-            });
         }
     };
 }();

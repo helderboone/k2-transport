@@ -29,7 +29,7 @@ var App = function () {
                     type: 'loader',
                     state: 'info',
                     message: 'Processando...',
-                    baseZ: 999999
+                    baseZ: 6000
                 });
             }
 		},

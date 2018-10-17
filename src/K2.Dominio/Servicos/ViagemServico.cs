@@ -171,7 +171,7 @@ namespace K2.Dominio.Servicos
 
             return _uow.Invalido
                 ? new Saida(false, _uow.Mensagens, null)
-                : new Saida(true, new[] { ViagemResource.Viagem_Alterada_Com_Sucesso }, new ViagemSaida(viagem));
+                : new Saida(true, new[] { ViagemResource.Viagem_Alterada_Com_Sucesso }, new ViagemSaida(await _viagemRepositorio.ObterPorId(viagem.Id)));
         }
 
         public async Task<ISaida> ExcluirViagem(int id)
