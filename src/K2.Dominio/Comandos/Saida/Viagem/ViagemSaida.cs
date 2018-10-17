@@ -128,6 +128,11 @@ namespace K2.Dominio.Comandos.Saida
             Carro = new
             {
                 viagem.Carro.Descricao,
+                NomeProprietario = viagem.Carro.Proprietario.Nome,
+                viagem.Carro.AnoModelo,
+                viagem.Carro.NomeFabricante,
+                viagem.Carro.Renavam,
+                Caracteristicas = viagem.Carro.Caracteristicas.Split(";".ToCharArray()),
                 viagem.Carro.Placa,
                 viagem.Carro.QuantidadeLugares
             };

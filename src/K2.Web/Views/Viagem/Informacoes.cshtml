@@ -1,0 +1,293 @@
+﻿@model K2.Web.Models.ViagemRegistro
+
+
+<div class="m-portlet m-portlet-xl m-portlet--brand m-portlet--head-solid-bg" style="margin:0 auto;">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Informações da viagem
+                    <small>@Model.Descricao</small>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="m-form m-form--fit m-form--state  m-form--group-seperator-dashed--k2" novalidate="novalidate">
+        <div class="m-portlet__body m-form m-form--fit m-form--state m-form--group-seperator-dashed" style="padding: 15px;">
+            <div class="row m-row--no-padding m-row--col-separator-xl">
+                <div class="col-md-12 col-lg-4">
+                    <!--begin::Total Profit-->
+                    <div class="m-widget24">
+                        <div class="m-widget24__item">
+                            <h4 class="m-widget24__title" style="margin-top: 1.3rem;">
+                                Lugares disponíveis
+                            </h4><br>
+                            <span class="m-widget24__desc">
+                                Qtd. de lugares: @Model.Carro.QuantidadeLugares
+                            </span>
+                            <span class="m-widget24__stats m--font-info">
+                                @Model.QuantidadeLugaresDisponiveis
+                            </span>
+                            <div class="m--space-10"></div>
+                            <div class="progress m-progress--sm">
+                                <div class="progress-bar @(Model.PercentualDisponibilidade == "0%" ? "m--bg-success" : "m--bg-info")" role="progressbar" style="width: @(Model.PercentualDisponibilidade);" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="m-widget24__change" style="margin-bottom: 1.86rem;">
+                                Disponibilidade
+                            </span>
+                            <span class="m-widget24__number" style="margin-bottom: 1.86rem;">
+                                @Model.PercentualDisponibilidade
+                            </span>
+                        </div>
+                    </div>
+                    <!--end::Total Profit-->
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <!--begin::New Orders-->
+                    <div class="m-widget24">
+                        <div class="m-widget24__item">
+                            <h4 class="m-widget24__title" style="margin-top: 1.3rem;">
+                                Custo da viagem
+                            </h4><br>
+                            <span class="m-widget24__desc">
+                                @(Model.Carro.QuantidadeLugares) lugares x @(Model.ValorPassagem.ToString("C2"))
+                            </span>
+                            <span class="m-widget24__stats m--font-brand">
+                                @((Model.Carro.QuantidadeLugares * Model.ValorPassagem).ToString("C2"))
+                            </span>
+                            <div class="m--space-10"></div>
+                            <div class="progress m-progress--sm">
+                                <div class="progress-bar m--bg-brand" role="progressbar" style="width: @(Model.PercentualArrecadadoReservas.ToString())%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="m-widget24__change">
+                                Percentual arrecadado
+                            </span>
+                            <span class="m-widget24__number">
+                                @(Model.PercentualArrecadadoReservas.ToString())%
+                            </span>
+                        </div>
+                    </div>
+                    <!--end::New Orders-->
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <!--begin::New Feedbacks-->
+                    <div class="m-widget1" style="padding-top: 1.0rem; padding-left: 2.1rem; padding-right: 2.1rem;">
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">Reservas</h3>
+                                    <span class="m-widget1__desc" style="white-space: nowrap;">Quantidade</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__number m--font-brand">@Model.Reservas.Count()</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <span class="m-widget1__desc">Arrecadação</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__number m--font-success">@Model.ValorArrecadadoReservas.ToString("C2")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::New Feedbacks-->
+                </div>
+            </div>
+            <ul class="nav nav-tabs  m-tabs-line m-tabs-line--2x" role="tablist" style="margin-left: 15px;">
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#tabReservas" role="tab">Reservas</a>
+                </li>
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#tabViagem" role="tab">Viagem</a>
+                </li>
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#tabMotorista" role="tab">Motorista</a>
+                </li>
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#tabCarro" role="tab">Carro</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tabReservas" role="tabpanel">
+                    <div class="form-group m-form__group m-form__group--sm">
+                        <label>Nome:</label>
+                        <p class="form-control-static m--font-bolder">@Model.Motorista.Nome</p>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--sm row">
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Celular:</label>
+                            <p class="form-control-static celular">@Model.Motorista.Celular</p>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>CPF:</label>
+                            <p class="form-control-static cpf">@Model.Motorista.Cpf</p>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>CNH:</label>
+                            <p class="form-control-static">@Model.Motorista.Cnh</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tabViagem" role="tabpanel">
+                    <div class="form-group m-form__group m-form__group--sm">
+                        <label>Descrição:</label>
+                        <p class="form-control-static font-weight-bold">@Model.Descricao</p>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--sm row">
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Data da saída:</label>
+                            <p class="form-control-static">@Model.DataHorarioSaidaToString</p>
+                            <p class="form-control-static m--font-bolder">
+                                @if (Model.QuantidadeDiasSaida >= 0)
+                                {
+                                    if (Model.QuantidadeDiasSaida == 0)
+                                    {
+                                        <span class="m--font-brand">Hoje</span>
+                                    }
+                                    else if (Model.QuantidadeDiasSaida == 1)
+                                    {
+                                        <span class="m--font-brand">Falta 1 dia</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="m--font-brand">Faltam @(Model.QuantidadeDiasSaida) dias.</span>
+                                    }
+                                }
+                                else
+                                {
+                                    if (Model.QuantidadeDiasSaida == -1)
+                                    {
+                                        <span class="m--font-success">Realizada à 1 dia.</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="m--font-success">Realizada à @(Model.QuantidadeDiasSaida * -1) dias.</span>
+                                    }
+                                }
+                            </p>
+                        </div>
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Valor da passagem:</label>
+                            <p class="form-control-static">@Model.ValorPassagem.ToString("C2")</p>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--sm row">
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Embarque:</label>
+                            <p class="form-control-static">@Model.LocalidadeEmbarque.Nome</p>
+                        </div>
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Desembarque:</label>
+                            <p class="form-control-static">@Model.LocalidadeDesembarque.Nome</p>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--sm row">
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Locais de embarque:</label>
+                            <p class="form-control-static">
+                                @if (Model.LocaisEmbarque.Any(x => !string.IsNullOrEmpty(x)))
+                                {
+                                    <ul>
+                                        @foreach(var local in Model.LocaisEmbarque)
+                                        {
+                                            <li>@local</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <span class="font-italic">Nenhum local informado.</span>
+                                }
+                            </p>
+                        </div>
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Locais de desembarque:</label>
+                            <p class="form-control-static">
+                                @if (Model.LocaisDesembarque.Any(x => !string.IsNullOrEmpty(x)))
+                                {
+                                    <ul>
+                                        @foreach (var local in Model.LocaisDesembarque)
+                                        {
+                                            <li>@local</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <span class="font-italic">Nenhum local informado.</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tabMotorista" role="tabpanel">
+                    <div class="form-group m-form__group m-form__group--sm">
+                        <label>Nome:</label>
+                        <p class="form-control-static m--font-bolder">@Model.Motorista.Nome</p>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--sm row">
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Celular:</label>
+                            <p class="form-control-static celular">@Model.Motorista.Celular</p>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>CPF:</label>
+                            <p class="form-control-static cpf">@Model.Motorista.Cpf</p>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>CNH:</label>
+                            <p class="form-control-static">@Model.Motorista.Cnh</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tabCarro" role="tabpanel">
+                    <div class="form-group m-form__group m-form__group--sm">
+                        <label>Descrição:</label>
+                        <p class="form-control-static m--font-bolder">@Model.Carro.Descricao</p>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--sm row">
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Proprietário:</label>
+                            <p class="form-control-static">@Model.Carro.NomeProprietario</p>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Placa:</label>
+                            <p class="form-control-static">@Model.Carro.Placa</p>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Quantidade de lugares:</label>
+                            <p class="form-control-static">@Model.Carro.QuantidadeLugares</p>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--sm row">
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Fabricante:</label>
+                            <p class="form-control-static">@Model.Carro.NomeFabricante</p>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Ano/Modelo:</label>
+                            <p class="form-control-static">@Model.Carro.AnoModelo</p>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Renavam:</label>
+                            <p class="form-control-static">@Model.Carro.Renavam</p>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--sm">
+                        <label>Características:</label>
+                        <p class="form-control-static">@(string.Join("; ", Model.Carro.Caracteristicas.Where(x => !string.IsNullOrEmpty(x)).ToArray()))</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid m-form__actions--right">
+                <button type="button" class="btn m-btn--square btn-secondary btn-fechar">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

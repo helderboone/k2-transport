@@ -28,33 +28,23 @@ namespace K2.Web.Controllers
             return View();
         }
 
-        //[Authorize(Policy = "MotoristaOuProprietarioCarro")]
-        //[HttpGet]
-        //[Route("viagens-previstas")]
-        //public async Task<IActionResult> ViagensPrevistas()
-        //{
-        //    var filtro = new ProcurarViagemEntrada
-        //    {
-        //        OrdenarPor = "DataHorarioSaida",
-        //        SomentePrevistas = true
-        //    };
+        [Authorize(Policy = TipoPerfil.Administrador)]
+        [HttpGet]
+        [Route("obter-info-viagem/{id:int}")]
+        public async Task<IActionResult> ObterInformacoesViagem(int id)
+        {
+            var apiResponse = await _restSharpHelper.ChamarApi("viagens/obter-por-id/" + id, Method.GET);
 
-        //    var parametros = new Parameter[]
-        //    {
-        //        new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
-        //    };
+            var saida = ViagemSaida.Obter(apiResponse.Content);
 
-        //    var apiResponse = await _restSharpHelper.ChamarApi("viagens/procurar", Method.POST, parametros);
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações da viagem.", new[] { "A API não retornou nenhuma resposta." }));
 
-        //    var saida = ProcurarSaida.Obter(apiResponse.Content);
+            if (!saida.Sucesso)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da viagem.", saida.Mensagens));
 
-        //    if (!saida.Sucesso)
-        //        return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível obter as viagens previstas.", saida.Mensagens, TipoAcaoAoOcultarFeedback.Ocultar));
-
-        //    var registros = saida.ObterRegistros<ViagemRegistro>();
-
-        //    return View(registros);
-        //}
+            return PartialView("Informacoes", saida.Retorno);
+        }
 
         [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]

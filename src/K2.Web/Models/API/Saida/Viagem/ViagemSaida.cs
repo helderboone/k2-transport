@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace K2.Web.Models
 {
@@ -88,11 +89,25 @@ namespace K2.Web.Models
         public string DataHorarioSaidaToString => this.DataHorarioSaida.ToString("dd MMM, yyyy - HH:mm");
 
         public double QuantidadeDiasSaida => Math.Round(this.DataHorarioSaida.Subtract(DateTimeHelper.ObterHorarioAtualBrasilia()).TotalDays, 0);
+
+        public decimal ValorArrecadadoReservas => this.Reservas.Where(x => x.ValorPago.HasValue).Sum(x => x.ValorPago.Value);
+
+        public decimal PercentualArrecadadoReservas => Math.Round(100 * this.ValorArrecadadoReservas / (this.Carro.QuantidadeLugares * this.ValorPassagem), 0);
     }
 
     public class ViagemCarroRetorno
     {
         public string Descricao { get; set; }
+
+        public string NomeProprietario { get; set; }
+
+        public string AnoModelo { get; set; }
+
+        public string NomeFabricante { get; set; }
+
+        public string Renavam { get; set; }
+
+        public string[] Caracteristicas { get; set; }
 
         public string Placa { get; set; }
 

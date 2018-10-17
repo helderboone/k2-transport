@@ -24,7 +24,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
         public async Task<Viagem> ObterPorId(int id, bool habilitarTracking = false)
         {
             var query = _efContext.Viagens
-                .Include(x => x.Carro.Proprietario)
+                .Include(x => x.Carro.Proprietario.Usuario)
                 .Include(x => x.Motorista.Usuario)
                 .Include(x => x.LocalidadeEmbarque)
                 .Include(x => x.LocalidadeDesembarque)
@@ -60,7 +60,7 @@ namespace K2.Infraestrutura.Dados.Repositorios
         public async Task<ProcurarSaida> Procurar(ProcurarViagemEntrada entrada, CredencialUsuarioEntrada credencial)
         {
             var query = _efContext.Viagens
-                .Include(x => x.Carro.Proprietario)
+                .Include(x => x.Carro.Proprietario.Usuario)
                 .Include(x => x.Motorista.Usuario)
                 .Include(x => x.LocalidadeEmbarque)
                 .Include(x => x.LocalidadeDesembarque)

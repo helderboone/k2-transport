@@ -37,7 +37,7 @@
 }
 
 .jconfirm.jconfirm-supervan .jconfirm-bg {
-    background-color: rgba(54,70,93,.85);
+    background-color: rgba(54,70,93,.90);
 }
 
 .jconfirm.jconfirm-light .jconfirm-bg {
@@ -241,6 +241,27 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
     margin-top: 10px;
 }
 
+.datetimepicker tbody tr > td.day.old {
+    color: #ccc;
+}
+
+    .datetimepicker tbody tr > td.day.old.disabled {
+        color: #efefef;
+    }
+
+.datetimepicker table tr td.disabled, .datetimepicker table tr td.disabled:hover {
+    color: #efefef;
+}
+
+.datetimepicker tbody tr > td.day.new {
+    color: #ccc;
+}
+
+.datetimepicker tbody tr > td.day.active {
+    background: #007AAD;
+    color: #ffffff;
+}
+
 @media (min-width: 1200px) {
     .jc-bs3-container.container {
         max-width: 90%;
@@ -248,6 +269,10 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
 }
 
 @media (max-width: 1024px) {
+    .jconfirm-box-container.jconfirm-animated.jconfirm-no-transition {
+        width: 100%;
+    }
+    
     .jc-bs3-container.container {
         max-width: 94%;
     }

@@ -187,7 +187,7 @@
                             Uf: $("#sEstado").val()
                         };
 
-                        App.bloquear($("#frmManterCliente"));
+                        App.bloquear();
 
                         $.post(App.corrigirPathRota(cadastro ? "cadastrar-cliente" : "alterar-cliente"), { entrada: cliente })
                             .done(function (feedbackResult) {
@@ -208,10 +208,23 @@
                                 feedback.exibirModal();
                             })
                             .always(function () {
-                                App.desbloquear($("#frmManterCliente"));
+                                App.desbloquear();
                             });
                     }
                 });
+            });
+        },
+
+        obterInfoViagem: function (id) {
+            App.exibirModalPorRota(App.corrigirPathRota("obter-info-viagem/" + id), function () {
+                $(".cpf").inputmask({
+                    "mask": "999.999.999-99"
+                });
+
+                $(".celular").inputmask({
+                    "mask": "(99) 99999-9999"
+                });
+ 
             });
         }
     };

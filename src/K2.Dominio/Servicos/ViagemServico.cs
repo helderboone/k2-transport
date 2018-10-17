@@ -18,6 +18,7 @@ namespace K2.Dominio.Servicos
         private readonly ICarroRepositorio _carroRepositorio;
         private readonly IMotoristaRepositorio _motoristaRepositorio;
         private readonly ILocalidadeRepositorio _localidadeRepositorio;
+        private readonly IReservaRepositorio _reservaRepositorio;
         private readonly IUow _uow;        
 
         public ViagemServico(
@@ -25,12 +26,14 @@ namespace K2.Dominio.Servicos
             ICarroRepositorio carroRepositorio,
             IMotoristaRepositorio motoristaRepositorio,
             ILocalidadeRepositorio localidadeRepositorio,
+            IReservaRepositorio reservaRepositorio,
             IUow uow)
         {
             _viagemRepositorio     = viagemRepositorio;
             _carroRepositorio      = carroRepositorio;
             _motoristaRepositorio  = motoristaRepositorio;
             _localidadeRepositorio = localidadeRepositorio;
+            _reservaRepositorio    = reservaRepositorio;
             _uow                   = uow;
         }
 
@@ -185,6 +188,9 @@ namespace K2.Dominio.Servicos
 
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
+
+            foreach (var reserva in viagem.Reservas)
+                _reservaRepositorio.Deletar(reserva);
 
             _viagemRepositorio.Deletar(viagem);
 

@@ -23,8 +23,7 @@ namespace K2.Infraestrutura.Dados.Maps
 
             builder.HasOne(x => x.Dependente)
                 .WithOne()
-                .HasForeignKey<ReservaDependente>(x => x.IdReserva)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey<ReservaDependente>(x => x.IdReserva);
 
             builder.Property(x => x.IdViagem);
             builder.Property(x => x.ValorPago);
