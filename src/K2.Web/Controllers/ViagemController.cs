@@ -1,4 +1,5 @@
-﻿using K2.Web.Filters;
+﻿using K2.Infraestrutura;
+using K2.Web.Filters;
 using K2.Web.Helpers;
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -165,8 +166,8 @@ namespace K2.Web.Controllers
 
         [Authorize(Policy = "MotoristaOuProprietarioCarro")]
         [HttpGet]
-        [Route("gerar-pdf-relacao-passageiros/{idViagem:int}/{tipo:int}")]
-        public async Task<IActionResult> GerarRelacaoPassageirosPdf(int idViagem, int tipo)
+        [Route("gerar-pdf-demonstrativo/{idViagem:int}")]
+        public async Task<IActionResult> GerarDemonstrativoPdf(int idViagem, int tipo)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("viagens/obter-por-id/" + idViagem, Method.GET);
 
@@ -178,10 +179,12 @@ namespace K2.Web.Controllers
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da viagem.", saida.Mensagens));
 
-            if (tipo == 1)
-                return PartialView("RelacaoPassageirosPdf", saida.Retorno);
+            //if (tipo == 1)
+            //    return PartialView("RelacaoPassageirosPdf", saida.Retorno);
 
-            return new ViewAsPdf("RelacaoPassageirosPdf", saida.Retorno);
+            var footer = "--footer-right \"Gerado em: " + DateTimeHelper.ObterHorarioAtualBrasilia().ToString("dd/MM/yyyy HH:mm") + "\" " + "--footer-left \"Página: [page] de [toPage]\" --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Roboto\"";
+
+            return new ViewAsPdf("Demonstrativo", saida.Retorno) { CustomSwitches = footer };
         }
     }
 }

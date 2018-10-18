@@ -195,6 +195,9 @@
   <data name="Usuario_Ja_Existe_Por_Rg" xml:space="preserve">
     <value>Já existe um usuário cadastrado com o RG informado.</value>
   </data>
+  <data name="Usuario_Nao_Encontrado_Por_Email" xml:space="preserve">
+    <value>Não existe nenhum usuário cadastrado com o e-mail informado.</value>
+  </data>
   <data name="Usuario_Nao_Encontrado_Por_Login_Senha" xml:space="preserve">
     <value>Usuário não encontrado. Por favor verifique o login e senha informados.</value>
   </data>

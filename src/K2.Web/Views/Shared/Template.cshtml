@@ -329,11 +329,6 @@
                             <div class="mr-auto">
                                 <h3 class="m-subheader__title m-subheader__title--separator">@ViewData["Title"]</h3>
                                 <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-                                    <li class="m-nav__item m-nav__item--home">
-                                        <a href="#" class="m-nav__link m-nav__link--icon" data-container="body" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Página inicial">
-                                            <i class="m-nav__link-icon la la-home"></i>
-                                        </a>
-                                    </li>
                                     @ObterCaminho()
                                 </ul>
                             </div>
@@ -419,6 +414,23 @@
         $(document).ajaxStop(function () { App.desbloquear(); });
 
         $(document).ready(function () {
+            Offline.options = {
+                checks: {
+                    xhr: { url: App.corrigirPathRota('hello') }
+                },
+                reconnect: {
+                    initialDelay: 10 // em segundos
+                }
+            };
+
+            Offline.on("confirmed-down", function () {
+                mApp.blockPage();
+            });
+
+            Offline.on("confirmed-up", function () {
+                mApp.unblockPage();
+            });
+
             $("#lnkAlterarMeusDados").click(function () {
                 K2.alterarMeusDados();
             });
@@ -462,7 +474,6 @@
         if (url.Contains("administradores"))
         {
             return Html.Raw(
-                    "<li class=\"m-nav__separator\">-</li>" +
                     "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
                     "<li class=\"m-nav__separator\">-</li>" +
                     "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
@@ -472,7 +483,6 @@
         else if (url.Contains("motoristas"))
         {
             return Html.Raw(
-                    "<li class=\"m-nav__separator\">-</li>" +
                     "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
                     "<li class=\"m-nav__separator\">-</li>" +
                     "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
@@ -482,7 +492,6 @@
         else if (url.Contains("proprietarios"))
         {
             return Html.Raw(
-                    "<li class=\"m-nav__separator\">-</li>" +
                     "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
                     "<li class=\"m-nav__separator\">-</li>" +
                     "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
@@ -492,7 +501,6 @@
         else if (url.Contains("carros"))
         {
             return Html.Raw(
-                    "<li class=\"m-nav__separator\">-</li>" +
                     "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
                     "<li class=\"m-nav__separator\">-</li>" +
                     "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
@@ -502,7 +510,6 @@
         else if (url.Contains("localidades"))
         {
             return Html.Raw(
-                    "<li class=\"m-nav__separator\">-</li>" +
                     "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
                     "<li class=\"m-nav__separator\">-</li>" +
                     "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +

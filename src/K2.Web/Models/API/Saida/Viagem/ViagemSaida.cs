@@ -1,4 +1,5 @@
-﻿using K2.Infraestrutura;
+﻿using JNogueira.Infraestrutura.Utilzao;
+using K2.Infraestrutura;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -122,7 +123,11 @@ namespace K2.Web.Models
 
         public string Cpf { get; set; }
 
+        public string CpfFormatado => this.Cpf?.FormatarCpf();
+
         public string Celular { get; set; }
+
+        public string CelularFormatado => this.Celular?.Formatar("(##)######-####");
     }
 
     public class ViagemLocalidadeRetorno
@@ -138,14 +143,42 @@ namespace K2.Web.Models
 
         public int IdCliente { get; set; }
 
-        public string NomeCliente { get; set; }
-
-        public int Situacao { get; set; }
-
-        public string DescricaoSituacao { get; set; }
-
         public string Observacao { get; set; }
 
         public decimal? ValorPago { get; set; }
+
+        public ViagemReservaClienteRetorno Cliente { get; set; }
+
+        public ViagemReservaDependenteRetorno Dependente { get; set; }
+    }
+
+    public class ViagemReservaClienteRetorno
+    {
+        public string Nome { get; set; }
+
+        public string Cpf { get; set; }
+
+        public string CpfFormatado => this.Cpf?.FormatarCpf();
+
+        public string Rg { get; set; }
+
+        public string Celular { get; set; }
+
+        public string CelularFormatado => this.Celular?.Formatar("(##)######-####");
+    }
+
+    public class ViagemReservaDependenteRetorno
+    {
+        public string Nome { get; set; }
+
+        public DateTime DataNascimento { get; set; }
+
+        public string DataNascimentoToString => this.DataNascimento.ToString("dd/MM/yyyy");
+
+        public string Cpf { get; set; }
+
+        public string CpfFormatado => this.Cpf?.FormatarCpf();
+
+        public string Rg { get; set; }
     }
 }

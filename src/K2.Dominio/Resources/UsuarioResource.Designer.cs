@@ -295,6 +295,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não existe nenhum usuário cadastrado com o e-mail informado..
+        /// </summary>
+        public static string Usuario_Nao_Encontrado_Por_Email {
+            get {
+                return ResourceManager.GetString("Usuario_Nao_Encontrado_Por_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usuário não encontrado. Por favor verifique o login e senha informados..
         /// </summary>
         public static string Usuario_Nao_Encontrado_Por_Login_Senha {

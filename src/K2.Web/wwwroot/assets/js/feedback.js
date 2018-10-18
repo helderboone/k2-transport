@@ -94,7 +94,7 @@ class Feedback {
                         switch (tipoAcao) {
                             case 1: window.history.back(); break;
                             case 2: window.close(); break;
-                            case 3: location.href = App.corrigirPathRota("inicio"); break;
+                            case 3: location.href = App.corrigirPathRota("viagens"); break;
                             case 4: location.reload(); break;
                             case 5: App.ocultarModal(); break;
                             case 6: location.href = App.corrigirPathRota("login"); break;

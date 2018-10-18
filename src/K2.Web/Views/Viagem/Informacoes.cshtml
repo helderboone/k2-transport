@@ -1,7 +1,7 @@
 ﻿@model K2.Web.Models.ViagemRegistro
 
 
-<div class="m-portlet m-portlet-xl m-portlet--brand m-portlet--head-solid-bg" style="margin:0 auto;">
+<div class="m-portlet m-portlet-xl m-portlet--brand m-portlet--head-solid-bg" style="margin:0 auto;" id="portlet-viagem-informacao">
     <div class="m-portlet__head">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <ul class="nav nav-tabs  m-tabs-line m-tabs-line--2x" role="tablist" style="margin-left: 15px; margin-right:15px;">
+            <ul class="nav nav-tabs  m-tabs-line m-tabs-line--2x ml-4 mr-4" role="tablist">
                 <li class="nav-item m-tabs__item">
                     <a class="nav-link m-tabs__link active" data-toggle="tab" href="#tabReservas" role="tab">Reservas</a>
                 </li>
@@ -105,9 +105,15 @@
                     <a class="nav-link m-tabs__link" data-toggle="tab" href="#tabCarro" role="tab">Carro</a>
                 </li>
             </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="tabReservas" role="tabpanel" style="margin-left: 15px; margin-right:15px;">
-                    <button type="button" class="btn m-btn--square btn-info m-btn--wide btn-sm mb-0" data-id-viagem="@Model.Id" data-container="#portletReserva" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Cadastrar reserva" id="bCadastrarReserva" @(Model.QuantidadeLugaresDisponiveis == 0 ? " disabled" : string.Empty)>Nova</button>                    <table class="table table-bordered m-table m-table--head-bg-metal table-hover table-striped" id="tblReserva" style="width: 100%;">
+            <div class="tab-content ml-4 mr-4">
+                <div class="tab-pane active" id="tabReservas" role="tabpanel">
+                    <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-info mb-0" data-id-viagem="@Model.Id" id="bCadastrarReserva" @(Model.QuantidadeLugaresDisponiveis == 0 ? " disabled" : string.Empty)>
+                        <span>
+                            <i class="la la-plus"></i>
+                            <span>Nova reserva</span>
+                        </span>
+                    </button>
+                    <table class="table table-bordered m-table m-table--head-bg-metal table-hover table-striped" id="tblReserva" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th data-priority="1" class="m--align-center">Cliente</th>
@@ -121,11 +127,17 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="tabViagem" role="tabpanel">
-                    <div class="form-group m-form__group m-form__group--sm">
+                    <a href="~/gerar-pdf-demonstrativo/@Model.Id" target="_blank" class="btn btn-sm m-btn--square m-btn--icon btn-info mb-0" id="bImprimirDemonstrativo">
+                        <span>
+                            <i class="la la-print"></i>
+                            <span>Demonstrativo</span>
+                        </span>
+                    </a>
+                    <div class="form-group m-form__group m-form__group--sm pl-0 pr-0">
                         <label>Descrição:</label>
                         <p class="form-control-static font-weight-bold">@Model.Descricao</p>
                     </div>
-                    <div class="form-group m-form__group m-form__group--sm row">
+                    <div class="form-group m-form__group m-form__group--sm row pl-0 pr-0">
                         <div class="col-lg-6 m-form__group-sub">
                             <label>Data da saída:</label>
                             <p class="form-control-static">@Model.DataHorarioSaidaToString</p>
@@ -163,7 +175,7 @@
                             <p class="form-control-static">@Model.ValorPassagem.ToString("C2")</p>
                         </div>
                     </div>
-                    <div class="form-group m-form__group m-form__group--sm row">
+                    <div class="form-group m-form__group m-form__group--sm row pl-0 pr-0">
                         <div class="col-lg-6 m-form__group-sub">
                             <label>Embarque:</label>
                             <p class="form-control-static">@Model.LocalidadeEmbarque.Nome</p>
@@ -173,7 +185,7 @@
                             <p class="form-control-static">@Model.LocalidadeDesembarque.Nome</p>
                         </div>
                     </div>
-                    <div class="form-group m-form__group m-form__group--sm row">
+                    <div class="form-group m-form__group m-form__group--sm row pl-0 pr-0">
                         <div class="col-lg-6 m-form__group-sub">
                             <label>Locais de embarque:</label>
                             <p class="form-control-static">
@@ -213,11 +225,11 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="tabMotorista" role="tabpanel">
-                    <div class="form-group m-form__group m-form__group--sm">
+                    <div class="form-group m-form__group m-form__group--sm pl-0 pr-0">
                         <label>Nome:</label>
                         <p class="form-control-static m--font-bolder">@Model.Motorista.Nome</p>
                     </div>
-                    <div class="form-group m-form__group m-form__group--sm row">
+                    <div class="form-group m-form__group m-form__group--sm row pl-0 pr-0">
                         <div class="col-lg-4 m-form__group-sub">
                             <label>Celular:</label>
                             <p class="form-control-static celular">@Model.Motorista.Celular</p>
@@ -233,11 +245,11 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="tabCarro" role="tabpanel">
-                    <div class="form-group m-form__group m-form__group--sm">
+                    <div class="form-group m-form__group m-form__group--sm pl-0 pr-0">
                         <label>Descrição:</label>
                         <p class="form-control-static m--font-bolder">@Model.Carro.Descricao</p>
                     </div>
-                    <div class="form-group m-form__group m-form__group--sm row">
+                    <div class="form-group m-form__group m-form__group--sm row pl-0 pr-0">
                         <div class="col-lg-4 m-form__group-sub">
                             <label>Proprietário:</label>
                             <p class="form-control-static">@Model.Carro.NomeProprietario</p>
@@ -251,7 +263,7 @@
                             <p class="form-control-static">@Model.Carro.QuantidadeLugares</p>
                         </div>
                     </div>
-                    <div class="form-group m-form__group m-form__group--sm row">
+                    <div class="form-group m-form__group m-form__group--sm row pl-0 pr-0">
                         <div class="col-lg-4 m-form__group-sub">
                             <label>Fabricante:</label>
                             <p class="form-control-static">@Model.Carro.NomeFabricante</p>
@@ -265,7 +277,7 @@
                             <p class="form-control-static">@Model.Carro.Renavam</p>
                         </div>
                     </div>
-                    <div class="form-group m-form__group m-form__group--sm">
+                    <div class="form-group m-form__group m-form__group--sm pl-0 pr-0">
                         <label>Características:</label>
                         <p class="form-control-static">@(string.Join("; ", Model.Carro.Caracteristicas.Where(x => !string.IsNullOrEmpty(x)).ToArray()))</p>
                     </div>

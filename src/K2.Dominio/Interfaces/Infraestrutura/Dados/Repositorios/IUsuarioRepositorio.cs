@@ -13,6 +13,11 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         Task<Usuario> ObterPorId(int id, bool habilitarTracking = false);
 
         /// <summary>
+        /// Obtém um usuário a partir do seu email
+        /// </summary>
+        Task<Usuario> ObterPorEmail(string email, bool habilitarTracking = false);
+
+        /// <summary>
         /// Obtém um usuário a partir do seu e-mail e senha
         /// </summary>
         Task<Usuario> ObterPorEmailSenha(string email, string senha, bool habilitarTracking = false);

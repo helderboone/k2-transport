@@ -174,6 +174,43 @@ namespace K2.Dominio.Servicos
             return new Saida(false, _uow.Mensagens, null);
         }
 
+        public async Task<ISaida> RedefinirSenha(string email)
+        {
+            this.NotificarSeEmailInvalido(email, UsuarioResource.Email_Invalido);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            var usuario = await _usuarioRepositorio.ObterPorEmail(email, true);
+
+            this.NotificarSeNulo(usuario, UsuarioResource.Usuario_Nao_Encontrado_Por_Email);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            var senhaTemporaria = usuario.RefefinirSenha();
+
+            await _uow.Commit();
+
+            if (!_uow.Invalido)
+            {
+                try
+                {
+                    _emailUtil.EnviarEmail(new[] { usuario.Email }, "Senha de acesso temporária.", $"Sua senha de acesso foi alterada para <b>{senhaTemporaria}</b>. Acesse o sistema e altera sua senha de acordo com a suas preferências.");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, $"Erro ao enviar a senha redefinida para o e-mail { usuario.Email }.");
+
+                    return new Saida(true, new[] { UsuarioResource.Senha_Redefinida_Com_Erro_Envio_Email }, new { SenhaTemporaria = senhaTemporaria });
+                }
+
+                return new Saida(true, new[] { UsuarioResource.Senha_Redefinida_Com_Sucesso }, new { SenhaTemporaria = senhaTemporaria });
+            }
+
+            return new Saida(false, _uow.Mensagens, null);
+        }
+
         public async Task<ISaida> ProcurarUsuarios(ProcurarUsuarioEntrada entrada)
         {
             if (entrada.Invalido)

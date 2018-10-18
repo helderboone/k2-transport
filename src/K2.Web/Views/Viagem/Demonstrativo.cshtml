@@ -1,0 +1,129 @@
+﻿@model K2.Web.Models.ViagemRegistro
+
+@{
+    Layout = "TemplatePdf";
+}
+
+<table style="width: 100%;">
+    <tr style="border-bottom:5px solid #efefef;">
+        <td style="padding-right:10px; padding-left: 10px; width:1px;">
+            <img src="~/assets/img/favicon.png" style="width: 70px;" />
+        </td>
+        <td class="m--align-center">
+            <h3>DEMONSTRATIVO DE VIAGEM</h3>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table class="table m-table m-table" style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td colspan="4">
+                            <h5 class="m--font-brand mt-4">Informações da viagem</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 1px; white-space: nowrap;">Descrição:</td>
+                        <td class="m--font-boldest">@Model.Descricao</td>
+                        <td style="width: 1px; white-space: nowrap;">Data / horário de saída:</td>
+                        <td class="m--font-bold">@Model.DataHorarioSaida.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 1px; white-space: nowrap;">Embarque:</td>
+                        <td class="m--font-bold">@(Model.LocalidadeEmbarque.Nome + " - " + Model.LocalidadeEmbarque.Uf)</td>
+                        <td style="width: 1px; white-space: nowrap;">Desembarque:</td>
+                        <td class="m--font-bold">@(Model.LocalidadeDesembarque.Nome + " - " + Model.LocalidadeDesembarque.Uf)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <h5 class="m--font-brand mt-4">Informações do motorista</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 1px; white-space: nowrap;">Nome:</td>
+                        <td class="m--font-bold">@Model.Motorista.Nome</td>
+                        <td style="width: 1px; white-space: nowrap;">CNH:</td>
+                        <td class="m--font-bold">@Model.Motorista.Cnh</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 1px; white-space: nowrap;">CPF:</td>
+                        <td class="m--font-bold">@Model.Motorista.CpfFormatado</td>
+                        <td style="width: 1px; white-space: nowrap;">Celular:</td>
+                        <td class="m--font-bold">@Model.Motorista.CelularFormatado</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <h5 class="m--font-brand mt-4">Informações do carro</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 1px; white-space: nowrap;">Descrição:</td>
+                        <td class="m--font-bold">@Model.Carro.Descricao</td>
+                        <td style="width: 1px; white-space: nowrap;">Placa:</td>
+                        <td class="m--font-bold">@Model.Carro.Placa</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 1px; white-space: nowrap;">Fabricante:</td>
+                        <td class="m--font-bold">@Model.Carro.NomeFabricante</td>
+                        <td style="width: 1px; white-space: nowrap;">Ano/modelo:</td>
+                        <td class="m--font-bold">@Model.Carro.AnoModelo</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 1px; white-space: nowrap;">RENAVAM:</td>
+                        <td class="m--font-bold">@Model.Carro.Renavam</td>
+                        <td style="width: 1px; white-space: nowrap;">Qtd. máx. passageiros:</td>
+                        <td class="m--font-bold">@Model.Carro.QuantidadeLugares</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <h5 class="m--font-brand mt-4">Relação de passageiros</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            @if (Model.Reservas.Any())
+                            {
+                                <table class="table table-bordered table-striped m-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="m--align-center">Passageiro</th>
+                                            <th class="m--align-center">CPF</th>
+                                            <th class="m--align-center">RG</th>
+                                            <th class="m--align-center">Celular</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var reserva in Model.Reservas.OrderBy(x => x.Cliente.Nome))
+                                        {
+                                            <tr>
+                                                <td class="m--font-bold">
+                                                    @reserva.Cliente.Nome
+                                                    @if (reserva.Dependente != null)
+                                                    {
+                                                        <div class="alert m-alert--default mt-2" role="alert">
+                                                            Dependente: @reserva.Dependente.Nome<br />
+                                                            Data de nascimento: @(reserva.Dependente.DataNascimentoToString)<br/>
+                                                            @(!string.IsNullOrEmpty(reserva.Dependente.Cpf) ? "CPF: " + reserva.Dependente.CpfFormatado : string.Empty)
+                                                            @(!string.IsNullOrEmpty(reserva.Dependente.Rg) ? "RG: " + reserva.Dependente.Rg : string.Empty)
+                                                        </div>
+                                                    }
+                                                </td>
+                                                <td class="m--align-center" style="vertical-align:middle;">@reserva.Cliente.CpfFormatado</td>
+                                                <td class="m--align-center" style="vertical-align:middle;">@reserva.Cliente.Rg</td>
+                                                <td class="m--align-center" style="vertical-align:middle;">@reserva.Cliente.CelularFormatado</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <div class="m--align-center">Nenhuma reserva cadastrada.</div>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>

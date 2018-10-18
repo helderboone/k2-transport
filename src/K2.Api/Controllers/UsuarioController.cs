@@ -132,6 +132,17 @@ namespace K2.Api.Controllers
             return await _usuarioServico.RedefinirSenha(id);
         }
 
+        /// <summary>
+        /// Redefine a senha de acesso do usuário para uma senha temporária
+        /// </summary>
+        [AllowAnonymous]
+        [HttpPut]
+        [Route("v1/usuarios/redefinir-senha/{email}")]
+        public async Task<ISaida> RedefinirSenha(string email)
+        {
+            return await _usuarioServico.RedefinirSenha(email);
+        }
+
         private ISaida CriarResponseTokenJwt(UsuarioSaida usuario, DateTime dataCriacaoToken, DateTime dataExpiracaoToken, JwtTokenConfig tokenConfig)
         {
             var identity = new ClaimsIdentity(

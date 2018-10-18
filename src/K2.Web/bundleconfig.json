@@ -1,18 +1,22 @@
 [
+  // Vendors
   {
     "outputFileName": "wwwroot/assets/vendors/base/vendors.bundle.min.css",
     "inputFiles": [
       "wwwroot/assets/vendors/base/vendors.bundle.css",
-      "wwwroot/assets/vendors/custom/jquery-confirm/jquery-confirm.min.css"
+      "wwwroot/assets/vendors/custom/jquery-confirm/jquery-confirm.min.css",
+      "wwwroot/assets/vendors/custom/offline-js/offline-js.min.css"
     ]
   },
   {
     "outputFileName": "wwwroot/assets/vendors/base/vendors.bundle.min.js",
     "inputFiles": [
       "wwwroot/assets/vendors/base/vendors.bundle.js",
-      "wwwroot/assets/vendors/custom/jquery-confirm/jquery-confirm.min.js"
+      "wwwroot/assets/vendors/custom/jquery-confirm/jquery-confirm.min.js",
+      "wwwroot/assets/vendors/custom/offline-js/offline-js.min.js"
     ]
   },
+  // Scripts bundle
   {
     "outputFileName": "wwwroot/assets/scripts.bundle.min.js",
     "inputFiles": [
@@ -25,6 +29,20 @@
       "wwwroot/assets/style.bundle.css"
     ]
   },
+  // Datatables
+  {
+    "outputFileName": "wwwroot/assets/vendors/custom/datatables/datatables.bundle.min.js",
+    "inputFiles": [
+      "wwwroot/assets/vendors/custom/datatables/datatables.bundle.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/vendors/custom/datatables/datatables.bundle.min.css",
+    "inputFiles": [
+      "wwwroot/assets/vendors/custom/datatables/datatables.bundle.css"
+    ]
+  },
+  // App
   {
     "outputFileName": "wwwroot/assets/css/app.min.css",
     "inputFiles": [
@@ -39,6 +57,7 @@
       "wwwroot/assets/js/k2.js"
     ]
   },
+  // Views
   {
     "outputFileName": "wwwroot/assets/js/views/usuario-login.min.js",
     "inputFiles": [
@@ -49,18 +68,6 @@
     "outputFileName": "wwwroot/assets/js/views/cliente.min.js",
     "inputFiles": [
       "wwwroot/assets/js/views/cliente.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/assets/vendors/custom/datatables/datatables.bundle.min.js",
-    "inputFiles": [
-      "wwwroot/assets/vendors/custom/datatables/datatables.bundle.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/assets/vendors/custom/datatables/datatables.bundle.min.css",
-    "inputFiles": [
-      "wwwroot/assets/vendors/custom/datatables/datatables.bundle.css"
     ]
   },
   {

@@ -62,8 +62,8 @@ var SnippetLogin = function() {
                     $.post(App.corrigirPathRota("login"), { email: $("#email").val(), senha: $("#password").val(), permanecerLogado: $("#remember").prop("checked") }, function (feedbackViewModel) {
                         var feedback = Feedback.converter(feedbackViewModel);
 
-                        if (feedback.Tipo.Nome == Tipo.Sucesso)
-                            location.href = App.corrigirPathRota("inicio");
+                        if (feedback.Tipo.Nome === Tipo.Sucesso)
+                            location.href = App.corrigirPathRota("viagens");
                         else
                             feedback.exibirModal();
                     })
@@ -88,7 +88,7 @@ var SnippetLogin = function() {
 
             form.validate({
                 rules: {
-                    email: {
+                    emailRedefinir: {
                         required: true,
                         email: true
                     }
@@ -104,20 +104,21 @@ var SnippetLogin = function() {
             form.ajaxSubmit({
                 url: '',
                 success: function () {
-                    // similate 2s delay
-                    setTimeout(function () {
-                        btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false); // remove 
-                        form.clearForm(); // clear form
-                        form.validate().resetForm(); // reset validation states
+                    $.post(App.corrigirPathRota("redefinir-senha/" + $("#emailRedefinir").val()), function (feedbackViewModel) {
+                        var feedback = Feedback.converter(feedbackViewModel);
 
-                        // display signup form
-                        displaySignInForm();
-                        var signInForm = login.find('.m-login__signin form');
-                        signInForm.clearForm();
-                        signInForm.validate().resetForm();
-
-                        showErrorMsg(signInForm, 'success', 'Cool! Password recovery instruction has been sent to your email.');
-                    }, 2000);
+                        if (feedback.Tipo.Nome === Tipo.Sucesso)
+                            displaySignInForm();
+                        else
+                            feedback.exibirModal();
+                    })
+                    .fail(function (jqXhr) {
+                        var feedback = Feedback.converter(jqXhr.responseJSON);
+                        feedback.exibirModal();
+                    })
+                    .always(function () {
+                        btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
+                    });
                 }
             });
         });

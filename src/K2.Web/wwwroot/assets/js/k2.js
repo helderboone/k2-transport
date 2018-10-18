@@ -90,12 +90,11 @@
             App.exibirModalPorRota(App.corrigirPathRota("visualizar-carro/" + id));
         },
 
-        criarSelectClientes: function (selector, obrigatorio, containerSelector) {
-            if (obrigatorio == null)
+        criarSelectClientes: function (selector, obrigatorio) {
+            if (obrigatorio === null)
                 obrigatorio = false;
 
-            if (containerSelector !== null && containerSelector !== "")
-                App.bloquear($(containerSelector));
+            App.bloquear();
 
             $.ajax({
                 type: "GET",
@@ -126,9 +125,8 @@
                 var feedback = Feedback.converter(jqXhr.responseJSON);
                 feedback.exibirModal();
             }).always(function () {
-                if (containerSelector !== null && containerSelector !== "")
-                    App.desbloquear($(containerSelector));
-            });;
+                App.desbloquear();
+            });
         },
 
         manterCliente: function (id, sucessoCallback) {

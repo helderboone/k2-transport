@@ -491,10 +491,10 @@
 
         App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-reserva/" + idReserva) : App.corrigirPathRota("cadastrar-reserva/" + idViagem)), function () {
 
-            K2.criarSelectClientes("#sClienteReserva", true, "#portlet-manter-reserva");
+            K2.criarSelectClientes("#sClienteReserva", true);
 
             $("#bCadastrarCliente").click(function () {
-                K2.manterCliente(null, function () { K2.criarSelectClientes("#sClienteReserva", true, "#portlet-manter-reserva"); });
+                K2.manterCliente(null, function () { K2.criarSelectClientes("#sClienteReserva", true); });
             });
 
             mApp.initTooltips();

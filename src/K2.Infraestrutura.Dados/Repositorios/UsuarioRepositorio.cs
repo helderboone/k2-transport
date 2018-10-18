@@ -30,6 +30,16 @@ namespace K2.Infraestrutura.Dados.Repositorios
             return await query.FirstOrDefaultAsync();
         }
 
+        public async Task<Usuario> ObterPorEmail(string email, bool habilitarTracking = false)
+        {
+            var query = _efContext.Usuarios.Where(x => x.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase));
+
+            if (!habilitarTracking)
+                query = query.AsNoTracking();
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task<Usuario> ObterPorEmailSenha(string email, string senha, bool habilitarTracking = false)
         {
             var query = _efContext.Usuarios.Where(x => x.Email == email && x.Senha == senha);

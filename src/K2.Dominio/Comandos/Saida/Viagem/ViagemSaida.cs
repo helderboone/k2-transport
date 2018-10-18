@@ -157,9 +157,21 @@ namespace K2.Dominio.Comandos.Saida
             {
                 x.Id,
                 x.IdCliente,
-                NomeCliente = x.Cliente.Nome,
+                Cliente = new {
+                    x.Cliente.Nome,
+                    x.Cliente.Cpf,
+                    x.Cliente.Rg,
+                    x.Cliente.Celular
+                },
                 x.Observacao,
-                x.ValorPago
+                x.ValorPago,
+                Dependente = x.Dependente != null ? new
+                {
+                    x.Dependente.Nome,
+                    x.Dependente.DataNascimento,
+                    x.Dependente.Cpf,
+                    x.Dependente.Rg
+                } : null
             }).ToArray();
             QuantidadeLugaresDisponiveis = viagem.QuantidadeLugaresDisponiveis;
             PercentualDisponibilidade    = viagem.PercentualDisponibilidade.ToString("N0") + "%";

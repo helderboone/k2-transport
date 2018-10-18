@@ -1,4 +1,4 @@
-﻿@model Feedback
+﻿@model K2.Web.Feedback
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,6 +49,23 @@
     <!-- begin::Page Loader -->
     <script>
         $(document).ready(function () {
+            Offline.options = {
+                checks: {
+                    xhr: { url: App.corrigirPathRota('hello') }
+                },
+                reconnect: {
+                    initialDelay: 10 // em segundos
+                }
+            };
+
+            Offline.on("confirmed-down", function () {
+                mApp.blockPage();
+            });
+
+            Offline.on("confirmed-up", function () {
+                mApp.unblockPage();
+            });
+
             var feedback = new Feedback(@((int)Model.Tipo), '@Html.Raw(Model.Mensagem)', '@Html.Raw(Model.MensagemAdicional)',  @((int)Model.TipoAcao));
             feedback.exibirModal();
         });

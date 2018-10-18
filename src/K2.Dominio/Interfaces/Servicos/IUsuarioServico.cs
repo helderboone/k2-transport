@@ -30,6 +30,11 @@ namespace K2.Dominio.Interfaces.Servicos
         Task<ISaida> RedefinirSenha(int id);
 
         /// <summary>
+        /// Redefine a senha do usuário para uma senha temporária
+        /// </summary>
+        Task<ISaida> RedefinirSenha(string email);
+
+        /// <summary>
         /// Obtém os usuários baseadas nos parâmetros de procura
         /// </summary>
         Task<ISaida> ProcurarUsuarios(ProcurarUsuarioEntrada entrada);

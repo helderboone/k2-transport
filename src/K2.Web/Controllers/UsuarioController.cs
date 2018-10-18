@@ -31,7 +31,7 @@ namespace K2.Web.Controllers
         public IActionResult Login()
         {
             return User.Identity.IsAuthenticated
-                ? (ActionResult)RedirectToAction("Index", "Home")
+                ? (ActionResult)RedirectToAction("Index", "Viagem")
                 : View();
         }
 
@@ -133,6 +133,9 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível redefinir a senha de acesso."));
+
             var senhaTemporaria = string.Empty;
 
             if (saida.Sucesso)
@@ -142,12 +145,40 @@ namespace K2.Web.Controllers
                 senhaTemporaria = retorno.senhaTemporaria;
             }
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível redefinir a senha de acesso."));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar sua senha de acesso.", saida.Mensagens))
-                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), !string.IsNullOrEmpty(senhaTemporaria) ? new[] { $"A senha temporária redefinida é <b>{senhaTemporaria}</b>." } : null, tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), !string.IsNullOrEmpty(senhaTemporaria)
+                    ? new[] { $"A senha temporária redefinida é <b>{senhaTemporaria}</b>." }
+                    : null, tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("redefinir-senha/{email}")]
+        [FeedbackExceptionFilter("Ocorreu um erro na tentativa de enviar uma nova senha de acesso.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        public async Task<IActionResult> RedefinirSenha(string email)
+        {
+            var apiResponse = await _restSharpHelper.ChamarApi("usuarios/redefinir-senha/" + email, Method.PUT, usarToken: false);
+
+            var saida = Saida.Obter(apiResponse.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível enviar uma nova senha de acesso."));
+
+            var senhaTemporaria = string.Empty;
+
+            if (saida.Sucesso)
+            {
+                dynamic retorno = saida.Retorno;
+
+                senhaTemporaria = retorno.senhaTemporaria;
+            }
+
+            return !saida.Sucesso
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível enviar uma nova senha de acesso.", saida.Mensagens))
+                : !string.IsNullOrEmpty(senhaTemporaria)
+                    ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível enviar uma nova senha de acesso.", saida.Mensagens))
+                    : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First()));
         }
     }
 }
