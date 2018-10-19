@@ -124,6 +124,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dados alterados com sucesso..
+        /// </summary>
+        public static string Meus_Dados_Alterados_Com_Sucesso {
+            get {
+                return ResourceManager.GetString("Meus_Dados_Alterados_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O nome é obrigatório e não foi informado..
         /// </summary>
         public static string Nome_Obrigatorio_Nao_Informado {

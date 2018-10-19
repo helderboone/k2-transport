@@ -135,6 +135,9 @@
   <data name="Motorista_Excluido_Com_Sucesso" xml:space="preserve">
     <value>O motorista foi excluído com sucesso.</value>
   </data>
+  <data name="Motorista_Id_Usuario_Nao_Existe" xml:space="preserve">
+    <value>O motorista com o ID do usuário informado não existe.</value>
+  </data>
   <data name="Nao_Possivel_Excluir_Motorista_Com_Viagens" xml:space="preserve">
     <value>Não é possível excluir um motorista que esteja associado a pelo menos uma viagem cadastrada. Exclua todas as viagens associadas ao motorista antes de excluí-lo.</value>
   </data>

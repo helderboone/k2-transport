@@ -41,6 +41,23 @@ namespace K2.Dominio.Servicos
                 : new Saida(true, new[] { MotoristaResource.Motorista_Encontrado_Com_Sucesso }, new MotoristaSaida(motorista));
         }
 
+        public async Task<ISaida> ObterMotoristaPorIdUsuario(int idUsuario)
+        {
+            this.NotificarSeMenorOuIgualA(idUsuario, 0, UsuarioResource.Id_Invalido);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            var motorista = await _motoristaRepositorio.ObterPorIdUsuario(idUsuario);
+
+            // Verifica se o motorista existe
+            this.NotificarSeNulo(motorista, MotoristaResource.Motorista_Id_Usuario_Nao_Existe);
+
+            return this.Invalido
+                ? new Saida(false, this.Mensagens, null)
+                : new Saida(true, new[] { MotoristaResource.Motorista_Encontrado_Com_Sucesso }, new MotoristaSaida(motorista));
+        }
+
         public async Task<ISaida> ProcurarMotoristas(ProcurarMotoristaEntrada entrada)
         {
             if (entrada.Invalido)

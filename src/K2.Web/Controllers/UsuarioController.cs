@@ -180,5 +180,57 @@ namespace K2.Web.Controllers
                     ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível enviar uma nova senha de acesso.", saida.Mensagens))
                     : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First()));
         }
+
+        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [HttpGet]
+        [Route("alterar-meus-dados")]
+        public async Task<IActionResult> AlterarMeusDados()
+        {
+            if (_cookieHelper.ObterPerfilUsuario() == TipoPerfil.Motorista)
+            {
+                var apiResponse = await _restSharpHelper.ChamarApi("usuarios/obter-por-id-usuario/" + _cookieHelper.ObterIdUsuario(), Method.GET);
+
+                var saida = MotoristaSaida.Obter(apiResponse.Content);
+
+                if (saida == null)
+                    return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível obter suas informações.", new[] { "A API não retornou nenhuma resposta." }));
+
+                if (!saida.Sucesso)
+                    return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível obter suas informações.", saida.Mensagens));
+
+                ViewData["Cnh"] = saida.Retorno.Cnh;
+            }
+
+            return PartialView("AlterarMeusDados");
+        }
+
+
+        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [HttpPost]
+        [Route("alterar-meus-dados")]
+        public async Task<IActionResult> AlterarMeusDados(AlterarMeusDadosEntrada entrada)
+        {
+            if (entrada == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Os dados não foram preenchidos.", new[] { "Verifique se todas as informações foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
+
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
+
+            var apiResponse = await _restSharpHelper.ChamarApi("usuarios/alterar-meus-dados", Method.PUT, parametros);
+
+            var saida = Saida.Obter(apiResponse.Content);
+
+            if (saida == null)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível os seus dados.", new[] { "A API não retornou nenhuma resposta." }));
+
+            if (saida.Sucesso)
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return !saida.Sucesso
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível os seus dados.", saida.Mensagens))
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Seus dados foram alterados com sucesso.", new[] { "Você será redirecionado para a tela de login. Por favor faça login novamente." }, tipoAcao: TipoAcaoAoOcultarFeedback.RedirecionarTelaLogin));
+        }
     }
 }

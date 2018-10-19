@@ -39,6 +39,22 @@ namespace K2.Web.Helpers
         public string ObterEmailUsuario() => _context.User.Claims.ElementAt(1).Value;
 
         /// <summary>
+        /// Obtém o CPF do usuário
+        /// </summary>
+        public string ObterCpfUsuario() => _context.User.Claims.First(x => x.Type == "Cpf").Value;
+
+        /// <summary>
+        /// Obtém o RG do usuário
+        /// </summary>
+        public string ObterRgUsuario() => _context.User.Claims.First(x => x.Type == "Rg").Value;
+
+        /// <summary>
+        /// Obtém o celular do usuário
+        /// </summary>
+        public string ObterCelularUsuario() => _context.User.Claims.First(x => x.Type == "Celular").Value;
+
+
+        /// <summary>
         /// Obtém o perfil associado ao usuário
         /// </summary>
         public string ObterPerfilUsuario()

@@ -115,6 +115,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O motorista com o ID do usuário informado não existe..
+        /// </summary>
+        public static string Motorista_Id_Usuario_Nao_Existe {
+            get {
+                return ResourceManager.GetString("Motorista_Id_Usuario_Nao_Existe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não é possível excluir um motorista que esteja associado a pelo menos uma viagem cadastrada. Exclua todas as viagens associadas ao motorista antes de excluí-lo..
         /// </summary>
         public static string Nao_Possivel_Excluir_Motorista_Com_Viagens {

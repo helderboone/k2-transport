@@ -63,6 +63,17 @@ namespace K2.Api.Controllers
         }
 
         /// <summary>
+        /// Obtém um motorista a partir do ID do seu usuário
+        /// </summary>
+        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [HttpGet]
+        [Route("v1/motoristas/obter-por-id-usuario/{idUsuario:int}")]
+        public async Task<ISaida> ObterPorIdUsuario(int idUsuario)
+        {
+            return await _motoristaServico.ObterMotoristaPorIdUsuario(idUsuario);
+        }
+
+        /// <summary>
         /// Realiza a exclusão de um motorista.
         /// </summary>
         [Authorize(Policy = TipoPerfil.Administrador)]

@@ -1,0 +1,68 @@
+﻿@using K2.Web.Helpers
+
+@inject CookieHelper cookieHelper
+
+<div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet-lg" style="margin:0 auto;">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Alterar meus dados
+                </h3>
+            </div>
+        </div>
+    </div>
+    <form id="frmManterMeusDados" class="m-form m-form--fit m-form--state" novalidate="novalidate">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Nome <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iNome" name="iNome" maxlength="500" style="text-transform:uppercase;" value="@cookieHelper.ObterNomeUsuario()">
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Email <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="input-group m-input-group m-input-group--square m-input-group--air">
+                        <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
+                        <input type="text" class="form-control m-input" id="iEmail" name="iEmail" maxlength="500" style="text-transform:lowercase;" value="@cookieHelper.ObterEmailUsuario()">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>CPF <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iCpf" name="iCpf" value="@cookieHelper.ObterCpfUsuario()">
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>RG <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iRg" name="iRg" maxlength="20" style="text-transform:uppercase;" value="@cookieHelper.ObterRgUsuario()">
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Telefone celular <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="input-group m-input-group m-input-group--square m-input-group--air">
+                        <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-phone"></i></span></div>
+                        <input type="text" class="form-control m-input" id="iCelular" name="iCelular" value="@cookieHelper.ObterCelularUsuario()">
+                    </div>
+                    <span class="m-form__help">DDD + Número</span>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    @if (cookieHelper.ObterPerfilUsuario() == K2.Web.TipoPerfil.Motorista)
+                    {
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>CNH <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                            <input type="text" class="form-control m-input m-input--square m-input--air" id="iCnh" name="iCnh" value="@ViewData["Cnh"]" maxlength="20">
+                            <span class="m-form__help"></span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid m-form__actions--right">
+                <button type="button" class="btn m-btn--square btn-secondary btn-fechar">Cancelar</button>
+                <button type="submit" class="btn m-btn--square btn-info">Salvar</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -220,7 +220,7 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
 }
 
     .m-form.m-form--group-seperator-dashed--k2 .m-form__group p {
-        margin-bottom: 0;
+        margin-bottom: 1.0rem;
     }
 
 .m-btn--icon.m-btn--icon-only--sm {

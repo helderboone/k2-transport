@@ -15,6 +15,11 @@ namespace K2.Dominio.Interfaces.Servicos
         Task<ISaida> ObterMotoristaPorId(int id);
 
         /// <summary>
+        /// Obtém um motorista a partir do ID do seu usuário
+        /// </summary>
+        Task<ISaida> ObterMotoristaPorIdUsuario(int idUsuario);
+
+        /// <summary>
         /// Obtém os motoristas baseados nos parâmetros de procura
         /// </summary>
         Task<ISaida> ProcurarMotoristas(ProcurarMotoristaEntrada entrada);

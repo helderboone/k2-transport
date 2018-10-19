@@ -62,6 +62,14 @@ namespace K2.Dominio.Entidades
             this.Usuario.Alterar(entrada);
         }
 
+        public void Alterar(AlterarMeusDadosEntrada entrada)
+        {
+            if (entrada.Invalido)
+                return;
+
+            this.Cnh = entrada.Cnh;
+        }
+
         public override string ToString()
         {
             return this.Usuario?.Nome?.ToUpper();

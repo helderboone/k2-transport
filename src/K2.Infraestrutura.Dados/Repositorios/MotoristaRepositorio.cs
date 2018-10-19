@@ -31,6 +31,18 @@ namespace K2.Infraestrutura.Dados.Repositorios
             return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<Motorista> ObterPorIdUsuario(int idUsuario, bool habilitarTracking = false)
+        {
+            var query = _efContext.Motoristas
+                    .Include(x => x.Usuario)
+                    .AsQueryable();
+
+            if (!habilitarTracking)
+                query = query.AsNoTracking();
+
+            return await query.FirstOrDefaultAsync(x => x.IdUsuario == idUsuario);
+        }
+
         public async Task<bool> VerificarExistenciaPorId(int id)
         {
             return await _efContext.Localidades.AnyAsync(x => x.Id == id);

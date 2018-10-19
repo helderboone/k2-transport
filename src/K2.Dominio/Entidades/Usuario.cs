@@ -85,6 +85,15 @@ namespace K2.Dominio.Entidades
             this.Administrador = entrada.Administrador;
         }
 
+        public void Alterar(AlterarMeusDadosEntrada entrada)
+        {
+            this.Nome = entrada.Nome;
+            this.Email = entrada.Email;
+            this.Cpf = entrada.Cpf;
+            this.Rg = entrada.Rg;
+            this.Celular = entrada.Celular;
+        }
+
         public string RefefinirSenha()
         {
             var senhaTemp = Guid.NewGuid().ToString().Substring(0, 8);

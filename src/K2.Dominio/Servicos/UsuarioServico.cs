@@ -278,7 +278,7 @@ namespace K2.Dominio.Servicos
             if (this.Invalido)
                 return new Saida(false, this.Mensagens, null);
 
-            // Altera o cliente
+            // Altera o usuário
             usuario.Alterar(entrada);
 
             await _uow.Commit();
@@ -310,6 +310,56 @@ namespace K2.Dominio.Servicos
             return _uow.Invalido
                 ? new Saida(false, _uow.Mensagens, null)
                 : new Saida(true, new[] { UsuarioResource.Usuario_Excluido_Com_Sucesso }, null);
+        }
+
+        public async Task<ISaida> AlterarMeusDados(AlterarMeusDadosEntrada entrada, CredencialUsuarioEntrada credencial)
+        {
+            // Verifica se as informações para alteração foram informadas corretamente
+            if (entrada.Invalido)
+                return new Saida(false, entrada.Mensagens, null);
+
+            var usuario = await _usuarioRepositorio.ObterPorId(credencial.IdUsuario, true);
+
+            // Verifica se o usuário existe
+            this.NotificarSeNulo(usuario, UsuarioResource.Id_Usuario_Nao_Existe);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Verifica se já existe um usuário com o mesmo email
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorEmail(entrada.Email, usuario.Id), UsuarioResource.Usuario_Ja_Existe_Por_Email);
+
+            // Verifica se já existe um usuário com o mesmo CPF
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorCpf(entrada.Cpf, usuario.Id), UsuarioResource.Usuario_Ja_Existe_Por_Cpf);
+
+            // Verifica se já existe um usuário com o mesmo RG
+            this.NotificarSeVerdadeiro(await _usuarioRepositorio.VerificarExistenciaPorRg(entrada.Rg, usuario.Id), UsuarioResource.Usuario_Ja_Existe_Por_Rg);
+
+            if (this.Invalido)
+                return new Saida(false, this.Mensagens, null);
+
+            // Altera o usuário
+            usuario.Alterar(entrada);
+
+            if (credencial.PerfilUsuario == TipoPerfil.Motorista)
+            {
+                // Altera o motorista
+
+                var motorista = await _motoristaRepositorio.ObterPorIdUsuario(credencial.IdUsuario, true);
+
+                this.NotificarSeNulo(motorista, MotoristaResource.Motorista_Id_Usuario_Nao_Existe);
+
+                if (this.Invalido)
+                    return new Saida(false, this.Mensagens, null);
+
+                motorista.Alterar(entrada);
+            }
+
+            await _uow.Commit();
+
+            return _uow.Invalido
+                ? new Saida(false, _uow.Mensagens, null)
+                : new Saida(true, new[] { UsuarioResource.Meus_Dados_Alterados_Com_Sucesso }, null);
         }
     }
 }

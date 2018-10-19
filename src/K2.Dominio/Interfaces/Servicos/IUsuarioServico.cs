@@ -53,5 +53,10 @@ namespace K2.Dominio.Interfaces.Servicos
         /// Exclui um usuario a partir do seu ID
         /// </summary>
         Task<ISaida> ExcluirUsuario(int id);
+        
+        /// <summary>
+        /// Realiza a alteração dos dados do usuário logado.
+        /// </summary>
+        Task<ISaida> AlterarMeusDados(AlterarMeusDadosEntrada entrada, CredencialUsuarioEntrada credencial);
     }
 }

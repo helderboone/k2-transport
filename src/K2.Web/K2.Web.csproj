@@ -87,6 +87,9 @@
     <Content Update="Views\Shared\TemplatePdf.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Usuario\AlterarMeusDados.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Viagem\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

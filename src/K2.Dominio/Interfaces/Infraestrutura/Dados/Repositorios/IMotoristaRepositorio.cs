@@ -14,6 +14,12 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         Task<Motorista> ObterPorId(int id, bool habilitarTracking = false);
 
         /// <summary>
+        /// Obtém um motorista a partir do seu ID de usuário
+        /// </summary>
+        /// <param name="habilitarTracking">Indica que o tracking do EF deverá estar habilitado, permitindo alteração dos dados.</param>
+        Task<Motorista> ObterPorIdUsuario(int idUsuario, bool habilitarTracking = false);
+
+        /// <summary>
         /// Verifica se existe um motorista com o ID informado
         /// </summary>
         Task<bool> VerificarExistenciaPorId(int id);

@@ -138,6 +138,9 @@
   <data name="Id_Usuario_Nao_Existe" xml:space="preserve">
     <value>O usuário com o ID informado não existe.</value>
   </data>
+  <data name="Meus_Dados_Alterados_Com_Sucesso" xml:space="preserve">
+    <value>Dados alterados com sucesso.</value>
+  </data>
   <data name="Nome_Obrigatorio_Nao_Informado" xml:space="preserve">
     <value>O nome é obrigatório e não foi informado.</value>
   </data>

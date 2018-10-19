@@ -164,7 +164,7 @@
                         Ativo: $("#cAtivo").is(':checked')
                     };
 
-                    App.bloquear($("#frmManterAdministrador"));
+                    App.bloquear();
 
                     $.post(App.corrigirPathRota(cadastro ? "cadastrar-administrador" : "alterar-administrador"), { entrada: administrador })
                         .done(function (feedbackResult) {
@@ -185,7 +185,7 @@
                             feedback.exibirModal();
                         })
                         .always(function () {
-                            App.desbloquear($("#frmManterAdministrador"));
+                            App.desbloquear();
                         });
                 }
             });

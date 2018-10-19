@@ -59,6 +59,19 @@ namespace K2.Api.Controllers
         }
 
         /// <summary>
+        /// Realiza a alteração dos dados do usuário logado
+        /// </summary>
+        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [HttpPut]
+        [Route("v1/usuarios/alterar-meus-dados")]
+        public async Task<ISaida> AlterarMeusDados([FromBody] AlterarMeusDadosEntrada entrada)
+        {
+            var credencial = new CredencialUsuarioEntrada(base.ObterIdUsuario(), base.ObterPerfilUsuario());
+
+            return await _usuarioServico.AlterarMeusDados(entrada, credencial);
+        }
+
+        /// <summary>
         /// Obtém um usuario a partir do seu ID
         /// </summary>
         [Authorize(Policy = TipoPerfil.Administrador)]
@@ -155,6 +168,7 @@ namespace K2.Api.Controllers
                         new Claim("Nome", usuario.Nome),
                         new Claim("Cpf", usuario.Cpf),
                         new Claim("Rg", usuario.Rg),
+                        new Claim("Celular", usuario.Celular),
                         new Claim("Perfil", usuario.Perfil)
                     }
                 );

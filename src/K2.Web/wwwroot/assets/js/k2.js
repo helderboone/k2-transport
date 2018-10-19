@@ -42,20 +42,66 @@
         },
 
         alterarMeusDados: function () {
-            //App.exibirModalPorRota(App.corrigirPathRota("alterar-meus-dados"), function () {
-            //    App.definirValidacaoForm("#frmAlterarMeusDados", function () {
-            //        App.bloquear();
+            App.exibirModalPorRota(App.corrigirPathRota("alterar-meus-dados"), function () {
+                $("#iCpf").inputmask({
+                    "mask": "999.999.999-99"
+                });
 
-            //        $.post(App.corrigirPathRota("alterar-meus-dados"), { nome: $("#txtNome").val(), email: $("#txtEmail").val() }, function () {
-            //            App.exibirModal(TipoNotificacao.Sucesso, "Seus dados foram alterados com sucesso.", "Sucesso", "Você será redirecionado para a tela de login.", function () {
-            //                location.href = App.corrigirPathRota("login");
-            //            });
-            //        })
-            //            .fail(function (xhr) {
-            //                App.exibirModalPorJqXHR(xhr);
-            //            });
-            //    });
-            //});
+                $("#iCelular").inputmask({
+                    "mask": "(99) 99999-9999"
+                });
+
+                $("#frmManterMeusDados").validate({
+                    rules: {
+                        iNome: {
+                            required: true
+                        },
+                        iEmail: {
+                            required: true,
+                            email: true
+                        },
+                        iCpf: {
+                            required: true
+                        },
+                        iRg: {
+                            required: true
+                        },
+                        iCelular: {
+                            required: true
+                        },
+                        iCnh: {
+                            required: $("#iCnh").length
+                        }
+                    },
+
+                    submitHandler: function () {
+
+                        var meusDados = {
+                            Nome: $("#iNome").val(),
+                            Email: $("#iEmail").val(),
+                            Cpf: $("#iCpf").val(),
+                            Rg: $("#iRg").val(),
+                            Celular: $("#iCelular").val(),
+                            Cnh: $("#iCnh").length ? $("#iCnh").val() : null
+                        };
+
+                        App.bloquear();
+
+                        $.post(App.corrigirPathRota("alterar-meus-dados"), { entrada: meusDados })
+                            .done(function (feedbackResult) {
+                                var feedback = Feedback.converter(feedbackResult);
+                                feedback.exibirModal();
+                            })
+                            .fail(function (jqXhr) {
+                                var feedback = Feedback.converter(jqXhr.responseJSON);
+                                feedback.exibirModal();
+                            })
+                            .always(function () {
+                                App.desbloquear();
+                            });
+                    }
+                });
+            });
         },
 
         redefinirSenha: function (id) {
