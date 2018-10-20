@@ -1,5 +1,6 @@
 ﻿using JNogueira.Infraestrutura.Utilzao;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace K2.Web.Models
@@ -19,7 +20,7 @@ namespace K2.Web.Models
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<ClienteSaida>(json)
-                : null;
+                : throw new Exception("A saida da API foi nula ou vazia.");
         }
     }
 
@@ -46,6 +47,8 @@ namespace K2.Web.Models
         public string CelularFormatado => this.Celular.Formatar("(##)######-####");
 
         public string Cep { get; set; }
+
+        public string CepFormatado => this.Cep?.Formatar("##.###-###");
 
         public string Endereco { get; set; }
 

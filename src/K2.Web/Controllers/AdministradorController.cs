@@ -19,18 +19,18 @@ namespace K2.Web.Controllers
             _datatablesHelper = datatablesHelper;
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [Route("administradores")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("listar-administradores")]
-        [FeedbackExceptionFilter("Ocorreu um erro ao obter as lista administradores cadastrados.", TipoAcaoAoOcultarFeedback.Ocultar)]
-        public async Task<IActionResult> ListarAdministradors(ProcurarUsuarioEntrada filtro)
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter a relação de administradores cadastrados.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        public async Task<IActionResult> ListarAdministradores(ProcurarUsuarioEntrada filtro)
         {
             if (filtro == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações para a procura não foram preenchidas.", tipoAcao: TipoAcaoAoOcultarFeedback.Ocultar));
@@ -49,10 +49,10 @@ namespace K2.Web.Controllers
 
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
-            return new DatatablesResult(_datatablesHelper.Draw, saida);
+            return new DatatablesResult(_datatablesHelper.Draw, saida.Retorno.TotalRegistros, saida.ObterRegistros<AdministradorRegistro>());
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("cadastrar-administrador")]
         public IActionResult CadastrarAdministrador()
@@ -60,9 +60,10 @@ namespace K2.Web.Controllers
             return PartialView("Manter", null);
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("cadastrar-administrador")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao cadastrar o novo administrador.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> CadastrarAdministrador(CadastrarUsuarioEntrada entrada)
         {
             if (entrada == null)
@@ -77,25 +78,20 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível cadastrar o administrador.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar o administrador.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("alterar-administrador/{id:int:min(1)}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter as informações do administrador.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarAdministrador(int id)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("usuarios/obter-por-id/" + id, Method.GET);
 
             var saida = AdministradorSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações do administrador.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações do administrador.", saida.Mensagens));
@@ -103,13 +99,14 @@ namespace K2.Web.Controllers
             return PartialView("Manter", saida.Retorno);
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("alterar-administrador")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao alterar as informações do administrador.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarAdministrador(AlterarUsuarioEntrada entrada)
         {
             if (entrada == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações do administrador não foram preenchidas.", new[] { "Verifique se todas as informações do motorista foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações do administrador não foram preenchidas.", new[] { "Verifique se todas as informações do administrador foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
 
             var parametros = new Parameter[]
             {
@@ -120,25 +117,20 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar o administrador.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar o administrador.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("excluir-administrador/{id:int}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao excluir o administrador.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> ExcluirAdministrador(int id)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("usuarios/excluir/" + id, Method.DELETE);
 
             var saida = Saida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir o administrador.", new[] { "A API não retornou nenhuma resposta." }));
 
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir o administrador.", saida.Mensagens))

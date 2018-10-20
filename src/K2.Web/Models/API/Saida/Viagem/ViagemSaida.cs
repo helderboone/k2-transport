@@ -22,7 +22,7 @@ namespace K2.Web.Models
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<ViagemSaida>(json)
-                : null;
+                : throw new Exception("A saida da API foi nula ou vazia.");
         }
     }
 
@@ -41,7 +41,7 @@ namespace K2.Web.Models
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<ViagensSaida>(json)
-                : null;
+                : throw new Exception("A saida da API foi nula ou vazia.");
         }
     }
 
@@ -146,6 +146,8 @@ namespace K2.Web.Models
         public string Observacao { get; set; }
 
         public decimal? ValorPago { get; set; }
+
+        public string ValorPagoFormatado => this.ValorPago?.ToString("C2");
 
         public ViagemReservaClienteRetorno Cliente { get; set; }
 

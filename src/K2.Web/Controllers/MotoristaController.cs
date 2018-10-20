@@ -19,17 +19,17 @@ namespace K2.Web.Controllers
             _datatablesHelper = datatablesHelper;
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [Route("motoristas")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("listar-motoristas")]
-        [FeedbackExceptionFilter("Ocorreu um erro ao obter as lista motoristas cadastrados.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter a relação de motoristas cadastrados.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> ListarMotoristas(ProcurarMotoristaEntrada filtro)
         {
             if (filtro == null)
@@ -49,10 +49,10 @@ namespace K2.Web.Controllers
 
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
-            return new DatatablesResult(_datatablesHelper.Draw, saida);
+            return new DatatablesResult(_datatablesHelper.Draw, saida.Retorno.TotalRegistros, saida.ObterRegistros<MotoristaRegistro>());
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("cadastrar-motorista")]
         public IActionResult CadastrarMotorista()
@@ -60,9 +60,10 @@ namespace K2.Web.Controllers
             return PartialView("Manter", null);
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("cadastrar-motorista")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao cadastrar o novo motorista.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> CadastrarMotorista(CadastrarMotoristaEntrada entrada)
         {
             if (entrada == null)
@@ -77,25 +78,20 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível cadastrar o motorista.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar o motorista.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("alterar-motorista/{id:int:min(1)}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter as informações do motorista.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarMotorista(int id)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("motoristas/obter-por-id/" + id, Method.GET);
 
             var saida = MotoristaSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações do motorista.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações do motorista.", saida.Mensagens));
@@ -103,9 +99,10 @@ namespace K2.Web.Controllers
             return PartialView("Manter", saida.Retorno);
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("alterar-motorista")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao alterar as informações do motorista.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarMotorista(AlterarMotoristaEntrada entrada)
         {
             if (entrada == null)
@@ -120,9 +117,6 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar o motorista.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar o motorista.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
@@ -131,14 +125,12 @@ namespace K2.Web.Controllers
         [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("excluir-motorista/{id:int}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao excluir o motorista.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> ExcluirMotorista(int id)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("motoristas/excluir/" + id, Method.DELETE);
 
             var saida = Saida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir o motorista.", new[] { "A API não retornou nenhuma resposta." }));
 
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir o motorista.", saida.Mensagens))

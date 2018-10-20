@@ -134,8 +134,7 @@
                     obterInfoViagem(idViagem);
                 });
             });
-
-
+            
             $("a[class*='alterar-viagem']").each(function () {
                 var idViagem = $(this).data("id-viagem");
 
@@ -164,14 +163,6 @@
                 manterReserva(null, idViagem);
             });
 
-            $(".cpf").inputmask({
-                "mask": "999.999.999-99"
-            });
-
-            $(".celular").inputmask({
-                "mask": "(99) 99999-9999"
-            });
-
             $("#tblReserva").DataTable({
                 ajax: {
                     url: App.corrigirPathRota("listar-reservas-por-viagem/" + idViagem),
@@ -189,8 +180,8 @@
                         className: "dt-body-left all",
                         render: function (data, type, row) {
                             return '<span class="m--font-boldest">' + data.cliente.nome + '</span><br/>' +
-                                'CPF: <span class="cpf">' + data.cliente.cpf + '</span><br/>' +
-                                'Celular: <span class="celular">' + data.cliente.celular + '</span>';
+                                'CPF: ' + data.cliente.cpfFormatado + '<br/>' +
+                                'Celular: ' + data.cliente.celularFormatado;
                         }
                     },
                     {
@@ -222,15 +213,12 @@
                         }
                     },
                     {
-                        data: null,
+                        data: "valorPagoFormatado",
                         title: "Valor pago",
                         orderable: false,
                         className: "min-tablet",
                         createdCell: function (td, cellData, rowData, row, col) {
                             $(td).attr('class', 'm--align-right');
-                        },
-                        render: function (data, type, row) {
-                            return accounting.formatMoney(data.valorPago, "R$ ", 2, ".", ",");
                         }
                     },
                     { data: "observacao", className: "min-tablet", title: "Observação", orderable: false },
@@ -314,14 +302,6 @@
 
                 mApp.initTooltips();
 
-                $(".cpf").inputmask({
-                    "mask": "999.999.999-99"
-                });
-
-                $(".celular").inputmask({
-                    "mask": "(99) 99999-9999"
-                });
-
                 $("a[class*='cadastrar-dependente']").each(function () {
                     var idReserva = $(this).data("id-reserva");
 
@@ -364,7 +344,7 @@
                     });
                 });
             }).on("processing.dt", function () {
-                    App.desbloquear($("#portletReserva"));
+                    App.desbloquear();
             });
         }, true, "modal-info-viagem");
     };

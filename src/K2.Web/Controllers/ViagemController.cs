@@ -21,24 +21,20 @@ namespace K2.Web.Controllers
             _datatablesHelper = datatablesHelper;
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
         [Route("viagens")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("obter-info-viagem/{id:int}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter as informações da viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> ObterInformacoesViagem(int id)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("viagens/obter-por-id/" + id, Method.GET);
 
             var saida = ViagemSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações da viagem.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da viagem.", saida.Mensagens));
@@ -46,10 +42,9 @@ namespace K2.Web.Controllers
             return PartialView("Informacoes", saida.Retorno);
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("listar-viagens-previstas")]
-        [FeedbackExceptionFilter("Ocorreu um erro ao obter a lista de viagens previstas.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter a relação de viagens previstas.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> ListarViagensPrevistas()
         {
             var filtro = new ProcurarViagemEntrada
@@ -81,7 +76,7 @@ namespace K2.Web.Controllers
         [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("cadastrar-viagem")]
-        [FeedbackExceptionFilter("Ocorreu um erro ao cadastrar a viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        [FeedbackExceptionFilter("Ocorreu um erro ao cadastrar a nova viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> CadastrarViagem(CadastrarViagemEntrada entrada)
         {
             if (entrada == null)
@@ -94,10 +89,7 @@ namespace K2.Web.Controllers
 
             var apiResponse = await _restSharpHelper.ChamarApi("viagens/cadastrar", Method.POST, parametros);
 
-            var saida = ViagemSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível cadastrar a viagem.", new[] { "A API não retornou nenhuma resposta." }));
+            var saida = Saida.Obter(apiResponse.Content);
 
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar a viagem.", saida.Mensagens))
@@ -107,14 +99,12 @@ namespace K2.Web.Controllers
         [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpGet]
         [Route("alterar-viagem/{id:int:min(1)}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter as informações da viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarViagem(int id)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("viagens/obter-por-id/" + id, Method.GET);
 
             var saida = ViagemSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações da viagem.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da viagem.", saida.Mensagens));
@@ -125,6 +115,7 @@ namespace K2.Web.Controllers
         [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("alterar-viagem")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao alterar as informações da viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarViagem(AlterarViagemEntrada entrada)
         {
             if (entrada == null)
@@ -139,9 +130,6 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar a viagem.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar a viagem.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
@@ -150,31 +138,26 @@ namespace K2.Web.Controllers
         [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("excluir-viagem/{id:int}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao excluir a viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> ExcluirViagem(int id)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("viagens/excluir/" + id, Method.DELETE);
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir a viagem.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir a viagem.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Viagem excluída com sucesso."));
         }
 
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
         [HttpGet]
         [Route("gerar-pdf-demonstrativo/{idViagem:int}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao gerar o demonstrativo da viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> GerarDemonstrativoPdf(int idViagem, int tipo)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("viagens/obter-por-id/" + idViagem, Method.GET);
 
             var saida = ViagemSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações da viagem.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da viagem.", saida.Mensagens));

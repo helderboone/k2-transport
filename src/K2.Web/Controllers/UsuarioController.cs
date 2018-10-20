@@ -51,9 +51,6 @@ namespace K2.Web.Controllers
 
             var saida = AutenticarSaida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível efetuar o login.", new[] { "Não foi possível recuperar as informações do usuário." }));
-
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível efetuar o login.", saida.Mensagens));
 
@@ -116,9 +113,6 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar sua senha de acesso."));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar sua senha de acesso.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
@@ -132,9 +126,6 @@ namespace K2.Web.Controllers
             var apiResponse = await _restSharpHelper.ChamarApi("usuarios/redefinir-senha/" + id, Method.PUT);
 
             var saida = Saida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível redefinir a senha de acesso."));
 
             var senhaTemporaria = string.Empty;
 
@@ -155,15 +146,12 @@ namespace K2.Web.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("redefinir-senha/{email}")]
-        [FeedbackExceptionFilter("Ocorreu um erro na tentativa de enviar uma nova senha de acesso.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        [FeedbackExceptionFilter("Ocorreu um erro na tentativa de enviar uma nova senha de acesso por e-mail.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> RedefinirSenha(string email)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("usuarios/redefinir-senha/" + email, Method.PUT, usarToken: false);
 
             var saida = Saida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível enviar uma nova senha de acesso."));
 
             var senhaTemporaria = string.Empty;
 
@@ -181,9 +169,9 @@ namespace K2.Web.Controllers
                     : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First()));
         }
 
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
         [HttpGet]
         [Route("alterar-meus-dados")]
+        [FeedbackExceptionFilter("Ocorreu um erro na tentativa de obter seus dados.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarMeusDados()
         {
             if (_cookieHelper.ObterPerfilUsuario() == TipoPerfil.Motorista)
@@ -191,9 +179,6 @@ namespace K2.Web.Controllers
                 var apiResponse = await _restSharpHelper.ChamarApi("usuarios/obter-por-id-usuario/" + _cookieHelper.ObterIdUsuario(), Method.GET);
 
                 var saida = MotoristaSaida.Obter(apiResponse.Content);
-
-                if (saida == null)
-                    return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível obter suas informações.", new[] { "A API não retornou nenhuma resposta." }));
 
                 if (!saida.Sucesso)
                     return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível obter suas informações.", saida.Mensagens));
@@ -204,10 +189,9 @@ namespace K2.Web.Controllers
             return PartialView("AlterarMeusDados");
         }
 
-
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
         [HttpPost]
         [Route("alterar-meus-dados")]
+        [FeedbackExceptionFilter("Ocorreu um erro na tentativa de alterar seus dados.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarMeusDados(AlterarMeusDadosEntrada entrada)
         {
             if (entrada == null)
@@ -222,14 +206,11 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível os seus dados.", new[] { "A API não retornou nenhuma resposta." }));
-
             if (saida.Sucesso)
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return !saida.Sucesso
-                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível os seus dados.", saida.Mensagens))
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar os seus dados.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Seus dados foram alterados com sucesso.", new[] { "Você será redirecionado para a tela de login. Por favor faça login novamente." }, tipoAcao: TipoAcaoAoOcultarFeedback.RedirecionarTelaLogin));
         }
     }

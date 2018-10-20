@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using JNogueira.Infraestrutura.Utilzao;
+using System;
 
 namespace K2.Web.Models
 {
@@ -19,7 +20,7 @@ namespace K2.Web.Models
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<LocalidadeSaida>(json)
-                : null;
+                : throw new Exception("A saida da API foi nula ou vazia.");
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,7 +23,7 @@ namespace K2.Web.Models
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<ProcurarSaida>(json)
-                : null;
+                : throw new Exception("A saida da API foi nula ou vazia.");
         }
     }
 

@@ -44,11 +44,13 @@
         alterarMeusDados: function () {
             App.exibirModalPorRota(App.corrigirPathRota("alterar-meus-dados"), function () {
                 $("#iCpf").inputmask({
-                    "mask": "999.999.999-99"
+                    mask: "999.999.999-99",
+                    clearIncomplete: true
                 });
 
                 $("#iCelular").inputmask({
-                    "mask": "(99) 99999-9999"
+                    mask: "(99) 99999-9999",
+                    clearIncomplete: true
                 });
 
                 $("#frmManterMeusDados").validate({
@@ -121,15 +123,7 @@
         },
 
         visualizarProprietarioCarro: function (id) {
-            App.exibirModalPorRota(App.corrigirPathRota("visualizar-proprietario/" + id), function () {
-                $(".cpf").inputmask({
-                    "mask": "999.999.999-99"
-                });
-
-                $(".celular").inputmask({
-                    "mask": "(99) 99999-9999"
-                });
-            });
+            App.exibirModalPorRota(App.corrigirPathRota("visualizar-proprietario/" + id));
         },
 
         visualizarCarro: function (id) {
@@ -180,15 +174,18 @@
 
             App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-cliente/" + id) : App.corrigirPathRota("cadastrar-cliente")), function () {
                 $("#iCpf").inputmask({
-                    "mask": "999.999.999-99"
+                    mask: "999.999.999-99",
+                    clearIncomplete: true
                 });
 
                 $("#iCelular").inputmask({
-                    "mask": "(99) 99999-9999"
+                    mask: "(99) 99999-9999",
+                    clearIncomplete: true
                 });
 
                 $("#iCep").inputmask({
-                    "mask": "99.999-999"
+                    mask: "99.999-999",
+                    clearIncomplete: true
                 });
 
                 $("#sEstado").select2({

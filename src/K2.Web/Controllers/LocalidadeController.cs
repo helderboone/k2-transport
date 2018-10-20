@@ -20,17 +20,17 @@ namespace K2.Web.Controllers
             _datatablesHelper = datatablesHelper;
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [Route("localidades")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("listar-localidades")]
-        [FeedbackExceptionFilter("Ocorreu um erro ao obter as lista localidades cadastradas.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter a relação de localidades cadastradas.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> ListarLocalidades(ProcurarLocalidadeEntrada filtro)
         {
             if (filtro == null)
@@ -50,22 +50,10 @@ namespace K2.Web.Controllers
 
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
-            if (!saida.Sucesso)
-                return new DatatablesResult(_datatablesHelper.Draw, saida);
-
-            var registros = saida.ObterRegistros<LocalidadeRegistro>();
-
-            var lst = registros.Select(x => new
-            {
-                id = x.Id,
-                nome = x.Nome,
-                uf = x.Uf.ObterNomeUfPorSiglaUf()
-            }).ToList();
-
-            return new DatatablesResult(_datatablesHelper.Draw, lst.Count, lst);
+            return new DatatablesResult(_datatablesHelper.Draw, saida.Retorno.TotalRegistros, saida.ObterRegistros<LocalidadeRegistro>());
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("cadastrar-localidade")]
         public IActionResult CadastrarLocalidade()
@@ -73,9 +61,10 @@ namespace K2.Web.Controllers
             return PartialView("Manter", null);
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("cadastrar-localidade")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao cadastrar a nova localidade.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> CadastrarLocalidade(CadastrarLocalidadeEntrada entrada)
         {
             if (entrada == null)
@@ -88,27 +77,22 @@ namespace K2.Web.Controllers
 
             var apiResponse = await _restSharpHelper.ChamarApi("localidades/cadastrar", Method.POST, parametros);
 
-            var saida = LocalidadeSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível cadastrar a localidade.", new[] { "A API não retornou nenhuma resposta." }));
+            var saida = Saida.Obter(apiResponse.Content);
 
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar a localidade.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("alterar-localidade/{id:int:min(1)}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter as informações da localidade.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarLocalidade(int id)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("localidades/obter-por-id/" + id, Method.GET);
 
             var saida = LocalidadeSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações da localidade.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da localidade.", saida.Mensagens));
@@ -116,9 +100,10 @@ namespace K2.Web.Controllers
             return PartialView("Manter", saida.Retorno);
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("alterar-localidade")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao alterar as informações da localidade.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarLocalidade(AlterarLocalidadeEntrada entrada)
         {
             if (entrada == null)
@@ -133,25 +118,20 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar a localidade.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar a localidade.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("excluir-localidade/{id:int}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao excluir a localidade.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> ExcluirLocalidade(int id)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("localidades/excluir/" + id, Method.DELETE);
 
             var saida = Saida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir a localidade.", new[] { "A API não retornou nenhuma resposta." }));
 
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir a localidade.", saida.Mensagens))

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using JNogueira.Infraestrutura.Utilzao;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -19,7 +20,7 @@ namespace K2.Web.Models
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<ReservaSaida>(json)
-                : null;
+                : throw new Exception("A saida da API foi nula ou vazia.");
         }
     }
 
@@ -38,7 +39,7 @@ namespace K2.Web.Models
         {
             return !string.IsNullOrEmpty(json)
                 ? JsonConvert.DeserializeObject<ReservasSaida>(json)
-                : null;
+                : throw new Exception("A saida da API foi nula ou vazia.");
         }
     }
 
@@ -56,6 +57,8 @@ namespace K2.Web.Models
         public int IdCliente { get; set; }
 
         public decimal? ValorPago { get; set; }
+
+        public string ValorPagoFormatado => this.ValorPago?.ToString("C2");
 
         public string Observacao { get; set; }
 
@@ -80,7 +83,11 @@ namespace K2.Web.Models
 
         public string Cpf { get; set; }
 
+        public string CpfFormatado => this.Cpf.FormatarCpf();
+
         public string Celular { get; set; }
+
+        public string CelularFormatado => this.Celular.Formatar("(##)######-####");
     }
 
     public class ReservaViagemRetorno
@@ -125,7 +132,11 @@ namespace K2.Web.Models
 
         public string Cpf { get; set; }
 
+        public string CpfFormatado => this.Cpf.FormatarCpf();
+
         public string Celular { get; set; }
+
+        public string CelularFormatado => this.Celular.Formatar("(##)######-####");
     }
 
     public class ReservaLocalidadeRetorno
@@ -143,10 +154,12 @@ namespace K2.Web.Models
 
         public DateTime DataNascimento { get; set; }
 
+        public string DataNascimentoToString => this.DataNascimento.ToString("dd/MM/yyyy");
+
         public string Cpf { get; set; }
 
-        public string Rg { get; set; }
+        public string CpfFormatado => this.Cpf.FormatarCpf();
 
-        public string DataNascimentoToString => this.DataNascimento.ToString("dd/MM/yyyy");
+        public string Rg { get; set; }
     }
 }

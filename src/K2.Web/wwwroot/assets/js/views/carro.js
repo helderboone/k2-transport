@@ -113,23 +113,25 @@
             });
 
             $("#iQuantidadeLugares").inputmask({
-                "mask": "9",
-                "repeat": 2,
-                "greedy": false
+                mask: "9",
+                repeat: 2,
+                greedy: false
             });
 
             $("#iPlaca").inputmask({
-                "mask": "aaa-9999"
+                mask: "aaa-9999",
+                clearIncomplete: true
             });
 
             $("#iAnoModelo").inputmask({
-                "mask": "9999/99"
+                mask: "9999/99",
+                clearIncomplete: true
             });
 
             $("#iRenavam").inputmask({
-                "mask": "9",
-                "repeat": 11,
-                "greedy": false
+                mask: "9",
+                repeat: 11,
+                greedy: false
             });
 
             $("#frmManterCarro").validate({

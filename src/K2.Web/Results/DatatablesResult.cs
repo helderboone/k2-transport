@@ -1,7 +1,5 @@
-﻿using K2.Web.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace K2.Web
@@ -9,17 +7,10 @@ namespace K2.Web
     public class DatatablesResult : IActionResult
     {
         private readonly int _draw;
-        private readonly ICollection _itens;
+        private readonly IEnumerable _itens;
         private readonly int _totalRegistros;
 
-        public DatatablesResult(int draw, ProcurarSaida saida)
-        {
-            _draw = draw;
-            _itens = saida.Retorno.Registros.ToList();
-            _totalRegistros = saida.Retorno.TotalRegistros;
-        }
-
-        public DatatablesResult(int draw, int totalRegistros, ICollection registros)
+        public DatatablesResult(int draw, int totalRegistros, IEnumerable registros)
         {
             _draw = draw;
             _itens = registros;

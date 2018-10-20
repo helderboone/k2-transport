@@ -13,8 +13,18 @@
     <div class="m-portlet__head m-portlet__head--k2">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
-                <button type="button" class="btn m-btn--square btn-info m-btn--wide btn-sm mr-2" id="bCadastrar">Novo</button>
-                <button type="button" class="btn m-btn--square btn-secondary btn-sm" data-toggle="modal" data-target="#modal_Procurar">Procurar</button>
+                <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-info mr-2" id="bCadastrar">
+                    <span>
+                        <i class="la la-plus"></i>
+                        <span>Novo motorista</span>
+                    </span>
+                </button>
+                <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-secondary" data-toggle="modal" data-target="#modal_Procurar" data-backdrop="static">
+                    <span>
+                        <i class="la la-search"></i>
+                        <span>Procurar</span>
+                    </span>
+                </button>
             </div>
         </div>
     </div>
@@ -55,7 +65,7 @@
                             <div class="col-lg-12 m-form__group-sub">
                                 <label>Nome</label>
                                 <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarNome" name="iProcurarNome" maxlength="500" style="text-transform:uppercase;">
-                                <span class="m-form__help">Procura por palavra</span>
+                                <span class="m-form__help">Procura por palavra-chave</span>
                             </div>
                         </div>
                         <div class="form-group m-form__group m-form__group--md row">
@@ -65,7 +75,7 @@
                                     <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
                                     <input type="text" class="form-control m-input" id="iProcurarEmail" name="iProcurarEmail" maxlength="500" style="text-transform:lowercase;">
                                 </div>
-                                <span class="m-form__help">Procura por palavra</span>
+                                <span class="m-form__help">Procura por palavra-chave</span>
                             </div>
                         </div>
                         <div class="form-group m-form__group m-form__group--md row">
@@ -76,7 +86,7 @@
                             <div class="col-lg-6 m-form__group-sub">
                                 <label>RG</label>
                                 <input type="text" class="form-control m-input m-input--square m-input--air" id="iProcurarRg" name="iProcurarRg" maxlength="20" style="text-transform:uppercase;">
-                                <span class="m-form__help">Procura por palavra</span>
+                                <span class="m-form__help">Procura por palavra-chave</span>
                             </div>
                         </div>
                         <div class="form-group m-form__group m-form__group--md row">
@@ -90,8 +100,18 @@
                     </div>
                     <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions m-form__actions--solid m-form__actions--right">
-                            <button type="button" class="btn btn-secondary btn-fechar" data-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-info" id="bProcurar">Procurar</button>
+                            <button type="button" class="btn btn-sm m-btn--square btn-secondary m-btn--icon" data-dismiss="modal">
+                                <span>
+                                    <i class="la la-close"></i>
+                                    <span>Cancelar</span>
+                                </span>
+                            </button>
+                            <button type="submit" class="btn btn-sm m-btn--square m-btn--icon btn-info" id="bProcurar">
+                                <span>
+                                    <i class="la la-search"></i>
+                                    <span>Procurar</span>
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -105,14 +125,10 @@
     <script src="~/assets/vendors/custom/datatables/datatables.bundle.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $.extend($.fn.dataTable.defaults, {
-            //processing: false,
-            //responsive: false,
             autoWidth: true,
             lengthMenu: [[10, 25, 50], [10, 25, 50]],
             pagingType: "full_numbers",
             language: {
-                //sLengthMenu: '_MENU_ registros por p&aacute;gina',
-                //sProcessing: '<i class="fa fa-spinner fa-pulse"></i> Carregando',
                 infoEmpty: "Nenhum registro encontrado.",
                 info: "Exibindo _START_ até _END_ de _TOTAL_ registros",
                 paginate: {
@@ -122,7 +138,6 @@
                     last: ">>",
                     zeroRecords: "Nenhum registro encontrado."
                 },
-                //infoFiltered: "(filtrado a partir do total de _MAX_ registros)",
                 emptyTable: "Nenhum registro encontrado.",
                 zeroRecords: "Nenhum registro encontrado."
             }

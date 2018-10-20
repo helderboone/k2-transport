@@ -19,7 +19,7 @@
             info: true,
             columns: [
                 { data: "nome", title: "Nome", orderable: true, className: "all" },
-                { data: "uf", title: "Estado", orderable: true },
+                { data: "nomeUf", title: "Estado", orderable: true },
                 {
                     data: null,
                     className: "td-actions dt-center",

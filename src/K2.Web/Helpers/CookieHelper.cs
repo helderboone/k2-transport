@@ -70,7 +70,6 @@ namespace K2.Web.Helpers
             switch (ObterPerfilUsuario())
             {
                 case TipoPerfil.Administrador:
-                case TipoPerfil.Cliente:
                 case TipoPerfil.Motorista:
                     return ObterPerfilUsuario();
                 case TipoPerfil.ProprietarioCarro:

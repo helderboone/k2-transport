@@ -28,7 +28,7 @@ namespace K2.Web.Filters
 
                 _mensagem = mensagem;
                 _tipoAcaoOcultar = tipoAcaoOcultar;
-                _mensagemAdicional = mensagemAdicional;
+                _mensagemAdicional = !string.IsNullOrEmpty(mensagemAdicional) ? mensagemAdicional : "A ocorrência desse erro foi registrada e será posteriormente analisada para identificar a causa. Pedimos desculpas pelo transtorno.";
                 _loggerFactory = loggerFactory;
             }
 

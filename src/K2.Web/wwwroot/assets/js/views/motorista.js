@@ -22,23 +22,9 @@
             info: true,
             columns: [
                 { data: "nome", title: "Nome", orderable: true, className: "all" },
-                {
-                    data: "celular",
-                    title: "Celular",
-                    orderable: false,
-                    createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).attr('class', 'celular');
-                    }
-                },
+                { data: "celularFormatado", title: "Celular", orderable: false },
                 { data: "email", title: "E-mail", orderable: true },
-                {
-                    data: "cpf",
-                    title: "CPF",
-                    orderable: false,
-                    createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).attr('class', 'cpf');
-                    }
-                },
+                { data: "cpfFormatado", title: "CPF", orderable: false },
                 { data: "rg", title: "RG", orderable: false },
                 { data: "cnh", title: "CNH", orderable: false },
                 {
@@ -77,14 +63,6 @@
             pageLength: 25
         }).on("draw.dt", function () {
             mApp.initTooltips();
-
-            $(".cpf").inputmask({
-                "mask": "999.999.999-99"
-            });
-
-            $(".celular").inputmask({
-                "mask": "(99) 99999-9999"
-            });
 
             $("a[class*='redefinir-senha']").each(function () {
                 var id = $(this).data("id-usuario");
@@ -127,15 +105,18 @@
 
         App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-motorista/" + id) : App.corrigirPathRota("cadastrar-motorista")), function () {
             $("#iCpf, #iProcurarCpf").inputmask({
-                "mask": "999.999.999-99"
+                mask: "999.999.999-99",
+                clearIncomplete: true
             });
 
             $("#iCelular").inputmask({
-                "mask": "(99) 99999-9999"
+                mask: "(99) 99999-9999",
+                clearIncomplete: true
             });
 
             $("#iCep").inputmask({
-                "mask": "99.999-999"
+                mask: "99.999-999",
+                clearIncomplete: true
             });
 
             $("#frmManterMotorista").validate({
@@ -174,7 +155,7 @@
                         Cnh: $("#iCnh").val()
                     };
 
-                    App.bloquear($("#frmManterMotorista"));
+                    App.bloquear();
 
                     $.post(App.corrigirPathRota(cadastro ? "cadastrar-motorista" : "alterar-motorista"), { entrada: motorista })
                         .done(function (feedbackResult) {
@@ -195,7 +176,7 @@
                             feedback.exibirModal();
                         })
                         .always(function () {
-                            App.desbloquear($("#frmManterMotorista"));
+                            App.desbloquear();
                         });
                 }
             });

@@ -24,7 +24,7 @@
             <div class="form-group m-form__group m-form__group--sm row">
                 <div class="col-lg-6 m-form__group-sub">
                     <label>CPF:</label>
-                    <p class="form-control-static cpf">@Model.Cpf</p>
+                    <p class="form-control-static">@Model.CpfFormatado</p>
                 </div>
                 <div class="col-lg-6 m-form__group-sub">
                     <label>RG:</label>
@@ -34,7 +34,7 @@
             <div class="form-group m-form__group m-form__group--sm row">
                 <div class="col-lg-6 m-form__group-sub">
                     <label>Celular:</label>
-                    <p class="form-control-static celular">@Model.Celular</p>
+                    <p class="form-control-static">@Model.CelularFormatado</p>
                 </div>
                 <div class="col-lg-6 m-form__group-sub">
 
@@ -43,7 +43,12 @@
         </div>
         <div class="m-portlet__foot m-portlet__foot--fit">
             <div class="m-form__actions m-form__actions--solid m-form__actions--right">
-                <button type="button" class="btn m-btn--square btn-secondary btn-fechar">Fechar</button>
+                <button type="button" class="btn btn-sm m-btn--square btn-secondary m-btn--icon btn-fechar">
+                    <span>
+                        <i class="la la-close"></i>
+                        <span>Fechar</span>
+                    </span>
+                </button>
             </div>
         </div>
     </div>

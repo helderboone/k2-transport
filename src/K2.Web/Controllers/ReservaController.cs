@@ -1,5 +1,4 @@
-﻿using JNogueira.Infraestrutura.Utilzao;
-using K2.Web.Filters;
+﻿using K2.Web.Filters;
 using K2.Web.Helpers;
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -20,54 +19,19 @@ namespace K2.Web.Controllers
             _datatablesHelper = datatablesHelper;
         }
 
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
-        [HttpGet]
-        [Route("reservas-por-viagem/{idViagem:int}")]
-        public async Task<IActionResult> ReservasPorViagem(int idViagem)
-        {
-            var apiResponse = await _restSharpHelper.ChamarApi("viagens/obter-por-id/" + idViagem, Method.GET);
-
-            var saida = ViagemSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as reservas da viagem.", new[] { "A API não retornou nenhuma resposta." }));
-
-            if (!saida.Sucesso)
-                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as reservas da viagem.", saida.Mensagens));
-
-            return View(saida.Retorno);
-        }
-
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
         [HttpPost]
         [Route("listar-reservas-por-viagem/{idViagem:int}")]
-        [FeedbackExceptionFilter("Ocorreu um erro ao obter a lista de reservas da viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter a relação de reservas da viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> ListarReservasPorViagem(int idViagem)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("reservas/obter-por-viagem/" + idViagem, Method.GET);
 
             var saida = ReservasSaida.Obter(apiResponse.Content);
 
-            if (!saida.Sucesso)
-                return new DatatablesResult(_datatablesHelper.Draw, 0, null);
-
-            if (saida.Retorno.Any())
-                ViewData["DescricaoViagem"] = saida.Retorno.First().Viagem.Descricao;
-            else
-            {
-                apiResponse = await _restSharpHelper.ChamarApi("viagens/obter-por-id/" + idViagem, Method.GET);
-
-                var viagemSaida = ViagemSaida.Obter(apiResponse.Content);
-
-                ViewData["DescricaoViagem"] = viagemSaida.Sucesso
-                    ? viagemSaida.Retorno.Descricao
-                    : string.Empty;
-            }
-
             return new DatatablesResult(_datatablesHelper.Draw, saida.Retorno.Count(), saida.Retorno.ToList());
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("cadastrar-reserva/{idViagem:int}")]
         public IActionResult CadastrarReserva(int idViagem)
@@ -77,9 +41,10 @@ namespace K2.Web.Controllers
             return PartialView("Manter", null);
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("cadastrar-reserva")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao cadastrar a nova reserva.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> CadastrarReserva(CadastrarReservaEntrada entrada)
         {
             if (entrada == null)
@@ -94,25 +59,20 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível cadastrar a reserva.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar a reserva.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("alterar-reserva/{idReserva:int}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter as informações da reserva.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public IActionResult AlterarReserva(int idReserva)
         {
             var apiResponse = _restSharpHelper.ChamarApi("reservas/obter-por-id/" + idReserva, Method.GET).Result;
 
             var saida = ReservaSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível obter as informações da reserva.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível obter as informações da reserva.", saida.Mensagens));
@@ -122,9 +82,10 @@ namespace K2.Web.Controllers
             return PartialView("Manter", reserva);
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("alterar-reserva")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao alterar as informações da reserva.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarReserva(AlterarReservaEntrada entrada)
         {
             if (entrada == null)
@@ -139,42 +100,35 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar a reserva.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar a reserva.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("excluir-reserva/{id:int}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao excluir a reserva.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> ExcluirReserva(int id)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("reservas/excluir/" + id, Method.DELETE);
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir a reserva.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir a reserva.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Reserva excluída com sucesso."));
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("cadastrar-reserva-dependente/{idReserva:int}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter as informações da reserva.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public IActionResult CadastrarReservaDependente(int idReserva)
         {
             var apiResponse = _restSharpHelper.ChamarApi("reservas/obter-por-id/" + idReserva, Method.GET).Result;
 
             var saida = ReservaSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível obter as informações da reserva.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível obter as informações da reserva.", saida.Mensagens));
@@ -187,9 +141,10 @@ namespace K2.Web.Controllers
             return PartialView("ManterDependente", null);
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("cadastrar-reserva-dependente")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao cadastrar o dependente da reserva.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> CadastrarReservaDependente(CadastrarReservaDependenteEntrada entrada)
         {
             if (entrada == null)
@@ -204,25 +159,20 @@ namespace K2.Web.Controllers
 
             var saida = ReservaDependenteSaida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível cadastrar o dependente para a reserva.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar o dependente para a reserva.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.Ocultar));
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("alterar-reserva-dependente/{idReserva:int:min(1)}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter as informações do dependente da reserva.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarReservaDependente(int idReserva)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("reservas/obter-dependente/" + idReserva, Method.GET);
 
             var saida = ReservaDependenteSaida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível exibir as informações do dependente da reserva.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações do dependente da reserva.", saida.Mensagens));
@@ -230,9 +180,6 @@ namespace K2.Web.Controllers
             apiResponse = _restSharpHelper.ChamarApi("reservas/obter-por-id/" + idReserva, Method.GET).Result;
 
             var reservaSaida = ReservaSaida.Obter(apiResponse.Content);
-
-            if (reservaSaida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível obter as informações da reserva.", new[] { "A API não retornou nenhuma resposta." }));
 
             if (!reservaSaida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível obter as informações da reserva.", saida.Mensagens));
@@ -242,9 +189,10 @@ namespace K2.Web.Controllers
             return PartialView("ManterDependente", saida.Retorno);
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("alterar-reserva-dependente")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao alterar as informações do dependente da reserva.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> AlterarReservaDependente(AlterarReservaDependenteEntrada entrada)
         {
             if (entrada == null)
@@ -259,25 +207,20 @@ namespace K2.Web.Controllers
 
             var saida = Saida.Obter(apiResponse.Content);
 
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível alterar o dependente da reserva.", new[] { "A API não retornou nenhuma resposta." }));
-
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível alterar o dependente da reserva.", saida.Mensagens))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("excluir-reserva-dependente/{idReserva:int:min(1)}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao excluir o dependente da reserva.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> ExcluirReservaDependente(int idReserva)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("reservas/excluir-dependente/" + idReserva, Method.DELETE);
 
             var saida = Saida.Obter(apiResponse.Content);
-
-            if (saida == null)
-                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Não foi possível excluir o dependente da reserva.", new[] { "A API não retornou nenhuma resposta." }));
 
             return !saida.Sucesso
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir o dependente da reserva.", saida.Mensagens))
