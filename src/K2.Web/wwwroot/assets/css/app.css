@@ -273,6 +273,33 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
     color: #ffffff;
 }
 
+.daterangepicker .input-mini {
+    border-radius: 0;
+}
+
+.daterangepicker .input-mini.active {
+    border-radius: 0;
+}
+
+.daterangepicker .ranges {
+    padding:0;
+}
+
+.daterangepicker tbody td.in-range, .daterangepicker tbody td.active {
+    background: #007AAD;
+    color: #ffffff;
+}
+
+    .daterangepicker tbody td.in-range:hover, .daterangepicker tbody td.active:hover {
+        background: #0a8cf0;
+        color: #ffffff;
+    }
+
+.daterangepicker tbody td.today {
+    background: #0a8cf0;
+    color: #ffffff;
+}
+
 @media (min-width: 1200px) {
     .jc-bs3-container.container {
         max-width: 90%;

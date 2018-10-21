@@ -1,4 +1,5 @@
-﻿using K2.Dominio.Comandos.Entrada;
+﻿using JNogueira.Infraestrutura.Utilzao;
+using K2.Dominio.Comandos.Entrada;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -156,7 +157,9 @@ namespace K2.Dominio.Entidades
 
         public TipoSituacaoViagem ObterTipoSituacao()
         {
-            return JNogueira.Infraestrutura.Utilzao.ExtensionMethods.ConverterParaEnum(this.Situacao, TipoSituacaoViagem.PendenteConfirmacao);
+            return DateTimeHelper.ObterHorarioAtualBrasilia() > this.DataHorarioSaida
+                ? TipoSituacaoViagem.Realizada
+                : this.Situacao.ConverterParaEnum(TipoSituacaoViagem.PendenteConfirmacao);
         }
 
         public override string ToString()

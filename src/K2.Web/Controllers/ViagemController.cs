@@ -4,6 +4,7 @@ using K2.Web.Helpers;
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RestSharp;
 using Rotativa.AspNetCore;
 using System.Linq;
@@ -14,11 +15,13 @@ namespace K2.Web.Controllers
     public class ViagemController : BaseController
     {
         private readonly DatatablesHelper _datatablesHelper;
+        private readonly ILogger _logger;
 
-        public ViagemController(DatatablesHelper datatablesHelper, CookieHelper cookieHelper, RestSharpHelper restSharpHelper)
+        public ViagemController(DatatablesHelper datatablesHelper, CookieHelper cookieHelper, RestSharpHelper restSharpHelper, ILogger<ViagemController> logger)
             : base(cookieHelper, restSharpHelper)
         {
             _datatablesHelper = datatablesHelper;
+            _logger = logger;
         }
 
         [Route("viagens")]
@@ -62,6 +65,36 @@ namespace K2.Web.Controllers
 
             var saida = ProcurarSaida.Obter(apiResponse.Content);
 
+            if (!saida.Sucesso)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Ocorreu um erro ao obter a relação de viagens previstas.", saida.Mensagens));
+
+            return new DatatablesResult(_datatablesHelper.Draw, saida.Retorno.TotalRegistros, saida.ObterRegistros<ViagemRegistro>().ToList());
+        }
+
+        [HttpPost]
+        [Route("listar-viagens-realizadas")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao obter a relação de viagens realizadas.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        public async Task<IActionResult> ListarViagensRealizadas(ProcurarViagemEntrada filtro)
+        {
+            filtro.OrdenarPor = _datatablesHelper.OrdenarPor;
+            filtro.OrdenarSentido = _datatablesHelper.OrdenarSentido;
+            filtro.PaginaIndex = _datatablesHelper.PaginaIndex;
+            filtro.PaginaTamanho = _datatablesHelper.PaginaTamanho;
+
+            filtro.SomenteRealizadasOuCanceladas = true;
+
+            var parametros = new Parameter[]
+            {
+                new Parameter{ Name = "filtro", Value = filtro.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
+            };
+
+            var apiResponse = await _restSharpHelper.ChamarApi("viagens/procurar", Method.POST, parametros);
+
+            var saida = ProcurarSaida.Obter(apiResponse.Content);
+
+            if (!saida.Sucesso)
+                return new FeedbackResult(new Feedback(TipoFeedback.Erro, "Ocorreu um erro ao obter a relação de viagens realizadas.", saida.Mensagens));
+
             return new DatatablesResult(_datatablesHelper.Draw, saida.Retorno.TotalRegistros, saida.ObterRegistros<ViagemRegistro>().ToList());
         }
 
@@ -89,11 +122,14 @@ namespace K2.Web.Controllers
 
             var apiResponse = await _restSharpHelper.ChamarApi("viagens/cadastrar", Method.POST, parametros);
 
-            var saida = Saida.Obter(apiResponse.Content);
+            var saida = ViagemSaida.Obter(apiResponse.Content);
 
-            return !saida.Sucesso
-                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar a viagem.", saida.Mensagens))
-                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
+            if (!saida.Sucesso)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível cadastrar a viagem.", saida.Mensagens));
+
+            _logger.LogInformation($"Nova viagem cadastrada: {saida.Retorno.Descricao}");
+
+            return new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
         [Authorize(Policy = TipoPerfil.Administrador)]
@@ -162,8 +198,7 @@ namespace K2.Web.Controllers
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da viagem.", saida.Mensagens));
 
-            //if (tipo == 1)
-            //    return PartialView("RelacaoPassageirosPdf", saida.Retorno);
+            _logger.LogInformation($"Demonstrativo da viagem \"{saida.Retorno.Descricao}\" gerado.");
 
             var footer = "--footer-right \"Gerado em: " + DateTimeHelper.ObterHorarioAtualBrasilia().ToString("dd/MM/yyyy HH:mm") + "\" " + "--footer-left \"Página: [page] de [toPage]\" --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Roboto\"";
 

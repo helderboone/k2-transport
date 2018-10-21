@@ -28,7 +28,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza uma procura por usuarios a partir dos parâmetros informados
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/usuarios/procurar")]
         public async Task<ISaida> Procurar([FromBody] ProcurarUsuarioEntrada entrada)
@@ -39,7 +39,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza o cadastro de um novo usuario
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/usuarios/cadastrar")]
         public async Task<ISaida> Cadastrar([FromBody] CadastrarUsuarioEntrada entrada)
@@ -50,7 +50,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a alteração de um usuario
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPut]
         [Route("v1/usuarios/alterar")]
         public async Task<ISaida> Alterar([FromBody] AlterarUsuarioEntrada entrada)
@@ -61,7 +61,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a alteração dos dados do usuário logado
         /// </summary>
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [Authorize(Policy = TipoPoliticaAcesso.MotoristaOuProprietarioCarro)]
         [HttpPut]
         [Route("v1/usuarios/alterar-meus-dados")]
         public async Task<ISaida> AlterarMeusDados([FromBody] AlterarMeusDadosEntrada entrada)
@@ -74,7 +74,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém um usuario a partir do seu ID
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("v1/usuarios/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)
@@ -85,7 +85,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a exclusão de um usuario.
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpDelete]
         [Route("v1/usuarios/excluir/{id:int}")]
         public async Task<ISaida> ExcluirUsuario(int id)
@@ -137,7 +137,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Redefine a senha de acesso do usuário para uma senha temporária
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPut]
         [Route("v1/usuarios/redefinir-senha/{id:int}")]
         public async Task<ISaida> RedefinirSenha(int id)

@@ -7,6 +7,7 @@
     {
         PendenteConfirmacao = 0,
         Confirmada = 1,
+        Realizada = 2,
         Cancelada = -1
     }
 
@@ -22,6 +23,32 @@
         public const string Cliente = "Cliente";
 
         public const string ProprietarioCarro = "ProprietarioCarro";
+    }
+
+    /// <summary>
+    /// Tipos de políticas de acesso utilizadas
+    /// </summary>
+    public static class TipoPoliticaAcesso
+    {
+        /// <summary>
+        /// Somente usuários com o perfil "administrador" terão acesso
+        /// </summary>
+        public const string Administrador = "Administrador";
+
+        /// <summary>
+        /// Somente usuários com o perfil "administrador" ou "motorista" terão acesso
+        /// </summary>
+        public const string Motorista = "Motorista";
+
+        /// <summary>
+        /// Somente usuários com o perfil "administrador" ou "proprietário" terão acesso
+        /// </summary>
+        public const string ProprietarioCarro = "ProprietarioCarro";
+
+        /// <summary>
+        /// Somente usuários com o perfil "administrador", "motorista" ou "proprietário" terão acesso
+        /// </summary>
+        public const string MotoristaOuProprietarioCarro = "MotoristaOuProprietarioCarro";
     }
 
     public static class ExtensionMethods

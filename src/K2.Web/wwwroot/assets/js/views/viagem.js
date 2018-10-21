@@ -4,7 +4,7 @@
     var initDataTableViagensPrevistas = function () {
         App.bloquear();
 
-        $("#tblViagensPrevistas").DataTable({
+        var dt1 = $("#tblViagensPrevistas").DataTable({
             ajax: {
                 url: App.corrigirPathRota("listar-viagens-previstas"),
                 type: "POST",
@@ -35,20 +35,6 @@
                 },
                 { data: "localidadeEmbarque.nome", title: "Embarque", orderable: false },
                 { data: "localidadeDesembarque.nome", title: "Desembarque", orderable: false },
-                //{
-                //    data: null,
-                //    title: "Situação",
-                //    orderable: false,
-                //    className: "min-tablet dt-center",
-                //    width: "1px",
-                //    render: function (data, type, row) {
-                //        switch (data.situacao) {
-                //            case -1: return '<span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">Cancelada</span>';
-                //            case 0: return '<span class="m-badge m-badge--warning m-badge--wide m-badge--rounded">Pendente</span>';
-                //            case 1: return '<span class="m-badge m-badge--success m-badge--wide m-badge--rounded">Confirmada</span>';
-                //        }
-                //    }
-                //},
                 {
                     data: null,
                     title: "Reservas",
@@ -88,19 +74,19 @@
                                                             '<span class="m-nav__section-text">Viagem</span>' +
                                                         '</li>' +
                                                         '<li class="m-nav__item">' +
-                                                            '<a href="#" class="info-viagem m-nav__link" data-id-viagem="' + data.id +'">' +
+                                                            '<a href="#" class="info-viagem-prevista m-nav__link" data-id-viagem="' + data.id +'">' +
                                                                 '<i class="m-nav__link-icon la la-info"></i>' +
                                                                 '<span class="m-nav__link-text">Informações</span>' +
                                                             '</a>' +
                                                         '</li>' +
                                                         '<li class="m-nav__item">' +
-                                                            '<a href="#" class="alterar-viagem m-nav__link" data-id-viagem="' + data.id +'">' +
+                                                            '<a href="#" class="alterar-viagem-prevista m-nav__link" data-id-viagem="' + data.id +'">' +
                                                                 '<i class="m-nav__link-icon la la-edit"></i>' +
                                                                 '<span class="m-nav__link-text">Alterar</span>' +
                                                             '</a>' +
                                                         '</li>' +
                                                         '<li class="m-nav__item">' +
-                                                            '<a href="#" class="excluir-viagem m-nav__link" data-id-viagem="' + data.id +'">' +
+                                                            '<a href="#" class="excluir-viagem-prevista m-nav__link" data-id-viagem="' + data.id +'">' +
                                                                 '<i class="m-nav__link-icon la la-trash"></i>' +
                                                                 '<span class="m-nav__link-text">Excluir</span>' +
                                                             '</a>' +
@@ -127,15 +113,25 @@
         }).on("draw.dt", function () {
             mApp.initTooltips();
 
-            $("a[class*='info-viagem']").each(function () {
+            let total = dt1.page.info().recordsTotal;
+
+            if (total > 0) {
+                $("#badgeTotalPrevistas").html(total);
+                $("#badgeTotalPrevistas").show();
+            }
+            else {
+                $("#badgeTotalPrevistas").hide();
+            }
+
+            $("a[class*='info-viagem-prevista']").each(function () {
                 var idViagem = $(this).data("id-viagem");
 
                 $(this).click(function () {
-                    obterInfoViagem(idViagem);
+                    obterInfoViagem(idViagem, true);
                 });
             });
             
-            $("a[class*='alterar-viagem']").each(function () {
+            $("a[class*='alterar-viagem-prevista']").each(function () {
                 var idViagem = $(this).data("id-viagem");
 
                 $(this).click(function () {
@@ -143,7 +139,7 @@
                 });
             });
 
-            $("a[class*='excluir-viagem']").each(function () {
+            $("a[class*='excluir-viagem-prevista']").each(function () {
                 var idViagem = $(this).data("id-viagem");
 
                 $(this).click(function () {
@@ -155,7 +151,168 @@
         });
     };
 
-    var obterInfoViagem = function (idViagem) {
+    var initDataTableViagensRealizadas = function () {
+        App.bloquear();
+
+        var dt2 = $("#tblViagensRealizadas").DataTable({
+            ajax: {
+                url: App.corrigirPathRota("listar-viagens-realizadas"),
+                type: "POST",
+                error: function (jqXhr) {
+                    var feedback = Feedback.converter(jqXhr.responseJSON);
+                    feedback.exibirModal();
+                },
+                data: function (data) {
+                    data.DataSaidaInicio        = $("#iProcurarDataSaidaInicio").val();
+                    data.DataSaidaFim           = $("#iProcurarDataSaidaFim").val();
+                    data.Descricao              = $("#iProcurarDescricao").val();
+                    data.IdMotorista            = $("#sProcurarMotorista").val();
+                    data.IdCarro                = $("#sProcurarCarro").val();
+                    data.IdLocalidadeEmbarque   = $("#sProcurarLocalidadeEmbarque").val();
+                    data.IdLocalidadeDesmbarque = $("#sProcurarLocalidadeDesembarque").val();
+                    data.ValorPassagem          = $("#iProcurarValorPassagem").val()
+                }
+            },
+            columns: [
+                {
+                    data: "descricao",
+                    title: "Descrição",
+                    className: "all",
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '<span class="m--font-boldest">' + row.descricao + '</span><br/>' +
+                            'Motorista: ' + row.motorista.nome + '<br/>' +
+                            'Carro: ' + row.carro.descricao + '<br/>';
+                    }
+                },
+                {
+                    data: "dataHorarioSaida",
+                    title: "Saída em",
+                    render: function (data, type, row) {
+                        return row.dataHorarioSaidaToString + '<br/>' +
+                            '<span class="m--font-boldest m--font-success"> Realizada à ' + row.quantidadeDiasSaida * -1 + ' dia</span>';
+                    }
+                },
+                { data: "localidadeEmbarque.nome", title: "Embarque", orderable: false },
+                { data: "localidadeDesembarque.nome", title: "Desembarque", orderable: false },
+                {
+                    data: null,
+                    title: "Reservas",
+                    orderable: false,
+                    className: "dt-center",
+                    width: "1px",
+                    render: function (data, type, row) {
+                        return '<span class="m--font-boldest m--font-brand" style="font-size: 1.45rem;">' + data.reservas.length + '</span>';      
+                    }
+                },
+                {
+                    data: null,
+                    title: "Lugares disponíveis",
+                    orderable: false,
+                    className: "dt-center",
+                    width: "1px",
+                    render: function (data, type, row) {
+                        return '<span class="m--font-boldest ' + (data.quantidadeLugaresDisponiveis === 0 ? ' m--font-danger' : ' m--font-success') + '" style="font-size: 1.45rem;">' + data.quantidadeLugaresDisponiveis + '</span>';
+                    }
+                },
+                {
+                    data: null,
+                    className: "td-actions dt-center all",
+                    orderable: false,
+                    width: "70px",
+                    render: function (data, type, row) {
+                        return '<div class="m-dropdown m-dropdown--inline" m-dropdown-toggle="click" aria-expanded="true">' + 
+                                    '<a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill m-dropdown__toggle">' +
+                                        '<i class="la la-ellipsis-h m--font-brand"></i>' +
+                                    '</a>' +
+                                    '<div class="m-dropdown__wrapper" style="z-index: 101; top: -466%; right: 33px !important; width:165px;">' +
+                                        '<div class="m-dropdown__inner">' +
+                                            '<div class="m-dropdown__body">' +
+                                                '<div class="m-dropdown__content">' +
+                                                    '<ul class="m-nav">' +
+                                                        '<li class="m-nav__section m-nav__section--first">' +
+                                                            '<span class="m-nav__section-text">Viagem</span>' +
+                                                        '</li>' +
+                                                        '<li class="m-nav__item">' +
+                                                            '<a href="#" class="info-viagem-realizada m-nav__link" data-id-viagem="' + data.id +'">' +
+                                                                '<i class="m-nav__link-icon la la-info"></i>' +
+                                                                '<span class="m-nav__link-text">Informações</span>' +
+                                                            '</a>' +
+                                                        '</li>' +
+                                                        '<li class="m-nav__item">' +
+                                                            '<a href="#" class="alterar-viagem-realizada m-nav__link" data-id-viagem="' + data.id +'">' +
+                                                                '<i class="m-nav__link-icon la la-edit"></i>' +
+                                                                '<span class="m-nav__link-text">Alterar</span>' +
+                                                            '</a>' +
+                                                        '</li>' +
+                                                        '<li class="m-nav__item">' +
+                                                            '<a href="#" class="excluir-viagem-realizada m-nav__link" data-id-viagem="' + data.id +'">' +
+                                                                '<i class="m-nav__link-icon la la-trash"></i>' +
+                                                                '<span class="m-nav__link-text">Excluir</span>' +
+                                                            '</a>' +
+                                                        '</li>' +
+                                                    '</ul>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>';
+                    }
+                }
+            ],
+            select: {
+                style: 'single',
+                info: false
+            },
+            serverSide: true,
+            responsive: true,
+            pagingType: 'full_numbers',
+            order: [1, "desc"],
+            searching: false,
+            paging: true,
+            lengthChange: false,
+            pageLength: 25
+        }).on("draw.dt", function () {
+            mApp.initTooltips();
+
+            let total = dt2.page.info().recordsTotal;
+
+            if (total > 0) {
+                $("#badgeTotalRealizadas").html(total);
+                $("#badgeTotalRealizadas").show();
+            } else {
+                $("#badgeTotalRealizadas").hide();
+            }
+
+            $("a[class*='info-viagem-realizada']").each(function () {
+                var idViagem = $(this).data("id-viagem");
+
+                $(this).click(function () {
+                    obterInfoViagem(idViagem, false);
+                });
+            });
+            
+            $("a[class*='alterar-viagem-realizada']").each(function () {
+                var idViagem = $(this).data("id-viagem");
+
+                $(this).click(function () {
+                    manterViagem(idViagem);
+                });
+            });
+
+            $("a[class*='excluir-viagem-realizada']").each(function () {
+                var idViagem = $(this).data("id-viagem");
+
+                $(this).click(function () {
+                    App.exibirConfirm('<span class="m--font-boldest">Deseja realmente excluir essa viagem?</span><br/>Ao excluir a viagem, todas as reservas relacionadas também serão excluídas.', "Sim", "Não", function () { excluirViagem(idViagem, false); });
+                });
+            });
+        }).on("processing.dt", function () {
+            App.bloquear();
+        });
+    };
+
+    var obterInfoViagem = function (idViagem, prevista) {
         App.exibirModalPorRota(App.corrigirPathRota("obter-info-viagem/" + idViagem), function () {
             $("#bCadastrarReserva").click(function () {
                 var idViagem = $(this).data("id-viagem");
@@ -340,7 +497,7 @@
                     var idViagem = $(this).data("id-viagem");
 
                     $(this).click(function () {
-                        App.exibirConfirm("Deseja realmente excluir essa reserva?", "Sim", "Não", function () { excluirReserva(idReserva, idViagem, true); });
+                        App.exibirConfirm("Deseja realmente excluir essa reserva?", "Sim", "Não", function () { excluirReserva(idReserva, idViagem, prevista); });
                     });
                 });
             }).on("processing.dt", function () {
@@ -349,13 +506,13 @@
         }, true, "modal-info-viagem");
     };
 
-    //var procurarViagem = function () {
-    //    $("#frmProcurarViagem").validate({
-    //        submitHandler: function () {
-    //            $("#tblViagem").DataTable().ajax.reload();
-    //        }
-    //    });
-    //};
+    var procurarViagem = function () {
+        $("#frmProcurarViagem").validate({
+            submitHandler: function () {
+                $("#tblViagensRealizadas").DataTable().ajax.reload();
+            }
+        });
+    };
 
     var manterViagem = function (id) {
         var cadastro = id === null || id === 0;
@@ -448,6 +605,7 @@
                             if (feedback.Tipo.Nome === Tipo.Sucesso) {
                                 feedback.exibirModal(function () {
                                     $("#tblViagensPrevistas").DataTable().ajax.reload();
+                                    $("#tblViagensRealizadas").DataTable().ajax.reload();
                                     App.ocultarModal();
                                 });
                             }
@@ -606,7 +764,7 @@
                     if (prevista)
                         $("#tblViagensPrevistas").DataTable().ajax.reload();
                     else
-                        $("#tblViagem").DataTable().ajax.reload();
+                        $("#tblViagensRealizadas").DataTable().ajax.reload();
                     App.ocultarModal();
                 });
             }
@@ -627,15 +785,8 @@
 
             if (feedback.Tipo.Nome === Tipo.Sucesso) {
                 feedback.exibirModal(function () {
-                    if (prevista)
-                    {
-                        App.ocultarModal(true);
-                        $("#tblViagensPrevistas").DataTable().ajax.reload();
-                        obterInfoViagem(idViagem);
-                    }
-                    else
-                        $("#tblViagem").DataTable().ajax.reload();
-                    App.ocultarModal();
+                    App.ocultarModal(true);
+                    obterInfoViagem(idViagem, prevista);
                 });
             }
             else
@@ -648,7 +799,7 @@
     };
 
     var excluirReservaDependente = function (idReserva) {
-        App.bloquear($("#frmManterReservaDependente"));
+        App.bloquear();
 
         $.post(App.corrigirPathRota("excluir-reserva-dependente/" + idReserva), function (feedbackResult) {
             var feedback = Feedback.converter(feedbackResult);
@@ -666,7 +817,7 @@
             feedback.exibirModal();
         })
         .always(function () {
-            App.desbloquear($("#frmManterReservaDependente"));
+            App.desbloquear();
         });
     };
 
@@ -674,9 +825,103 @@
     return {
         init: function () {
             initDataTableViagensPrevistas();
-
+            initDataTableViagensRealizadas();
+            
             $("#bCadastrar").click(function () {
                 manterViagem(null);
+            });
+
+            $("#bProcurar").click(function () {
+                procurarViagem();
+            });
+
+            $('#m_accordion_5_item_1_body').on('shown.bs.collapse', function () {
+                $("#tblViagensPrevistas").DataTable().columns.adjust();
+            })
+
+            $('#m_accordion_5_item_2_body').on('shown.bs.collapse', function () {
+                $("#tblViagensRealizadas").DataTable().columns.adjust();
+            })
+
+            $('#iProcurarPeriodoSaida').daterangepicker({
+                buttonClasses: 'm-btn btn',
+                applyClass: 'btn btn-sm m-btn--square btn-info',
+                cancelClass: 'btn btn-sm m-btn--square btn-secondary',
+                parentEl: '#modal_Procurar',
+                minDate: moment().startOf('year'),
+                maxDate: moment().subtract(1, 'days'),
+                locale: {
+                    format: "DD/MM/YYYY",
+                    applyLabel: "Aplicar",
+                    cancelLabel: "Cancelar",
+                    daysOfWeek: [
+                        "Dom",
+                        "Seg",
+                        "Ter",
+                        "Qua",
+                        "Qui",
+                        "Sex",
+                        "Sáb"
+                    ],
+                    monthNames: [
+                        "Janeiro",
+                        "Fevereiro",
+                        "Março",
+                        "Abril",
+                        "Maio",
+                        "Junho",
+                        "Julho",
+                        "Agosto",
+                        "Setembro",
+                        "Outubro",
+                        "Novembro",
+                        "Dezembro"
+                    ]
+                }
+            }, function (start, end, label) {
+                $('#iProcurarPeriodoSaida .form-control').val(start.format('DD/MM/YYYY') + ' até ' + end.format('DD/MM/YYYY'));
+                $("#iProcurarDataSaidaInicio").val(start.format('DD/MM/YYYY'));
+                $("#iProcurarDataSaidaFim").val(end.format('DD/MM/YYYY'));
+            });
+
+            $('#iProcurarPeriodoSaida').on('cancel.daterangepicker', function (ev, picker) {
+                $('#iProcurarPeriodoSaida .form-control').val('');
+                $("#iProcurarDataSaidaInicio").val('');
+                $("#iProcurarDataSaidaFim").val('');
+            });
+
+            $("#sProcurarMotorista").select2({
+                placeholder: "Selecione um motorista se desejar",
+                allowClear: true
+            });
+
+            $("#sProcurarCarro").select2({
+                placeholder: "Selecione um carro se desejar",
+                allowClear: true
+            });
+
+            $("#sProcurarLocalidadeEmbarque").select2({
+                placeholder: "Selecione a localidade de embarque se desejar",
+                allowClear: true
+            });
+
+            $("#sProcurarLocalidadeDesembarque").select2({
+                placeholder: "Selecione a localidade de desembarque se desejar",
+                allowClear: true
+            });
+
+            $('#iProcurarValorPassagem').inputmask('decimal', {
+                radixPoint: ",",
+                groupSeparator: ".",
+                autoGroup: true,
+                digits: 2,
+                digitsOptional: false,
+                placeholder: '0',
+                rightAlign: false,
+                prefix: '',
+                onBeforeMask: function (value, opts) {
+                    return value;
+                }
             });
         }
     };

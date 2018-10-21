@@ -21,7 +21,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza uma procura por motoristas a partir dos parâmetros informados
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/motoristas/procurar")]
         public async Task<ISaida> Procurar([FromBody] ProcurarMotoristaEntrada entrada)
@@ -32,7 +32,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza o cadastro de um novo motorista
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/motoristas/cadastrar")]
         public async Task<ISaida> Cadastrar([FromBody] CadastrarMotoristaEntrada entrada)
@@ -43,7 +43,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a alteração de um motorista
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPut]
         [Route("v1/motoristas/alterar")]
         public async Task<ISaida> Alterar([FromBody] AlterarMotoristaEntrada entrada)
@@ -54,7 +54,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém um motorista a partir do seu ID
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("v1/motoristas/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)
@@ -65,7 +65,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém um motorista a partir do ID do seu usuário
         /// </summary>
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [Authorize(Policy = TipoPoliticaAcesso.MotoristaOuProprietarioCarro)]
         [HttpGet]
         [Route("v1/motoristas/obter-por-id-usuario/{idUsuario:int}")]
         public async Task<ISaida> ObterPorIdUsuario(int idUsuario)
@@ -76,7 +76,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a exclusão de um motorista.
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpDelete]
         [Route("v1/motoristas/excluir/{id:int}")]
         public async Task<ISaida> ExcluirMotorista(int id)

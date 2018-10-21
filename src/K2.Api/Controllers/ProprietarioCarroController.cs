@@ -21,7 +21,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza uma procura por proprietários a partir dos parâmetros informados
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/proprietarios-carro/procurar")]
         public async Task<ISaida> Procurar([FromBody] ProcurarProprietarioCarroEntrada entrada)
@@ -32,7 +32,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza o cadastro de um novo proprietário
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/proprietarios-carro/cadastrar")]
         public async Task<ISaida> Cadastrar([FromBody] CadastrarProprietarioCarroEntrada entrada)
@@ -43,7 +43,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a alteração de um proprietário
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPut]
         [Route("v1/proprietarios-carro/alterar")]
         public async Task<ISaida> Alterar([FromBody] AlterarProprietarioCarroEntrada entrada)
@@ -54,7 +54,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém um proprietário a partir do seu ID
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("v1/proprietarios-carro/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)
@@ -65,7 +65,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a exclusão de um proprietário.
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpDelete]
         [Route("v1/proprietarios-carro/excluir/{id:int}")]
         public async Task<ISaida> ExcluirProprietarioCarro(int id)

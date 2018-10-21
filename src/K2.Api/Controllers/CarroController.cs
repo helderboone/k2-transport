@@ -21,7 +21,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza uma procura por carros a partir dos parâmetros informados
         /// </summary>
-        [Authorize(Policy = TipoPerfil.ProprietarioCarro)]
+        [Authorize(Policy = TipoPoliticaAcesso.ProprietarioCarro)]
         [HttpPost]
         [Route("v1/carros/procurar")]
         public async Task<ISaida> Procurar([FromBody] ProcurarCarroEntrada entrada)
@@ -34,7 +34,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza o cadastro de um novo carro
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/carros/cadastrar")]
         public async Task<ISaida> Cadastrar([FromBody] CadastrarCarroEntrada entrada)
@@ -45,7 +45,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a alteração de um carro
         /// </summary>
-        [Authorize(Policy = TipoPerfil.ProprietarioCarro)]
+        [Authorize(Policy = TipoPoliticaAcesso.ProprietarioCarro)]
         [HttpPut]
         [Route("v1/carros/alterar")]
         public async Task<ISaida> Alterar([FromBody] AlterarCarroEntrada entrada)
@@ -58,7 +58,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém um carro a partir do seu ID
         /// </summary>
-        [Authorize(Policy = TipoPerfil.ProprietarioCarro)]
+        [Authorize(Policy = TipoPoliticaAcesso.ProprietarioCarro)]
         [HttpGet]
         [Route("v1/carros/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)
@@ -71,7 +71,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a exclusão de um carro.
         /// </summary>
-        [Authorize(Policy = TipoPerfil.ProprietarioCarro)]
+        [Authorize(Policy = TipoPoliticaAcesso.ProprietarioCarro)]
         [HttpDelete]
         [Route("v1/carros/excluir/{id:int}")]
         public async Task<ISaida> ExcluirCarro(int id)

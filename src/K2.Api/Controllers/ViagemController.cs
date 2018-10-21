@@ -21,7 +21,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém uma viagem a partir do seu ID
         /// </summary>
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [Authorize(Policy = TipoPoliticaAcesso.MotoristaOuProprietarioCarro)]
         [HttpGet]
         [Route("v1/viagens/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)
@@ -34,7 +34,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza uma procura por viagens a partir dos parâmetros informados
         /// </summary>
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [Authorize(Policy = TipoPoliticaAcesso.MotoristaOuProprietarioCarro)]
         [HttpPost]
         [Route("v1/viagens/procurar")]
         public async Task<ISaida> Procurar([FromBody] ProcurarViagemEntrada entrada)
@@ -47,7 +47,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza o cadastro de uma nova viagem
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/viagens/cadastrar")]
         public async Task<ISaida> Cadastrar([FromBody] CadastrarViagemEntrada entrada)
@@ -58,7 +58,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a alteração de uma viagem
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPut]
         [Route("v1/viagens/alterar")]
         public async Task<ISaida> Alterar([FromBody] AlterarViagemEntrada entrada)
@@ -69,7 +69,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a exclusão de um viagem.
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpDelete]
         [Route("v1/viagens/excluir/{id:int}")]
         public async Task<ISaida> ExcluirViagem(int id)

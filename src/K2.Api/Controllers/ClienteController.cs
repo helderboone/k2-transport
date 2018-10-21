@@ -21,7 +21,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza uma procura por clientes a partir dos parâmetros informados
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/clientes/procurar")]
         public async Task<ISaida> Procurar([FromBody] ProcurarClienteEntrada entrada)
@@ -32,7 +32,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza o cadastro de um novo cliente
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/clientes/cadastrar")]
         public async Task<ISaida> Cadastrar([FromBody] CadastrarClienteEntrada entrada)
@@ -43,7 +43,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a alteração de um cliente
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPut]
         [Route("v1/clientes/alterar")]
         public async Task<ISaida> Alterar([FromBody] AlterarClienteEntrada entrada)
@@ -54,7 +54,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém um cliente a partir do seu ID
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpGet]
         [Route("v1/clientes/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)
@@ -65,7 +65,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a exclusão de um cliente.
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpDelete]
         [Route("v1/clientes/excluir/{id:int}")]
         public async Task<ISaida> ExcluirCliente(int id)

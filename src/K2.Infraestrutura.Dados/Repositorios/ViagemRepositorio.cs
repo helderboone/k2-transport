@@ -100,7 +100,8 @@ namespace K2.Infraestrutura.Dados.Repositorios
             {
                 query = query.Where(x => x.DataHorarioSaida < DateTimeHelper.ObterHorarioAtualBrasilia() || x.Situacao == (int)TipoSituacaoViagem.Cancelada);
             }
-            else if (entrada.DataSaidaInicio.HasValue && entrada.DataSaidaFim.HasValue)
+
+            if (entrada.DataSaidaInicio.HasValue && entrada.DataSaidaFim.HasValue)
                 query = query.Where(x => x.DataHorarioSaida >= entrada.DataSaidaInicio.Value && x.DataHorarioSaida <= entrada.DataSaidaFim.Value);
 
             if (entrada.IdLocalidadeEmbarque.HasValue)

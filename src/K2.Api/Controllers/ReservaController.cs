@@ -21,7 +21,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém uma reserva a partir do seu ID
         /// </summary>
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [Authorize(Policy = TipoPoliticaAcesso.MotoristaOuProprietarioCarro)]
         [HttpGet]
         [Route("v1/reservas/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)
@@ -34,7 +34,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém as reservas relacionadas a um viagem a partir do ID da viagem
         /// </summary>
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [Authorize(Policy = TipoPoliticaAcesso.MotoristaOuProprietarioCarro)]
         [HttpGet]
         [Route("v1/reservas/obter-por-viagem/{idViagem:int}")]
         public async Task<ISaida> ObterPorViagem(int idViagem)
@@ -47,7 +47,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza uma procura por reservas a partir dos parâmetros informados
         /// </summary>
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [Authorize(Policy = TipoPoliticaAcesso.MotoristaOuProprietarioCarro)]
         [HttpPost]
         [Route("v1/reservas/procurar")]
         public async Task<ISaida> Procurar([FromBody] ProcurarReservaEntrada entrada)
@@ -60,7 +60,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza o cadastro de uma nova reserva
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/reservas/cadastrar")]
         public async Task<ISaida> Cadastrar([FromBody] CadastrarReservaEntrada entrada)
@@ -71,7 +71,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a alteração de uma reserva
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPut]
         [Route("v1/reservas/alterar")]
         public async Task<ISaida> Alterar([FromBody] AlterarReservaEntrada entrada)
@@ -82,7 +82,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a exclusão de um reserva.
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpDelete]
         [Route("v1/reservas/excluir/{id:int}")]
         public async Task<ISaida> ExcluirReserva(int id)
@@ -93,7 +93,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém o dependente de uma reserva
         /// </summary>
-        [Authorize(Policy = "MotoristaOuProprietarioCarro")]
+        [Authorize(Policy = TipoPoliticaAcesso.MotoristaOuProprietarioCarro)]
         [HttpGet]
         [Route("v1/reservas/obter-dependente/{idReserva:int}")]
         public async Task<ISaida> ObterDependentePorReserva(int idReserva)
@@ -104,7 +104,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza o cadastro do dependente da reserva
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPost]
         [Route("v1/reservas/cadastrar-dependente")]
         public async Task<ISaida> CadastrarDependente([FromBody] CadastrarReservaDependenteEntrada entrada)
@@ -115,7 +115,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a alteração do dependente da reserva
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpPut]
         [Route("v1/reservas/alterar-dependente")]
         public async Task<ISaida> AlterarDependente([FromBody] AlterarReservaDependenteEntrada entrada)
@@ -126,7 +126,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a exclusão de um dependente.
         /// </summary>
-        [Authorize(Policy = TipoPerfil.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
         [HttpDelete]
         [Route("v1/reservas/excluir-dependente/{idReserva:int}")]
         public async Task<ISaida> ExcluirDependente(int idReserva)
