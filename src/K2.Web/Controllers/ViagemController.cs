@@ -24,12 +24,14 @@ namespace K2.Web.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         [Route("viagens")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         [HttpGet]
         [Route("obter-info-viagem/{id:int}")]
         [FeedbackExceptionFilter("Ocorreu um erro ao obter as informações da viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
@@ -45,6 +47,7 @@ namespace K2.Web.Controllers
             return PartialView("Informacoes", saida.Retorno);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("listar-viagens-previstas")]
         [FeedbackExceptionFilter("Ocorreu um erro ao obter a relação de viagens previstas.", TipoAcaoAoOcultarFeedback.Ocultar)]
@@ -71,6 +74,7 @@ namespace K2.Web.Controllers
             return new DatatablesResult(_datatablesHelper.Draw, saida.Retorno.TotalRegistros, saida.ObterRegistros<ViagemRegistro>().ToList());
         }
 
+        [Authorize]
         [HttpPost]
         [Route("listar-viagens-realizadas")]
         [FeedbackExceptionFilter("Ocorreu um erro ao obter a relação de viagens realizadas.", TipoAcaoAoOcultarFeedback.Ocultar)]
@@ -186,6 +190,7 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Viagem excluída com sucesso."));
         }
 
+        [Authorize]
         [HttpGet]
         [Route("gerar-pdf-demonstrativo/{idViagem:int}")]
         [FeedbackExceptionFilter("Ocorreu um erro ao gerar o demonstrativo da viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]

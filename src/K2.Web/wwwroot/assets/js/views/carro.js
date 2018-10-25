@@ -42,8 +42,13 @@
                     orderable: false,
                     width: "70px",
                     render: function (data, type, row) {
-                        return '<a href="#" data-id="' + row.id + '" class="alterar-carro btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Alterar"><i class="la la-edit"></i></a>' +
-                            '<a href="#" data-id="' + row.id + '" class="excluir-carro btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Excluir"><i class="la la-trash"></i></a>';
+
+                        let html = '<a href="#" data-id="' + row.id + '" class="alterar-carro btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Alterar"><i class="la la-edit"></i></a>';
+
+                        if ($("#iPerfilUsuarioLogado").val() === "Administrador")
+                            html += '<a href="#" data-id="' + row.id + '" class="excluir-carro btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-container="body" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Excluir"><i class="la la-trash"></i></a>';
+
+                        return html;                            
                     }
                 }
             ],

@@ -80,6 +80,7 @@ namespace K2.Web.Controllers
             return new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Usuário autenticado com sucesso."));
         }
 
+        [Authorize]
         [HttpPost]
         [Route("logout")]
         public async Task<IActionResult> Logout()
@@ -89,6 +90,7 @@ namespace K2.Web.Controllers
             return new EmptyResult();
         }
 
+        [Authorize]
         [HttpGet]
         [Route("alterar-senha")]
         public IActionResult AlterarSenha()
@@ -96,6 +98,7 @@ namespace K2.Web.Controllers
             return PartialView();
         }
 
+        [Authorize]
         [HttpPost]
         [Route("alterar-senha")]
         [FeedbackExceptionFilter("Ocorreu um erro na tentativa de alterar a senha de acesso.", TipoAcaoAoOcultarFeedback.Ocultar)]
@@ -118,6 +121,7 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
+        [Authorize(Policy = TipoPerfil.Administrador)]
         [HttpPost]
         [Route("redefinir-senha/{id:int}")]
         [FeedbackExceptionFilter("Ocorreu um erro na tentativa de redefinir a senha de acesso.", TipoAcaoAoOcultarFeedback.Ocultar)]
@@ -169,6 +173,7 @@ namespace K2.Web.Controllers
                     : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First()));
         }
 
+        [Authorize]
         [HttpGet]
         [Route("alterar-meus-dados")]
         [FeedbackExceptionFilter("Ocorreu um erro na tentativa de obter seus dados.", TipoAcaoAoOcultarFeedback.Ocultar)]
@@ -189,6 +194,7 @@ namespace K2.Web.Controllers
             return PartialView("AlterarMeusDados");
         }
 
+        [Authorize]
         [HttpPost]
         [Route("alterar-meus-dados")]
         [FeedbackExceptionFilter("Ocorreu um erro na tentativa de alterar seus dados.", TipoAcaoAoOcultarFeedback.Ocultar)]

@@ -300,6 +300,12 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
     color: #ffffff;
 }
 
+@media (max-width: 768px) {
+    .m-subheader {
+        margin: 20px 0 0 0;
+    }
+}
+
 @media (min-width: 1200px) {
     .jc-bs3-container.container {
         max-width: 90%;

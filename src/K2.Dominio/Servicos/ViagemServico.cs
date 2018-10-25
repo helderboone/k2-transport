@@ -59,10 +59,10 @@ namespace K2.Dominio.Servicos
             switch (credencial.PerfilUsuario)
             {
                 case TipoPerfil.Motorista:
-                    this.NotificarSeVerdadeiro(viagem.IdMotorista != credencial.IdUsuario, ViagemResource.Motorista_Sem_Permissao_Obter);
+                    this.NotificarSeVerdadeiro(viagem.Motorista.IdUsuario != credencial.IdUsuario, ViagemResource.Motorista_Sem_Permissao_Obter);
                     break;
                 case TipoPerfil.ProprietarioCarro:
-                    this.NotificarSeVerdadeiro(viagem.Carro.IdProprietario != credencial.IdUsuario, ViagemResource.Proprietario_Sem_Permissao_Obter);
+                    this.NotificarSeVerdadeiro(viagem.Carro.Proprietario.IdUsuario != credencial.IdUsuario, ViagemResource.Proprietario_Sem_Permissao_Obter);
                     break;
             }
 

@@ -83,7 +83,7 @@ namespace K2.Web.Controllers
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, saida.Mensagens.First(), tipoAcao: TipoAcaoAoOcultarFeedback.OcultarMoldais));
         }
 
-        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.ProprietarioCarro)]
         [HttpGet]
         [Route("alterar-carro/{id:int:min(1)}")]
         [FeedbackExceptionFilter("Ocorreu um erro ao obter as informações do carro.", TipoAcaoAoOcultarFeedback.Ocultar)]
@@ -99,7 +99,7 @@ namespace K2.Web.Controllers
             return PartialView("Manter", saida.Retorno);
         }
 
-        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.ProprietarioCarro)]
         [HttpPost]
         [Route("alterar-carro")]
         [FeedbackExceptionFilter("Ocorreu um erro ao alterar as informações do carro.", TipoAcaoAoOcultarFeedback.Ocultar)]

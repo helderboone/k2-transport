@@ -17,12 +17,15 @@
     <div class="m-portlet__head m-portlet__head--k2">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
-                <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-info mr-2" id="bCadastrar">
-                    <span>
-                        <i class="la la-plus"></i>
-                        <span>Novo carro</span>
-                    </span>
-                </button>
+                @if (cookieHelper.ObterPerfilUsuario() == TipoPerfil.Administrador)
+                {
+                    <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-info mr-2" id="bCadastrar">
+                        <span>
+                            <i class="la la-plus"></i>
+                            <span>Novo carro</span>
+                        </span>
+                    </button>
+                }
                 <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-secondary" data-toggle="modal" data-target="#modal_Procurar" data-backdrop="static">
                     <span>
                         <i class="la la-search"></i>

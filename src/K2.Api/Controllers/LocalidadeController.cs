@@ -21,7 +21,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza uma procura por localidades a partir dos parâmetros informados
         /// </summary>
-        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
+        [Authorize]
         [HttpPost]
         [Route("v1/localidades/procurar")]
         public async Task<ISaida> Procurar([FromBody] ProcurarLocalidadeEntrada entrada)

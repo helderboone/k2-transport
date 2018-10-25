@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using K2.Web.Models;
+using Microsoft.Extensions.Configuration;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -22,36 +23,29 @@ namespace K2.Web.Helpers
 
         public async Task<IRestResponse> ChamarApi(string rota, Method metodo, ICollection<Parameter> parametros = null, bool usarToken = true)
         {
-            try
+            var request = new RestRequest(rota, metodo);
+            request.AddHeader("Content-Type", "application/json");
+
+            if (usarToken)
             {
-                var request = new RestRequest(rota, metodo);
-                request.AddHeader("Content-Type", "application/json");
+                var tokenJwt = _cookieHelper.ObterTokenJwt();
 
-                if (usarToken)
-                {
-                    var tokenJwt = _cookieHelper.ObterTokenJwt();
-
-                    if (!string.IsNullOrEmpty(tokenJwt))
-                        request.AddHeader("Authorization", "Bearer " + tokenJwt);
-                }
-
-                if (parametros != null && parametros.Any())
-                {
-                    foreach (var parametro in parametros)
-                        request.AddParameter(parametro);
-                }
-
-                var response = await _restClient.ExecuteTaskAsync(request);
-
-                if (!response.IsSuccessful)
-                    throw new Exception("Falha na comunicação com a API.", response.ErrorException);
-
-                return response;
+                if (!string.IsNullOrEmpty(tokenJwt))
+                    request.AddHeader("Authorization", "Bearer " + tokenJwt);
             }
-            catch (Exception ex)
+
+            if (parametros != null && parametros.Any())
             {
-                throw new Exception("Falha na comunicação com a API.", ex);
+                foreach (var parametro in parametros)
+                    request.AddParameter(parametro);
             }
+
+            var response = await _restClient.ExecuteTaskAsync(request);
+
+            if (!response.IsSuccessful)
+                throw new Exception("Falha na comunicação com a API: " + response.ErrorException?.Message);
+
+            return response;
         }
     }
 }

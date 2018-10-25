@@ -65,7 +65,7 @@
                                     '<a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill m-dropdown__toggle">' +
                                         '<i class="la la-ellipsis-h m--font-brand"></i>' +
                                     '</a>' +
-                                    '<div class="m-dropdown__wrapper" style="z-index: 101; top: -466%; right: 33px !important; width:165px;">' +
+                                    '<div class="m-dropdown__wrapper" style="z-index: 101; top: ' + ($("#iPerfilUsuarioLogado").val() !== "Administrador" ? "-100%" : "-466%") + '; right: 33px !important; width:165px;">' +
                                         '<div class="m-dropdown__inner">' +
                                             '<div class="m-dropdown__body">' +
                                                 '<div class="m-dropdown__content">' +
@@ -79,13 +79,13 @@
                                                                 '<span class="m-nav__link-text">Informações</span>' +
                                                             '</a>' +
                                                         '</li>' +
-                                                        '<li class="m-nav__item">' +
+                                                        '<li class="m-nav__item" ' + ($("#iPerfilUsuarioLogado").val() !== "Administrador" ? 'style="display:none;"' : '') + '>' +
                                                             '<a href="#" class="alterar-viagem-prevista m-nav__link" data-id-viagem="' + data.id +'">' +
                                                                 '<i class="m-nav__link-icon la la-edit"></i>' +
                                                                 '<span class="m-nav__link-text">Alterar</span>' +
                                                             '</a>' +
                                                         '</li>' +
-                                                        '<li class="m-nav__item">' +
+                                                        '<li class="m-nav__item " ' + ($("#iPerfilUsuarioLogado").val() !== "Administrador" ? 'style="display:none;"' : '') + '>' +
                                                             '<a href="#" class="excluir-viagem-prevista m-nav__link" data-id-viagem="' + data.id +'">' +
                                                                 '<i class="m-nav__link-icon la la-trash"></i>' +
                                                                 '<span class="m-nav__link-text">Excluir</span>' +
@@ -170,7 +170,7 @@
                     data.IdCarro                = $("#sProcurarCarro").val();
                     data.IdLocalidadeEmbarque   = $("#sProcurarLocalidadeEmbarque").val();
                     data.IdLocalidadeDesmbarque = $("#sProcurarLocalidadeDesembarque").val();
-                    data.ValorPassagem          = $("#iProcurarValorPassagem").val()
+                    data.ValorPassagem          = $("#iProcurarValorPassagem").length ? $("#iProcurarValorPassagem").val() : null;
                 }
             },
             columns: [
@@ -225,7 +225,7 @@
                                     '<a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill m-dropdown__toggle">' +
                                         '<i class="la la-ellipsis-h m--font-brand"></i>' +
                                     '</a>' +
-                                    '<div class="m-dropdown__wrapper" style="z-index: 101; top: -466%; right: 33px !important; width:165px;">' +
+                                    '<div class="m-dropdown__wrapper" style="z-index: 101; top: ' + ($("#iPerfilUsuarioLogado").val() !== "Administrador" ? "-100%" : "-466%") + '; right: 33px !important; width:165px;">' +
                                         '<div class="m-dropdown__inner">' +
                                             '<div class="m-dropdown__body">' +
                                                 '<div class="m-dropdown__content">' +
@@ -239,13 +239,13 @@
                                                                 '<span class="m-nav__link-text">Informações</span>' +
                                                             '</a>' +
                                                         '</li>' +
-                                                        '<li class="m-nav__item">' +
+                                                        '<li class="m-nav__item" ' + ($("#iPerfilUsuarioLogado").val() !== "Administrador" ? 'style="display:none;"' : '') + '>' +
                                                             '<a href="#" class="alterar-viagem-realizada m-nav__link" data-id-viagem="' + data.id +'">' +
                                                                 '<i class="m-nav__link-icon la la-edit"></i>' +
                                                                 '<span class="m-nav__link-text">Alterar</span>' +
                                                             '</a>' +
                                                         '</li>' +
-                                                        '<li class="m-nav__item">' +
+                                                        '<li class="m-nav__item " ' + ($("#iPerfilUsuarioLogado").val() !== "Administrador" ? 'style="display:none;"' : '') + '>' +
                                                             '<a href="#" class="excluir-viagem-realizada m-nav__link" data-id-viagem="' + data.id +'">' +
                                                                 '<i class="m-nav__link-icon la la-trash"></i>' +
                                                                 '<span class="m-nav__link-text">Excluir</span>' +
@@ -355,12 +355,14 @@
                             }
                         }
                     },
+                    { data: "observacao", className: "min-tablet", title: "Observação", orderable: false },
                     {
                         data: null,
                         title: "Pago?",
                         orderable: false,
                         className: "dt-center",
                         width: "1px",
+                        visible: $("#iPerfilUsuarioLogado").val() === "Administrador",
                         render: function (data, type, row) {
                             switch (data.pago) {
                                 case 0: return '<span class="m-badge m-badge--danger"></span>';
@@ -374,19 +376,19 @@
                         title: "Valor pago",
                         orderable: false,
                         className: "min-tablet",
+                        visible: $("#iPerfilUsuarioLogado").val() === "Administrador",
                         createdCell: function (td, cellData, rowData, row, col) {
                             $(td).attr('class', 'm--align-right');
                         }
                     },
-                    { data: "observacao", className: "min-tablet", title: "Observação", orderable: false },
                     {
                         data: null,
                         className: "td-actions dt-center all",
                         orderable: false,
                         width: "70px",
+                        visible: $("#iPerfilUsuarioLogado").val() === "Administrador",
                         render: function (data, type, row) {
-
-
+                            
                             return '<div class="m-dropdown m-dropdown--inline m-dropdown--up m-dropdown--align-right" m-dropdown-toggle="click" aria-expanded="true">' +
                                         '<a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill m-dropdown__toggle">' +
                                             '<i class="la la-ellipsis-h m--font-brand"></i>' +

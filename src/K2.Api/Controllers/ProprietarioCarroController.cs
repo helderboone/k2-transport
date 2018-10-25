@@ -21,7 +21,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza uma procura por proprietários a partir dos parâmetros informados
         /// </summary>
-        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
+        [Authorize(Policy = TipoPoliticaAcesso.ProprietarioCarro)]
         [HttpPost]
         [Route("v1/proprietarios-carro/procurar")]
         public async Task<ISaida> Procurar([FromBody] ProcurarProprietarioCarroEntrada entrada)
@@ -54,7 +54,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém um proprietário a partir do seu ID
         /// </summary>
-        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
+        [Authorize]
         [HttpGet]
         [Route("v1/proprietarios-carro/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)

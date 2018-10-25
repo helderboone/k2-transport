@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Html
+@using K2.Web
 @using K2.Web.Helpers
 @inject CookieHelper cookieHelper
 @{
@@ -82,33 +83,61 @@
                                 <button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-light" id="m_aside_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
                                 <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light">
                                     <ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
-                                        <li class="m-menu__item @VerificarCssClassMenuItemAtivo("viagens")">
-                                            <a href="viagens" class="m-menu__link"><i class="m-menu__link-icon fa fa-map-marked-alt"></i><span class="m-menu__link-text">Viagens</span></a>
-                                        </li>
-                                        <li class="m-menu__item @VerificarCssClassMenuItemAtivo("clientes")">
-                                            <a href="clientes" class="m-menu__link"><i class="m-menu__link-icon fa fa-users"></i><span class="m-menu__link-text">Clientes</span></a>
-                                        </li>
-                                        <li class="m-menu__item @VerificarCssClassMenuItemAtivo("administradores", "motoristas", "proprietarios", "localidades") m-menu__item--submenu m-menu__item--rel" m-menu-submenu-toggle="click" aria-haspopup="true">
-                                            <a href="javascript:;" class="m-menu__link m-menu__toggle"><span class=" m-menu__item-here"></span><i class="m-menu__link-icon fa fa-wrench"></i><span class="m-menu__link-text">Configurações</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-                                            <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
-                                                <span class="m-menu__arrow m-menu__arrow--adjust"></span>
-                                                <ul class="m-menu__subnav">
-                                                    <li class="m-menu__item @VerificarCssClassMenuItemAtivo("administradores", "motoristas", "proprietarios", "localidades") m-menu__item--submenu" m-menu-submenu-toggle="hover" m-menu-link-redirect="1" aria-haspopup="true">
-                                                        <a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Cadastros auxiliares</span><i class="m-menu__hor-arrow la la-angle-right"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-                                                        <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--right">
-                                                            <span class="m-menu__arrow "></span>
+
+                                        @switch (cookieHelper.ObterPerfilUsuario())
+                                        {
+                                            case TipoPerfil.Administrador:
+                                                {
+                                                    <li class="m-menu__item @VerificarCssClassMenuItemAtivo("viagens")">
+                                                        <a href="viagens" class="m-menu__link"><i class="m-menu__link-icon fa fa-map-marked-alt"></i><span class="m-menu__link-text">Viagens</span></a>
+                                                    </li>
+                                                    <li class="m-menu__item @VerificarCssClassMenuItemAtivo("clientes")">
+                                                        <a href="clientes" class="m-menu__link"><i class="m-menu__link-icon fa fa-users"></i><span class="m-menu__link-text">Clientes</span></a>
+                                                    </li>
+                                                    <li class="m-menu__item @VerificarCssClassMenuItemAtivo("administradores", "motoristas", "proprietarios", "localidades") m-menu__item--submenu m-menu__item--rel" m-menu-submenu-toggle="click" aria-haspopup="true">
+                                                        <a href="javascript:;" class="m-menu__link m-menu__toggle"><span class=" m-menu__item-here"></span><i class="m-menu__link-icon fa fa-wrench"></i><span class="m-menu__link-text">Configurações</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a>
+                                                        <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
+                                                            <span class="m-menu__arrow m-menu__arrow--adjust"></span>
                                                             <ul class="m-menu__subnav">
-                                                                <li class="m-menu__item @VerificarCssClassMenuItemAtivo("administradores")" m-menu-link-redirect="1" aria-haspopup="true"><a href="administradores" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Administradores</span></a></li>
-                                                                <li class="m-menu__item @VerificarCssClassMenuItemAtivo("motoristas")" m-menu-link-redirect="1" aria-haspopup="true"><a href="motoristas" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Motoristas</span></a></li>
-                                                                <li class="m-menu__item @VerificarCssClassMenuItemAtivo("proprietarios")" m-menu-link-redirect="1" aria-haspopup="true"><a href="proprietarios" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Proprietários</span></a></li>
-                                                                <li class="m-menu__item @VerificarCssClassMenuItemAtivo("carros")" m-menu-link-redirect="1" aria-haspopup="true"><a href="carros" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Carros</span></a></li>
-                                                                <li class="m-menu__item @VerificarCssClassMenuItemAtivo("localidades")" m-menu-link-redirect="1" aria-haspopup="true"><a href="localidades" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Localidades</span></a></li>
+                                                                <li class="m-menu__item @VerificarCssClassMenuItemAtivo("administradores", "motoristas", "proprietarios", "localidades") m-menu__item--submenu" m-menu-submenu-toggle="hover" m-menu-link-redirect="1" aria-haspopup="true">
+                                                                    <a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Cadastros auxiliares</span><i class="m-menu__hor-arrow la la-angle-right"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a>
+                                                                    <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--right">
+                                                                        <span class="m-menu__arrow "></span>
+                                                                        <ul class="m-menu__subnav">
+                                                                            <li class="m-menu__item @VerificarCssClassMenuItemAtivo("administradores")" m-menu-link-redirect="1" aria-haspopup="true"><a href="administradores" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Administradores</span></a></li>
+                                                                            <li class="m-menu__item @VerificarCssClassMenuItemAtivo("motoristas")" m-menu-link-redirect="1" aria-haspopup="true"><a href="motoristas" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Motoristas</span></a></li>
+                                                                            <li class="m-menu__item @VerificarCssClassMenuItemAtivo("proprietarios")" m-menu-link-redirect="1" aria-haspopup="true"><a href="proprietarios" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Proprietários</span></a></li>
+                                                                            <li class="m-menu__item @VerificarCssClassMenuItemAtivo("carros")" m-menu-link-redirect="1" aria-haspopup="true"><a href="carros" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Carros</span></a></li>
+                                                                            <li class="m-menu__item @VerificarCssClassMenuItemAtivo("localidades")" m-menu-link-redirect="1" aria-haspopup="true"><a href="localidades" class="m-menu__link"><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class=" m-menu__link-text">Localidades</span></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </li>
-                                                </ul>
-                                            </div>
-                                        </li>
+
+                                                    break;
+                                                }
+                                            case TipoPerfil.ProprietarioCarro:
+                                                {
+                                                    <li class="m-menu__item @VerificarCssClassMenuItemAtivo("viagens")">
+                                                        <a href="viagens" class="m-menu__link"><i class="m-menu__link-icon fa fa-map-marked-alt"></i><span class="m-menu__link-text">Viagens</span></a>
+                                                    </li>
+                                                    <li class="m-menu__item @VerificarCssClassMenuItemAtivo("carros")">
+                                                        <a href="carros" class="m-menu__link"><i class="m-menu__link-icon fa fa-bus"></i><span class="m-menu__link-text">Meus carros</span></a>
+                                                    </li>
+
+                                                    break;
+                                                }
+                                            case TipoPerfil.Motorista:
+                                                {
+                                                    <li class="m-menu__item @VerificarCssClassMenuItemAtivo("viagens")">
+                                                        <a href="viagens" class="m-menu__link"><i class="m-menu__link-icon fa fa-map-marked-alt"></i><span class="m-menu__link-text">Minhas viagens</span></a>
+                                                    </li>
+
+                                                    break;
+                                                }
+                                        }
                                     </ul>
                                 </div>
                                 <!-- END: Horizontal Menu -->
@@ -209,6 +238,7 @@
                     </div>
                     <!-- END: Subheader -->
                     <div class="m-content">
+                        <input type="hidden" id="iPerfilUsuarioLogado" value="@cookieHelper.ObterPerfilUsuario()"/>
                         @RenderBody()
                     </div>
                 </div>
@@ -217,44 +247,6 @@
         </div>
         <!-- end:: Body -->
         <!-- begin::Footer -->
-        <footer class="m-grid__item  m-footer ">
-            <div class="m-container m-container--fluid m-container--full-height">
-                <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
-                    <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
-
-                    </div>
-                    <div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first">
-                        <ul class="m-footer__nav m-nav m-nav--inline m--pull-right">
-                            <li class="m-nav__item">
-                                <a href="#" class="m-nav__link">
-                                    <span class="m-nav__link-text">About</span>
-                                </a>
-                            </li>
-                            <li class="m-nav__item">
-                                <a href="#" class="m-nav__link">
-                                    <span class="m-nav__link-text">Privacy</span>
-                                </a>
-                            </li>
-                            <li class="m-nav__item">
-                                <a href="#" class="m-nav__link">
-                                    <span class="m-nav__link-text">T&C</span>
-                                </a>
-                            </li>
-                            <li class="m-nav__item">
-                                <a href="#" class="m-nav__link">
-                                    <span class="m-nav__link-text">Purchase</span>
-                                </a>
-                            </li>
-                            <li class="m-nav__item m-nav__item--last">
-                                <a href="#" class="m-nav__link" data-toggle="m-tooltip" title="Support Center" data-placement="left">
-                                    <i class="m-nav__link-icon flaticon-info m--icon-font-size-lg3"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
         <!-- end::Footer -->
 
     </div>
@@ -327,69 +319,69 @@
 </html>
 
 @functions {
-    public string VerificarCssClassMenuItemAtivo(params string[] palavrasChaves)
+public string VerificarCssClassMenuItemAtivo(params string[] palavrasChaves)
+{
+    var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
+
+    foreach (var palavra in palavrasChaves)
     {
-        var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
-
-        foreach (var palavra in palavrasChaves)
-        {
-            if (url.Contains(palavra))
-                return "m-menu__item--active";
-        }
-
-        return string.Empty;
+        if (url.Contains(palavra))
+            return "m-menu__item--active";
     }
 
-    public IHtmlContent ObterCaminho()
+    return string.Empty;
+}
+
+public IHtmlContent ObterCaminho()
+{
+    var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
+
+    if (url.Contains("administradores"))
     {
-        var url = this.Url.RouteUrl(this.ViewContext.RouteData.Values);
-
-        if (url.Contains("administradores"))
-        {
-            return Html.Raw(
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__item\"><a href=\"administradores\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Administradores</span></a></li>");
-        }
-        else if (url.Contains("motoristas"))
-        {
-            return Html.Raw(
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__item\"><a href=\"motoristas\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Motoristas</span></a></li>");
-        }
-        else if (url.Contains("proprietarios"))
-        {
-            return Html.Raw(
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__item\"><a href=\"proprietarios\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Proprietários</span></a></li>");
-        }
-        else if (url.Contains("carros"))
-        {
-            return Html.Raw(
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__item\"><a href=\"carros\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Carros</span></a></li>");
-        }
-        else if (url.Contains("localidades"))
-        {
-            return Html.Raw(
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
-                    "<li class=\"m-nav__separator\">-</li>" +
-                    "<li class=\"m-nav__item\"><a href=\"localidades\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Localidades</span></a></li>");
-        }
-
-        return Html.Raw(string.Empty);
+        return Html.Raw(
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__item\"><a href=\"administradores\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Administradores</span></a></li>");
     }
+    else if (url.Contains("motoristas"))
+    {
+        return Html.Raw(
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__item\"><a href=\"motoristas\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Motoristas</span></a></li>");
+    }
+    else if (url.Contains("proprietarios"))
+    {
+        return Html.Raw(
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__item\"><a href=\"proprietarios\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Proprietários</span></a></li>");
+    }
+    else if (url.Contains("carros"))
+    {
+        return Html.Raw(cookieHelper.ObterPerfilUsuario() == TipoPerfil.Administrador ? 
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__item\"><a href=\"carros\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Carros</span></a></li>" : string.Empty);
+    }
+    else if (url.Contains("localidades"))
+    {
+        return Html.Raw(
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Configurações</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__separator\"><span class=\"m-nav__link-text\">Cadastros</span></li>" +
+                "<li class=\"m-nav__separator\">-</li>" +
+                "<li class=\"m-nav__item\"><a href=\"localidades\" class=\"m-nav__link\"><span class=\"m-nav__link-text\">Localidades</span></a></li>");
+    }
+
+    return Html.Raw(string.Empty);
+}
 }
