@@ -10,7 +10,7 @@ namespace K2.Infraestrutura.Dados.Maps
         {
             builder.ToTable("reserva_dependente");
             builder.HasKey(x => x.IdReserva);
-            builder.Property(x => x.IdReserva).HasColumnName("IdReserva");
+            //builder.Property(x => x.IdReserva).HasColumnName("IdReserva");
 
             builder.Property(x => x.Nome);
             builder.Property(x => x.DataNascimento);

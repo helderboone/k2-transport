@@ -122,7 +122,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza a alteração da senha de acesso do usuário
         /// </summary>
-        [Authorize]
+        [Authorize(Policy = TipoPoliticaAcesso.MotoristaOuProprietarioCarro)]
         [HttpPut]
         [Route("v1/usuarios/alterar-senha")]
         public async Task<ISaida> AlteraSenha([FromBody] AlterarSenhaUsuarioEntrada model)

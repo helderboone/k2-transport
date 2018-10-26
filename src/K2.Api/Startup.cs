@@ -67,6 +67,7 @@ namespace K2.Api
             services.AddTransient<IViagemRepositorio, ViagemRepositorio>();
             services.AddTransient<IReservaRepositorio, ReservaRepositorio>();
             services.AddTransient<IReservaDependenteRepositorio, ReservaDependenteRepositorio>();
+            services.AddTransient<ILogRepositorio, LogRepositorio>();
 
             services.AddTransient<IUsuarioServico, UsuarioServico>();
             services.AddTransient<IClienteServico, ClienteServico>();
@@ -76,6 +77,7 @@ namespace K2.Api
             services.AddTransient<ILocalidadeServico, LocalidadeServico>();
             services.AddTransient<IViagemServico, ViagemServico>();
             services.AddTransient<IReservaServico, ReservaServico>();
+            services.AddTransient<ILogServico, LogServico>();
 
             services
                 // AddAuthentication: especificará os schemas utilizados para a autenticação do tipo Bearer
@@ -114,6 +116,7 @@ namespace K2.Api
                 options.AddPolicy(TipoPoliticaAcesso.ProprietarioCarro, policy => policy.RequireAssertion(context => context.User.HasClaim(c => c.Type == "Perfil" && (c.Value == TipoPerfil.ProprietarioCarro || c.Value == TipoPerfil.Administrador))).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(TipoPoliticaAcesso.Motorista, policy => policy.RequireAssertion(context => context.User.HasClaim(c => c.Type == "Perfil" && (c.Value == TipoPerfil.Motorista || c.Value == TipoPerfil.Administrador))).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
                 options.AddPolicy(TipoPoliticaAcesso.MotoristaOuProprietarioCarro, policy => policy.RequireAssertion(context => context.User.HasClaim(c => c.Type == "Perfil" && (c.Value == TipoPerfil.Motorista || c.Value == TipoPerfil.ProprietarioCarro || c.Value == TipoPerfil.Administrador))).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+                options.AddPolicy(TipoPoliticaAcesso.AnalistaTI, policy => policy.RequireAssertion(context => context.User.HasClaim(c => c.Type == "Perfil" && c.Value == TipoPerfil.Administrador) && context.User.HasClaim(c => c.Type == "Cpf" && c.Value == "09937454743")).AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
 
             services

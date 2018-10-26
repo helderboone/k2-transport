@@ -54,7 +54,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém um proprietário a partir do seu ID
         /// </summary>
-        [Authorize]
+        [Authorize(Policy = TipoPoliticaAcesso.MotoristaOuProprietarioCarro)]
         [HttpGet]
         [Route("v1/proprietarios-carro/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)

@@ -17,6 +17,7 @@ namespace K2.Infraestrutura.Dados
         public DbSet<Viagem> Viagens { get; set; }
         public DbSet<Reserva> Reservas { get; set; }
         public DbSet<ReservaDependente> ReservaDependentes { get; set; }
+        public DbSet<Log> Log { get; set; }
 
         public EfDataContext(string connectionString)
         {
@@ -39,6 +40,7 @@ namespace K2.Infraestrutura.Dados
             modelBuilder.ApplyConfiguration(new ViagemMap());
             modelBuilder.ApplyConfiguration(new ReservaMap());
             modelBuilder.ApplyConfiguration(new ReservaDependenteMap());
+            modelBuilder.ApplyConfiguration(new LogMap());
         }
     }
 }

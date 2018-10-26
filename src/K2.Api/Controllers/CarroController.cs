@@ -21,7 +21,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Realiza uma procura por carros a partir dos parâmetros informados
         /// </summary>
-        [Authorize]
+        [Authorize(Policy = TipoPoliticaAcesso.MotoristaOuProprietarioCarro)]
         [HttpPost]
         [Route("v1/carros/procurar")]
         public async Task<ISaida> Procurar([FromBody] ProcurarCarroEntrada entrada)
