@@ -19,6 +19,11 @@
         /// Somente usuários com o perfil "administrador" ou "proprietário" terão acesso
         /// </summary>
         public const string ProprietarioCarro = "ProprietarioCarro";
+
+        /// <summary>
+        /// Somente usuário com o perfil "administrador" e o e-mail "jlnpinheiro@gmail.com"
+        /// </summary>
+        public const string AnalistaTI = "MotoristaOuProprietarioCarro";
     }
     
     /// <summary>

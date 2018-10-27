@@ -48,6 +48,7 @@ namespace K2.Web
                 options.AddPolicy(TipoPoliticaAcesso.Administrador, policy => policy.RequireClaim("Perfil", TipoPerfil.Administrador).AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme));
                 options.AddPolicy(TipoPoliticaAcesso.ProprietarioCarro, policy => policy.RequireAssertion(context => context.User.HasClaim(c => c.Type == "Perfil" && (c.Value == TipoPerfil.ProprietarioCarro || c.Value == TipoPerfil.Administrador))).AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme));
                 options.AddPolicy(TipoPoliticaAcesso.Motorista, policy => policy.RequireAssertion(context => context.User.HasClaim(c => c.Type == "Perfil" && (c.Value == TipoPerfil.Motorista || c.Value == TipoPerfil.Administrador))).AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme));
+                options.AddPolicy(TipoPoliticaAcesso.AnalistaTI, policy => policy.RequireAssertion(context => context.User.HasClaim(c => c.Type == "Perfil" && c.Value == TipoPerfil.Administrador) && context.User.HasClaim(c => c.Type == "Cpf" && c.Value == "09937454743")).AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme));
             });
 
             services.AddMvc();

@@ -1,0 +1,79 @@
+﻿@model K2.Web.Models.LogRegistro
+
+
+<div class="m-portlet m-portlet-lg m-portlet--brand m-portlet--head-solid-bg" style="margin:0 auto;">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Detalhamento do registro
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div id="frmManterProprietarioCarro" class="m-form m-form--fit m-form--state  m-form--group-seperator-dashed--k2" novalidate="novalidate">
+        <div class="m-portlet__body m-form m-form--fit m-form--state m-form--group-seperator-dashed" style="padding: 0px;">
+            <div class="form-group m-form__group m-form__group--sm row">
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Data:</label>
+                    <p class="form-control-static">@Model.DataToString</p>
+                </div>
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Tipo:</label><br />
+                    @switch (Model.Tipo)
+                    {
+                        case "Information":
+                            {
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Informação</span>
+
+                                break;
+                            }
+                        case "Warning":
+                            {
+                                <span class="m-badge m-badge--warning m-badge--wide m-badge--rounded">Atenção</span>
+
+                                break;
+                            }
+                        case "Error":
+                            {
+                                <span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">Erro</span>
+
+                                break;
+                            }
+                    }
+                </div>
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Usuário:</label>
+                    <p class="form-control-static">@Model.Usuario</p>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--sm">
+                <label>Mensagem:</label>
+                <p class="form-control-static font-weight-bold">@Model.Mensagem</p>
+            </div>
+            <div class="form-group m-form__group m-form__group--sm">
+                <label>Origem:</label>
+                <p class="form-control-static">@Model.NomeOrigem</p>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.ExceptionInfo))
+            {
+                <div class="form-group m-form__group m-form__group--sm">
+                    <label>Exception:</label>
+                    <div style="height: 200px;" id="divAceEditor">
+                        @Model.ExceptionInfo
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid m-form__actions--right">
+                <button type="button" class="btn btn-sm m-btn--square btn-secondary m-btn--icon btn-fechar">
+                    <span>
+                        <i class="la la-close"></i>
+                        <span>Fechar</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
