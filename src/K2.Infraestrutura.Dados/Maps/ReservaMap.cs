@@ -27,6 +27,9 @@ namespace K2.Infraestrutura.Dados.Maps
 
             builder.Property(x => x.IdViagem);
             builder.Property(x => x.ValorPago);
+            builder.Property(x => x.LocalEmbarque);
+            builder.Property(x => x.LocalDesembarque);
+            builder.Property(x => x.SequenciaEmbarque);
             builder.Property(x => x.Observacao);
         }
     }

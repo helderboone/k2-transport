@@ -12,6 +12,7 @@ namespace K2.Infraestrutura.Dados.Maps
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasColumnName("IdLocalidade");
             builder.Property(x => x.Nome);
+            builder.Property(x => x.Sigla);
             builder.Property(x => x.Uf);
         }
     }

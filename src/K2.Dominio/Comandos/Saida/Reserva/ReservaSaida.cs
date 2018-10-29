@@ -23,6 +23,21 @@ namespace K2.Dominio.Comandos.Saida
         public decimal? ValorPago { get; }
 
         /// <summary>
+        /// Descrição do local de embarque
+        /// </summary>
+        public string LocalEmbarque { get; }
+
+        /// <summary>
+        /// Descrição do local de desembarque
+        /// </summary>
+        public string LocalDesembarque { get; }
+
+        /// <summary>
+        /// Número da sequência de embarque
+        /// </summary>
+        public int SequenciaEmbarque { get; }
+
+        /// <summary>
         /// Observações da reserva
         /// </summary>
         public string Observacao { get; }
@@ -47,6 +62,9 @@ namespace K2.Dominio.Comandos.Saida
             Id                = reserva.Id;
             IdCliente         = reserva.IdCliente;
             ValorPago         = reserva.ValorPago;
+            LocalEmbarque     = reserva.LocalEmbarque;
+            LocalDesembarque  = reserva.LocalDesembarque;
+            SequenciaEmbarque = reserva.SequenciaEmbarque;
             Observacao        = reserva.Observacao;
             Cliente = new
             {
@@ -66,7 +84,7 @@ namespace K2.Dominio.Comandos.Saida
                 {
                     reserva.Viagem.Carro.Descricao,
                     reserva.Viagem.Carro.Placa,
-                    reserva.Viagem.Carro.QuantidadeLugares
+                    reserva.Viagem.Carro.Capacidade
                 },
                 Motorista = new
                 {
@@ -78,11 +96,13 @@ namespace K2.Dominio.Comandos.Saida
                 LocalidadeEmbarque = new
                 {
                     reserva.Viagem.LocalidadeEmbarque.Nome,
+                    reserva.Viagem.LocalidadeEmbarque.Sigla,
                     reserva.Viagem.LocalidadeEmbarque.Uf
                 },
                 LocalidadeDesembarque = new
                 {
                     reserva.Viagem.LocalidadeDesembarque.Nome,
+                    reserva.Viagem.LocalidadeDesembarque.Sigla,
                     reserva.Viagem.LocalidadeDesembarque.Uf
                 },
                 LocaisEmbarque = reserva.Viagem.Embarques?.Split(";".ToCharArray()),

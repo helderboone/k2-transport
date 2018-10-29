@@ -142,6 +142,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A sequência de embarque é obrigatória e não foi informada..
+        /// </summary>
+        public static string Sequencia_Embarque_Obrigatoria_Nao_Informado {
+            get {
+                return ResourceManager.GetString("Sequencia_Embarque_Obrigatoria_Nao_Informado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O valor pago da reserva é inválido. Informe um valor maior que zero..
         /// </summary>
         public static string Valor_Pago_Invalido {

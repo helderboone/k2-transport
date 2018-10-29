@@ -24,7 +24,7 @@
                                 Lugares disponíveis
                             </h4><br>
                             <span class="m-widget24__desc">
-                                Qtd. de lugares: @Model.Carro.QuantidadeLugares
+                                Capacidade: @Model.Carro.Capacidade
                             </span>
                             <span class="m-widget24__stats m--font-info">
                                 @Model.QuantidadeLugaresDisponiveis
@@ -51,10 +51,10 @@
                                     Custo da viagem
                                 </h4><br>
                                 <span class="m-widget24__desc">
-                                    @(Model.Carro.QuantidadeLugares) lugares x @(Model.ValorPassagem.ToString("C2"))
+                                    @(Model.Carro.Capacidade) lugares x @(Model.ValorPassagem.ToString("C2"))
                                 </span>
                                 <span class="m-widget24__stats m--font-brand">
-                                    @((Model.Carro.QuantidadeLugares * Model.ValorPassagem).ToString("C2"))
+                                    @((Model.Carro.Capacidade * Model.ValorPassagem).ToString("C2"))
                                 </span>
                                 <div class="m--space-10"></div>
                                 <div class="progress m-progress--sm">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <ul class="nav nav-tabs  m-tabs-line m-tabs-line--2x ml-4 mr-4" role="tablist">
+            <ul class="nav nav-tabs nav-fill ml-4 mr-4 mt-4" role="tablist">
                 <li class="nav-item m-tabs__item">
                     <a class="nav-link m-tabs__link active" data-toggle="tab" href="#tabReservas" role="tab">Reservas</a>
                 </li>
@@ -123,16 +123,23 @@
                                 <span>Nova reserva</span>
                             </span>
                         </button>
+                        <a href="~/gerar-pdf-demonstrativo/@Model.Id" target="_blank" class="btn btn-sm m-btn--square m-btn--icon btn-info mb-0" id="bImprimirDemonstrativo">
+                            <span>
+                                <i class="la la-print"></i>
+                                <span>Demonstrativo</span>
+                            </span>
+                        </a>
                     }
                     <table class="table table-bordered m-table m-table--head-bg-metal table-hover table-striped" id="tblReserva" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th data-priority="1" class="m--align-center">Cliente</th>
                                 <th class="m--align-center">Dependente</th>
+                                <th class="m--align-center">Embarque</th>
+                                <th class="m--align-center">Desembarque</th>
                                 <th class="m--align-center">Observação</th>
                                 @if (cookieHelper.ObterPerfilUsuario() == TipoPerfil.Administrador)
                                 {
-                                    <th>Pago?</th>
                                     <th class="m--align-center">Valor pago</th>
                                     <th class="m--align-center">Ações</th>
                                 }
@@ -141,12 +148,6 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="tabViagem" role="tabpanel">
-                    <a href="~/gerar-pdf-demonstrativo/@Model.Id" target="_blank" class="btn btn-sm m-btn--square m-btn--icon btn-info mb-0" id="bImprimirDemonstrativo">
-                        <span>
-                            <i class="la la-print"></i>
-                            <span>Demonstrativo</span>
-                        </span>
-                    </a>
                     <div class="form-group m-form__group m-form__group--sm pl-0 pr-0">
                         <label>Descrição:</label>
                         <p class="form-control-static font-weight-bold">@Model.Descricao</p>
@@ -273,8 +274,8 @@
                             <p class="form-control-static">@Model.Carro.Placa</p>
                         </div>
                         <div class="col-lg-4 m-form__group-sub">
-                            <label>Quantidade de lugares:</label>
-                            <p class="form-control-static">@Model.Carro.QuantidadeLugares</p>
+                            <label>Capacidade:</label>
+                            <p class="form-control-static">@(Model.Carro.Capacidade) passageiros</p>
                         </div>
                     </div>
                     <div class="form-group m-form__group m-form__group--sm row pl-0 pr-0">

@@ -35,11 +35,15 @@ namespace K2.Web.Models
 
         public string AnoModelo { get; set; }
 
-        public int QuantidadeLugares { get; set; }
+        public int Capacidade { get; set; }
 
         public string Placa { get; set; }
 
+        public string Cor { get; set; }
+
         public string Renavam { get; set; }
+
+        public string NumeroRegistroSeturb { get; set; }
 
         public string[] Caracteristicas { get; set; }
 

@@ -18,20 +18,26 @@ namespace K2.Dominio.Comandos.Saida
         public string Nome { get; }
 
         /// <summary>
+        /// Sigla da localidade
+        /// </summary>
+        public string Sigla { get; }
+
+        /// <summary>
         /// UF da localidade
         /// </summary>
         public string Uf { get; }
 
         public LocalidadeSaida(Localidade localidade)
         {
-            this.Id   = localidade.Id;
-            this.Nome = localidade.Nome;
-            this.Uf   = localidade.Uf;
+            this.Id    = localidade.Id;
+            this.Nome  = localidade.Nome;
+            this.Sigla = localidade.Sigla;
+            this.Uf    = localidade.Uf;
         }
 
         public override string ToString()
         {
-            return $"{this.Nome} - {this.Uf}";
+            return $"{this.Sigla} - {this.Nome}/{this.Uf}";
         }
     }
 }

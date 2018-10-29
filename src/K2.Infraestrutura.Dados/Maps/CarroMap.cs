@@ -19,7 +19,7 @@ namespace K2.Infraestrutura.Dados.Maps
             builder.Property(x => x.Descricao);
             builder.Property(x => x.NomeFabricante);
             builder.Property(x => x.AnoModelo);
-            builder.Property(x => x.QuantidadeLugares).HasColumnName("QtdLugares");
+            builder.Property(x => x.Capacidade);
             builder.Property(x => x.Placa);
             builder.Property(x => x.Renavam);
             builder.Property(x => x.Caracteristicas);

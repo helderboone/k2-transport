@@ -67,8 +67,8 @@ namespace K2.Infraestrutura.Dados.Repositorios
             if (!string.IsNullOrEmpty(entrada.AnoModelo))
                 query = query.Where(x => x.AnoModelo.IndexOf(entrada.AnoModelo, StringComparison.InvariantCultureIgnoreCase) != -1);
 
-            if (entrada.QuantidadeLugares.HasValue)
-                query = query.Where(x => x.QuantidadeLugares == entrada.QuantidadeLugares.Value);
+            if (entrada.Capacidade.HasValue)
+                query = query.Where(x => x.Capacidade == entrada.Capacidade.Value);
 
             if (!string.IsNullOrEmpty(entrada.Placa))
                 query = query.Where(x => x.Placa.IndexOf(entrada.Placa, StringComparison.InvariantCultureIgnoreCase) != -1);

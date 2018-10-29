@@ -30,6 +30,8 @@ namespace K2.Web.Models
 
         public string Nome { get; set; }
 
+        public string Sigla { get; set; }
+
         public string Uf { get; set; }
 
         public string NomeUf => this.Uf.ObterNomeUfPorSiglaUf();

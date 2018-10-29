@@ -38,27 +38,67 @@ namespace K2.Dominio.Comandos.Entrada
         /// <summary>
         /// Descrição da viagem
         /// </summary>
-        public string Descricao { get; private set; }
+        public string Descricao { get; }
 
         /// <summary>
         /// Valor da passagem por pessoa
         /// </summary>
-        public decimal ValorPassagem { get; private set; }
+        public decimal ValorPassagem { get; }
 
         /// <summary>
         /// Data e horário da saída
         /// </summary>
-        public DateTime DataHorarioSaida { get; private set; }
+        public DateTime DataHorarioSaida { get; }
 
         /// <summary>
         /// Descrição dos locais de embarque
         /// </summary>
-        public string[] LocaisEmbarque { get; private set; }
+        public string[] LocaisEmbarque { get; }
 
         /// <summary>
         /// Descrição dos locais de desembarque
         /// </summary>
-        public string[] LocaisDesembarque { get; private set; }
+        public string[] LocaisDesembarque { get; }
+
+        /// <summary>
+        /// KM inicial
+        /// </summary>
+        public int? KmInicial { get; }
+
+        /// <summary>
+        /// KM final
+        /// </summary>
+        public int? KmFinal { get; }
+
+        /// <summary>
+        /// KM rodado
+        /// </summary>
+        public int? KmRodado { get; }
+
+        /// <summary>
+        /// Nome do contratante do frete
+        /// </summary>
+        public string NomeContratanteFrete { get; }
+
+        /// <summary>
+        /// Endereço do contratante do frete
+        /// </summary>
+        public string EnderecoContratanteFrete { get; }
+
+        /// <summary>
+        /// Número do contratante do frete
+        /// </summary>
+        public string DocumentoContratanteFrete { get; }
+
+        /// <summary>
+        /// RG do contratante do frete
+        /// </summary>
+        public string RgContratanteFrete { get; }
+
+        /// <summary>
+        /// Telefone do contratante do frete
+        /// </summary>
+        public string TelefoneContratanteFrete { get; }
 
         public AlterarViagemEntrada(
             int id,
@@ -70,18 +110,34 @@ namespace K2.Dominio.Comandos.Entrada
             decimal valorPassagem,
             DateTime dataHorarioSaida,
             string[] locaisEmbarque,
-            string[] locaisDesembarque)
+            string[] locaisDesembarque,
+            int? kmInicial = null,
+            int? kmFinal = null,
+            int? kmRodado = null,
+            string nomeContratanteFrete = null,
+            string enderecoContratanteFrete = null,
+            string documentoContratanteFrete = null,
+            string rgContratanteFrete = null,
+            string telefoneContratanteFrete = null)
         {
-            Id                      = id;
-            IdCarro                 = idCarro;
-            IdMotorista             = idMotorista;
-            IdLocalidadeEmbarque    = idLocalidadeEmbarque;
-            IdLocalidadeDesembarque = idLocalidadeDesembarque;
-            Descricao               = descricao;
-            ValorPassagem           = valorPassagem;
-            DataHorarioSaida        = dataHorarioSaida;
-            LocaisEmbarque          = locaisEmbarque;
-            LocaisDesembarque       = locaisDesembarque;
+            Id                        = id;
+            IdCarro                   = idCarro;
+            IdMotorista               = idMotorista;
+            IdLocalidadeEmbarque      = idLocalidadeEmbarque;
+            IdLocalidadeDesembarque   = idLocalidadeDesembarque;
+            Descricao                 = descricao;
+            ValorPassagem             = valorPassagem;
+            DataHorarioSaida          = dataHorarioSaida;
+            LocaisEmbarque            = locaisEmbarque;
+            LocaisDesembarque         = locaisDesembarque;
+            KmInicial                 = kmInicial;
+            KmFinal                   = kmFinal;
+            KmRodado                  = kmRodado;
+            NomeContratanteFrete      = nomeContratanteFrete;
+            EnderecoContratanteFrete  = enderecoContratanteFrete;
+            DocumentoContratanteFrete = documentoContratanteFrete;
+            RgContratanteFrete        = rgContratanteFrete;
+            TelefoneContratanteFrete  = telefoneContratanteFrete;
 
             Validar();
         }

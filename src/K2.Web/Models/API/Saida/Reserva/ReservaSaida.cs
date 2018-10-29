@@ -60,6 +60,12 @@ namespace K2.Web.Models
 
         public string ValorPagoFormatado => this.ValorPago?.ToString("C2");
 
+        public string LocalEmbarque { get; set; }
+
+        public string LocalDesembarque { get; set; }
+
+        public int SequenciaEmbarque { get; set; }
+
         public string Observacao { get; set; }
 
         public ReservaClienteRetorno Cliente { get; set; }
@@ -121,7 +127,7 @@ namespace K2.Web.Models
 
         public string Placa { get; set; }
 
-        public int QuantidadeLugares { get; set; }
+        public int Capacidade { get; set; }
     }
 
     public class ReservaMotoristaRetorno
@@ -142,6 +148,8 @@ namespace K2.Web.Models
     public class ReservaLocalidadeRetorno
     {
         public string Nome  { get; set; }
+
+        public string Sigla { get; set; }
 
         public string Uf { get; set; }
     }

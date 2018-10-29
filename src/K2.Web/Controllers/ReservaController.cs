@@ -50,6 +50,9 @@ namespace K2.Web.Controllers
             if (entrada == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações da reserva não foram preenchidas.", new[] { "Verifique se todas as informações da reserva foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
 
+            if (entrada.ValorPago == 0)
+                entrada.ValorPago = null;
+
             var parametros = new Parameter[]
             {
                 new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }
@@ -90,6 +93,9 @@ namespace K2.Web.Controllers
         {
             if (entrada == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações da reserva não foram preenchidas.", new[] { "Verifique se todas as informações da reserva foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
+
+            if (entrada.ValorPago == 0)
+                entrada.ValorPago = null;
 
             var parametros = new Parameter[]
             {

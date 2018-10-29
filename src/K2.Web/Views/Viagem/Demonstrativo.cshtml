@@ -4,6 +4,49 @@
     Layout = "TemplatePdf";
 }
 
+<table class="table table-bordered m-table m-table--border-metal" style="width:100%;">
+    <tbody>
+        <tr>
+            <td style="width: 1px; padding-left: 15px; padding-right: 15px; vertical-align: middle;"><img src="~/assets/img/favicon.png" style="width: 70px;" /></td>
+            <td class="m--align-center" style="vertical-align: middle;">
+                <span class="m--icon-font-size-lg1 m--font-bold">K2 TRANSPORT - Iatami Klever Leite Nogueira - MEI</span><br />
+                <span class="m--icon-font-size-lg1 m--font-bold">CNPJ: 27.782.839/0001-85</span>
+            </td>
+            <td style="width: 1px; padding:0;">
+                <table class="table" style="width:100%; margin-bottom:0; border-spacing: 1px;">
+                    <tbody>
+                        <tr>
+                            <td style="width: 1px; border-top:none; border-left:none; white-space: nowrap; padding-top: 0; padding-bottom: 0;" class="m--font-bold">FRETE Nº:</td>
+                            <td style="width: 1px; border-top:none; border-right:none; padding-top: 0; padding-bottom: 0;" class="m--font-boldest">@Model.DataHorarioSaida.ToString("ddMMyyyy")</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 1px; border-top:none; border-left:none; white-space: nowrap; padding-top: 0; padding-bottom: 0;" class="m--font-bold">DESTINO:</td>
+                            <td style="width: 1px; border-top:none; border-right:none; white-space: nowrap; padding-top: 0; padding-bottom: 0;" class="m--font-boldest">@(Model.LocalidadeEmbarque.Sigla) x @(Model.LocalidadeDesembarque.Sigla)</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 1px; border-top:none; border-left:none; white-space: nowrap; padding-top: 0; padding-bottom: 0;" class="m--font-bold">DATA:</td>
+                            <td style="width: 1px; border-top:none; border-right:none; white-space: nowrap; padding-top: 0; padding-bottom: 0;" class="m--font-boldest">@Model.DataHorarioSaida.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 1px; border-top:none; border-left:none; white-space: nowrap; padding-top: 0; padding-bottom: 0;" class="m--font-bold">DIA:</td>
+                            <td style="width: 1px; border-top:none; border-right:none; white-space: nowrap; padding-top: 0; padding-bottom: 0;" class="m--font-boldest">@Model.DataHorarioSaida.ToString("dddd").ToUpper()</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 1px; border-bottom:none; border-left:none; white-space: nowrap; padding-top: 0; padding-bottom: 0;" class="m--font-bold">HORÁRIO:</td>
+                            <td style="width: 1px; border-bottom:none; border-right:none; white-space: nowrap; padding-top: 0; padding-bottom: 0;" class="m--font-boldest">@Model.DataHorarioSaida.ToString("HH:mm")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="m--align-center">
+                <span class="m--icon-font-size-lg2 m--font-boldest">SERVIÇO DE TRANSPORTE COLETIVO - FRETAMENTO DE VEÍCULO VAN</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 <table style="width: 100%;">
     <tr style="border-bottom:5px solid #efefef;">
         <td style="padding-right:10px; padding-left: 10px; width:1px;">
@@ -72,7 +115,7 @@
                         <td style="width: 1px; white-space: nowrap;">RENAVAM:</td>
                         <td class="m--font-bold">@Model.Carro.Renavam</td>
                         <td style="width: 1px; white-space: nowrap;">Qtd. máx. passageiros:</td>
-                        <td class="m--font-bold">@Model.Carro.QuantidadeLugares</td>
+                        <td class="m--font-bold">@Model.Carro.Capacidade</td>
                     </tr>
                     <tr>
                         <td colspan="4">

@@ -61,6 +61,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A capacidade de passageiros informada é inválida..
+        /// </summary>
+        public static string Capacidade_Invalida {
+            get {
+                return ResourceManager.GetString("Capacidade_Invalida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O carro foi alterado com sucesso..
         /// </summary>
         public static string Carro_Alterado_Com_Sucesso {
@@ -93,6 +102,15 @@ namespace K2.Dominio.Resources {
         public static string Carro_Excluido_Com_Sucesso {
             get {
                 return ResourceManager.GetString("Carro_Excluido_Com_Sucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O nome da cor é obrigatório e não foi informado..
+        /// </summary>
+        public static string Cor_Obrigatoria_Nao_Informada {
+            get {
+                return ResourceManager.GetString("Cor_Obrigatoria_Nao_Informada", resourceCulture);
             }
         }
         
@@ -142,6 +160,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O número de registro SETURB é obrigatório e não foi informado..
+        /// </summary>
+        public static string NumeroRegistroSeturb_Obrigatorio_Nao_Informado {
+            get {
+                return ResourceManager.GetString("NumeroRegistroSeturb_Obrigatorio_Nao_Informado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O perfil do usuário responsável pela procura é obrigatório e não foi informado..
         /// </summary>
         public static string Perfil_Usuario_Procura_Obrigatorio_Nao_Informado {
@@ -183,15 +210,6 @@ namespace K2.Dominio.Resources {
         public static string Proprietario_Sem_Permissao_Obter {
             get {
                 return ResourceManager.GetString("Proprietario_Sem_Permissao_Obter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A quantidade de lugares informada é inválida..
-        /// </summary>
-        public static string Quantidade_Lugares_Invalida {
-            get {
-                return ResourceManager.GetString("Quantidade_Lugares_Invalida", resourceCulture);
             }
         }
     }

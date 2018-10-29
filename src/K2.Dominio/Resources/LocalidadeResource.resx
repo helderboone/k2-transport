@@ -141,6 +141,9 @@
   <data name="Nome_Obrigatorio_Nao_Informado" xml:space="preserve">
     <value>O nome da localidade é obrigatório e não foi informado.</value>
   </data>
+  <data name="Sigla_Obrigatoria_Nao_Informada" xml:space="preserve">
+    <value>A silga da localidade é obrigatória e não foi informada.</value>
+  </data>
   <data name="Uf_Obrigatoria_Nao_Informado" xml:space="preserve">
     <value>O estado da localidade é obrigatório e não foi informado.</value>
   </data>

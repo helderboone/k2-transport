@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestSharp;
 using Rotativa.AspNetCore;
+using Rotativa.AspNetCore.Options;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -192,7 +193,7 @@ namespace K2.Web.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("gerar-pdf-demonstrativo/{idViagem:int}")]
+        [Route("gerar-pdf-demonstrativo/{idViagem:int}/{tipo:int}")]
         [FeedbackExceptionFilter("Ocorreu um erro ao gerar o demonstrativo da viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
         public async Task<IActionResult> GerarDemonstrativoPdf(int idViagem, int tipo)
         {
@@ -207,7 +208,10 @@ namespace K2.Web.Controllers
 
             var footer = "--footer-right \"Gerado em: " + DateTimeHelper.ObterHorarioAtualBrasilia().ToString("dd/MM/yyyy HH:mm") + "\" " + "--footer-left \"Página: [page] de [toPage]\" --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Roboto\"";
 
-            return new ViewAsPdf("Demonstrativo", saida.Retorno) { CustomSwitches = footer };
+            if (tipo == 1)
+                return View("Demonstrativo", saida.Retorno);
+
+            return new ViewAsPdf("Demonstrativo", saida.Retorno) { CustomSwitches = footer, PageOrientation = Orientation.Landscape };
         }
     }
 }

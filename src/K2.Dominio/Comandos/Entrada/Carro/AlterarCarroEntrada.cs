@@ -35,9 +35,9 @@ namespace K2.Dominio.Comandos.Entrada
         public string AnoModelo { get; }
 
         /// <summary>
-        /// Quantidade de lugares disponíveis para passageiros
+        /// Capacidade disponível para passageiros
         /// </summary>
-        public int QuantidadeLugares { get; }
+        public int Capacidade { get; }
 
         /// <summary>
         /// Número da placa do carro
@@ -45,9 +45,19 @@ namespace K2.Dominio.Comandos.Entrada
         public string Placa { get; }
 
         /// <summary>
+        /// Cor do carro
+        /// </summary>
+        public string Cor { get; }
+
+        /// <summary>
         /// Número RENAVAM do carro
         /// </summary>
         public string Renavam { get; }
+
+        /// <summary>
+        /// Número de registro Seturb do carro
+        /// </summary>
+        public string NumeroRegistroSeturb { get; }
 
         /// <summary>
         /// Descrição das características do carro
@@ -60,20 +70,24 @@ namespace K2.Dominio.Comandos.Entrada
             string descricao,
             string nomeFabricante,
             string anoModelo,
-            int quantidadeLugares,
+            int capacidade,
             string placa,
             string renavam,
-            string[] caracteristicas)
+            string[] caracteristicas,
+            string cor,
+            string numeroRegistroSeturb)
         {
-            Id                = id;
-            IdProprietario    = idProprietario;
-            Descricao         = descricao?.ToUpper();
-            NomeFabricante    = nomeFabricante?.ToUpper();
-            AnoModelo         = anoModelo;
-            QuantidadeLugares = quantidadeLugares;
-            Placa             = placa?.ToUpper();
-            Renavam           = renavam;
-            Caracteristicas   = caracteristicas;
+            Id                   = id;
+            IdProprietario       = idProprietario;
+            Descricao            = descricao?.ToUpper();
+            NomeFabricante       = nomeFabricante?.ToUpper();
+            AnoModelo            = anoModelo;
+            Capacidade           = capacidade;
+            Placa                = placa?.ToUpper();
+            Renavam              = renavam;
+            Caracteristicas      = caracteristicas;
+            Cor                  = cor?.ToUpper();
+            NumeroRegistroSeturb = numeroRegistroSeturb?.ToUpper();
 
             this.Validar();
         }
@@ -89,7 +103,9 @@ namespace K2.Dominio.Comandos.Entrada
                 .NotificarSeMenorOuIgualA(this.IdProprietario, 0, CarroResource.Id_Proprietario_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.Descricao, CarroResource.Descricao_Obrigatoria_Nao_Informada)
                 .NotificarSeNuloOuVazio(this.Placa, CarroResource.Placa_Obrigatoria_Nao_Informado)
-                .NotificarSeMenorOuIgualA(this.QuantidadeLugares, 0, CarroResource.Quantidade_Lugares_Invalida);
+                .NotificarSeMenorOuIgualA(this.Capacidade, 0, CarroResource.Capacidade_Invalida)
+                .NotificarSeNuloOuVazio(this.Cor, CarroResource.Cor_Obrigatoria_Nao_Informada)
+                .NotificarSeNuloOuVazio(this.NumeroRegistroSeturb, CarroResource.NumeroRegistroSeturb_Obrigatorio_Nao_Informado);
         }
     }
 }

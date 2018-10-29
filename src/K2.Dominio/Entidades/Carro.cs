@@ -34,9 +34,9 @@ namespace K2.Dominio.Entidades
         public string AnoModelo { get; private set; }
 
         /// <summary>
-        /// Quantidade de lugares disponíveis para passageiros
+        /// Capacidade disponível para passageiros
         /// </summary>
-        public int QuantidadeLugares { get; private set; }
+        public int Capacidade { get; private set; }
 
         /// <summary>
         /// Número da placa do carro
@@ -44,9 +44,19 @@ namespace K2.Dominio.Entidades
         public string Placa { get; private set; }
 
         /// <summary>
+        /// Cor do carro
+        /// </summary>
+        public string Cor { get; private set; }
+
+        /// <summary>
         /// Número RENAVAM do carro
         /// </summary>
         public string Renavam { get; private set; }
+
+        /// <summary>
+        /// Número de registro Seturb do carro
+        /// </summary>
+        public string NumeroRegistroSeturb { get; private set; }
 
         /// <summary>
         /// Descrição das características do carro
@@ -68,13 +78,15 @@ namespace K2.Dominio.Entidades
             if (entrada.Invalido)
                 return;
 
-            this.IdProprietario    = entrada.IdProprietario;
-            this.Descricao         = entrada.Descricao;
-            this.NomeFabricante    = entrada.NomeFabricante;
-            this.AnoModelo         = entrada.AnoModelo;
-            this.QuantidadeLugares = entrada.QuantidadeLugares;
-            this.Placa             = entrada.Placa;
-            this.Renavam           = entrada.Renavam;
+            this.IdProprietario       = entrada.IdProprietario;
+            this.Descricao            = entrada.Descricao;
+            this.NomeFabricante       = entrada.NomeFabricante;
+            this.AnoModelo            = entrada.AnoModelo;
+            this.Capacidade           = entrada.Capacidade;
+            this.Placa                = entrada.Placa;
+            this.Cor                  = entrada.Cor;
+            this.Renavam              = entrada.Renavam;
+            this.NumeroRegistroSeturb = entrada.NumeroRegistroSeturb;
             this.Caracteristicas   = entrada.Caracteristicas != null && entrada.Caracteristicas.Any()
                 ? string.Join(";", entrada.Caracteristicas)
                 : null;
@@ -85,13 +97,15 @@ namespace K2.Dominio.Entidades
             if (entrada.Invalido || entrada.Id != this.Id)
                 return;
 
-            this.IdProprietario = entrada.IdProprietario;
-            this.Descricao = entrada.Descricao;
-            this.NomeFabricante = entrada.NomeFabricante;
-            this.AnoModelo = entrada.AnoModelo;
-            this.QuantidadeLugares = entrada.QuantidadeLugares;
-            this.Placa = entrada.Placa;
-            this.Renavam = entrada.Renavam;
+            this.IdProprietario       = entrada.IdProprietario;
+            this.Descricao            = entrada.Descricao;
+            this.NomeFabricante       = entrada.NomeFabricante;
+            this.AnoModelo            = entrada.AnoModelo;
+            this.Capacidade           = entrada.Capacidade;
+            this.Placa                = entrada.Placa;
+            this.Cor                  = entrada.Cor;
+            this.Renavam              = entrada.Renavam;
+            this.NumeroRegistroSeturb = entrada.NumeroRegistroSeturb;
             this.Caracteristicas = entrada.Caracteristicas != null && entrada.Caracteristicas.Any()
                 ? string.Join(";", entrada.Caracteristicas)
                 : null;

@@ -71,7 +71,25 @@ namespace K2.Web.Models
 
         public string[] LocaisDesembarque { get; set; }
 
-        public string DescricaoCancelamento { get; set; }
+        public int? KmInicial { get; set; }
+
+        public int? KmFinal { get; set; }
+
+        public int? KmRodado { get; set; }
+
+        public string NomeContratanteFrete { get; set; }
+
+        public string EnderecoContratanteFrete { get; set; }
+
+        public string DocumentoContratanteFrete { get; set; }
+
+        public string DocumentoContratanteFreteFormatado => this.DocumentoContratanteFrete?.FormatarCpfCnpj();
+
+        public string RgContratanteFrete { get; set; }
+
+        public string TelefoneContratanteFrete { get; set; }
+
+        public string TelefoneContratanteFreteFormatado => this.TelefoneContratanteFrete?.Formatar("(##)######-####");
 
         public ViagemCarroRetorno Carro { get; set; }
 
@@ -93,7 +111,7 @@ namespace K2.Web.Models
 
         public decimal ValorArrecadadoReservas => this.Reservas.Where(x => x.ValorPago.HasValue).Sum(x => x.ValorPago.Value);
 
-        public decimal PercentualArrecadadoReservas => Math.Round(100 * this.ValorArrecadadoReservas / (this.Carro.QuantidadeLugares * this.ValorPassagem), 0);
+        public decimal PercentualArrecadadoReservas => Math.Round(100 * this.ValorArrecadadoReservas / (this.Carro.Capacidade * this.ValorPassagem), 0);
     }
 
     public class ViagemCarroRetorno
@@ -112,7 +130,7 @@ namespace K2.Web.Models
 
         public string Placa { get; set; }
 
-        public int QuantidadeLugares { get; set; }
+        public int Capacidade { get; set; }
     }
 
     public class ViagemMotoristaRetorno
@@ -128,11 +146,51 @@ namespace K2.Web.Models
         public string Celular { get; set; }
 
         public string CelularFormatado => this.Celular?.Formatar("(##)######-####");
+
+        public DateTime DataExpedicaoCnh { get; set; }
+
+        public string DataExpedicaoCnhToString => this.DataExpedicaoCnh.ToString("dd/MM/yyyy");
+
+        public DateTime DataValidadeCnh { get; set; }
+
+        public string DataValidadeCnhToString => this.DataValidadeCnh.ToString("dd/MM/yyyy");
+
+        public string Cep { get; set; }
+
+        public string Endereco { get; set; }
+
+        public string Municipio { get; set; }
+
+        public string Uf { get; set; }
+
+        public string EnderecoCompleto
+        {
+            get
+            {
+                var enderecoCompleto = new List<string>();
+
+                if (!string.IsNullOrEmpty(this.Endereco))
+                    enderecoCompleto.Add(this.Endereco);
+
+                if (!string.IsNullOrEmpty(this.Municipio))
+                    enderecoCompleto.Add(this.Municipio);
+
+                if (!string.IsNullOrEmpty(this.Uf))
+                    enderecoCompleto.Add(this.Uf);
+
+                if (!string.IsNullOrEmpty(this.CelularFormatado))
+                    enderecoCompleto.Add("CEP: " + this.Municipio);
+
+                return string.Join(", ", enderecoCompleto);
+            }
+        }
     }
 
     public class ViagemLocalidadeRetorno
     {
         public string Nome  { get; set; }
+
+        public string Sigla { get; set; }
 
         public string Uf { get; set; }
     }

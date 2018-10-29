@@ -355,22 +355,24 @@
                             }
                         }
                     },
+                    { data: "localEmbarque", className: "min-tablet", title: "Embarque", orderable: false },
+                    { data: "localDesembarque", className: "min-tablet", title: "Desembarque", orderable: false },
                     { data: "observacao", className: "min-tablet", title: "Observação", orderable: false },
-                    {
-                        data: null,
-                        title: "Pago?",
-                        orderable: false,
-                        className: "dt-center",
-                        width: "1px",
-                        visible: $("#iPerfilUsuarioLogado").val() === "Administrador",
-                        render: function (data, type, row) {
-                            switch (data.pago) {
-                                case 0: return '<span class="m-badge m-badge--danger"></span>';
-                                case 1: return '<span class="m-badge m-badge--success"></span>';
-                                case 2: return '<span class="m-badge m-badge--warning"></span>';
-                            }
-                        }
-                    },
+                    //{
+                    //    data: null,
+                    //    title: "Pago?",
+                    //    orderable: false,
+                    //    className: "dt-center",
+                    //    width: "1px",
+                    //    visible: $("#iPerfilUsuarioLogado").val() === "Administrador",
+                    //    render: function (data, type, row) {
+                    //        switch (data.pago) {
+                    //            case 0: return '<span class="m-badge m-badge--danger"></span>';
+                    //            case 1: return '<span class="m-badge m-badge--success"></span>';
+                    //            case 2: return '<span class="m-badge m-badge--warning"></span>';
+                    //        }
+                    //    }
+                    //},
                     {
                         data: "valorPagoFormatado",
                         title: "Valor pago",
@@ -561,6 +563,35 @@
                 }
             });
 
+            $("#iTelefoneContratanteFrete").inputmask({
+                mask: "(99) 99999-9999",
+                clearIncomplete: true
+            });
+
+            $("#iDocumentoContratanteFrete").inputmask({
+                mask: "9",
+                repeat: 14,
+                greedy: false
+            });
+
+            $("#iKmInicial").inputmask({
+                mask: "9",
+                repeat: 10,
+                greedy: false
+            });
+
+            $("#iKmFinal").inputmask({
+                mask: "9",
+                repeat: 10,
+                greedy: false
+            });
+
+            $("#iKmRodado").inputmask({
+                mask: "9",
+                repeat: 10,
+                greedy: false
+            });
+
             $("#frmManterViagem").validate({
                 rules: {
                     iDescricao: {
@@ -573,6 +604,9 @@
                         required: true
                     },
                     sCarro: {
+                        required: true
+                    },
+                    iValorPassagem: {
                         required: true
                     },
                     sLocalidadeEmbarque: {
@@ -592,10 +626,18 @@
                         IdLocalidadeEmbarque: $("#sLocalidadeEmbarque").val(),
                         IdLocalidadeDesembarque: $("#sLocalidadeDesembarque").val(),
                         Descricao: $("#iDescricao").val(),
-                        ValorPassagem: $("#iValorPassagem").val(),
                         DataHorarioSaida: $("#iDataHorarioSaida").val(),
+                        ValorPassagem: $("#iValorPassagem").val(),
+                        KmInicial: $("#iKmInicial").val(),
+                        KmFinal: $("#iKmFinal").val(),
+                        KmRodado: $("#iKmRodado").val(),
                         LocaisEmbarque: $("#tLocaisEmbarque").val().split('\n'),
-                        LocaisDesembarque: $("#tLocaisDesembarque").val().split('\n')
+                        LocaisDesembarque: $("#tLocaisDesembarque").val().split('\n'),
+                        NomeContratanteFrete: $("#iNomeContratanteFrete").val(),
+                        DocumentoContratanteFrete: $("#iDocumentoContratanteFrete").val(),
+                        RgContratanteFrete: $("#iRgContratanteFrete").val(),
+                        TelefoneContratanteFrete: $("#iTelefoneContratanteFrete").val(),
+                        EnderecoContratanteFrete: $("#iEnderecoContratanteFrete").val()
                     };
 
                     App.bloquear();
@@ -650,9 +692,18 @@
                 prefix: ''
             });
 
+            $("#iSequenciaEmbarque").inputmask({
+                mask: "9",
+                repeat: 2,
+                greedy: false
+            });
+
             $("#frmManterReserva").validate({
                 rules: {
                     sClienteReserva: {
+                        required: true
+                    },
+                    iSequenciaEmbarque: {
                         required: true
                     }
                 },
@@ -664,6 +715,9 @@
                         IdViagem: $("#iIdViagem").val(),
                         IdCliente: $("#sClienteReserva").val(),
                         ValorPago: $("#iValorPagoReserva").val(),
+                        SequenciaEmbarque: $("#iSequenciaEmbarque").val(),
+                        LocalEmbarque: $("#iLocalEmbarqueReserva").val(),
+                        LocalDesembarque: $("#iLocalDesembarqueReserva").val(),
                         Observacao: $("#tObservacaoReserva").val()
                     };
 

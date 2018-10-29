@@ -32,26 +32,38 @@
             </div>
             <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-4 m-form__group-sub">
-                    <label>Quantidade de passageiros <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iQuantidadeLugares" name="iQuantidadeLugares" maxlength="2" value="@Model?.QuantidadeLugares">
-                    <span class="m-form__help">Qtd. máxima de passageiros suportada.</span>
+                    <label>Capacidade <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iCapacidade" name="iCapacidade" maxlength="2" value="@Model?.Capacidade">
+                    <span class="m-form__help">Capacidade de passageiros transportados.</span>
                 </div>
                 <div class="col-lg-4 m-form__group-sub">
                     <label>Placa <span class="m-badge m-badge--danger m-badge--dot"></span></label>
                     <input type="text" class="form-control m-input m-input--square m-input--air" id="iPlaca" name="iPlaca" maxlength="8" value="@Model?.Placa" style="text-transform:uppercase;">
                 </div>
                 <div class="col-lg-4 m-form__group-sub">
+                    <label>Cor <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iCor" name="iCor" maxlength="45" value="@Model?.Cor" style="text-transform:uppercase;">
+                    <span class="m-form__help">Nome da cor.</span>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Registro SETURB <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iNumeroRegistroSeturb" name="iNumeroRegistroSeturb" maxlength="45" value="@Model?.NumeroRegistroSeturb" style="text-transform:uppercase;">
+                    <span class="m-form__help">Número do registro na SETURB.</span>
+                </div>
+                <div class="col-lg-4 m-form__group-sub">
                     <label>Fabricante</label>
                     <input type="text" class="form-control m-input m-input--square m-input--air" id="iNomeFabricante" name="iNomeFabricante" maxlength="200" value="@Model?.NomeFabricante" style="text-transform:uppercase;">
                     <span class="m-form__help">Nome do fabricante.</span>
                 </div>
-            </div>
-            <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-4 m-form__group-sub">
                     <label>Ano / modelo</label>
                     <input type="text" class="form-control m-input m-input--square m-input--air" id="iAnoModelo" name="iAnoModelo" maxlength="9" value="@Model?.AnoModelo">
                     <span class="m-form__help">Ano / modelo de fabricação.</span>
                 </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-4 m-form__group-sub">
                     <label>Renavam</label>
                     <input type="text" class="form-control m-input m-input--square m-input--air" id="iRenavam" name="iRenavam" maxlength="30" value="@Model?.Renavam">
@@ -61,38 +73,37 @@
             <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-12 m-form__group-sub">
                     <label>Características </label>
-                    @{ 
+                    @{
                         var caracteristicas = new List<SelectListItem>
-                        {
-                            new SelectListItem
-                            {
-                                Value = "Ar condicionado",
-                                Text = "Ar condicionado",
-                            },
-                            new SelectListItem
-                            {
-                                Value = "Banco reclinável",
-                                Text = "Banco reclinável",
-                            },
-                            new SelectListItem
-                            {
-                                Value = "DVD",
-                                Text = "DVD",
-                            },
-                            new SelectListItem
-                            {
-                                Value = "Maleiro",
-                                Text = "Maleiro",
-                            },
-                            new SelectListItem
-                            {
-                                Value = "Wi-Fi",
-                                Text = "Wi-Fi",
-                            }
-                        };
+                                    {
+                                        new SelectListItem
+                                        {
+                                            Value = "Ar condicionado",
+                                            Text = "Ar condicionado",
+                                        },
+                                        new SelectListItem
+                                        {
+                                            Value = "Banco reclinável",
+                                            Text = "Banco reclinável",
+                                        },
+                                        new SelectListItem
+                                        {
+                                            Value = "DVD",
+                                            Text = "DVD",
+                                        },
+                                        new SelectListItem
+                                        {
+                                            Value = "Maleiro",
+                                            Text = "Maleiro",
+                                        },
+                                        new SelectListItem
+                                        {
+                                            Value = "Wi-Fi",
+                                            Text = "Wi-Fi",
+                                        }
+                                    };
                     }
-                    <select class="form-control m-select2" asp-for="Caracteristicas" id="sCaracteristicas" name="sCaracteristicas" multiple="multiple" asp-items="@caracteristicas">
-                    </select>
+                    <select class="form-control m-select2" asp-for="Caracteristicas" id="sCaracteristicas" name="sCaracteristicas" multiple="multiple" asp-items="@caracteristicas"></select>
                 </div>
             </div>
         </div>

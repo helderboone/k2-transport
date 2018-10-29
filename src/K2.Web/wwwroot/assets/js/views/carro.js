@@ -33,9 +33,8 @@
                 },
                 { data: "nomeFabricante", title: "Fabricante", orderable: true },
                 { data: "anoModelo", title: "Ano / modelo", orderable: true },
-                { data: "quantidadeLugares", title: "Qtd. passageiros", orderable: true },
+                { data: "capacidade", title: "Capacidade", orderable: true },
                 { data: "placa", title: "Placa", orderable: true },
-                { data: "renavam", title: "Renavam", orderable: false },
                 {
                     data: null,
                     className: "td-actions dt-center",
@@ -117,7 +116,7 @@
                 dropdownParent: $('.jc-bs3-container')
             });
 
-            $("#iQuantidadeLugares").inputmask({
+            $("#iCapacidade").inputmask({
                 mask: "9",
                 repeat: 2,
                 greedy: false
@@ -139,12 +138,30 @@
                 greedy: false
             });
 
+            $("#iNumeroRegistroSeturb").inputmask({
+                mask: "9",
+                repeat: 10,
+                greedy: false
+            });
+
             $("#frmManterCarro").validate({
                 rules: {
-                    iNome: {
+                    iDescricao: {
                         required: true
                     },
-                    sEstado: {
+                    sProprietario: {
+                        required: true
+                    },
+                    iCapacidade: {
+                        required: true
+                    },
+                    iPlaca: {
+                        required: true
+                    },
+                    iCor: {
+                        required: true
+                    },
+                    iNumeroRegistroSeturb: {
                         required: true
                     }
                 },
@@ -155,11 +172,13 @@
                         Id: $("#iIdCarro").val(),
                         Descricao: $("#iDescricao").val(),
                         IdProprietario: $("#sProprietario").val(),
-                        QuantidadeLugares: $("#iQuantidadeLugares").val(),
+                        Capacidade: $("#iCapacidade").val(),
                         NomeFabricante: $("#iNomeFabricante").val(),
                         AnoModelo: $("#iAnoModelo").val(),
                         Placa: $("#iPlaca").val(),
                         Renavam: $("#iRenavam").val(),
+                        Cor: $("#iCor").val(),
+                        NumeroRegistroSeturb: $("#iNumeroRegistroSeturb").val(),
                         Caracteristicas: $("#sCaracteristicas").val()
                     };
 

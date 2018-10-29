@@ -16,6 +16,12 @@ namespace K2.Infraestrutura.Dados.Maps
                 .HasForeignKey<Motorista>(x => x.IdUsuario);
 
             builder.Property(x => x.Cnh);
+            builder.Property(x => x.DataExpedicaoCnh);
+            builder.Property(x => x.DataValidadeCnh);
+            builder.Property(x => x.Cep);
+            builder.Property(x => x.Endereco);
+            builder.Property(x => x.Municipio);
+            builder.Property(x => x.Uf);
         }
     }
 }

@@ -38,7 +38,14 @@ namespace K2.Infraestrutura.Dados.Maps
             builder.Property(x => x.Situacao);
             builder.Property(x => x.Embarques);
             builder.Property(x => x.Desembarques);
-            builder.Property(x => x.DescricaoCancelamento);
+            builder.Property(x => x.KmInicial);
+            builder.Property(x => x.KmFinal);
+            builder.Property(x => x.KmRodado);
+            builder.Property(x => x.NomeContratanteFrete);
+            builder.Property(x => x.EnderecoContratanteFrete);
+            builder.Property(x => x.DocumentoContratanteFrete);
+            builder.Property(x => x.RgContratanteFrete);
+            builder.Property(x => x.TelefoneContratanteFrete);
 
             builder.Ignore(x => x.PercentualDisponibilidade);
             builder.Ignore(x => x.QuantidadeLugaresDisponiveis);

@@ -1,4 +1,5 @@
-﻿@model K2.Web.Models.MotoristaRegistro
+﻿@using K2.Web.Helpers
+@model K2.Web.Models.MotoristaRegistro
 
 <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet-lg" style="margin:0 auto;">
     <div class="m-portlet__head">
@@ -27,17 +28,15 @@
                 </div>
             </div>
             <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-6 m-form__group-sub">
+                <div class="col-lg-4 m-form__group-sub">
                     <label>CPF <span class="m-badge m-badge--danger m-badge--dot"></span></label>
                     <input type="text" class="form-control m-input m-input--square m-input--air" id="iCpf" name="iCpf" value="@Model?.Cpf">
                 </div>
-                <div class="col-lg-6 m-form__group-sub">
+                <div class="col-lg-4 m-form__group-sub">
                     <label>RG <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iRg" name="iRg" maxlength="20" style="text-transform:uppercase;" value="@Model?.Rg"> 
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iRg" name="iRg" maxlength="20" style="text-transform:uppercase;" value="@Model?.Rg">
                 </div>
-            </div>
-            <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-6 m-form__group-sub">
+                <div class="col-lg-4 m-form__group-sub">
                     <label>Telefone celular <span class="m-badge m-badge--danger m-badge--dot"></span></label>
                     <div class="input-group m-input-group m-input-group--square m-input-group--air">
                         <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-phone"></i></span></div>
@@ -45,7 +44,62 @@
                     </div>
                     <span class="m-form__help">DDD + Número</span>
                 </div>
-                <div class="col-lg-6 m-form__group-sub">
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Número da CNH <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iCnh" name="iCnh" value="@Model?.Cnh" maxlength="20">
+                    <span class="m-form__help"></span>
+                </div>
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Data de expedição da CNH <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="input-group m-input-group--square m-input-group--air date">
+                        <input type="text" class="form-control m-input" id="iDataExpedicaoCnh" name="iDataExpedicaoCnh" value="@(Model == null ? string.Empty : Model.DataExpedicaoCnh.ToString("dd/MM/yyyy"))">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="la la-calendar glyphicon-th"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Data de validade da CNH <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="input-group m-input-group--square m-input-group--air date">
+                        <input type="text" class="form-control m-input" id="iDataValidadeCnh" name="iDataValidadeCnh" value="@(Model == null ? string.Empty : Model.DataValidadeCnh.ToString("dd/MM/yyyy"))">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="la la-calendar glyphicon-th"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-8 m-form__group-sub">
+                    <label for="iEndereco">Endereço</label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iEndereco" name="iEndereco" maxlength="1000" style="text-transform:uppercase;" value="@Model?.Endereco">
+                    <span class="m-form__help">Endereço completo (logradouro, número e complemento)</span>
+                </div>
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>CEP</label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iCep" name="iCep" value="@Model?.Cep">
+                    <span class="m-form__help"></span>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Município</label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iMunicipio" name="iMunicipio" style="text-transform:uppercase;" value="@Model?.Municipio">
+                    <span class="m-form__help"></span>
+                </div>
+                <div class="col-lg-4 m-form__group-sub">
+                    <label>Estado</label>
+                    <div class="m-select2 m-select2--square m-select2--air">
+                        @CustomHtmlHelper.DropDownUf("sEstado", "form-control m-select2", Model == null ? "ES" : Model.Uf)
+                        <span class="m-form__help"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4 m-form__group-sub">
                     <label class="form-control-label">Ativo</label>
                     <div class="m-checkbox-list">
                         <span class="m-switch m-switch--outline m-switch--info">
@@ -55,13 +109,6 @@
                             </label>
                         </span>
                     </div>
-                </div>
-            </div>
-            <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>CNH <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iCnh" name="iCnh" value="@Model?.Cnh" maxlength="20">
-                    <span class="m-form__help"></span>
                 </div>
             </div>
         </div>

@@ -67,9 +67,44 @@ namespace K2.Dominio.Entidades
         public string Desembarques { get; private set; }
 
         /// <summary>
-        /// Descrição do motivo de cancelamento da viagem
+        /// KM inicial
         /// </summary>
-        public string DescricaoCancelamento { get; private set; }
+        public int? KmInicial { get; private set; }
+
+        /// <summary>
+        /// KM final
+        /// </summary>
+        public int? KmFinal { get; private set; }
+
+        /// <summary>
+        /// KM rodado
+        /// </summary>
+        public int? KmRodado { get; private set; }
+
+        /// <summary>
+        /// Nome do contratante do frete
+        /// </summary>
+        public string NomeContratanteFrete { get; private set; }
+
+        /// <summary>
+        /// Endereço do contratante do frete
+        /// </summary>
+        public string EnderecoContratanteFrete { get; private set; }
+
+        /// <summary>
+        /// Número do contratante do frete
+        /// </summary>
+        public string DocumentoContratanteFrete { get; private set; }
+
+        /// <summary>
+        /// RG do contratante do frete
+        /// </summary>
+        public string RgContratanteFrete { get; private set; }
+
+        /// <summary>
+        /// Telefone do contratante do frete
+        /// </summary>
+        public string TelefoneContratanteFrete { get; private set; }
 
         /// <summary>
         /// Carro designado para realizar a viagem
@@ -99,12 +134,12 @@ namespace K2.Dominio.Entidades
         /// <summary>
         /// Percentual de disponibilidade da viagem
         /// </summary>
-        public decimal PercentualDisponibilidade => !this.Reservas.Any() ? 100 : 100 - (this.Reservas.Count() * 100 / this.Carro.QuantidadeLugares);
+        public decimal PercentualDisponibilidade => !this.Reservas.Any() ? 100 : 100 - (this.Reservas.Count() * 100 / this.Carro.Capacidade);
 
         /// <summary>
         /// Quantidade de lugares disponíveis
         /// </summary>
-        public int QuantidadeLugaresDisponiveis => this.Carro.QuantidadeLugares - this.Reservas.Count();
+        public int QuantidadeLugaresDisponiveis => this.Carro.Capacidade - this.Reservas.Count();
 
         protected Viagem()
         {
@@ -130,6 +165,14 @@ namespace K2.Dominio.Entidades
             this.Desembarques            = entrada.LocaisDesembarque?.Any() == true
                 ? string.Join(";", entrada.LocaisDesembarque)
                 : null;
+            this.KmInicial                 = entrada.KmInicial;
+            this.KmFinal                   = entrada.KmFinal;
+            this.KmRodado                  = entrada.KmRodado;
+            this.NomeContratanteFrete      = entrada.NomeContratanteFrete;
+            this.EnderecoContratanteFrete  = entrada.EnderecoContratanteFrete;
+            this.DocumentoContratanteFrete = entrada.DocumentoContratanteFrete;
+            this.RgContratanteFrete        = entrada.RgContratanteFrete;
+            this.TelefoneContratanteFrete  = entrada.TelefoneContratanteFrete;
 
             this.Situacao = (int)TipoSituacaoViagem.PendenteConfirmacao;
         }
@@ -153,6 +196,14 @@ namespace K2.Dominio.Entidades
             this.Desembarques            = entrada.LocaisDesembarque?.Any() == true
                 ? string.Join(";", entrada.LocaisDesembarque)
                 : null;
+            this.KmInicial                 = entrada.KmInicial;
+            this.KmFinal                   = entrada.KmFinal;
+            this.KmRodado                  = entrada.KmRodado;
+            this.NomeContratanteFrete      = entrada.NomeContratanteFrete;
+            this.EnderecoContratanteFrete  = entrada.EnderecoContratanteFrete;
+            this.DocumentoContratanteFrete = entrada.DocumentoContratanteFrete;
+            this.RgContratanteFrete        = entrada.RgContratanteFrete;
+            this.TelefoneContratanteFrete  = entrada.TelefoneContratanteFrete;
         }
 
         public TipoSituacaoViagem ObterTipoSituacao()

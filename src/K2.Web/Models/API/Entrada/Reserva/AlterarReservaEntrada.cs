@@ -11,6 +11,12 @@
 
         public decimal? ValorPago { get; set; }
 
+        public string LocalEmbarque { get; set; }
+
+        public string LocalDesembarque { get; set; }
+
+        public int SequenciaEmbarque { get; set; }
+
         public string Observacao { get; set; }
     }
 }

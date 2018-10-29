@@ -70,9 +70,11 @@ namespace K2.Dominio.Comandos.Saida
                 x.Descricao,
                 x.NomeFabricante,
                 x.AnoModelo,
-                x.QuantidadeLugares,
+                x.Capacidade,
                 x.Placa,
+                x.Cor,
                 x.Renavam,
+                x.NumeroRegistroSeturb,
                 Caracteristicas = !string.IsNullOrEmpty(x.Caracteristicas)
                     ? x.Caracteristicas.Split(";".ToCharArray())
                     : null

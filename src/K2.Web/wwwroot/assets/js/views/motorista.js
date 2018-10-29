@@ -119,6 +119,22 @@
                 clearIncomplete: true
             });
 
+            $("#iDataExpedicaoCnh").inputmask("dd/mm/yyyy", {
+                placeholder: "_",
+                clearIncomplete: true
+
+            });
+
+            $("#iDataValidadeCnh").inputmask("dd/mm/yyyy", {
+                placeholder: "_",
+                clearIncomplete: true
+
+            });
+
+            $("#sEstado").select2({
+                placeholder: "Selecione um estado"
+            });
+
             $("#frmManterMotorista").validate({
                 rules: {
                     iNome: {
@@ -139,6 +155,12 @@
                     },
                     iCnh: {
                         required: true
+                    },
+                    iDataExpedicaoCnh: {
+                        required: true
+                    },
+                    iDataValidadeCnh: {
+                        required: true
                     }
                 },
 
@@ -152,7 +174,13 @@
                         Rg: $("#iRg").val(),
                         Celular: $("#iCelular").val(),
                         Ativo: $("#cAtivo").is(':checked'),
-                        Cnh: $("#iCnh").val()
+                        Cnh: $("#iCnh").val(),
+                        DataValidadeCnh: $("#iDataValidadeCnh").val(),
+                        DataExpedicaoCnh: $("#iDataExpedicaoCnh").val(),
+                        Cep: $("#iCep").val(),
+                        Endereco: $("#iEndereco").val(),
+                        Municipio: $("#iMunicipio").val(),
+                        Uf: $("#sEstado").val()
                     };
 
                     App.bloquear();

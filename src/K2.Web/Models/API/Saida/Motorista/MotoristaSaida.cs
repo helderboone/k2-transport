@@ -47,5 +47,43 @@ namespace K2.Web.Models
         public string CelularFormatado => this.Celular.Formatar("(##)######-####");
 
         public string Cnh { get; set; }
+
+        public DateTime DataExpedicaoCnh { get; set; }
+
+        public string DataExpedicaoCnhToString => this.DataExpedicaoCnh.ToString("dd/MM/yyyy");
+
+        public DateTime DataValidadeCnh { get; set; }
+
+        public string DataValidadeCnhToString => this.DataValidadeCnh.ToString("dd/MM/yyyy");
+
+        public string Cep { get; set; }
+
+        public string Endereco { get; set; }
+
+        public string Municipio { get; set; }
+
+        public string Uf { get; set; }
+
+        public string EnderecoCompleto
+        {
+            get
+            {
+                var enderecoCompleto = new List<string>();
+
+                if (!string.IsNullOrEmpty(this.Endereco))
+                    enderecoCompleto.Add(this.Endereco);
+
+                if (!string.IsNullOrEmpty(this.Municipio))
+                    enderecoCompleto.Add(this.Municipio);
+
+                if (!string.IsNullOrEmpty(this.Uf))
+                    enderecoCompleto.Add(this.Uf);
+
+                if (!string.IsNullOrEmpty(this.CelularFormatado))
+                    enderecoCompleto.Add("CEP: " + this.Municipio);
+
+                return string.Join(", ", enderecoCompleto);
+            }
+        }
     }
 }

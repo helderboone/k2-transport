@@ -14,7 +14,7 @@ namespace K2.Dominio.Comandos.Entrada
 
         public string AnoModelo { get; set; }
 
-        public int? QuantidadeLugares { get; set; }
+        public int? Capacidade { get; set; }
 
         public string Placa { get; set; }
 

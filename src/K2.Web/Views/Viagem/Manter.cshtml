@@ -12,89 +12,149 @@
             </div>
         </div>
     </div>
-    <form id="frmManterViagem" class="m-form m-form--fit m-form--state" novalidate="novalidate">
+    <form id="frmManterViagem" class="m-form m-form--state" novalidate="novalidate">
         <input type="hidden" id="iIdViagem" name="iIdViagem" value="@(Model != null ? Model.Id.ToString() : string.Empty)">
         <div class="m-portlet__body">
-            <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>Descrição <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iDescricao" name="iDescricao" maxlength="200" value="@Model?.Descricao">
-                    <span class="m-form__help">Nome de identificação da viagem</span>
-                </div>
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>Data da saída <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <div class="input-group m-input-group--square m-input-group--air date">
-                        <input type="text" class="form-control m-input" readonly id="iDataHorarioSaida" name="iDataHorarioSaida" data-startdate="@DateTime.Now.ToString("yyyy-MM-dd HH:mm")" value="@(Model == null ? string.Empty : Model.DataHorarioSaida.ToString("dd/MM/yyyy HH:mm"))">
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                                <i class="la la-calendar glyphicon-th"></i>
-                            </span>
+            <ul class="nav nav-tabs nav-fill" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#" data-target="#m_tabs_1_1">Viagem</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#m_tabs_1_3">Embarque / Desembarque</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#m_tabs_1_4">Frete</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
+                    <div class="form-group m-form__group m-form__group--md row">
+                        <div class="col-lg-8 m-form__group-sub">
+                            <label>Descrição <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                            <input type="text" class="form-control m-input m-input--square m-input--air" id="iDescricao" name="iDescricao" maxlength="200" value="@Model?.Descricao">
+                            <span class="m-form__help">Nome de identificação da viagem</span>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Data da saída <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                            <div class="input-group m-input-group--square m-input-group--air date">
+                                <input type="text" class="form-control m-input" readonly id="iDataHorarioSaida" name="iDataHorarioSaida" data-startdate="@DateTime.Now.ToString("yyyy-MM-dd HH:mm")" value="@(Model == null ? string.Empty : Model.DataHorarioSaida.ToString("dd/MM/yyyy HH:mm"))">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-calendar glyphicon-th"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="m-form__help">Data/horário do início da viagem</span>
                         </div>
                     </div>
-                    <span class="m-form__help">Data/horário do início da viagem</span>
-                </div>
-            </div>
-            <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>Motorista <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <div class="m-select2 m-select2--square m-select2--air">
-                        @customHtmlHelper.DropDownMotoristas("sMotorista", "form-control m-select2", Model == null ? string.Empty : Model.IdMotorista.ToString())
-                        <span class="m-form__help">Motorista responsável pela viagem</span>
-                    </div>
-                </div>
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>Carro <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <div class="m-select2 m-select2--square m-select2--air">
-                        @customHtmlHelper.DropDownCarros("sCarro", "form-control m-select2", Model == null ? string.Empty : Model.IdCarro.ToString())
-                        <span class="m-form__help">Carro que realizará a viagem</span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>Valor da passagem <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <div class="input-group m-input-group--square m-input-group--air">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                R$
-                            </span>
+                    <div class="form-group m-form__group m-form__group--md row">
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Motorista <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                            <div class="m-select2 m-select2--square m-select2--air">
+                                @customHtmlHelper.DropDownMotoristas("sMotorista", "form-control m-select2", Model == null ? string.Empty : Model.IdMotorista.ToString())
+                                <span class="m-form__help">Motorista responsável pela viagem</span>
+                            </div>
                         </div>
-                        <input type="text" class="form-control m-input m-input--square m-input--air" id="iValorPassagem" name="iValorPassagem" value="@Model?.ValorPassagem.ToString("N2")">
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Carro <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                            <div class="m-select2 m-select2--square m-select2--air">
+                                @customHtmlHelper.DropDownCarros("sCarro", "form-control m-select2", Model == null ? string.Empty : Model.IdCarro.ToString())
+                                <span class="m-form__help">Carro que realizará a viagem</span>
+                            </div>
+                        </div>
                     </div>
-                    <span class="m-form__help">Valor da passagem em reais</span>
-                </div>
-                <div class="col-lg-6 m-form__group-sub">
-
-                </div>
-            </div>
-            <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>Embarque (localidade) <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <div class="m-select2 m-select2--square m-select2--air">
-                        @customHtmlHelper.DropDownLocalidades("sLocalidadeEmbarque", "form-control m-select2", Model == null ? string.Empty : Model.IdLocalidadeEmbarque.ToString())
-                        <span class="m-form__help">Localidade de embarque</span>
+                    <div class="form-group m-form__group m-form__group--md row">
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Valor da passagem <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                            <div class="input-group m-input-group--square m-input-group--air">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        R$
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control m-input m-input--square m-input--air" id="iValorPassagem" name="iValorPassagem" value="@Model?.ValorPassagem.ToString("N2")">
+                            </div>
+                            <span class="m-form__help">Valor da passagem em reais</span>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>KM inicial</label>
+                            <input type="text" class="form-control m-input m-input--square m-input--air" id="iKmInicial" name="iKmInicial" maxlength="10" value="@Model?.KmInicial">
+                            <span class="m-form__help">Quilometragem inicial</span>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>KM final</label>
+                            <input type="text" class="form-control m-input m-input--square m-input--air" id="iKmFinal" name="iKmFinal" maxlength="10" value="@Model?.KmFinal">
+                            <span class="m-form__help">Quilometragem final</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--md row">
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>KM rodados</label>
+                            <input type="text" class="form-control m-input m-input--square m-input--air" id="iKmRodado" name="iKmRodado" maxlength="10" value="@Model?.KmRodado">
+                            <span class="m-form__help">Quilometragem rodada</span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>Desembarque (localidade) <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <div class="m-select2 m-select2--square m-select2--air">
-                        @customHtmlHelper.DropDownLocalidades("sLocalidadeDesembarque", "form-control m-select2", Model == null ? string.Empty : Model.IdLocalidadeDesembarque.ToString())
-                        <span class="m-form__help">Localidade de desembarque</span>
+                <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
+                    <div class="form-group m-form__group m-form__group--md row">
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Embarque (localidade) <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                            <div class="m-select2 m-select2--square m-select2--air">
+                                @customHtmlHelper.DropDownLocalidades("sLocalidadeEmbarque", "form-control m-select2", Model == null ? string.Empty : Model.IdLocalidadeEmbarque.ToString())
+                                <span class="m-form__help">Localidade de embarque</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Desembarque (localidade) <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                            <div class="m-select2 m-select2--square m-select2--air">
+                                @customHtmlHelper.DropDownLocalidades("sLocalidadeDesembarque", "form-control m-select2", Model == null ? string.Empty : Model.IdLocalidadeDesembarque.ToString())
+                                <span class="m-form__help">Localidade de desembarque</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--md row">
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Locais de embarque</label>
+                            <textarea class="form-control m-input--square m-input--air" rows="3" id="tLocaisEmbarque">@(Model == null || !Model.LocaisEmbarque.Any() ? string.Empty : string.Join("\n", Model.LocaisEmbarque))</textarea>
+                            <span class="m-form__help">Nome dos locais de desembarque <span class="font-italic">(exemplo: Goiabeiras)</span></span>
+                            <span class="m-form__help">Digite somente um local por linha</span>
+                        </div>
+                        <div class="col-lg-6 m-form__group-sub">
+                            <label>Locais de desembarque</label>
+                            <textarea class="form-control m-input--square m-input--air" rows="3" id="tLocaisDesembarque">@(Model == null || !Model.LocaisDesembarque.Any() ? string.Empty : string.Join("\n", Model.LocaisDesembarque))</textarea>
+                            <span class="m-form__help">Nome dos locais de desembarque <span class="font-italic">(exemplo: Goiabeiras)</span></span>
+                            <span class="m-form__help">Digite somente um local por linha</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>Locais de embarque</label>
-                    <textarea class="form-control m-input--square m-input--air" rows="3" id="tLocaisEmbarque">@(Model == null || !Model.LocaisEmbarque.Any() ? string.Empty : string.Join("\n", Model.LocaisEmbarque))</textarea>
-                    <span class="m-form__help">Nome dos locais de desembarque <span class="font-italic">(exemplo: Goiabeiras)</span></span>
-                    <span class="m-form__help">Digite somente um local por linha</span>
-                </div>
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>Locais de desembarque</label>
-                    <textarea class="form-control m-input--square m-input--air" rows="3" id="tLocaisDesembarque">@(Model == null || !Model.LocaisDesembarque.Any() ? string.Empty : string.Join("\n", Model.LocaisDesembarque))</textarea>
-                    <span class="m-form__help">Nome dos locais de desembarque <span class="font-italic">(exemplo: Goiabeiras)</span></span>
-                    <span class="m-form__help">Digite somente um local por linha</span>
+                <div class="tab-pane" id="m_tabs_1_4" role="tabpanel">
+                    <div class="form-group m-form__group m-form__group--md row">
+                        <div class="col-lg-12 m-form__group-sub">
+                            <label>Nome do contratante </label>
+                            <input type="text" class="form-control m-input m-input--square m-input--air" id="iNomeContratanteFrete" name="iNomeContratanteFrete" maxlength="500" value="@Model?.NomeContratanteFrete" style="text-transform:uppercase;">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--md row">
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Documento do contratante </label>
+                            <input type="text" class="form-control m-input m-input--square m-input--air" id="iDocumentoContratanteFrete" name="iDocumentoContratanteFrete" maxlength="30" value="@Model?.DocumentoContratanteFrete">
+                            <span class="m-form__help">CPF/CNPJ do contratante</span>
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>RG do contratante </label>
+                            <input type="text" class="form-control m-input m-input--square m-input--air" id="iRgContratanteFrete" name="iRgContratanteFrete" maxlength="20" value="@Model?.RgContratanteFrete">
+                        </div>
+                        <div class="col-lg-4 m-form__group-sub">
+                            <label>Telefone do contratante </label>
+                            <input type="text" class="form-control m-input m-input--square m-input--air" id="iTelefoneContratanteFrete" name="iTelefoneContratanteFrete" maxlength="20" value="@Model?.TelefoneContratanteFrete">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group m-form__group--md row">
+                        <div class="col-lg-12 m-form__group-sub">
+                            <label>Endereço do contratante </label>
+                            <input type="text" class="form-control m-input m-input--square m-input--air" id="iEnderecoContratanteFrete" name="iEnderecoContratanteFrete" maxlength="500" value="@Model?.EnderecoContratanteFrete" style="text-transform:uppercase;">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -28,6 +28,21 @@ namespace K2.Dominio.Entidades
         public decimal? ValorPago { get; private set; }
 
         /// <summary>
+        /// Descrição do local de embarque
+        /// </summary>
+        public string LocalEmbarque { get; private set; }
+
+        /// <summary>
+        /// Descrição do local de desembarque
+        /// </summary>
+        public string LocalDesembarque { get; private set; }
+
+        /// <summary>
+        /// Número da sequência de embarque
+        /// </summary>
+        public int SequenciaEmbarque { get; private set; }
+
+        /// <summary>
         /// Observações da reserva
         /// </summary>
         public string Observacao { get; private set; }
@@ -57,10 +72,13 @@ namespace K2.Dominio.Entidades
             if (entrada.Invalido)
                 return;
 
-            this.IdViagem = entrada.IdViagem;
-            this.IdCliente = entrada.IdCliente;
-            this.ValorPago = entrada.ValorPago;
-            this.Observacao = entrada.Observacao;
+            this.IdViagem          = entrada.IdViagem;
+            this.IdCliente         = entrada.IdCliente;
+            this.ValorPago         = entrada.ValorPago;
+            this.LocalEmbarque     = entrada.LocalEmbarque;
+            this.LocalDesembarque  = entrada.LocalDesembarque;
+            this.SequenciaEmbarque = entrada.SequenciaEmbarque;
+            this.Observacao        = entrada.Observacao;
         }
 
         public void Alterar(AlterarReservaEntrada entrada)
@@ -68,9 +86,12 @@ namespace K2.Dominio.Entidades
             if (entrada.Invalido || entrada.Id != this.Id)
                 return;
 
-            this.IdCliente  = entrada.IdCliente;
-            this.ValorPago  = entrada.ValorPago;
-            this.Observacao = entrada.Observacao;
+            this.IdCliente         = entrada.IdCliente;
+            this.ValorPago         = entrada.ValorPago;
+            this.LocalEmbarque     = entrada.LocalEmbarque;
+            this.LocalDesembarque  = entrada.LocalDesembarque;
+            this.SequenciaEmbarque = entrada.SequenciaEmbarque;
+            this.Observacao        = entrada.Observacao;
         }
     }
 }

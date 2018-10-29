@@ -1,6 +1,4 @@
-﻿using JNogueira.Infraestrutura.NotifiqueMe;
-using K2.Dominio.Resources;
-using System;
+﻿using System;
 
 namespace K2.Web.Models
 {
@@ -28,5 +26,21 @@ namespace K2.Web.Models
         public string[] LocaisEmbarque { get; set; }
 
         public string[] LocaisDesembarque { get; set; }
+
+        public int? KmInicial { get; set; }
+
+        public int? KmFinal { get; set; }
+
+        public int? KmRodado { get; set; }
+
+        public string NomeContratanteFrete { get; set; }
+
+        public string EnderecoContratanteFrete { get; set; }
+
+        public string DocumentoContratanteFrete { get; set; }
+
+        public string RgContratanteFrete { get; set; }
+
+        public string TelefoneContratanteFrete { get; set; }
     }
 }

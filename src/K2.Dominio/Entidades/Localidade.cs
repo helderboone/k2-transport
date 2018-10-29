@@ -18,6 +18,11 @@ namespace K2.Dominio.Entidades
         public string Nome { get; private set; }
 
         /// <summary>
+        /// Sigla da localidade
+        /// </summary>
+        public string Sigla { get; private set; }
+
+        /// <summary>
         /// Sigla da UF da localidade
         /// </summary>
         public string Uf { get; private set; }
@@ -32,8 +37,9 @@ namespace K2.Dominio.Entidades
             if (entrada.Invalido)
                 return;
 
-            this.Nome = entrada.Nome;
-            this.Uf   = entrada.Uf;
+            this.Nome  = entrada.Nome;
+            this.Uf    = entrada.Uf;
+            this.Sigla = entrada.Sigla;
         }
 
         public void Alterar(AlterarLocalidadeEntrada entrada)
@@ -41,13 +47,14 @@ namespace K2.Dominio.Entidades
             if (entrada.Invalido || entrada.Id != this.Id)
                 return;
 
-            this.Nome = entrada.Nome;
-            this.Uf   = entrada.Uf;
+            this.Nome  = entrada.Nome;
+            this.Uf    = entrada.Uf;
+            this.Sigla = entrada.Sigla;
         }
 
         public override string ToString()
         {
-            return $"{this.Nome} - {this.Uf}";
+            return $"{this.Sigla} - {this.Nome}/{this.Uf}";
         }
     }
 }

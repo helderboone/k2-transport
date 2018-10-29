@@ -133,6 +133,15 @@ namespace K2.Dominio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A silga da localidade é obrigatória e não foi informada..
+        /// </summary>
+        public static string Sigla_Obrigatoria_Nao_Informada {
+            get {
+                return ResourceManager.GetString("Sigla_Obrigatoria_Nao_Informada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O estado da localidade é obrigatório e não foi informado..
         /// </summary>
         public static string Uf_Obrigatoria_Nao_Informado {

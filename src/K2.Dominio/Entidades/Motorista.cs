@@ -1,4 +1,5 @@
 ﻿using K2.Dominio.Comandos.Entrada;
+using System;
 
 namespace K2.Dominio.Entidades
 {
@@ -23,7 +24,37 @@ namespace K2.Dominio.Entidades
         public string Cnh { get; private set; }
 
         /// <summary>
-        /// Usuário associado ao cliente
+        /// Data de expedição da CNH do motorista
+        /// </summary>
+        public DateTime DataExpedicaoCnh { get; private set; }
+
+        /// <summary>
+        /// Data de validade da CNH do motorista
+        /// </summary>
+        public DateTime DataValidadeCnh { get; private set; }
+
+        /// <summary>
+        /// CEP do motorista
+        /// </summary>
+        public string Cep { get; private set; }
+
+        /// <summary>
+        /// Descrição do endereço do motorista
+        /// </summary>
+        public string Endereco { get; private set; }
+
+        /// <summary>
+        /// Nome do município do motorista
+        /// </summary>
+        public string Municipio { get; private set; }
+
+        /// <summary>
+        /// Sigla da UF do motorista
+        /// </summary>
+        public string Uf { get; private set; }
+
+        /// <summary>
+        /// Usuário associado ao motorista
         /// </summary>
         public Usuario Usuario { get; private set; }
 
@@ -49,7 +80,13 @@ namespace K2.Dominio.Entidades
 
             this.Usuario = new Usuario(entrada);
 
-            this.Cnh = entrada.Cnh;
+            this.Cnh              = entrada.Cnh;
+            this.DataExpedicaoCnh = entrada.DataExpedicaoCnh;
+            this.DataValidadeCnh  = entrada.DataValidadeCnh;
+            this.Cep              = entrada.Cep;
+            this.Endereco         = entrada.Endereco;
+            this.Municipio        = entrada.Municipio;
+            this.Uf               = entrada.Uf;
         }
 
         public void Alterar(AlterarMotoristaEntrada entrada)
@@ -57,7 +94,13 @@ namespace K2.Dominio.Entidades
             if (entrada.Invalido || entrada.Id != this.Id)
                 return;
 
-            this.Cnh = entrada.Cnh;
+            this.Cnh              = entrada.Cnh;
+            this.DataExpedicaoCnh = entrada.DataExpedicaoCnh;
+            this.DataValidadeCnh  = entrada.DataValidadeCnh;
+            this.Cep              = entrada.Cep;
+            this.Endereco         = entrada.Endereco;
+            this.Municipio        = entrada.Municipio;
+            this.Uf               = entrada.Uf;
 
             this.Usuario.Alterar(entrada);
         }

@@ -32,6 +32,10 @@
             </div>
             <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-6 m-form__group-sub">
+                    <label>Sequência de embarque <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iSequenciaEmbarque" name="iSequenciaEmbarque" maxlength="5" value="@(Model == null? 1 : Model.SequenciaEmbarque)">
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
                     <label>Valor pago</label>
                     <div class="input-group m-input-group--square m-input-group--air">
                         <div class="input-group-prepend">
@@ -43,8 +47,15 @@
                     </div>
                     <span class="m-form__help">Valor pago pelo cliente</span>
                 </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-6 m-form__group-sub">
-
+                    <label>Local de embarque</label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iLocalEmbarqueReserva" name="iLocalEmbarqueReserva" maxlength="200" value="@Model?.LocalEmbarque" style="text-transform:uppercase;">
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Local de desembarque</label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iLocalDesembarqueReserva" name="iLocalDesembarqueReserva" maxlength="200" value="@Model?.LocalDesembarque" style="text-transform:uppercase;">
                 </div>
             </div>
             <div class="form-group m-form__group m-form__group--md row">

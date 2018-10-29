@@ -71,9 +71,44 @@ namespace K2.Dominio.Comandos.Saida
         public string[] LocaisDesembarque { get; }
 
         /// <summary>
-        /// Descrição do motivo de cancelamento da viagem
+        /// KM inicial
         /// </summary>
-        public string DescricaoCancelamento { get; }
+        public int? KmInicial { get; }
+
+        /// <summary>
+        /// KM final
+        /// </summary>
+        public int? KmFinal { get; }
+
+        /// <summary>
+        /// KM rodado
+        /// </summary>
+        public int? KmRodado { get; }
+
+        /// <summary>
+        /// Nome do contratante do frete
+        /// </summary>
+        public string NomeContratanteFrete { get; }
+
+        /// <summary>
+        /// Endereço do contratante do frete
+        /// </summary>
+        public string EnderecoContratanteFrete { get; }
+
+        /// <summary>
+        /// Número do contratante do frete
+        /// </summary>
+        public string DocumentoContratanteFrete { get; }
+
+        /// <summary>
+        /// RG do contratante do frete
+        /// </summary>
+        public string RgContratanteFrete { get; }
+
+        /// <summary>
+        /// Telefone do contratante do frete
+        /// </summary>
+        public string TelefoneContratanteFrete { get; }
 
         /// <summary>
         /// Carro relacionado a viagem
@@ -112,19 +147,26 @@ namespace K2.Dominio.Comandos.Saida
 
         public ViagemSaida(Viagem viagem)
         {
-            Id                      = viagem.Id;
-            IdCarro                 = viagem.IdCarro;
-            IdMotorista             = viagem.IdMotorista;
-            IdLocalidadeEmbarque    = viagem.IdLocalidadeEmbarque;
-            IdLocalidadeDesembarque = viagem.IdLocalidadeDesembarque;
-            Descricao               = viagem.Descricao;
-            ValorPassagem           = viagem.ValorPassagem;
-            DataHorarioSaida        = viagem.DataHorarioSaida;
-            Situacao                = viagem.Situacao;
-            DescricaoSituacao       = viagem.ObterTipoSituacao().ObterDescricao();
-            LocaisEmbarque          = viagem.Embarques?.Split(";".ToCharArray());
-            LocaisDesembarque       = viagem.Desembarques?.Split(";".ToCharArray());
-            DescricaoCancelamento   = viagem.DescricaoCancelamento;
+            Id                        = viagem.Id;
+            IdCarro                   = viagem.IdCarro;
+            IdMotorista               = viagem.IdMotorista;
+            IdLocalidadeEmbarque      = viagem.IdLocalidadeEmbarque;
+            IdLocalidadeDesembarque   = viagem.IdLocalidadeDesembarque;
+            Descricao                 = viagem.Descricao;
+            ValorPassagem             = viagem.ValorPassagem;
+            DataHorarioSaida          = viagem.DataHorarioSaida;
+            Situacao                  = viagem.Situacao;
+            DescricaoSituacao         = viagem.ObterTipoSituacao().ObterDescricao();
+            LocaisEmbarque            = viagem.Embarques?.Split(";".ToCharArray());
+            LocaisDesembarque         = viagem.Desembarques?.Split(";".ToCharArray());
+            KmInicial                 = viagem.KmInicial;
+            KmFinal                   = viagem.KmFinal;
+            KmRodado                  = viagem.KmRodado;
+            NomeContratanteFrete      = viagem.NomeContratanteFrete;
+            EnderecoContratanteFrete  = viagem.EnderecoContratanteFrete;
+            DocumentoContratanteFrete = viagem.DocumentoContratanteFrete;
+            RgContratanteFrete        = viagem.RgContratanteFrete;
+            TelefoneContratanteFrete  = viagem.TelefoneContratanteFrete;
             Carro = new
             {
                 viagem.Carro.Descricao,
@@ -134,23 +176,33 @@ namespace K2.Dominio.Comandos.Saida
                 viagem.Carro.Renavam,
                 Caracteristicas = viagem.Carro.Caracteristicas.Split(";".ToCharArray()),
                 viagem.Carro.Placa,
-                viagem.Carro.QuantidadeLugares
+                viagem.Carro.Capacidade,
+                viagem.Carro.Cor,
+                viagem.Carro.NumeroRegistroSeturb
             };
             Motorista = new
             {
                 viagem.Motorista.Nome,
                 viagem.Motorista.Cnh,
+                viagem.Motorista.DataExpedicaoCnh,
+                viagem.Motorista.DataValidadeCnh,
                 viagem.Motorista.Cpf,
-                viagem.Motorista.Celular
+                viagem.Motorista.Celular,
+                viagem.Motorista.Endereco,
+                viagem.Motorista.Municipio,
+                viagem.Motorista.Cep,
+                viagem.Motorista.Uf            
             };
             LocalidadeEmbarque = new
             {
                 viagem.LocalidadeEmbarque.Nome,
+                viagem.LocalidadeEmbarque.Sigla,
                 viagem.LocalidadeEmbarque.Uf
             };
             LocalidadeDesembarque = new
             {
                 viagem.LocalidadeDesembarque.Nome,
+                viagem.LocalidadeDesembarque.Sigla,
                 viagem.LocalidadeDesembarque.Uf
             };
             Reservas = viagem.Reservas.Select(x => new
@@ -165,6 +217,9 @@ namespace K2.Dominio.Comandos.Saida
                 },
                 x.Observacao,
                 x.ValorPago,
+                x.SequenciaEmbarque,
+                x.LocalEmbarque,
+                x.LocalDesembarque,
                 Dependente = x.Dependente != null ? new
                 {
                     x.Dependente.Nome,

@@ -33,9 +33,9 @@ namespace K2.Dominio.Comandos.Saida
         public string AnoModelo { get; }
 
         /// <summary>
-        /// Quantidade de lugares disponíveis para passageiros
+        /// Capacidade disponível para passageiros
         /// </summary>
-        public int QuantidadeLugares { get; }
+        public int Capacidade { get; }
 
         /// <summary>
         /// Número da placa do carro
@@ -43,9 +43,19 @@ namespace K2.Dominio.Comandos.Saida
         public string Placa { get; }
 
         /// <summary>
+        /// Cor do carro
+        /// </summary>
+        public string Cor { get; }
+
+        /// <summary>
         /// Número RENAVAM do carro
         /// </summary>
         public string Renavam { get; }
+
+        /// <summary>
+        /// Número de registro Seturb do carro
+        /// </summary>
+        public string NumeroRegistroSeturb { get; }
 
         /// <summary>
         /// Descrição das características do carro
@@ -59,15 +69,17 @@ namespace K2.Dominio.Comandos.Saida
 
         public CarroSaida(Carro carro)
         {
-            this.Id                = carro.Id;
-            this.IdProprietario    = carro.IdProprietario;
-            this.Descricao         = carro.Descricao;
-            this.NomeFabricante    = carro.NomeFabricante;
-            this.AnoModelo         = carro.AnoModelo;
-            this.QuantidadeLugares = carro.QuantidadeLugares;
-            this.Placa             = carro.Placa;
-            this.Renavam           = carro.Renavam;
-            this.Caracteristicas   = carro.Caracteristicas?.Split(";".ToCharArray());
+            this.Id                   = carro.Id;
+            this.IdProprietario       = carro.IdProprietario;
+            this.Descricao            = carro.Descricao;
+            this.NomeFabricante       = carro.NomeFabricante;
+            this.AnoModelo            = carro.AnoModelo;
+            this.Capacidade           = carro.Capacidade;
+            this.Placa                = carro.Placa;
+            this.Renavam              = carro.Renavam;
+            this.Caracteristicas      = carro.Caracteristicas?.Split(";".ToCharArray());
+            this.Cor                  = carro.Cor;
+            this.NumeroRegistroSeturb = carro.NumeroRegistroSeturb;
 
             this.Proprietario = new
             {

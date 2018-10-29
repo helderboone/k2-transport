@@ -147,4 +147,7 @@
   <data name="Valor_Pago_Invalido" xml:space="preserve">
     <value>O valor pago da reserva é inválido. Informe um valor maior que zero.</value>
   </data>
+  <data name="Sequencia_Embarque_Obrigatoria_Nao_Informado" xml:space="preserve">
+    <value>A sequência de embarque é obrigatória e não foi informada.</value>
+  </data>
 </root>

@@ -20,6 +20,11 @@ namespace K2.Dominio.Comandos.Entrada
         public string Nome { get; }
 
         /// <summary>
+        /// Sigla da localidade
+        /// </summary>
+        public string Sigla { get; }
+
+        /// <summary>
         /// Sigla da UF da localidade
         /// </summary>
         public string Uf { get; }
@@ -27,18 +32,20 @@ namespace K2.Dominio.Comandos.Entrada
         public AlterarLocalidadeEntrada(
             int id,
             string nome,
+            string sigla,
             string uf)
         {
-            Id   = id;
-            Nome = nome;
-            Uf   = uf?.ToUpper();
+            Id    = id;
+            Nome  = nome;
+            Sigla = sigla?.ToUpper();
+            Uf    = uf?.ToUpper();
 
             this.Validar();
         }
 
         public override string ToString()
         {
-            return $"{this.Nome} - {this.Uf}";
+            return $"{this.Sigla} - {this.Nome}/{this.Uf}";
         }
 
         private void Validar()
@@ -46,6 +53,7 @@ namespace K2.Dominio.Comandos.Entrada
             this
                 .NotificarSeMenorOuIgualA(this.Id, 0, LocalidadeResource.Id_Localidade_Nao_Existe)
                 .NotificarSeNuloOuVazio(this.Nome, LocalidadeResource.Nome_Obrigatorio_Nao_Informado)
+                .NotificarSeNuloOuVazio(this.Sigla, LocalidadeResource.Sigla_Obrigatoria_Nao_Informada)
                 .NotificarSeNuloOuVazio(this.Uf, LocalidadeResource.Uf_Obrigatoria_Nao_Informado);
         }
     }
