@@ -131,6 +131,10 @@ namespace K2.Web.Models
         public string Placa { get; set; }
 
         public int Capacidade { get; set; }
+
+        public string Cor { get; set; }
+
+        public string RegistroSeturb { get; set; }
     }
 
     public class ViagemMotoristaRetorno
@@ -178,8 +182,8 @@ namespace K2.Web.Models
                 if (!string.IsNullOrEmpty(this.Uf))
                     enderecoCompleto.Add(this.Uf);
 
-                if (!string.IsNullOrEmpty(this.CelularFormatado))
-                    enderecoCompleto.Add("CEP: " + this.Municipio);
+                if (!string.IsNullOrEmpty(this.Cep))
+                    enderecoCompleto.Add("CEP: " + this.Cep);
 
                 return string.Join(", ", enderecoCompleto);
             }

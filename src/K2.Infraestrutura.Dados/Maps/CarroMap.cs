@@ -22,6 +22,7 @@ namespace K2.Infraestrutura.Dados.Maps
             builder.Property(x => x.Capacidade);
             builder.Property(x => x.Placa);
             builder.Property(x => x.Renavam);
+            builder.Property(x => x.RegistroSeturb);
             builder.Property(x => x.Caracteristicas);
         }
     }

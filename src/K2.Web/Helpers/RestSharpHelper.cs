@@ -43,7 +43,14 @@ namespace K2.Web.Helpers
             var response = await _restClient.ExecuteTaskAsync(request);
 
             if (!response.IsSuccessful)
-                throw new Exception("Falha na comunicação com a API: " + response.ErrorException?.Message);
+            {
+                var saida = Saida.Obter(response.Content);
+
+                if (saida != null)
+                    throw new Exception("Falha na comunicação com a API: " + string.Join(",", saida.Mensagens));
+
+                throw new Exception("Falha na comunicação com a API.");
+            }
 
             return response;
         }

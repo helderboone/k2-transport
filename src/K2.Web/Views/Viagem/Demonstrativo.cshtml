@@ -44,10 +44,203 @@
                 <span class="m--icon-font-size-lg2 m--font-boldest">SERVIÇO DE TRANSPORTE COLETIVO - FRETAMENTO DE VEÍCULO VAN</span>
             </td>
         </tr>
+        <tr>
+            <td colspan="3" class="m--align-center" style="padding:0; border-bottom: none;">
+                <table class="table" style="width:100%; margin-bottom:0; border-spacing: 1px;">
+                    <tbody>
+                        <tr>
+                            <td colspan="4" style="width: 50%; background-color: #efefef; padding-top: 2px; padding-bottom: 2px; border-top:none; border-left: none;" class="m--font-bolder">
+                                @($"VEÍCULO - Pas./Microônibus/Van - {Model.Carro.NomeFabricante} {Model.Carro.Descricao} - REG. SETURB {Model.Carro.RegistroSeturb}")
+                            </td>
+                            <td colspan="4" style="width: 50%; background-color: #efefef; padding-top: 2px; padding-bottom: 2px; border-top:none; border-right: none;" class="m--font-bolder">
+                                MOTORISTA - PRONTUÁRIO 002
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 12.5%; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">ANO/MODELO</td>
+                            <td style="width: 12.5%; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">CAPACIDADE</td>
+                            <td style="width: 12.5%; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">PLACA</td>
+                            <td style="width: 12.5%; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">COR</td>
+                            <td colspan="2" style="width: 25%; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                Nome: <span class="m--font-bolder">@Model.Motorista.Nome</span>
+                            </td>
+                            <td colspan="2" style="width: 25%; border-right:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                CPF: <span class="m--font-bolder">@Model.Motorista.CpfFormatado</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3" style="width: 12.5%; border-left:none; border-bottom:none; padding-top: 2px; padding-bottom: 2px; vertical-align: middle;" class="m--font-bolder m--align-center">@Model.Carro.AnoModelo</td>
+                            <td rowspan="3" style="width: 12.5%; border-bottom:none; padding-top: 2px; padding-bottom: 2px; vertical-align: middle;" class="m--font-bolder m--align-center">@(Model.Carro.Capacidade + " passageiros")</td>
+                            <td rowspan="3" style="width: 12.5%; border-bottom:none; padding-top: 2px; padding-bottom: 2px; vertical-align: middle;" class="m--font-bolder m--align-center">@Model.Carro.Placa</td>
+                            <td rowspan="3" style="width: 12.5%; border-bottom:none; padding-top: 2px; padding-bottom: 2px; vertical-align: middle;" class="m--font-bolder m--align-center">@Model.Carro.Cor</td>
+                            <td colspan="2" style="width: 25%;   border-bottom:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                CNH: <span class="m--font-bolder">@Model.Motorista.Cnh</span>
+                            </td>
+                            <td colspan="2" style="width: 25%; border-right:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                Expedição: <span class="m--font-bolder">@Model.Motorista.DataExpedicaoCnhToString</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="width: 25%; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                Validade: <span class="m--font-bolder">@Model.Motorista.DataExpedicaoCnhToString</span>
+                            </td>
+                            <td colspan="2" style="width: 25%; border-right:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                Fone: <span class="m--font-bolder">@Model.Motorista.CelularFormatado</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="width: 25%; border-left:none; border-right:none; border-bottom:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                Endereço: <span class="m--font-bolder">@Model.Motorista.EnderecoCompleto</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="m--align-center" style="padding:0; background-color: #efefef;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="m--align-center" style="padding:0; border-bottom: none;">
+                <table class="table" style="width:100%; margin-bottom:0; border-spacing: 1px;">
+                    <tr>
+                        <td style="width: 50%; padding-top: 2px; padding-bottom: 2px; border-top:none; border-left: none;" class="m--align-left">
+                            Fretado por: <span class="m--font-bolder">@Model.NomeContratanteFrete</span>
+                        </td>
+                        <td rowspan="2" style="padding:0; width: 50%; border-top:none; border-bottom:none; border-right: none;" class="m--align-left">
+                            <table class="table" style="width:100%; margin-bottom:0; border-spacing: 1px;">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 33%; padding-top: 2px; padding-bottom: 2px; border-left: none; border-top:none;">
+                                            CPF/CNPJ: <span class="m--font-bolder">@Model.DocumentoContratanteFreteFormatado</span>
+                                        </td>
+                                        <td style="width: 33%; padding-top: 2px; padding-bottom: 2px; border-left: none; border-top:none;">
+                                            RG: <span class="m--font-bolder">@Model.RgContratanteFrete</span>
+                                        </td>
+                                        <td style="width: 33%; padding-top: 2px; padding-bottom: 2px; border-right: none; border-top:none;">
+                                            Telefone: <span class="m--font-bolder">@Model.TelefoneContratanteFreteFormatado</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 33%; padding-top: 2px; padding-bottom: 2px; border-left: none; border-bottom:none;">
+                                            KM inicial: <span class="m--font-bolder">@Model.KmInicial?.ToString("N0")</span>
+                                        </td>
+                                        <td style="width: 33%; padding-top: 2px; padding-bottom: 2px; border-left: none; border-bottom:none;">
+                                            KM final: <span class="m--font-bolder">@Model.KmFinal?.ToString("N0")</span>
+                                        </td>
+                                        <td style="width: 33%; padding-top: 2px; padding-bottom: 2px; border-right: none; border-bottom:none;">
+                                            KM rodado: <span class="m--font-bolder">@Model.KmRodado?.ToString("N0")</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; padding-top: 2px; padding-bottom: 2px; border-bottom:none; border-left: none;" class="m--align-left">
+                            Endereço: <span class="m--font-bolder">@Model.EnderecoContratanteFrete</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="m--align-center" style="padding:0; background-color: #efefef;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="m--align-center">
+                <span class="m--icon-font-size-lg1 m--font-boldest">LISTA DE PASSAGEIROS</span>
+            </td>
+        </tr>
+        @*<tr>
+            <td colspan="3" class="m--align-center" style="padding: 0;">
+                <table class="table" style="width:100%; margin-bottom:0; border-spacing: 1px;">
+                    <tbody>
+                        <tr>
+                            <td style="width: 50%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #efefef;" class="m--font-bolder">
+
+                            </td>
+                            <td style="width: 50%; border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px; background-color: #efefef;" class="m--font-boldest">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border:none; padding: 0;">
+                                <table class="table" style="width:100%; margin-bottom:0; border-spacing: 1px;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">ANO/MODELO</td>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">CAPACIDADE</td>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">PLACA</td>
+                                            <td style="width: 12.5%; border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">COR</td>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">ANO/MODELO</td>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">CAPACIDADE</td>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">PLACA</td>
+                                            <td style="width: 12.5%; border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">COR</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">ANO/MODELO</td>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">CAPACIDADE</td>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">PLACA</td>
+                                            <td style="width: 12.5%; border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">COR</td>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">ANO/MODELO</td>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">CAPACIDADE</td>
+                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">PLACA</td>
+                                            <td style="width: 12.5%; border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">COR</td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="3" style="border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--font-bolder m--align-center">@Model.Carro.AnoModelo</td>
+                                            <td rowspan="3" style="border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--font-bolder m--align-center">@(Model.Carro.Capacidade + " passageiros")</td>
+                                            <td rowspan="3" style="border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--font-bolder m--align-center">@Model.Carro.Placa</td>
+                                            <td rowspan="3" style="border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px;" class="m--font-bolder m--align-center">@Model.Carro.Cor</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td style="border-right:none; padding: 0;">
+                                <table class="table" style="width:100%; margin-bottom:0; border-spacing: 1px;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 50%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                                Nome: <span class="m--font-bolder">@Model.Motorista.Nome</span>
+                                            </td>
+                                            <td style="width: 50%; border-top:none; border-left:none; border-right:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                                CPF: <span class="m--font-bolder">@Model.Motorista.CpfFormatado</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                                CNH: <span class="m--font-bolder">@Model.Motorista.Cnh</span>
+                                            </td>
+                                            <td style="width: 50%; border-top:none; border-left:none; border-right:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                                Expedição: <span class="m--font-bolder">@Model.Motorista.DataExpedicaoCnhToString</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                                Validade: <span class="m--font-bolder">@Model.Motorista.DataExpedicaoCnhToString</span>
+                                            </td>
+                                            <td style="width: 50%; border-top:none; border-left:none; border-right:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                                Fone: <span class="m--font-bolder">@Model.Motorista.CelularFormatado</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
+                                                Endereço: <span class="m--font-bolder">@Model.Motorista.EnderecoCompleto</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>*@
     </tbody>
 </table>
 
-<table style="width: 100%;">
+@*<table style="width: 100%;">
     <tr style="border-bottom:5px solid #efefef;">
         <td style="padding-right:10px; padding-left: 10px; width:1px;">
             <img src="~/assets/img/favicon.png" style="width: 70px;" />
@@ -169,4 +362,4 @@
             </table>
         </td>
     </tr>
-</table>
+</table>*@

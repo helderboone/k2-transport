@@ -79,8 +79,8 @@ namespace K2.Web.Models
                 if (!string.IsNullOrEmpty(this.Uf))
                     enderecoCompleto.Add(this.Uf);
 
-                if (!string.IsNullOrEmpty(this.CelularFormatado))
-                    enderecoCompleto.Add("CEP: " + this.Municipio);
+                if (!string.IsNullOrEmpty(this.Cep))
+                    enderecoCompleto.Add("CEP: " + this.Cep);
 
                 return string.Join(", ", enderecoCompleto);
             }

@@ -43,7 +43,7 @@ namespace K2.Web.Models
 
         public string Renavam { get; set; }
 
-        public string NumeroRegistroSeturb { get; set; }
+        public string RegistroSeturb { get; set; }
 
         public string[] Caracteristicas { get; set; }
 

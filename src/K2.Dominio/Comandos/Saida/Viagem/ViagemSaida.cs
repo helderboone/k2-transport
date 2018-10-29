@@ -178,7 +178,7 @@ namespace K2.Dominio.Comandos.Saida
                 viagem.Carro.Placa,
                 viagem.Carro.Capacidade,
                 viagem.Carro.Cor,
-                viagem.Carro.NumeroRegistroSeturb
+                viagem.Carro.RegistroSeturb
             };
             Motorista = new
             {

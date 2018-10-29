@@ -79,7 +79,7 @@ namespace K2.Dominio.Comandos.Saida
             this.Renavam              = carro.Renavam;
             this.Caracteristicas      = carro.Caracteristicas?.Split(";".ToCharArray());
             this.Cor                  = carro.Cor;
-            this.NumeroRegistroSeturb = carro.NumeroRegistroSeturb;
+            this.NumeroRegistroSeturb = carro.RegistroSeturb;
 
             this.Proprietario = new
             {

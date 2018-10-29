@@ -204,7 +204,7 @@ namespace K2.Web.Controllers
             if (!saida.Sucesso)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível exibir as informações da viagem.", saida.Mensagens));
 
-            _logger.LogInformation($"Demonstrativo da viagem \"{saida.Retorno.Descricao}\" gerado.");
+            //_logger.LogInformation($"Demonstrativo da viagem \"{saida.Retorno.Descricao}\" gerado.");
 
             var footer = "--footer-right \"Gerado em: " + DateTimeHelper.ObterHorarioAtualBrasilia().ToString("dd/MM/yyyy HH:mm") + "\" " + "--footer-left \"Página: [page] de [toPage]\" --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Roboto\"";
 

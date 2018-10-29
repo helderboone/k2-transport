@@ -56,7 +56,7 @@ namespace K2.Dominio.Entidades
         /// <summary>
         /// Número de registro Seturb do carro
         /// </summary>
-        public string NumeroRegistroSeturb { get; private set; }
+        public string RegistroSeturb { get; private set; }
 
         /// <summary>
         /// Descrição das características do carro
@@ -86,7 +86,7 @@ namespace K2.Dominio.Entidades
             this.Placa                = entrada.Placa;
             this.Cor                  = entrada.Cor;
             this.Renavam              = entrada.Renavam;
-            this.NumeroRegistroSeturb = entrada.NumeroRegistroSeturb;
+            this.RegistroSeturb = entrada.NumeroRegistroSeturb;
             this.Caracteristicas   = entrada.Caracteristicas != null && entrada.Caracteristicas.Any()
                 ? string.Join(";", entrada.Caracteristicas)
                 : null;
@@ -105,7 +105,7 @@ namespace K2.Dominio.Entidades
             this.Placa                = entrada.Placa;
             this.Cor                  = entrada.Cor;
             this.Renavam              = entrada.Renavam;
-            this.NumeroRegistroSeturb = entrada.NumeroRegistroSeturb;
+            this.RegistroSeturb = entrada.NumeroRegistroSeturb;
             this.Caracteristicas = entrada.Caracteristicas != null && entrada.Caracteristicas.Any()
                 ? string.Join(";", entrada.Caracteristicas)
                 : null;

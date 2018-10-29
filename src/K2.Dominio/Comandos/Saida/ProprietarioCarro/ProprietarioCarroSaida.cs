@@ -74,7 +74,7 @@ namespace K2.Dominio.Comandos.Saida
                 x.Placa,
                 x.Cor,
                 x.Renavam,
-                x.NumeroRegistroSeturb,
+                x.RegistroSeturb,
                 Caracteristicas = !string.IsNullOrEmpty(x.Caracteristicas)
                     ? x.Caracteristicas.Split(";".ToCharArray())
                     : null
