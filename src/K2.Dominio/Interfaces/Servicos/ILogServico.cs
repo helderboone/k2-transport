@@ -18,5 +18,15 @@ namespace K2.Dominio.Interfaces.Servicos
         /// Obtém os registros do log baseados nos parâmetros de procura
         /// </summary>
         Task<ISaida> ProcurarRegistros(ProcurarLogEntrada entrada);
+
+        /// <summary>
+        /// Exclui um registro do log a partir do seu ID
+        /// </summary>
+        Task ExcluirRegistro(int id);
+
+        /// <summary>
+        /// Exclui todos os registros do log
+        /// </summary>
+        Task LimparLog();
     }
 }

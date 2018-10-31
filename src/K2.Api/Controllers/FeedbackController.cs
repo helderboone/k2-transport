@@ -18,7 +18,8 @@ namespace K2.Api.Controllers
             {
                 case HttpStatusCode.NotFound:
                 case HttpStatusCode.BadRequest:
-                    saida = new Saida(false, new[] { $"Erro 404: O endereço \"{HttpContext.Request.Path}\" não foi encontrado." }, null);
+                    var feature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
+                    saida = new Saida(false, new[] { $"Erro 404: O endereço \"{feature?.OriginalPath}\" não foi encontrado." }, null);
                     break;
                 case HttpStatusCode.Forbidden:
                     saida = new Saida(false, new[] { "Erro 403: Acesso negado. Você não tem permissão de acesso para essa funcionalidade." }, null);

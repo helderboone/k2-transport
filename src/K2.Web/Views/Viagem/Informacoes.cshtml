@@ -117,7 +117,7 @@
                 <div class="tab-pane active" id="tabReservas" role="tabpanel">
                     @if (cookieHelper.ObterPerfilUsuario() == TipoPerfil.Administrador)
                     {
-                        <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-info mb-0" data-id-viagem="@Model.Id" id="bCadastrarReserva" @(Model.QuantidadeLugaresDisponiveis == 0 ? " disabled" : string.Empty)>
+                        <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-info mb-0" data-id-viagem="@Model.Id" id="bCadastrarReserva" @(Model.QuantidadeLugaresDisponiveis <= 0 ? " disabled" : string.Empty)>
                             <span>
                                 <i class="la la-plus"></i>
                                 <span>Nova reserva</span>

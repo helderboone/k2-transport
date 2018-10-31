@@ -30,9 +30,9 @@ namespace K2.Infraestrutura.Logging
 
     internal class LogExceptionRequest
     {
-        public Dictionary<string, string> Headers { get; }
-
         public string Rota { get; }
+
+        public Dictionary<string, string> Headers { get; }
 
         public LogExceptionRequest(HttpRequest request)
         {
@@ -51,7 +51,7 @@ namespace K2.Infraestrutura.Logging
 
             this.Rota = uriBuilder.Uri.ToString();
 
-            foreach (var item in request.Headers.Where(x => x.Value.Any()))
+            foreach (var item in request.Headers.Where(x => x.Key != "Cookie" && x.Value.Any()))
                 this.Headers.Add(item.Key, string.Join(",", item.Value.ToArray()));
         }
     }

@@ -4,10 +4,11 @@
     Layout = "TemplatePdf";
 }
 
-<table class="table table-bordered m-table m-table--border-metal" style="width:100%;">
+
+<table class="table table-bordered m-table m-table--border-metal" style="width:100%; margin:0;">
     <tbody>
         <tr>
-            <td style="width: 1px; padding-left: 15px; padding-right: 15px; vertical-align: middle;"><img src="~/assets/img/favicon.png" style="width: 70px;" /></td>
+            <td style="width: 1px; padding-left: 15px; padding-right: 15px; vertical-align: middle;"><img src="~/assets/img/logo-k2.png" style="width:80px;" /></td>
             <td class="m--align-center" style="vertical-align: middle;">
                 <span class="m--icon-font-size-lg1 m--font-bold">K2 TRANSPORT - Iatami Klever Leite Nogueira - MEI</span><br />
                 <span class="m--icon-font-size-lg1 m--font-bold">CNPJ: 27.782.839/0001-85</span>
@@ -152,214 +153,83 @@
                 <span class="m--icon-font-size-lg1 m--font-boldest">LISTA DE PASSAGEIROS</span>
             </td>
         </tr>
-        @*<tr>
-            <td colspan="3" class="m--align-center" style="padding: 0;">
-                <table class="table" style="width:100%; margin-bottom:0; border-spacing: 1px;">
-                    <tbody>
-                        <tr>
-                            <td style="width: 50%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #efefef;" class="m--font-bolder">
-
-                            </td>
-                            <td style="width: 50%; border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px; background-color: #efefef;" class="m--font-boldest">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="border:none; padding: 0;">
-                                <table class="table" style="width:100%; margin-bottom:0; border-spacing: 1px;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">ANO/MODELO</td>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">CAPACIDADE</td>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">PLACA</td>
-                                            <td style="width: 12.5%; border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">COR</td>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">ANO/MODELO</td>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">CAPACIDADE</td>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">PLACA</td>
-                                            <td style="width: 12.5%; border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">COR</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">ANO/MODELO</td>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">CAPACIDADE</td>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">PLACA</td>
-                                            <td style="width: 12.5%; border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">COR</td>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">ANO/MODELO</td>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">CAPACIDADE</td>
-                                            <td style="width: 12.5%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">PLACA</td>
-                                            <td style="width: 12.5%; border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px; background-color: #f9f9f9;">COR</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="3" style="border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--font-bolder m--align-center">@Model.Carro.AnoModelo</td>
-                                            <td rowspan="3" style="border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--font-bolder m--align-center">@(Model.Carro.Capacidade + " passageiros")</td>
-                                            <td rowspan="3" style="border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--font-bolder m--align-center">@Model.Carro.Placa</td>
-                                            <td rowspan="3" style="border-top:none; border-right:none; padding-top: 2px; padding-bottom: 2px;" class="m--font-bolder m--align-center">@Model.Carro.Cor</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td style="border-right:none; padding: 0;">
-                                <table class="table" style="width:100%; margin-bottom:0; border-spacing: 1px;">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 50%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
-                                                Nome: <span class="m--font-bolder">@Model.Motorista.Nome</span>
-                                            </td>
-                                            <td style="width: 50%; border-top:none; border-left:none; border-right:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
-                                                CPF: <span class="m--font-bolder">@Model.Motorista.CpfFormatado</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 50%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
-                                                CNH: <span class="m--font-bolder">@Model.Motorista.Cnh</span>
-                                            </td>
-                                            <td style="width: 50%; border-top:none; border-left:none; border-right:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
-                                                Expedição: <span class="m--font-bolder">@Model.Motorista.DataExpedicaoCnhToString</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 50%; border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
-                                                Validade: <span class="m--font-bolder">@Model.Motorista.DataExpedicaoCnhToString</span>
-                                            </td>
-                                            <td style="width: 50%; border-top:none; border-left:none; border-right:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
-                                                Fone: <span class="m--font-bolder">@Model.Motorista.CelularFormatado</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" style="border-top:none; border-left:none; padding-top: 2px; padding-bottom: 2px;" class="m--align-left">
-                                                Endereço: <span class="m--font-bolder">@Model.Motorista.EnderecoCompleto</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>*@
     </tbody>
 </table>
+<table class="table table-bordered table-striped m-table m-table--border-metal" style="width:100%; margin:0; border-spacing: 1px; border-top: none; border-bottom: none;">
+    <thead>
+        <tr>
+            <th class="m--align-center" style="border-left:none; border-top: none; width: 1px;">QUANT</th>
+            <th class="m--align-center" style="border-top: none;">PASSAGEIRO</th>
+            <th class="m--align-center" style="border-top: none; width: 1px; white-space: nowrap;">CONTATO</th>
+            <th class="m--align-center" style="border-top: none; width: 1px; white-space: nowrap;">RG</th>
+            <th class="m--align-center" style="border-top: none; width: 1px; white-space: nowrap;">CPF</th>
+            <th class="m--align-center" style="border-top: none; width: 1px; white-space: nowrap;">SEQ. EMB.</th>
+            <th class="m--align-center" style="border-top: none; width: 1px; white-space: nowrap;">EMBARQUE</th>
+            <th class="m--align-center" style="border-top: none; width: 1px; white-space: nowrap;">DESEMBARQUE</th>
+            <th class="m--align-center" style="border-top: none; width: 1px; white-space: nowrap;">VALOR (R$)</th>
+            <th class="m--align-center" style="border-right:none; border-top: none; width: 80px; white-space: nowrap;">PAGO</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var contReserva = 1;
 
-@*<table style="width: 100%;">
-    <tr style="border-bottom:5px solid #efefef;">
-        <td style="padding-right:10px; padding-left: 10px; width:1px;">
-            <img src="~/assets/img/favicon.png" style="width: 70px;" />
-        </td>
-        <td class="m--align-center">
-            <h3>DEMONSTRATIVO DE VIAGEM</h3>
+            foreach (var reserva in Model.Reservas.OrderBy(x => x.SequenciaEmbarque).ThenBy(x => x.Cliente.Nome))
+            {
+                <tr>
+                    <td style="border-left:none;" class="m--align-center">@contReserva.ToString("N0")</td>
+                    <td class="m--align-left">
+                        <span class="m--font-bold">@reserva.Cliente.Nome</span>
+                        @if (reserva.Dependente != null)
+                        {
+                            <div style="padding:3px;">
+                                Dependente: @reserva.Dependente.Nome<br />
+                                Data de nascimento: @reserva.Dependente.DataNascimentoToString
+                                @(!string.IsNullOrEmpty(reserva.Dependente.Cpf) ? Html.Raw("<br/>CPF: " + reserva.Dependente.CpfFormatado) : Html.Raw(string.Empty))
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(reserva.Observacao))
+                        {
+                            <div style="padding:3px;">
+                                Observação: @reserva.Observacao
+                            </div>
+                        }
+                    </td>
+                    <td style="white-space: nowrap;" class="m--align-center">@reserva.Cliente.CelularFormatado</td>
+                    <td style="white-space: nowrap;" class="m--align-center">@reserva.Cliente.Rg</td>
+                    <td style="white-space: nowrap;" class="m--align-center">@reserva.Cliente.CpfFormatado</td>
+                    <td style="white-space: nowrap;" class="m--align-center">@reserva.SequenciaEmbarque</td>
+                    <td style="white-space: nowrap;" class="m--align-center">@reserva.LocalEmbarque</td>
+                    <td style="white-space: nowrap;" class="m--align-center">@reserva.LocalDesembarque</td>
+                    <td style="white-space: nowrap;" class="m--align-center">@Model.ValorPassagem.ToString("C2")</td>
+                    <td style="white-space: nowrap;" class="m--align-center" style="border-right:none;">
+                        @(reserva.ValorPago.HasValue && reserva.ValorPago.Value == Model.ValorPassagem ? " X " : reserva.ValorPagoFormatado)
+                    </td>
+                </tr>
+
+                contReserva++;
+            }
+        }
+    </tbody>
+</table>
+<table class="table table-bordered m-table m-table--border-metal" style="width:100%; margin:0; border-spacing: 1px; border-top: none;">
+    <tr>
+        <td colspan="3" style="border-top: none;">Observações:<br /><br /></td>
+    </tr>
+    <tr>
+        <td colspan="3" class="m--align-center" style="border-bottom: none;">
+            Rua Gentil Otaviano Fundão dos Santos, 187 - Guriri Norte, São Mateus/ES - CEP: 29.946-290
         </td>
     </tr>
     <tr>
-        <td colspan="2">
-            <table class="table m-table m-table" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td colspan="4">
-                            <h5 class="m--font-brand mt-4">Informações da viagem</h5>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 1px; white-space: nowrap;">Descrição:</td>
-                        <td class="m--font-boldest">@Model.Descricao</td>
-                        <td style="width: 1px; white-space: nowrap;">Data / horário de saída:</td>
-                        <td class="m--font-bold">@Model.DataHorarioSaida.ToString("dd/MM/yyyy HH:mm")</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 1px; white-space: nowrap;">Embarque:</td>
-                        <td class="m--font-bold">@(Model.LocalidadeEmbarque.Nome + " - " + Model.LocalidadeEmbarque.Uf)</td>
-                        <td style="width: 1px; white-space: nowrap;">Desembarque:</td>
-                        <td class="m--font-bold">@(Model.LocalidadeDesembarque.Nome + " - " + Model.LocalidadeDesembarque.Uf)</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <h5 class="m--font-brand mt-4">Informações do motorista</h5>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 1px; white-space: nowrap;">Nome:</td>
-                        <td class="m--font-bold">@Model.Motorista.Nome</td>
-                        <td style="width: 1px; white-space: nowrap;">CNH:</td>
-                        <td class="m--font-bold">@Model.Motorista.Cnh</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 1px; white-space: nowrap;">CPF:</td>
-                        <td class="m--font-bold">@Model.Motorista.CpfFormatado</td>
-                        <td style="width: 1px; white-space: nowrap;">Celular:</td>
-                        <td class="m--font-bold">@Model.Motorista.CelularFormatado</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <h5 class="m--font-brand mt-4">Informações do carro</h5>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 1px; white-space: nowrap;">Descrição:</td>
-                        <td class="m--font-bold">@Model.Carro.Descricao</td>
-                        <td style="width: 1px; white-space: nowrap;">Placa:</td>
-                        <td class="m--font-bold">@Model.Carro.Placa</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 1px; white-space: nowrap;">Fabricante:</td>
-                        <td class="m--font-bold">@Model.Carro.NomeFabricante</td>
-                        <td style="width: 1px; white-space: nowrap;">Ano/modelo:</td>
-                        <td class="m--font-bold">@Model.Carro.AnoModelo</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 1px; white-space: nowrap;">RENAVAM:</td>
-                        <td class="m--font-bold">@Model.Carro.Renavam</td>
-                        <td style="width: 1px; white-space: nowrap;">Qtd. máx. passageiros:</td>
-                        <td class="m--font-bold">@Model.Carro.Capacidade</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <h5 class="m--font-brand mt-4">Relação de passageiros</h5>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            @if (Model.Reservas.Any())
-                            {
-                                <table class="table table-bordered table-striped m-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="m--align-center">Passageiro</th>
-                                            <th class="m--align-center">CPF</th>
-                                            <th class="m--align-center">RG</th>
-                                            <th class="m--align-center">Celular</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var reserva in Model.Reservas.OrderBy(x => x.Cliente.Nome))
-                                        {
-                                            <tr>
-                                                <td class="m--font-bold">
-                                                    @reserva.Cliente.Nome
-                                                    @if (reserva.Dependente != null)
-                                                    {
-                                                        <div class="alert m-alert--default mt-2" role="alert">
-                                                            Dependente: @reserva.Dependente.Nome<br />
-                                                            Data de nascimento: @(reserva.Dependente.DataNascimentoToString)<br/>
-                                                            @(!string.IsNullOrEmpty(reserva.Dependente.Cpf) ? "CPF: " + reserva.Dependente.CpfFormatado : string.Empty)
-                                                            @(!string.IsNullOrEmpty(reserva.Dependente.Rg) ? "RG: " + reserva.Dependente.Rg : string.Empty)
-                                                        </div>
-                                                    }
-                                                </td>
-                                                <td class="m--align-center" style="vertical-align:middle;">@reserva.Cliente.CpfFormatado</td>
-                                                <td class="m--align-center" style="vertical-align:middle;">@reserva.Cliente.Rg</td>
-                                                <td class="m--align-center" style="vertical-align:middle;">@reserva.Cliente.CelularFormatado</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            }
-                            else
-                            {
-                                <div class="m--align-center">Nenhuma reserva cadastrada.</div>
-                            }
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <td style="border: none; padding:0; width:33%;" class="m--align-center">
+            www.k2transport.com.br
+        </td>
+        <td style="border: none; padding:0;  width:33%;" class="m--align-center">
+            contato@k2transport.com.br
+        </td>
+        <td style="border: none; padding:0;  width:33%;" class="m--align-center">
+            Telefone: (27) 99794-0912 / (27) 98814-6970
         </td>
     </tr>
-</table>*@
+</table>

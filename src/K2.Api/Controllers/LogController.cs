@@ -39,5 +39,27 @@ namespace K2.Api.Controllers
         {
             return await _logServico.ObterRegistroPorId(id);
         }
+
+        /// <summary>
+        /// Realiza a exclusão de um registro do log.
+        /// </summary>
+        [Authorize(Policy = TipoPoliticaAcesso.AnalistaTI)]
+        [HttpDelete]
+        [Route("v1/log/excluir/{id:int:min(1)}")]
+        public async Task Excluir(int id)
+        {
+            await _logServico.ExcluirRegistro(id);
+        }
+
+        /// <summary>
+        /// Realiza a exclusão de todos os registros do log.
+        /// </summary>
+        [Authorize(Policy = TipoPoliticaAcesso.AnalistaTI)]
+        [HttpDelete]
+        [Route("v1/log/limpar")]
+        public async Task Limpar()
+        {
+            await _logServico.LimparLog();
+        }
     }
 }

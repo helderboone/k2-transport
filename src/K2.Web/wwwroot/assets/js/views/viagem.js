@@ -457,8 +457,6 @@
                 ordering: false,
                 searching: false,
                 paging: false,
-                lengthChange: false,
-                pageLength: 25
             }).on("draw.dt", function () {
 
                 mApp.initTooltips();

@@ -34,11 +34,6 @@
         });
     </script>
     <script src="~/assets/vendors/base/bootstrap-datetimepicker.pt-BR.js" type="text/javascript"></script>
-    <script src="~/assets/vendors/custom/acejs/ace.js"></script>
-    <script src="~/assets/vendors/custom/acejs/ext-searchbox.js"></script>
-    <script src="~/assets/vendors/custom/acejs/mode-xml.js"></script>
-    <script src="~/assets/vendors/custom/acejs/mode-json.js"></script>
-    <script src="~/assets/vendors/custom/acejs/theme-chrome.js"></script>
 }
 
 @section PaginaJS
@@ -55,10 +50,16 @@
     <div class="m-portlet__head m-portlet__head--k2">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
-                <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-secondary" data-toggle="modal" data-target="#modal_Procurar" data-backdrop="static">
+                <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-secondary mr-2" data-toggle="modal" data-target="#modal_Procurar" data-backdrop="static">
                     <span>
                         <i class="la la-search"></i>
                         <span>Procurar</span>
+                    </span>
+                </button>
+                <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-danger" id="bLimparSlack">
+                    <span>
+                        <i class="la la-slack"></i>
+                        <span>Limpar Slack</span>
                     </span>
                 </button>
             </div>
@@ -161,6 +162,25 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_Progress" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg" style="margin:0 auto; width:100%;">
+                <div class="m-portlet__body">
+                    <div class="form-group m-form__group m-form__group--md mb-0">
+                        <div class="col-lg-12 m-form__group-sub">
+                            <span id="labelProgress">Iniciando a exclusão...</span>
+                            <div class="progress" style="height:30px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

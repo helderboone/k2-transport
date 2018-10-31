@@ -66,5 +66,18 @@ namespace K2.Web.Controllers
 
             return PartialView("Detalhar", saida.Retorno);
         }
+
+        [Authorize(Policy = TipoPoliticaAcesso.AnalistaTI)]
+        [HttpPost]
+        [Route("excluir-log/{id:int}")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao excluir o registro do log.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        public async Task<IActionResult> ExcluirLog(int id)
+        {
+            var apiResponse = await _restSharpHelper.ChamarApi("log/excluir/" + id, Method.DELETE);
+
+            return !apiResponse.IsSuccessful
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir o registro."))
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Registro excluído com sucesso."));
+        }
     }
 }

@@ -71,5 +71,15 @@ namespace K2.Infraestrutura.Dados.Repositorios
                     totalRegistros);
             }
         }
+
+        public async Task Deletar(int id)
+        {
+            await _efContext.Database.ExecuteSqlCommandAsync("DELETE FROM log WHERE IdLog = {0}", id);
+        }
+
+        public async Task Limpar()
+        {
+            await _efContext.Database.ExecuteSqlCommandAsync("DELETE FROM log");
+        }
     }
 }

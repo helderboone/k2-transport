@@ -209,6 +209,12 @@ namespace K2.Web.Models
 
         public decimal? ValorPago { get; set; }
 
+        public string LocalEmbarque { get; set; }
+
+        public string LocalDesembarque { get; set; }
+
+        public int SequenciaEmbarque { get; set; }
+
         public string ValorPagoFormatado => this.ValorPago?.ToString("C2");
 
         public ViagemReservaClienteRetorno Cliente { get; set; }

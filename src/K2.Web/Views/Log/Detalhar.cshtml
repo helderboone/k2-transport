@@ -1,67 +1,129 @@
 ﻿@model K2.Web.Models.LogRegistro
 
 
-<div class="m-portlet m-portlet-lg m-portlet--brand m-portlet--head-solid-bg" style="margin:0 auto;">
+<div class="m-portlet m-portlet-lg m-portlet--@(Model.Tipo == "Information" ? "info" : (Model.Tipo == "Warning" ? "warning" : "danger")) m-portlet--head-solid-bg" style="margin:0 auto; background-color: #fff;">
     <div class="m-portlet__head">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
                 <h3 class="m-portlet__head-text">
-                    Detalhamento do registro
+                    @switch (Model.Tipo)
+                    {
+                        case "Information":
+                            {
+                                <span>Informação</span>
+
+                                break;
+                            }
+                        case "Warning":
+                            {
+                                <span>Atenção</span>
+
+                                break;
+                            }
+                        case "Error":
+                            {
+                                <span>Erro</span>
+
+                                break;
+                            }
+                    }
+                    <small>Detalhamento do registro</small>
                 </h3>
             </div>
         </div>
     </div>
     <div id="frmManterProprietarioCarro" class="m-form m-form--fit m-form--state  m-form--group-seperator-dashed--k2" novalidate="novalidate">
         <div class="m-portlet__body m-form m-form--fit m-form--state m-form--group-seperator-dashed" style="padding: 0px;">
-            <div class="form-group m-form__group m-form__group--sm row">
-                <div class="col-lg-4 m-form__group-sub">
+            <div class="form-group m-form__group m-form__group--sm row" style="padding-top: 10px; padding-bottom: 0;">
+                <div class="col-lg-6 m-form__group-sub">
                     <label>Data:</label>
                     <p class="form-control-static">@Model.DataToString</p>
                 </div>
-                <div class="col-lg-4 m-form__group-sub">
-                    <label>Tipo:</label><br />
-                    @switch (Model.Tipo)
-                    {
-                        case "Information":
-                            {
-                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Informação</span>
-
-                                break;
-                            }
-                        case "Warning":
-                            {
-                                <span class="m-badge m-badge--warning m-badge--wide m-badge--rounded">Atenção</span>
-
-                                break;
-                            }
-                        case "Error":
-                            {
-                                <span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">Erro</span>
-
-                                break;
-                            }
-                    }
-                </div>
-                <div class="col-lg-4 m-form__group-sub">
-                    <label>Usuário:</label>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Usuário: </label>
                     <p class="form-control-static">@Model.Usuario</p>
                 </div>
             </div>
-            <div class="form-group m-form__group m-form__group--sm">
-                <label>Mensagem:</label>
+            <div class="form-group m-form__group m-form__group--sm" style="padding-top: 10px; padding-bottom: 0;">
+                <label>Mensagem: </label>
                 <p class="form-control-static font-weight-bold">@Model.Mensagem</p>
             </div>
-            <div class="form-group m-form__group m-form__group--sm">
+            <div class="form-group m-form__group m-form__group--sm" style="padding-top: 10px; padding-bottom: 0;">
                 <label>Origem:</label>
                 <p class="form-control-static">@Model.NomeOrigem</p>
             </div>
             @if (!string.IsNullOrEmpty(Model.ExceptionInfo))
             {
-                <div class="form-group m-form__group m-form__group--sm">
-                    <label>Exception:</label>
-                    <div style="height: 200px;" id="divAceEditor">
-                        @Model.ExceptionInfo
-                    </div>
+                var exceptionInfo = Model.ObterExceptionInfo();
+
+                <ul class="nav nav-tabs nav-fill ml-4 mr-4 mt-4" role="tablist">
+                    @if (exceptionInfo.ExceptionInfo != null)
+                    { 
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#tabException" role="tab">Exception</a>
+                        </li>
+                    }
+                    @if (exceptionInfo.Request != null)
+                    {
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#tabRequest" role="tab">Request</a>
+                        </li>
+                    }
+                </ul>
+                <div class="tab-content ml-4 mr-4 mb-4">
+                    @if (exceptionInfo.ExceptionInfo != null)
+                    {
+                        <div class="tab-pane active" id="tabException" role="tabpanel">
+
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <td class="m--font-bold" style="white-space: nowrap;">Mensagem</td>
+                                    <td>@exceptionInfo.ExceptionInfo.ExceptionMensagem</td>
+                                </tr>
+                                <tr>
+                                    <td class="m--font-bold" style="white-space: nowrap;">Mensagem (base exception)</td>
+                                    <td>@exceptionInfo.ExceptionInfo.BaseExceptionMensagem</td>
+                                </tr>
+                                <tr>
+                                    <td class="m--font-bold" style="white-space: nowrap;">Source</td>
+                                    <td>@exceptionInfo.ExceptionInfo.Source</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        Stack trace:<br />
+                                        <div class="m-scrollable" data-scrollable="true" style="height: 150px; padding: 2px; white-space:normal;">
+                                            <code>@exceptionInfo.ExceptionInfo.StackTrace</code>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    }
+
+                    @if (exceptionInfo.Request != null)
+                    {
+                        <div class="tab-pane" id="tabRequest" role="tabpanel">
+                            <div class="m-scrollable" data-scrollable="true" style="height: 200px;">
+                                <table class="table table-striped table-bordered" style="margin-bottom:0;">
+                                    <tr>
+                                        <td class="m--font-bold" style="white-space: nowrap;">Rota</td>
+                                        <td>@exceptionInfo.Request.Rota</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="m--align-center m--font-bolder">Headers</td>
+                                    </tr>
+                                    @foreach (var item in exceptionInfo.Request.Headers)
+                                    {
+                                        <tr>
+                                            <td class="m--font-bold" style="white-space: nowrap;">@item.Key</td>
+                                            <td>@item.Value</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    }
                 </div>
             }
         </div>

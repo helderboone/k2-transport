@@ -16,5 +16,15 @@ namespace K2.Dominio.Interfaces.Infraestrutura.Dados.Repositorios
         /// Obtém os registros de log baseados nos parâmetros de procura
         /// </summary>
         Task<ProcurarSaida> Procurar(ProcurarLogEntrada entrada);
+
+        /// <summary>
+        /// Deleta um registro do log
+        /// </summary>
+        Task Deletar(int id);
+
+        /// <summary>
+        /// Delete todos os registros do log
+        /// </summary>
+        Task Limpar();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -16,7 +17,8 @@ namespace K2.Web.Controllers
             {
                 case HttpStatusCode.NotFound:
                 case HttpStatusCode.BadRequest:
-                    feedback = new Feedback(TipoFeedback.Atencao, "Página não encontrada.", tipoAcao: TipoAcaoAoOcultarFeedback.RedirecionarTelaInicial);
+                    var feature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
+                    feedback = new Feedback(TipoFeedback.Atencao, $"A rota \"{feature?.OriginalPath}\" não foi encontrada.", tipoAcao: TipoAcaoAoOcultarFeedback.RedirecionarTelaInicial);
                     break;
                 case HttpStatusCode.Forbidden:
                     feedback = new Feedback(TipoFeedback.Atencao, "Você não tem permissão para acessar essa funcionalidade.", tipoAcao: TipoAcaoAoOcultarFeedback.RedirecionarTelaInicial);

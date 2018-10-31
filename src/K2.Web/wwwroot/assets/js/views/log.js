@@ -26,7 +26,7 @@
                 { data: "dataToString", title: "Data", width: "1px", orderable: true, className: "all" },
                 {
                     data: null,
-                    className: "all m--align-center",
+                    className: "m--align-center",
                     orderable: true,
                     width: "1px",
                     createdCell: function (td, cellData, rowData, row, col) {
@@ -53,7 +53,7 @@
                 { data: "nomeOrigem", title: "Origem", orderable: true },
                 {
                     data: null,
-                    className: "td-actions dt-center",
+                    className: "td-actions dt-center all",
                     orderable: false,
                     width: "70px",
                     render: function (data, type, row) {
@@ -107,13 +107,7 @@
 
     var detalharLog = function (id) {
         App.exibirModalPorRota(App.corrigirPathRota("detalhar-log/" + id), function () {
-            if ($("#divAceEditor").length)
-            {
-                var editor = ace.edit("divAceEditor");
-                editor.setTheme("ace/theme/chrome");
-                editor.getSession().setMode("ace/mode/json");
-                editor.setReadOnly(true);
-            }
+            mApp.initComponents();
         });
     };
 
@@ -137,6 +131,93 @@
                 feedback.exibirModal();
             });
     };
+
+    var mensagensSlack = [];
+    var totalMensagens = 0;
+
+    var channelId = 'GCHJCSZ99';
+    var token = 'xoxp-335820742260-336905600279-470407029478-d5009041b37e7af87175b9f9bd2ee7d3';
+
+    var limparLogSlack = function () {
+        
+        let historyUrl = 'https://slack.com/api/groups.history?token=' + token + '&count=1000&channel=' + channelId;
+
+        $.get(historyUrl, function (res) {
+            try {
+                if (res == null) {
+                    let feedback = new Feedback(3, "Ocorreu um erro ao excluir os registros do Slack.", "A API do Slack não retornou uma resposta.");
+                    feedback.exibirModal();
+                    return;
+                }
+
+                if (!res.ok) {
+                    let feedback = new Feedback(3, "Ocorreu um erro ao excluir os registros do Slack.", "A API do Slack retornou o seguinte código de erro: <b>" + res.error + "</b>");
+                    feedback.exibirModal();
+                    return;
+                }
+                else {
+                    if (res.messages.length == 0) {
+                        let feedback = new Feedback(2, "Nenhuma mensagem foi encontrada.");
+                        feedback.exibirModal();
+                        return;
+                    }
+
+                    for (var i = 0; i < res.messages.length; i++) {
+                        mensagensSlack.push(res.messages[i].ts);
+                    }
+
+                    totalMensagens = mensagensSlack.length;
+
+                    App.desbloquear();
+                    $("#labelProgress").html("Serão excluídas, " + mensagensSlack.length + " mensagens.");
+
+                    $('#modal_Progress').modal({ show: true, backdrop: 'static', keyboard: false })
+                        .on('shown.bs.modal', function (e) {
+                            excluirLogSlack();
+                        });
+                }
+            } catch (e) {
+                let feedback = new Feedback(3, "Ocorreu um erro ao excluir os registros do Slack.", e);
+                feedback.exibirModal();
+                App.desbloquear();
+            }
+        });
+    };
+    
+    var contExcluido = 0;
+    var porcentagem = 0;
+
+    var excluirLogSlack = function () {
+
+        if (mensagensSlack.length == 0 || contExcluido == 20) {
+            let feedback = new Feedback(4, "Todas as mensagens foram excluídas com sucesso.");
+            feedback.exibirModal(function () {
+                $('#modal_Progress').modal('hide');
+            });
+            return;
+        }
+
+        var ts = mensagensSlack.shift();
+
+        let deleteUrl = 'https://slack.com/api/chat.delete?token=' + token + '&channel=' + channelId + '&ts=' + ts;
+
+        porcentagem = parseInt(contExcluido * 100 / totalMensagens);        
+
+        $("#labelProgress").html("Excluindo mensagem " + contExcluido + " de " + totalMensagens + "...");
+
+        $(".progress-bar").width(porcentagem + "%");
+
+        $.get(deleteUrl, function (res) {
+            if (res != null && res.ok) {
+                contExcluido++;
+            }
+            else {
+                mensagensSlack.push(ts);
+            }
+        });
+
+        setTimeout(excluirLogSlack, 2000);
+    }
 
     //== Public Functions
     return {
@@ -197,6 +278,10 @@
 
             $("#bProcurar").click(function () {
                 procurarLog();
+            });
+
+            $("#bLimparSlack").click(function () {
+                limparLogSlack();
             });
         }
     };

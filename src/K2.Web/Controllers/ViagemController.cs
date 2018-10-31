@@ -193,9 +193,9 @@ namespace K2.Web.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("gerar-pdf-demonstrativo/{idViagem:int}/{tipo:int}")]
+        [Route("gerar-pdf-demonstrativo/{idViagem:int}/{tipo:int?}")]
         [FeedbackExceptionFilter("Ocorreu um erro ao gerar o demonstrativo da viagem.", TipoAcaoAoOcultarFeedback.Ocultar)]
-        public async Task<IActionResult> GerarDemonstrativoPdf(int idViagem, int tipo)
+        public async Task<IActionResult> GerarDemonstrativoPdf(int idViagem, int? tipo)
         {
             var apiResponse = await _restSharpHelper.ChamarApi("viagens/obter-por-id/" + idViagem, Method.GET);
 
@@ -206,9 +206,9 @@ namespace K2.Web.Controllers
 
             //_logger.LogInformation($"Demonstrativo da viagem \"{saida.Retorno.Descricao}\" gerado.");
 
-            var footer = "--footer-right \"Gerado em: " + DateTimeHelper.ObterHorarioAtualBrasilia().ToString("dd/MM/yyyy HH:mm") + "\" " + "--footer-left \"Página: [page] de [toPage]\" --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Roboto\"";
+            var footer = "--footer-right \"Emitido em: " + DateTimeHelper.ObterHorarioAtualBrasilia().ToString("dd/MM/yyyy HH:mm") + "\" " + "--footer-left \"Página: [page] de [toPage]\" --footer-line --footer-font-size \"7\" --footer-spacing 1 --footer-font-name \"Poppins\"";
 
-            if (tipo == 1)
+            if (tipo.HasValue && tipo.Value == 1)
                 return View("Demonstrativo", saida.Retorno);
 
             return new ViewAsPdf("Demonstrativo", saida.Retorno) { CustomSwitches = footer, PageOrientation = Orientation.Landscape };

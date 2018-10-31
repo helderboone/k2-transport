@@ -34,5 +34,15 @@ namespace K2.Dominio.Servicos
                 ? new Saida(false, entrada.Mensagens, null)
                 : await _logRepositorio.Procurar(entrada);
         }
+
+        public async Task ExcluirRegistro(int id)
+        {
+            await _logRepositorio.Deletar(id);
+        }
+
+        public async Task LimparLog()
+        {
+            await _logRepositorio.Limpar();
+        }
     }
 }

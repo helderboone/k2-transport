@@ -20,17 +20,73 @@
     <!--begin::Page Vendors Styles -->
     @RenderSection("VendorsCss", required: false)
     <!--end::Page Vendors Styles -->
-    <!--begin::Base Styles -->
-    <link href="~/assets/vendors/base/vendors.bundle.min.css" rel="stylesheet" type="text/css" />
-    <environment include="Development">
-        <link href="~/assets/style.bundle.css" rel="stylesheet" type="text/css" />
-        <link href="~/assets/css/app.css" rel="stylesheet" type="text/css" />
-    </environment>
-    <environment exclude="Development">
-        <link href="~/assets/style.bundle.min.css" rel="stylesheet" type="text/css" />
-        <link href="~/assets/css/app.min.css" rel="stylesheet" type="text/css" />
-    </environment>
-    <!--end::Base Styles -->
+    <style type="text/css">
+        @@page {
+            size: A4 landscape;
+        }
+
+        body {
+            margin: 0;
+            height: 100%;
+            padding: 0;
+            font-size: 13px;
+            font-weight: 300;
+            font-family: Poppins;
+            -ms-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .m-table.m-table--border-metal, .m-table.m-table--border-metal th, .m-table.m-table--border-metal td {
+            border-color: #999;
+        }
+
+        .m--align-center {
+            text-align: center;
+        }
+
+        .m--align-left {
+            text-align: left;
+        }
+
+        .m--font-bold {
+            font-weight: 400;
+        }
+
+        .m--font-bolder {
+            font-weight: 500;
+        }
+
+        .m--font-boldest {
+            font-weight: 600;
+        }
+
+        .m--icon-font-size-lg1 {
+            font-size: 1.4rem !important;
+        }
+
+        .m--icon-font-size-lg2 {
+            font-size: 1.6rem !important;
+        }
+
+        .table {
+            border-collapse: collapse !important;
+        }
+        
+        .table-bordered {
+            border: 1px solid #f4f5f8;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #F9F9F9;
+        }
+
+        .table th, .table td {
+            padding: 0.40rem;
+            vertical-align: top;
+            border: 1px solid #f4f5f8;
+        }
+    </style>
     <link rel="shortcut icon" href="~/assets/img/favicon.png" />
 </head>
 <!-- end::Head -->
