@@ -1,5 +1,6 @@
 ﻿@using K2.Web.Helpers
-
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Log";
     Layout = "Template";
@@ -56,7 +57,13 @@
                         <span>Procurar</span>
                     </span>
                 </button>
-                <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-danger" id="bLimparSlack">
+                <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-danger mr-2" id="bLimparLog">
+                    <span>
+                        <i class="la la-database"></i>
+                        <span>Limpar banco</span>
+                    </span>
+                </button>
+                <button type="button" class="btn btn-sm m-btn--square m-btn--icon btn-danger" data-token="@Configuration["Slack:TokenApi"]" data-channel-id="@Configuration["Slack:ChannelId"]" id="bLimparSlack">
                     <span>
                         <i class="la la-slack"></i>
                         <span>Limpar Slack</span>

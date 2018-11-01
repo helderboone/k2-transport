@@ -138,6 +138,12 @@
                                                     break;
                                                 }
                                         }
+                                        @if (cookieHelper.ObterPerfilUsuario() == TipoPerfil.Administrador && cookieHelper.ObterEmailUsuario() == "jlnpinheiro@gmail.com")
+                                        {
+                                            <li class="m-menu__item @VerificarCssClassMenuItemAtivo("log")">
+                                                <a href="log" class="m-menu__link"><i class="m-menu__link-icon fa fa-bug"></i><span class="m-menu__link-text">Log</span></a>
+                                            </li>
+                                        }
                                     </ul>
                                 </div>
                                 <!-- END: Horizontal Menu -->
@@ -157,6 +163,9 @@
                         <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
 
                             <div class="m-stack__item m-topbar__nav-wrapper">
+                                <environment include="Development">
+                                    <span class="m-badge m-badge--success m-badge--wide m-badge--rounded m--font-bolder m--icon-font-size-sm2">DEV</span>
+                                </environment>
                                 <ul class="m-topbar__nav m-nav m-nav--inline">
                                     <li class="m-nav__item m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                                         <a href="#" class="m-nav__link m-dropdown__toggle">

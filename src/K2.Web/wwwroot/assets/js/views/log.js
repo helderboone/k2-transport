@@ -132,15 +132,17 @@
             });
     };
 
+    var tokenSlack = null;
+    var channelIdSlack = null;
     var mensagensSlack = [];
-    var totalMensagens = 0;
 
-    var channelId = 'GCHJCSZ99';
-    var token = 'xoxp-335820742260-336905600279-470407029478-d5009041b37e7af87175b9f9bd2ee7d3';
+    var totalMensagens = 0;
+    var contExcluido = 0;
+    var porcentagem = 0;
 
     var limparLogSlack = function () {
         
-        let historyUrl = 'https://slack.com/api/groups.history?token=' + token + '&count=1000&channel=' + channelId;
+        let historyUrl = 'https://slack.com/api/groups.history?token=' + tokenSlack + '&count=1000&channel=' + channelIdSlack;
 
         $.get(historyUrl, function (res) {
             try {
@@ -173,6 +175,7 @@
 
                     $('#modal_Progress').modal({ show: true, backdrop: 'static', keyboard: false })
                         .on('shown.bs.modal', function (e) {
+                            contExcluido = 0;
                             excluirLogSlack();
                         });
                 }
@@ -183,13 +186,10 @@
             }
         });
     };
-    
-    var contExcluido = 0;
-    var porcentagem = 0;
 
     var excluirLogSlack = function () {
 
-        if (mensagensSlack.length == 0 || contExcluido == 20) {
+        if (mensagensSlack.length == 0) {
             let feedback = new Feedback(4, "Todas as mensagens foram excluídas com sucesso.");
             feedback.exibirModal(function () {
                 $('#modal_Progress').modal('hide');
@@ -197,9 +197,9 @@
             return;
         }
 
-        var ts = mensagensSlack.shift();
+        let ts = mensagensSlack.shift();
 
-        let deleteUrl = 'https://slack.com/api/chat.delete?token=' + token + '&channel=' + channelId + '&ts=' + ts;
+        let deleteUrl = 'https://slack.com/api/chat.delete?token=' + tokenSlack + '&channel=' + channelIdSlack + '&ts=' + ts;
 
         porcentagem = parseInt(contExcluido * 100 / totalMensagens);        
 
@@ -212,11 +212,18 @@
                 contExcluido++;
             }
             else {
+                if (res != null && !res.ok) {
+                    let feedback = new Feedback(3, "Ocorreu um erro ao excluir os registros do Slack.", "A API do Slack retornou o seguinte código de erro: <b>" + res.error + "</b>");
+                    feedback.exibirModal();
+                    return;
+                }
+
                 mensagensSlack.push(ts);
+                contExcluido--;
             }
         });
 
-        setTimeout(excluirLogSlack, 2000);
+        setTimeout(excluirLogSlack, 1000);
     }
 
     //== Public Functions
@@ -280,8 +287,35 @@
                 procurarLog();
             });
 
+            $("#bLimparLog").click(function () {
+                App.exibirConfirm("Deseja realmente limpar todos os registros do log no banco de dados?", "Sim", "Não", function () {
+                    $.post(App.corrigirPathRota("limpar-log"), function (feedbackResult) {
+                        var feedback = Feedback.converter(feedbackResult);
+
+                        if (feedback.Tipo.Nome == Tipo.Sucesso) {
+                            feedback.exibirModal(function () {
+                                $("#tblLog").DataTable().ajax.reload();
+                                App.ocultarModal();
+                            });
+                        }
+                        else
+                            feedback.exibirModal();
+                    })
+                        .fail(function (jqXhr) {
+                            var feedback = Feedback.converter(jqXhr.responseJSON);
+                            feedback.exibirModal();
+                        });
+                });
+            });
+
             $("#bLimparSlack").click(function () {
-                limparLogSlack();
+                tokenSlack = $(this).data("token");
+                channelIdSlack = $(this).data("channel-id");
+
+                App.exibirConfirm("Deseja realmente limpar todos os registros do canal no Slack?", "Sim", "Não", function ()
+                {
+                    limparLogSlack();
+                });
             });
         }
     };

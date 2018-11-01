@@ -79,5 +79,18 @@ namespace K2.Web.Controllers
                 ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir o registro."))
                 : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Registro excluído com sucesso."));
         }
+
+        [Authorize(Policy = TipoPoliticaAcesso.AnalistaTI)]
+        [HttpPost]
+        [Route("limpar-log")]
+        [FeedbackExceptionFilter("Ocorreu um erro ao limpar o log.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        public async Task<IActionResult> LimparLog()
+        {
+            var apiResponse = await _restSharpHelper.ChamarApi("log/limpar", Method.DELETE);
+
+            return !apiResponse.IsSuccessful
+                ? new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível excluir todos os registros do log."))
+                : new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Todos os registros do log foram excluídos com sucesso."));
+        }
     }
 }
