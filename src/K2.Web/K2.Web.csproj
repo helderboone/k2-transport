@@ -4,20 +4,10 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>K2.Web</AssemblyName>
     <RootNamespace>K2.Web</RootNamespace>
-    <RazorCompileOnBuild>false</RazorCompileOnBuild>
-    <RazorCompileOnPublish>false</RazorCompileOnPublish>
+    <RazorCompileOnBuild>true</RazorCompileOnBuild>
+    <RazorCompileOnPublish>true</RazorCompileOnPublish>
+    <ServerGarbageCollection>false</ServerGarbageCollection>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\assets\js\views\carro.min.js" />
-    <Content Remove="wwwroot\assets\js\views\cliente - Copy.min.js" />
-    <Content Remove="wwwroot\assets\js\views\cliente.min.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\assets\js\views\carro.min.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\assets\js\views\cliente.min.js" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
@@ -40,11 +30,6 @@
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\assets\js\views\carro.min.js" />
-    <None Include="wwwroot\assets\js\views\cliente.min.js" />
   </ItemGroup>
 
   <ItemGroup>

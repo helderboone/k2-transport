@@ -9,6 +9,13 @@ namespace K2.Api.Controllers
     public class FeedbackController : Controller
     {
         [AllowAnonymous]
+        [Route("/")]
+        public IActionResult Hello()
+        {
+            return Content("API K2 Transport");
+        }
+
+        [AllowAnonymous]
         [Route("feedback/{httpStatusCode:int}")]
         public IActionResult Feedback(HttpStatusCode httpStatusCode)
         {
