@@ -294,7 +294,7 @@
                     </div>
                     <div class="form-group m-form__group m-form__group--sm pl-0 pr-0">
                         <label>Características:</label>
-                        <p class="form-control-static">@(string.Join("; ", Model.Carro.Caracteristicas.Where(x => !string.IsNullOrEmpty(x)).ToArray()))</p>
+                        <p class="form-control-static">@(Model.Carro.Caracteristicas != null ? string.Join("; ", Model.Carro.Caracteristicas.Where(x => !string.IsNullOrEmpty(x)).ToArray()) : string.Empty)</p>
                     </div>
                 </div>
             </div>

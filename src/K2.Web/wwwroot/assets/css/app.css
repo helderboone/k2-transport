@@ -418,3 +418,10 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
         right: unset;
     }
 }
+
+
+@media (max-width: 1024px) {
+    .m-brand {
+        background-color: #6AB6E8;
+    }
+}

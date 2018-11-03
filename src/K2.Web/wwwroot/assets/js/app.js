@@ -16,6 +16,7 @@ var App = function () {
 		// Bloqueia a página ou um elemento específico, indicando que algum processamento está sendo realizado
         bloquear: function (selector) {
             if (selector != null) {
+                mApp.unblock(selector);
                 mApp.block(selector, {
                     overlayColor: '#000000',
                     type: 'loader',
@@ -24,6 +25,7 @@ var App = function () {
                 });
             }
             else {
+                mApp.unblockPage();
                 mApp.blockPage({
                     overlayColor: '#000000',
                     type: 'loader',

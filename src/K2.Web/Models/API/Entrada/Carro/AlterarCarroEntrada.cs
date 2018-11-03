@@ -23,7 +23,7 @@
 
         public string Cor { get; set; }
 
-        public string NumeroRegistroSeturb { get; set; }
+        public string RegistroSeturb { get; set; }
 
         public string[] Caracteristicas { get; set; }
     }

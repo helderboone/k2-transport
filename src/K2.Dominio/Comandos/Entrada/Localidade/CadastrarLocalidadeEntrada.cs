@@ -29,7 +29,7 @@ namespace K2.Dominio.Comandos.Entrada
             string sigla,
             string uf)
         {
-            Nome  = nome;
+            Nome  = nome?.ToUpper();
             Sigla = sigla?.ToUpper();
             Uf    = uf?.ToUpper();
 

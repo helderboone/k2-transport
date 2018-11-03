@@ -57,7 +57,7 @@ namespace K2.Dominio.Comandos.Entrada
         /// <summary>
         /// Número de registro Seturb do carro
         /// </summary>
-        public string NumeroRegistroSeturb { get; }
+        public string RegistroSeturb { get; }
 
         /// <summary>
         /// Descrição das características do carro
@@ -75,7 +75,7 @@ namespace K2.Dominio.Comandos.Entrada
             string renavam,
             string[] caracteristicas,
             string cor,
-            string numeroRegistroSeturb)
+            string registroSeturb)
         {
             Id                   = id;
             IdProprietario       = idProprietario;
@@ -87,7 +87,7 @@ namespace K2.Dominio.Comandos.Entrada
             Renavam              = renavam;
             Caracteristicas      = caracteristicas;
             Cor                  = cor?.ToUpper();
-            NumeroRegistroSeturb = numeroRegistroSeturb?.ToUpper();
+            RegistroSeturb       = registroSeturb?.ToUpper();
 
             this.Validar();
         }
@@ -105,7 +105,7 @@ namespace K2.Dominio.Comandos.Entrada
                 .NotificarSeNuloOuVazio(this.Placa, CarroResource.Placa_Obrigatoria_Nao_Informado)
                 .NotificarSeMenorOuIgualA(this.Capacidade, 0, CarroResource.Capacidade_Invalida)
                 .NotificarSeNuloOuVazio(this.Cor, CarroResource.Cor_Obrigatoria_Nao_Informada)
-                .NotificarSeNuloOuVazio(this.NumeroRegistroSeturb, CarroResource.NumeroRegistroSeturb_Obrigatorio_Nao_Informado);
+                .NotificarSeNuloOuVazio(this.RegistroSeturb, CarroResource.NumeroRegistroSeturb_Obrigatorio_Nao_Informado);
         }
     }
 }

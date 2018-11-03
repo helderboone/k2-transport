@@ -174,7 +174,7 @@ namespace K2.Dominio.Comandos.Saida
                 viagem.Carro.AnoModelo,
                 viagem.Carro.NomeFabricante,
                 viagem.Carro.Renavam,
-                Caracteristicas = viagem.Carro.Caracteristicas.Split(";".ToCharArray()),
+                Caracteristicas = viagem.Carro.Caracteristicas?.Split(";".ToCharArray()),
                 viagem.Carro.Placa,
                 viagem.Carro.Capacidade,
                 viagem.Carro.Cor,

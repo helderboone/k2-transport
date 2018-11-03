@@ -106,5 +106,11 @@
     "inputFiles": [
       "wwwroot/assets/js/views/log.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/vendors/base/bootstrap-datetimepicker.pt-BR.min.js",
+    "inputFiles": [
+      "wwwroot/assets/vendors/base/bootstrap-datetimepicker.pt-BR.js"
+    ]
   }
 ]

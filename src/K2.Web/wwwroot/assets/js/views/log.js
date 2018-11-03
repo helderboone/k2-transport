@@ -201,15 +201,15 @@
 
         let deleteUrl = 'https://slack.com/api/chat.delete?token=' + tokenSlack + '&channel=' + channelIdSlack + '&ts=' + ts;
 
-        porcentagem = parseInt(contExcluido * 100 / totalMensagens);        
-
-        $("#labelProgress").html("Excluindo mensagem " + contExcluido + " de " + totalMensagens + "...");
-
-        $(".progress-bar").width(porcentagem + "%");
-
         $.get(deleteUrl, function (res) {
             if (res != null && res.ok) {
                 contExcluido++;
+
+                porcentagem = parseInt(contExcluido * 100 / totalMensagens);
+
+                $("#labelProgress").html("Excluindo mensagem " + contExcluido + " de " + totalMensagens + "...");
+
+                $(".progress-bar").width(porcentagem + "%");
             }
             else {
                 if (res != null && !res.ok) {

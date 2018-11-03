@@ -22,7 +22,7 @@
                     },
 
                     submitHandler: function () {
-                        App.bloquear($("#frmAlterarSenha"));
+                        App.bloquear();
 
                         $.post(App.corrigirPathRota("alterar-senha"), { senhaAtual: $("#iSenhaAtual").val(), senhaNova: $("#iNovaSenha").val(), confirmacaoSenhaNova: $("#iConfirmaNovaSenha").val(), enviarEmailSenhaNova: $("#iEnviarEmail").prop("checked") })
                             .done(function (feedbackViewModel) {
@@ -34,7 +34,7 @@
                                 feedback.exibirModal();
                             })
                             .always(function () {
-                                App.desbloquear($("#frmAlterarSenha"));
+                                App.desbloquear();
                             });
                     }
                 });

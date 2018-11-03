@@ -7,6 +7,8 @@
     {
         public string Nome { get; set; }
 
+        public string Sigla { get; set; }
+
         public string Uf { get; set; }
     }
 }

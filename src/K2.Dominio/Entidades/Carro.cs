@@ -86,7 +86,7 @@ namespace K2.Dominio.Entidades
             this.Placa                = entrada.Placa;
             this.Cor                  = entrada.Cor;
             this.Renavam              = entrada.Renavam;
-            this.RegistroSeturb = entrada.NumeroRegistroSeturb;
+            this.RegistroSeturb       = entrada.RegistroSeturb;
             this.Caracteristicas   = entrada.Caracteristicas != null && entrada.Caracteristicas.Any()
                 ? string.Join(";", entrada.Caracteristicas)
                 : null;
@@ -105,7 +105,7 @@ namespace K2.Dominio.Entidades
             this.Placa                = entrada.Placa;
             this.Cor                  = entrada.Cor;
             this.Renavam              = entrada.Renavam;
-            this.RegistroSeturb = entrada.NumeroRegistroSeturb;
+            this.RegistroSeturb       = entrada.RegistroSeturb;
             this.Caracteristicas = entrada.Caracteristicas != null && entrada.Caracteristicas.Any()
                 ? string.Join(";", entrada.Caracteristicas)
                 : null;

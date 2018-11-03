@@ -36,7 +36,7 @@ namespace K2.Dominio.Comandos.Entrada
             string uf)
         {
             Id    = id;
-            Nome  = nome;
+            Nome  = nome?.ToUpper();
             Sigla = sigla?.ToUpper();
             Uf    = uf?.ToUpper();
 

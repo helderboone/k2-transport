@@ -29,10 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\PublishProfiles\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="Views\Administrador\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

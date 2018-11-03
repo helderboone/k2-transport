@@ -55,7 +55,7 @@ namespace K2.Dominio.Comandos.Saida
         /// <summary>
         /// Número de registro Seturb do carro
         /// </summary>
-        public string NumeroRegistroSeturb { get; }
+        public string RegistroSeturb { get; }
 
         /// <summary>
         /// Descrição das características do carro
@@ -79,7 +79,7 @@ namespace K2.Dominio.Comandos.Saida
             this.Renavam              = carro.Renavam;
             this.Caracteristicas      = carro.Caracteristicas?.Split(";".ToCharArray());
             this.Cor                  = carro.Cor;
-            this.NumeroRegistroSeturb = carro.RegistroSeturb;
+            this.RegistroSeturb = carro.RegistroSeturb;
 
             this.Proprietario = new
             {

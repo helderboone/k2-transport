@@ -31,6 +31,8 @@
     </environment>
     <!--end::Base Styles -->
     <link rel="shortcut icon" href="assets/img/favicon.png" />
+    <meta name="theme-color" content="#8CD1EE">
+    <link rel="manifest" href="~/manifest.json">
 </head>
 <!-- end::Head -->
 <!-- begin::Body -->
@@ -114,6 +116,7 @@
     </environment>
     <script>
         $(document).ready(function () {
+
             Offline.options = {
                 checks: {
                     xhr: { url: App.corrigirPathRota('hello') }

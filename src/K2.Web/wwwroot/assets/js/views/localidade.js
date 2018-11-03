@@ -18,6 +18,7 @@
             },
             info: true,
             columns: [
+                { data: "sigla", title: "Sigla", orderable: true, width: "1px" },
                 { data: "nome", title: "Nome", orderable: true, className: "all" },
                 { data: "nomeUf", title: "Estado", orderable: true },
                 {
@@ -88,6 +89,9 @@
                     iNome: {
                         required: true
                     },
+                    iSigla: {
+                        required: true
+                    },
                     sEstado: {
                         required: true
                     }
@@ -98,10 +102,11 @@
                     var localidade = {
                         Id: $("#iIdLocalidade").val(),
                         Nome: $("#iNome").val(),
+                        Sigla: $("#iSigla").val(),
                         Uf: $("#sEstado").val()
                     };
 
-                    App.bloquear($("#frmManterLocalidade"));
+                    App.bloquear();
 
                     $.post(App.corrigirPathRota(cadastro ? "cadastrar-localidade" : "alterar-localidade"), { entrada: localidade })
                         .done(function (feedbackResult) {
@@ -121,7 +126,7 @@
                             feedback.exibirModal();
                         })
                         .always(function () {
-                            App.desbloquear($("#frmManterLocalidade"));
+                            App.desbloquear();
                         });
                 }
             });

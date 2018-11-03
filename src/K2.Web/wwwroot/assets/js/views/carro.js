@@ -178,11 +178,11 @@
                         Placa: $("#iPlaca").val(),
                         Renavam: $("#iRenavam").val(),
                         Cor: $("#iCor").val(),
-                        NumeroRegistroSeturb: $("#iNumeroRegistroSeturb").val(),
+                        RegistroSeturb: $("#iRegistroSeturb").val(),
                         Caracteristicas: $("#sCaracteristicas").val()
                     };
 
-                    App.bloquear($("#frmManterCarro"));
+                    App.bloquear();
 
                     $.post(App.corrigirPathRota(cadastro ? "cadastrar-carro" : "alterar-carro"), { entrada: carro })
                         .done(function (feedbackResult) {
@@ -202,7 +202,7 @@
                             feedback.exibirModal();
                         })
                         .always(function () {
-                            App.desbloquear($("#frmManterCarro"));
+                            App.desbloquear();
                         });
                 }
             });
