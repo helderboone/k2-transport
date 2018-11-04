@@ -169,7 +169,7 @@
 
                     return '<span class="m--font-bolder">' + item.text + "</span><br/>" +
                         'Celular: ' + item.celular + '<br/>' +
-                        'CPF: ' + item.cpf;
+                        'CPF: ' + (item.cpf != null ? item.cpf : ' ');
                 }
             });
         },
