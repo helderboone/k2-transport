@@ -69,9 +69,6 @@ namespace K2.Dominio.Comandos.Entrada
             this
                 .NotificarSeMenorOuIgualA(this.IdUsuario, 0, UsuarioResource.Id_Invalido)
                 .NotificarSeNuloOuVazio(this.Nome, UsuarioResource.Nome_Obrigatorio_Nao_Informado)
-                .NotificarSeNuloOuVazio(this.Email, UsuarioResource.Email_Obrigatorio_Nao_Informado)
-                .NotificarSeNuloOuVazio(this.Cpf, UsuarioResource.Cpf_Obrigatorio_Nao_Informado)
-                .NotificarSeNuloOuVazio(this.Rg, UsuarioResource.Rg_Obrigatorio_Nao_Informado)
                 .NotificarSeNuloOuVazio(this.Celular, UsuarioResource.Celular_Obrigatorio_Nao_Informado);
 
             if (!string.IsNullOrEmpty(this.Email))

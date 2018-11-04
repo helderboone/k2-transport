@@ -65,7 +65,7 @@ namespace K2.Dominio.Entidades
                 return;
 
             this.Nome          = entrada.Nome;
-            this.Senha         = entrada.Senha.MD5();
+            this.Senha         = !string.IsNullOrEmpty(entrada.Senha) ? entrada.Senha.MD5() : null;
             this.Email         = entrada.Email;
             this.Cpf           = entrada.Cpf;
             this.Rg            = entrada.Rg;
@@ -87,10 +87,10 @@ namespace K2.Dominio.Entidades
 
         public void Alterar(AlterarMeusDadosEntrada entrada)
         {
-            this.Nome = entrada.Nome;
-            this.Email = entrada.Email;
-            this.Cpf = entrada.Cpf;
-            this.Rg = entrada.Rg;
+            this.Nome    = entrada.Nome;
+            this.Email   = entrada.Email;
+            this.Cpf     = entrada.Cpf;
+            this.Rg      = entrada.Rg;
             this.Celular = entrada.Celular;
         }
 

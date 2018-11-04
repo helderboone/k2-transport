@@ -12,10 +12,5 @@
         public string Municipio { get; set; }
 
         public string Uf { get; set; }
-
-        public CadastrarClienteEntrada()
-        {
-            base.Senha = "k2";
-        }
     }
 }

@@ -52,23 +52,32 @@ namespace K2.Infraestrutura.Dados.Repositorios
 
         public async Task<bool> VerificarExistenciaPorCpf(string cpf, int? idUsuario = null)
         {
+            if (string.IsNullOrEmpty(cpf))
+                return false;
+
             return idUsuario.HasValue
-                ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Cpf.Equals(cpf.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase))
-                : await _efContext.Usuarios.AnyAsync(x => x.Cpf.Equals(cpf.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase));
+                ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Cpf != null && x.Cpf.Equals(cpf.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase))
+                : await _efContext.Usuarios.AnyAsync(x => x.Cpf != null && x.Cpf.Equals(cpf.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase));
         }
 
         public async Task<bool> VerificarExistenciaPorEmail(string email, int? idUsuario = null)
         {
+            if (string.IsNullOrEmpty(email))
+                return false;
+
             return idUsuario.HasValue
-                ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Email.ToLower() == email.ToLower())
-                : await _efContext.Usuarios.AnyAsync(x => x.Email.ToLower() == email.ToLower());
+                ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Email != null && x.Email.ToLower() == email.ToLower())
+                : await _efContext.Usuarios.AnyAsync(x => x.Email != null && x.Email.ToLower() == email.ToLower());
         }
 
         public async Task<bool> VerificarExistenciaPorRg(string rg, int? idUsuario = null)
         {
+            if (string.IsNullOrEmpty(rg))
+                return false;
+
             return idUsuario.HasValue
-                ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Rg.Equals(rg.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase))
-                : await _efContext.Usuarios.AnyAsync(x => x.Rg.Equals(rg.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase));
+                ? await _efContext.Usuarios.AnyAsync(x => x.Id != idUsuario && x.Rg != null && x.Rg.Equals(rg.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase))
+                : await _efContext.Usuarios.AnyAsync(x => x.Rg != null && x.Rg.Equals(rg.RemoverCaracter(".", "-", "/"), StringComparison.InvariantCultureIgnoreCase));
         }
 
         public async Task<ProcurarSaida> Procurar(ProcurarUsuarioEntrada entrada)

@@ -147,40 +147,26 @@
                     iNome: {
                         required: true
                     },
-                    iEmail: {
-                        required: true,
-                        email: true
-                    },
-                    iCpf: {
-                        required: true
-                    },
-                    iRg: {
-                        required: true
-                    },
                     iCelular: {
-                        required: true
-                    },
-                    iCnh: {
                         required: true
                     }
                 },
 
                 submitHandler: function () {
 
-                    var motorista = {
+                    var proprietario = {
                         Id: $("#iIdProprietarioCarro").val(),
                         Nome: $("#iNome").val(),
                         Email: $("#iEmail").val(),
                         Cpf: $("#iCpf").val(),
                         Rg: $("#iRg").val(),
                         Celular: $("#iCelular").val(),
-                        Ativo: $("#cAtivo").is(':checked'),
-                        Cnh: $("#iCnh").val()
+                        Ativo: $("#cAtivo").is(':checked')
                     };
 
                     App.bloquear();
 
-                    $.post(App.corrigirPathRota(cadastro ? "cadastrar-proprietario" : "alterar-proprietario"), { entrada: motorista })
+                    $.post(App.corrigirPathRota(cadastro ? "cadastrar-proprietario" : "alterar-proprietario"), { entrada: proprietario })
                         .done(function (feedbackResult) {
                             var feedback = Feedback.converter(feedbackResult);
 

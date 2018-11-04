@@ -69,6 +69,9 @@ namespace K2.Web.Controllers
             if (entrada == null)
                 return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "As informações do administrador não foram preenchidas.", new[] { "Verifique se todas as informações do administrador foram preenchidas." }, TipoAcaoAoOcultarFeedback.Ocultar));
 
+            entrada.Senha = "k2";
+            entrada.Administrador = true;
+
             var parametros = new Parameter[]
             {
                 new Parameter{ Name = "model", Value = entrada.ObterJson(), Type = ParameterType.RequestBody, ContentType = "application/json" }

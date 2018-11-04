@@ -140,16 +140,6 @@
                     iNome: {
                         required: true
                     },
-                    iEmail: {
-                        required: true,
-                        email: true
-                    },
-                    iCpf: {
-                        required: true
-                    },
-                    iRg: {
-                        required: true
-                    },
                     iCelular: {
                         required: true
                     },

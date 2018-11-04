@@ -59,7 +59,7 @@ namespace K2.Dominio.Comandos.Saida
 
             this.Id            = usuario.Id;
             this.Nome          = usuario.Nome.ToUpper();
-            this.Email         = usuario.Email.ToLower();
+            this.Email         = usuario.Email?.ToLower();
             this.Cpf           = usuario.Cpf;
             this.Rg            = usuario.Rg;
             this.Celular       = usuario.Celular;

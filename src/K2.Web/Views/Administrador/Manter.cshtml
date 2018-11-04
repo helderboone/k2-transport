@@ -21,31 +21,31 @@
                     <input type="text" class="form-control m-input m-input--square m-input--air" id="iNome" name="iNome" maxlength="500" style="text-transform:uppercase;" value="@Model?.Nome">
                 </div>
                 <div class="col-lg-6 m-form__group-sub">
-                    <label>Email <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <div class="input-group m-input-group m-input-group--square m-input-group--air">
-                        <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
-                        <input type="text" class="form-control m-input" id="iEmail" name="iEmail" maxlength="500" style="text-transform:lowercase;" value="@Model?.Email">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>CPF <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iCpf" name="iCpf" value="@Model?.Cpf">
-                </div>
-                <div class="col-lg-6 m-form__group-sub">
-                    <label>RG <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iRg" name="iRg" maxlength="20" style="text-transform:uppercase;" value="@Model?.Rg"> 
-                </div>
-            </div>
-            <div class="form-group m-form__group m-form__group--md row">
-                <div class="col-lg-6 m-form__group-sub">
                     <label>Telefone celular <span class="m-badge m-badge--danger m-badge--dot"></span></label>
                     <div class="input-group m-input-group m-input-group--square m-input-group--air">
                         <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-phone"></i></span></div>
                         <input type="text" class="form-control m-input" id="iCelular" name="iCelular" value="@Model?.Celular">
                     </div>
                     <span class="m-form__help">DDD + Número</span>
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>Email <span class="m-badge m-badge--danger m-badge--dot"></span></label>
+                    <div class="input-group m-input-group m-input-group--square m-input-group--air">
+                        <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
+                        <input type="text" class="form-control m-input" id="iEmail" name="iEmail" maxlength="500" style="text-transform:lowercase;" value="@Model?.Email">
+                    </div>
+                </div>
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>CPF</label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iCpf" name="iCpf" value="@Model?.Cpf">
+                </div>
+            </div>
+            <div class="form-group m-form__group m-form__group--md row">
+                <div class="col-lg-6 m-form__group-sub">
+                    <label>RG</label>
+                    <input type="text" class="form-control m-input m-input--square m-input--air" id="iRg" name="iRg" maxlength="20" style="text-transform:uppercase;" value="@Model?.Rg">
                 </div>
                 <div class="col-lg-6 m-form__group-sub">
                     <label class="form-control-label">Ativo</label>

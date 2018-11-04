@@ -27,6 +27,8 @@ namespace K2.Dominio.Comandos.Entrada
             set => _rg = value;
         }
 
+        public string PalavraChave { get; set; }
+
         public ProcurarClienteEntrada(string ordenarPor,
             string ordenarSentido,
             int? paginaIndex = null,

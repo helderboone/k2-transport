@@ -20,10 +20,5 @@ namespace K2.Web.Models
         public string Municipio { get; set; }
 
         public string Uf { get; set; }
-
-        public CadastrarMotoristaEntrada()
-        {
-            base.Senha = "k2";
-        }
     }
 }

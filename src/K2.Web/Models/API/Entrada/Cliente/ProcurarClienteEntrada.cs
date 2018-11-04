@@ -12,5 +12,7 @@
         public string Cpf { get; set; }
 
         public string Rg { get; set; }
+
+        public string PalavraChave { get; set; }
     }
 }

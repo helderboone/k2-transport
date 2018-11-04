@@ -134,38 +134,43 @@
             if (obrigatorio === null)
                 obrigatorio = false;
 
-            App.bloquear();
+            $(selector).select2({
+                ajax: {
+                    url: App.corrigirPathRota("obter-clientes-por-palavra-chave"),
+                    dataType: 'json',
+                    delay: 1000,
+                    data: function (params) {
+                        return {
+                            palavraChave: params.term
+                        };
+                    },
+                    processResults: function (data, params) {
+                        var itens = [];
 
-            $.ajax({
-                type: "GET",
-                url: App.corrigirPathRota("obter-todos-clientes"),
-                dataType: "json",
-                success: function (dados) {
-                    var itens = [];
+                        itens.push({ id: "", text: "" });
 
-                    itens.push({ id: "", text: "" });
+                        $.each(data, function (k, item) {
+                            itens.push({ id: item.id, text: item.nome, cpf: item.cpfFormatado, celular: item.celularFormatado });
+                        });
 
-                    $.each(dados, function (k, item) {
-                        itens.push({ id: item.id, text: item.nome, cpf: item.cpfFormatado, celular: item.celularFormatado });
-                    });
+                        return {
+                            results: itens
+                        };
+                    },
+                    cache: true
+                },
+                language: "pt-BR",
+                allowClear: !obrigatorio,
+                placeholder: "Selecione uma cliente",
+                escapeMarkup: function (markup) { return markup; },
+                templateResult: function (item) {
+                    if (item.loading)
+                        return '<span class="m--font-bolder">' + item.text + '</span>';
 
-                    $(selector).select2({
-                        allowClear: !obrigatorio,
-                        placeholder: "Selecione uma cliente",
-                        data: itens,
-                        escapeMarkup: function (markup) { return markup; },
-                        templateResult: function (item) {
-                            return '<span class="m--font-bolder">' + item.text + "</span><br/>" +
-                                'Celular: ' + item.celular + '<br/>' +
-                                'CPF: ' + item.cpf;
-                        }
-                    });
+                    return '<span class="m--font-bolder">' + item.text + "</span><br/>" +
+                        'Celular: ' + item.celular + '<br/>' +
+                        'CPF: ' + item.cpf;
                 }
-            }).fail(function (jqXhr) {
-                var feedback = Feedback.converter(jqXhr.responseJSON);
-                feedback.exibirModal();
-            }).always(function () {
-                App.desbloquear();
             });
         },
 
@@ -195,16 +200,6 @@
                 $("#frmManterCliente").validate({
                     rules: {
                         iNome: {
-                            required: true
-                        },
-                        iEmail: {
-                            required: true,
-                            email: true
-                        },
-                        iCpf: {
-                            required: true
-                        },
-                        iRg: {
                             required: true
                         },
                         iCelular: {

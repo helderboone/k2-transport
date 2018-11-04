@@ -48,17 +48,27 @@ namespace K2.Infraestrutura.Dados.Repositorios
                 .AsNoTracking()
                 .AsQueryable();
 
-            if (!string.IsNullOrEmpty(entrada.Nome))
-                query = query.Where(x => x.Usuario.Nome.IndexOf(entrada.Nome, StringComparison.InvariantCultureIgnoreCase) != -1);
+            if (!string.IsNullOrEmpty(entrada.PalavraChave))
+            {
+                query = query.Where(x =>
+                    x.Usuario.Nome.IndexOf(entrada.PalavraChave, StringComparison.InvariantCultureIgnoreCase) != -1 ||
+                    x.Usuario.Cpf.IndexOf(entrada.PalavraChave, StringComparison.InvariantCultureIgnoreCase) != -1 ||
+                    x.Usuario.Rg.IndexOf(entrada.PalavraChave, StringComparison.InvariantCultureIgnoreCase) != -1);
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(entrada.Nome))
+                    query = query.Where(x => x.Usuario.Nome.IndexOf(entrada.Nome, StringComparison.InvariantCultureIgnoreCase) != -1);
 
-            if (!string.IsNullOrEmpty(entrada.Email))
-                query = query.Where(x => x.Usuario.Email.IndexOf(entrada.Email, StringComparison.InvariantCultureIgnoreCase) != -1);
+                if (!string.IsNullOrEmpty(entrada.Email))
+                    query = query.Where(x => x.Usuario.Email.IndexOf(entrada.Email, StringComparison.InvariantCultureIgnoreCase) != -1);
 
-            if (!string.IsNullOrEmpty(entrada.Cpf))
-                query = query.Where(x => x.Usuario.Cpf == entrada.Cpf);
+                if (!string.IsNullOrEmpty(entrada.Cpf))
+                    query = query.Where(x => x.Usuario.Cpf == entrada.Cpf);
 
-            if (!string.IsNullOrEmpty(entrada.Rg))
-                query = query.Where(x => x.Usuario.Rg.IndexOf(entrada.Rg, StringComparison.InvariantCultureIgnoreCase) != -1);
+                if (!string.IsNullOrEmpty(entrada.Rg))
+                    query = query.Where(x => x.Usuario.Rg.IndexOf(entrada.Rg, StringComparison.InvariantCultureIgnoreCase) != -1);
+            }
 
             switch (entrada.OrdenarPor?.ToLower())
             {

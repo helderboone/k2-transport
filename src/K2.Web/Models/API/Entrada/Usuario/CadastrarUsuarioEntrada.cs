@@ -17,12 +17,6 @@
 
         public string Celular { get; set; }
 
-        public bool Administrador { get; }
-
-        public CadastrarUsuarioEntrada()
-        {
-            this.Senha         = "k2";
-            this.Administrador = true;
-        }
+        public bool Administrador { get; set; }
     }
 }
