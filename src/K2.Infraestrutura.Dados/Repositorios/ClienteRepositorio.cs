@@ -52,8 +52,8 @@ namespace K2.Infraestrutura.Dados.Repositorios
             {
                 query = query.Where(x =>
                     x.Usuario.Nome.IndexOf(entrada.PalavraChave, StringComparison.InvariantCultureIgnoreCase) != -1 ||
-                    x.Usuario.Cpf.IndexOf(entrada.PalavraChave, StringComparison.InvariantCultureIgnoreCase) != -1 ||
-                    x.Usuario.Rg.IndexOf(entrada.PalavraChave, StringComparison.InvariantCultureIgnoreCase) != -1);
+                    x.Usuario.Cpf != null && x.Usuario.Cpf.IndexOf(entrada.PalavraChave, StringComparison.InvariantCultureIgnoreCase) != -1 ||
+                    x.Usuario.Rg != null && x.Usuario.Rg.IndexOf(entrada.PalavraChave, StringComparison.InvariantCultureIgnoreCase) != -1);
             }
             else
             {
@@ -61,13 +61,13 @@ namespace K2.Infraestrutura.Dados.Repositorios
                     query = query.Where(x => x.Usuario.Nome.IndexOf(entrada.Nome, StringComparison.InvariantCultureIgnoreCase) != -1);
 
                 if (!string.IsNullOrEmpty(entrada.Email))
-                    query = query.Where(x => x.Usuario.Email.IndexOf(entrada.Email, StringComparison.InvariantCultureIgnoreCase) != -1);
+                    query = query.Where(x => x.Usuario.Email != null && x.Usuario.Email.IndexOf(entrada.Email, StringComparison.InvariantCultureIgnoreCase) != -1);
 
                 if (!string.IsNullOrEmpty(entrada.Cpf))
-                    query = query.Where(x => x.Usuario.Cpf == entrada.Cpf);
+                    query = query.Where(x => x.Usuario.Cpf != null &&  x.Usuario.Cpf == entrada.Cpf);
 
                 if (!string.IsNullOrEmpty(entrada.Rg))
-                    query = query.Where(x => x.Usuario.Rg.IndexOf(entrada.Rg, StringComparison.InvariantCultureIgnoreCase) != -1);
+                    query = query.Where(x => x.Usuario.Rg != null && x.Usuario.Rg.IndexOf(entrada.Rg, StringComparison.InvariantCultureIgnoreCase) != -1);
             }
 
             switch (entrada.OrdenarPor?.ToLower())
