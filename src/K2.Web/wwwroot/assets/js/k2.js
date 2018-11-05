@@ -161,16 +161,18 @@
                 },
                 language: "pt-BR",
                 allowClear: !obrigatorio,
-                placeholder: "Selecione uma cliente",
+                placeholder: "Selecione um cliente",
                 escapeMarkup: function (markup) { return markup; },
                 templateResult: function (item) {
                     if (item.loading)
                         return '<span class="m--font-bolder">' + item.text + '</span>';
 
-                    return '<span class="m--font-bolder">' + item.text + "</span><br/>" +
+                    return '<span class="m--font-boldest">' + item.text + "</span><br/>" +
                         'Celular: ' + item.celular + '<br/>' +
                         'CPF: ' + (item.cpf != null ? item.cpf : ' ');
                 }
+            }).on("change", function () {
+                $(this).valid();
             });
         },
 

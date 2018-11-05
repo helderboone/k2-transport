@@ -112,7 +112,7 @@ class Feedback {
             message: this.Mensagem
         },
         {
-            type: this.obterClassCssBootstrap(),
+            type: this.Tipo.obterClassCssBootstrap(),
             z_index: 9999999999,
             timer: (this.Tipo.Nome == Tipo.Erro ? 12000 : 5000),
             mouse_over: "pause",

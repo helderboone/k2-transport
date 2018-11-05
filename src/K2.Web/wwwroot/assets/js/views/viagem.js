@@ -358,21 +358,6 @@
                     { data: "localEmbarque", className: "min-tablet", title: "Embarque", orderable: false },
                     { data: "localDesembarque", className: "min-tablet", title: "Desembarque", orderable: false },
                     { data: "observacao", className: "min-tablet", title: "Observação", orderable: false },
-                    //{
-                    //    data: null,
-                    //    title: "Pago?",
-                    //    orderable: false,
-                    //    className: "dt-center",
-                    //    width: "1px",
-                    //    visible: $("#iPerfilUsuarioLogado").val() === "Administrador",
-                    //    render: function (data, type, row) {
-                    //        switch (data.pago) {
-                    //            case 0: return '<span class="m-badge m-badge--danger"></span>';
-                    //            case 1: return '<span class="m-badge m-badge--success"></span>';
-                    //            case 2: return '<span class="m-badge m-badge--warning"></span>';
-                    //        }
-                    //    }
-                    //},
                     {
                         data: "valorPagoFormatado",
                         title: "Valor pago",
@@ -522,18 +507,26 @@
         App.exibirModalPorRota((!cadastro ? App.corrigirPathRota("alterar-viagem/" + id) : App.corrigirPathRota("cadastrar-viagem")), function () {
             $("#sMotorista").select2({
                 placeholder: "Selecione um motorista"
+            }).on("change", function () {
+                $(this).valid(); 
             });
 
             $("#sCarro").select2({
                 placeholder: "Selecione um carro"
+            }).on("change", function () {
+                $(this).valid();
             });
 
             $("#sLocalidadeEmbarque").select2({
                 placeholder: "Selecione a localidade de embarque"
+            }).on("change", function () {
+                $(this).valid();
             });
 
             $("#sLocalidadeDesembarque").select2({
                 placeholder: "Selecione a localidade de desembarque"
+            }).on("change", function () {
+                $(this).valid();
             });
 
             var startDate = $("#iDataHorarioSaida").data("startdate");
@@ -545,6 +538,8 @@
                 format: 'dd/mm/yyyy hh:ii',
                 startDate: startDate,
                 language: 'pt-BR'
+            }).on('hide', function (e) {
+                $(this).valid();
             });
 
             $('#iValorPassagem').inputmask('decimal', {
@@ -615,6 +610,19 @@
                     }
                 },
 
+                invalidHandler: function (event, validator) {
+                    if (validator.errorList[0].element != null && validator.errorList[0].element.id == "sLocalidadeEmbarque" || validator.errorList[0].element.id == "sLocalidadeDesembarque") {
+                        $('.nav-tabs li:eq(1) a').tab('show');
+                    }
+                    else {
+                        $('.nav-tabs li:eq(0) a').tab('show');
+                    }
+
+                    //for (var i = 0; i < validator.errorList.length; i++) {
+                        
+                    //}
+                },
+
                 submitHandler: function () {
 
                     var viagem = {
@@ -675,6 +683,17 @@
 
             $("#bCadastrarCliente").click(function () {
                 K2.manterCliente(null, function () { K2.criarSelectClientes("#sClienteReserva", true); });
+            });
+
+            $("#bAlterarCliente").click(function () {
+                let idCliente = $("#sClienteReserva").val();
+
+                if (idCliente != null)
+                    K2.manterCliente(idCliente, function () { K2.criarSelectClientes("#sClienteReserva", true); });
+                else {
+                    let feedback = new Feedback(2, "Selecione primeiro um cliente.");
+                    feedback.exibirModal();
+                }
             });
 
             mApp.initTooltips();

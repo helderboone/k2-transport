@@ -109,6 +109,8 @@
             $("#sProprietario").select2({
                 placeholder: "Selecione um proprietário",
                 dropdownParent: $('.jc-bs3-container')
+            }).on("change", function () {
+                $(this).valid();
             });
 
             $("#sCaracteristicas").select2({
