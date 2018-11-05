@@ -85,6 +85,30 @@
                     App.exibirConfirm("Deseja realmente excluir esse cliente?", "Sim", "Não", function () { excluirCliente(id); });
                 });
             });
+        }).on('responsive-display', function (e, datatable, row, showHide, update) {
+            $("a[class*='redefinir-senha']").each(function () {
+                var id = $(this).data("id-usuario");
+
+                $(this).click(function () {
+                    K2.redefinirSenha(id);
+                });
+            });
+
+            $("a[class*='alterar-cliente']").each(function () {
+                var id = $(this).data("id");
+
+                $(this).click(function () {
+                    K2.manterCliente(id, function () { $("#tblCliente").DataTable().ajax.reload(); });
+                });
+            });
+
+            $("a[class*='excluir-cliente']").each(function () {
+                var id = $(this).data("id");
+
+                $(this).click(function () {
+                    App.exibirConfirm("Deseja realmente excluir esse cliente?", "Sim", "Não", function () { excluirCliente(id); });
+                });
+            });
         }).on("processing.dt", function () {
             App.bloquear();
         });
