@@ -325,8 +325,12 @@
             var gg1 = new JustGage({
                 id: "gg1",
                 counter: true,
-                label: "Reserva(s)"
+                label: "Reserva(s)",
+                relativeGaugeSize: true,
+                valueFontFamily: "Poppins"
             });
+            
+            $("#gg1 > svg > text").eq(2).html('<tspan style="font-family:Poppins; font-size: 0.7rem;">Reserva(s)</tspan>');
 
             $("#tblReserva").DataTable({
                 ajax: {
@@ -345,8 +349,8 @@
                         className: "dt-body-left all",
                         render: function (data, type, row) {
                             return '<span class="m--font-boldest">' + data.cliente.nome + '</span>' + ' <a href="#" data-id-viagem="' + idViagem + '" data-id-cliente="' + row.idCliente + '" class="alterar-cliente-reserva btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only--sm m-btn--pill" data-container="#portlet-viagem-informacao" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Alterar informações do cliente"><i class="la la-edit"></i></a><br/>' +
-                                'CPF: ' + data.cliente.cpfFormatado + '<br/>' +
-                                'Celular: ' + data.cliente.celularFormatado;
+                                'Celular: ' + data.cliente.celularFormatado + '<br/>' +
+                                'CPF: ' + (data.cliente.cpfFormatado != null ? data.cliente.cpfFormatado : ' ');
                         }
                     },
                     {
