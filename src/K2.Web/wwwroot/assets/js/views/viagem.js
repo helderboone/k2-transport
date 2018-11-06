@@ -29,8 +29,9 @@
                     data: null,
                     title: "Saída em",
                     render: function (data, type, row) {
-                        return data.dataHorarioSaidaToString + '<br/>' +
-                            '<span class="m--font-boldest m--font-brand"> ' + (data.quantidadeDiasSaida === 0 ? "Hoje" : (data.quantidadeDiasSaida === 1 ? "Falta 1 dia" : "Faltam " + data.quantidadeDiasSaida + " dias.")) + '</span>';
+                        return '<span class="m--font-boldest m--font-info">' + data.diaSemanaSaida + '</span><br/>' +
+                            data.dataHorarioSaidaToString + '<br/>' +
+                            '<span class="m--font-bolder"> ' + (data.quantidadeDiasSaida === 0 ? "Hoje" : (data.quantidadeDiasSaida === 1 ? "Falta 1 dia" : "Faltam " + data.quantidadeDiasSaida + " dias.")) + '</span>';
                     }
                 },
                 { data: "localidadeEmbarque.nome", title: "Embarque", orderable: false },
@@ -189,7 +190,8 @@
                     data: "dataHorarioSaida",
                     title: "Saída em",
                     render: function (data, type, row) {
-                        return row.dataHorarioSaidaToString + '<br/>' +
+                        return '<span class="m--font-boldest">' + row.diaSemanaSaida + '</span><br/>' +
+                            row.dataHorarioSaidaToString + '<br/>' +
                             '<span class="m--font-boldest m--font-success"> Realizada à ' + row.quantidadeDiasSaida * -1 + ' dia</span>';
                     }
                 },

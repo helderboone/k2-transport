@@ -107,6 +107,8 @@ namespace K2.Web.Models
 
         public string DataHorarioSaidaToString => this.DataHorarioSaida.ToString("dd MMM, yyyy - HH:mm");
 
+        public string DiaSemanaSaida => this.DataHorarioSaida.ToString("dddd");
+
         public double QuantidadeDiasSaida => Math.Round(this.DataHorarioSaida.Subtract(DateTimeHelper.ObterHorarioAtualBrasilia()).TotalDays, 0);
 
         public decimal ValorArrecadadoReservas => this.Reservas.Where(x => x.ValorPago.HasValue).Sum(x => x.ValorPago.Value);
