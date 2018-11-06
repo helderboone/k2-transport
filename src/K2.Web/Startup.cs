@@ -5,12 +5,15 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Rotativa.AspNetCore;
 using System;
 using System.Globalization;
+using System.IO.Compression;
+using System.Linq;
 using System.Net;
 
 namespace K2.Web
@@ -52,6 +55,15 @@ namespace K2.Web
             });
 
             services.AddMvc();
+
+            // Habilita a compressão do response
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<GzipCompressionProvider>();
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/json", "text/css", "text/html", "text/plain" });
+            });
+
+            services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IHttpContextAccessor httpContextAccessor, IHostingEnvironment env)
@@ -71,6 +83,9 @@ namespace K2.Web
 
             // Customiza as páginas de erro
             app.UseStatusCodePagesWithReExecute("/feedback/{0}");
+
+            // Utiliza a compressão do response
+            app.UseResponseCompression();
 
             app.UseAuthentication();
 
