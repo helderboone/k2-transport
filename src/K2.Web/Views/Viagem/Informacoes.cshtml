@@ -154,22 +154,23 @@
                     </div>
                     <div class="form-group m-form__group m-form__group--sm row pl-0 pr-0">
                         <div class="col-lg-6 m-form__group-sub">
-                            <label>Data da saída:</label>
-                            <p class="form-control-static">@Model.DataHorarioSaidaToString</p>
+                            <label>Data da saída:</label><br/>
+                            <span class="form-control-static m--font-boldest m--font-brand m--font-transform-u">@Model.DiaSemanaSaida</span><br />
+                            <span class="form-control-static">@Model.DataHorarioSaidaToString</span>
                             <p class="form-control-static m--font-bolder">
                                 @if (Model.QuantidadeDiasSaida >= 0)
                                 {
                                     if (Model.QuantidadeDiasSaida == 0)
                                     {
-                                        <span class="m--font-brand">Hoje</span>
+                                        <span>Hoje</span>
                                     }
                                     else if (Model.QuantidadeDiasSaida == 1)
                                     {
-                                        <span class="m--font-brand">Falta 1 dia</span>
+                                        <span>Falta 1 dia</span>
                                     }
                                     else
                                     {
-                                        <span class="m--font-brand">Faltam @(Model.QuantidadeDiasSaida) dias.</span>
+                                        <span>Faltam @(Model.QuantidadeDiasSaida) dias.</span>
                                     }
                                 }
                                 else

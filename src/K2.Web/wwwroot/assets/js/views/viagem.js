@@ -29,7 +29,7 @@
                     data: null,
                     title: "Saída em",
                     render: function (data, type, row) {
-                        return '<span class="m--font-boldest m--font-info">' + data.diaSemanaSaida + '</span><br/>' +
+                        return '<span class="m--font-boldest m--font-brand m--font-transform-u">' + data.diaSemanaSaida + '</span><br/>' +
                             data.dataHorarioSaidaToString + '<br/>' +
                             '<span class="m--font-bolder"> ' + (data.quantidadeDiasSaida === 0 ? "Hoje" : (data.quantidadeDiasSaida === 1 ? "Falta 1 dia" : "Faltam " + data.quantidadeDiasSaida + " dias.")) + '</span>';
                     }
@@ -190,7 +190,7 @@
                     data: "dataHorarioSaida",
                     title: "Saída em",
                     render: function (data, type, row) {
-                        return '<span class="m--font-boldest">' + row.diaSemanaSaida + '</span><br/>' +
+                        return '<span class="m--font-boldest m--font-transform-u">' + row.diaSemanaSaida + '</span><br/>' +
                             row.dataHorarioSaidaToString + '<br/>' +
                             '<span class="m--font-boldest m--font-success"> Realizada à ' + row.quantidadeDiasSaida * -1 + ' dia</span>';
                     }
