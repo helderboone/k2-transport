@@ -17,7 +17,10 @@
             <div class="form-group m-form__group m-form__group--md row">
                 <div class="col-lg-12 m-form__group-sub">
                     <label>Cliente <span class="m-badge m-badge--danger m-badge--dot"></span></label>
-                    <div class="input-group m-input-group m-input-group--square m-input-group--air">
+                    <div class="input-group m-input-group--square m-input-group--air" style="flex-wrap: nowrap;">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-info" type="button" id="bCadastrarCliente" data-container="#portlet-manter-reserva" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Cadastrar novo cliente"><i class="fa fa-plus"></i></button>
+                        </div>
                         <select class="form-control m-select2 m-select2--square" id="sClienteReserva" name="sClienteReserva">
                             @if (Model != null)
                             {
@@ -25,7 +28,7 @@
                             }
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-info" type="button" id="bCadastrarCliente" data-container="#portlet-manter-reserva" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Cadastrar novo cliente"><i class="fa fa-plus"></i></button>
+                            <button class="btn btn-brand" type="button" id="bAlterarCliente" data-container="#portlet-manter-reserva" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="Alterar dados do cliente selecionado"><i class="la la-edit"></i></button>
                         </div>
                     </div>
                 </div>
