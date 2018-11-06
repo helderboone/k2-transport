@@ -24,6 +24,21 @@
                                 Lugares disponíveis
                             </h4><br>
                             <span class="m-widget24__desc">
+                                Capacidade: @(Model.Carro.Capacidade) lugares
+                            </span>
+                            <span class="m-widget24__stats m--font-info">
+                                @Model.QuantidadeLugaresDisponiveis
+                            </span>
+                            <div id="gg1" data-value="@Model.Reservas.Count()" data-min="0" data-max="@Model.Carro.Capacidade"></div>
+                        </div>
+                        
+                    </div>
+                    @*<div class="m-widget24">
+                        <div class="m-widget24__item">
+                            <h4 class="m-widget24__title" style="margin-top: 1.3rem;">
+                                Lugares disponíveis
+                            </h4><br>
+                            <span class="m-widget24__desc">
                                 Capacidade: @Model.Carro.Capacidade
                             </span>
                             <span class="m-widget24__stats m--font-info">
@@ -40,7 +55,7 @@
                                 @Model.PercentualDisponibilidade
                             </span>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
                 @if (cookieHelper.ObterPerfilUsuario() == TipoPerfil.Administrador)
                 {

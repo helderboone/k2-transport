@@ -112,5 +112,11 @@
     "inputFiles": [
       "wwwroot/assets/vendors/base/bootstrap-datetimepicker.pt-BR.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/vendors/custom/justgage-js/justgage.min.js",
+    "inputFiles": [
+      "wwwroot/assets/vendors/custom/justgage-js/justgage.js"
+    ]
   }
 ]

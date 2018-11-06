@@ -322,6 +322,12 @@
                 manterReserva(null, idViagem);
             });
 
+            var gg1 = new JustGage({
+                id: "gg1",
+                counter: true,
+                label: "Reserva(s)"
+            });
+
             $("#tblReserva").DataTable({
                 ajax: {
                     url: App.corrigirPathRota("listar-reservas-por-viagem/" + idViagem),
