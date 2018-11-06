@@ -338,7 +338,7 @@
                         orderable: false,
                         className: "dt-body-left all",
                         render: function (data, type, row) {
-                            return '<span class="m--font-boldest">' + data.cliente.nome + '</span><br/>' +
+                            return '<span class="m--font-boldest">' + data.cliente.nome + '</span>' + ' <a href="#" data-id-viagem="' + idViagem + '" data-id-cliente="' + row.idCliente + '" class="alterar-cliente-reserva btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only--sm m-btn--pill" data-container="#portlet-viagem-informacao" data-toggle="m-tooltip" data-placement="right" title="" data-original-title="Alterar informações do cliente"><i class="la la-edit"></i></a><br/>' +
                                 'CPF: ' + data.cliente.cpfFormatado + '<br/>' +
                                 'Celular: ' + data.cliente.celularFormatado;
                         }
@@ -447,6 +447,19 @@
             }).on("draw.dt", function () {
 
                 mApp.initTooltips();
+
+                $("a[class*='alterar-cliente-reserva']").each(function () {
+                    var idViagem = $(this).data("id-viagem");
+                    var idCliente = $(this).data("id-cliente");
+
+                    $(this).click(function () {
+                        K2.manterCliente(idCliente, function ()
+                        {
+                            App.ocultarModal(true);
+                            obterInfoViagem(idViagem);
+                        });
+                    });
+                });
 
                 $("a[class*='cadastrar-dependente']").each(function () {
                     var idReserva = $(this).data("id-reserva");
@@ -619,10 +632,6 @@
                     else {
                         $('.nav-tabs li:eq(0) a').tab('show');
                     }
-
-                    //for (var i = 0; i < validator.errorList.length; i++) {
-                        
-                    //}
                 },
 
                 submitHandler: function () {
