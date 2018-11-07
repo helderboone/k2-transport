@@ -325,12 +325,12 @@
             var gg1 = new JustGage({
                 id: "gg1",
                 counter: true,
-                label: "Reserva(s)",
                 relativeGaugeSize: true,
                 valueFontFamily: "Poppins"
             });
-            
-            $("#gg1 > svg > text").eq(2).html('<tspan style="font-family:Poppins; font-size: 0.7rem;">Reserva(s)</tspan>');
+
+            $("#gg1 > svg > text").attr("fill", "#000");
+            $("#gg1 > svg > text").eq(0).html('<tspan style="font-family:Poppins; font-size:1.0rem; font-weight:500;">Reservas</tspan>');
 
             $("#tblReserva").DataTable({
                 ajax: {
