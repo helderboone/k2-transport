@@ -317,6 +317,10 @@
 
             $("#lnkLogout").click(function () {
                 App.exibirConfirm("Deseja realmente sair?", "Sim", "Não", function () {
+                    if (typeof (Storage) !== "undefined") {
+                        localStorage.removeItem("token");
+                    }
+
                     $.post(App.corrigirPathRota("logout"), function () {
                         location.href = "login";
                     });

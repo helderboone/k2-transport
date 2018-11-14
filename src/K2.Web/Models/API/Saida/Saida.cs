@@ -41,10 +41,10 @@ namespace K2.Web.Models
 
         }
 
-        public static Saida<object> Obter(string json)
+        public static Saida<JObject> Obter(string json)
         {
             return !string.IsNullOrEmpty(json)
-                ? JsonConvert.DeserializeObject<Saida<object>>(json)
+                ? JsonConvert.DeserializeObject<Saida<JObject>>(json)
                 : throw new Exception("A saida da API foi nula ou vazia.");
         }
     }

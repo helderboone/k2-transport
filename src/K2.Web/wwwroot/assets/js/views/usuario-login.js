@@ -59,13 +59,23 @@ var SnippetLogin = function() {
             form.ajaxSubmit({
                 url: '',
                 success: function () {
-                    $.post(App.corrigirPathRota("login"), { email: $("#email").val(), senha: $("#password").val(), permanecerLogado: $("#remember").prop("checked") }, function (feedbackViewModel) {
-                        var feedback = Feedback.converter(feedbackViewModel);
+                    $.post(App.corrigirPathRota("login"), { email: $("#email").val(), senha: $("#password").val(), permanecerLogado: $("#remember").prop("checked") }, function (saida) {
 
-                        if (feedback.Tipo.Nome === Tipo.Sucesso)
+                        if (saida != null) {
+                            // Verifica se a saída é um "feedback"
+                            if (saida.Tipo != null) {
+                                var feedback = Feedback.converter(saida);
+
+                                feedback.exibirModal();
+                                return;
+                            }
+
+                            if (typeof (Storage) !== "undefined" && $("#remember").prop("checked")) {
+                                localStorage.setItem("token", saida.token);
+                            }
+
                             location.href = App.corrigirPathRota("viagens");
-                        else
-                            feedback.exibirModal();
+                        }
                     })
                     .fail(function (jqXhr) {
                         var feedback = Feedback.converter(jqXhr.responseJSON);
@@ -131,6 +141,23 @@ var SnippetLogin = function() {
             handleFormSwitch();
             handleSignInFormSubmit();
             handleForgetPasswordFormSubmit();
+
+            if (typeof (Storage) !== "undefined") {
+                var token = localStorage.getItem("token");
+
+                if (token != "" && token != null) {
+                    App.bloquear();
+
+                    $.post(App.corrigirPathRota("login-por-token"), { token: token }, function (feedbackViewModel) {
+                        var feedback = Feedback.converter(feedbackViewModel);
+
+                        if (feedback.Tipo.Nome === Tipo.Sucesso)
+                            location.href = App.corrigirPathRota("viagens");
+                        else
+                            console.info(feedback.Mensagem);
+                    });
+                }
+            }
         }
     };
 }();

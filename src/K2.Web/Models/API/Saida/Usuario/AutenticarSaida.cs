@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using K2.Web.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -35,17 +36,9 @@ namespace K2.Web.Models
         {
             var token = ObterToken();
 
-            if (string.IsNullOrEmpty(token))
-                return new List<Claim>();
-
-            var jwtHandler = new JwtSecurityTokenHandler();
-
-            if (!jwtHandler.CanReadToken(token))
-                return new List<Claim>();
-
-            var jwtToken = jwtHandler.ReadJwtToken(token);
-
-            return jwtToken.Claims;
+            return string.IsNullOrEmpty(token)
+                ? new List<Claim>()
+                : JwtTokenHelper.ExtrairClaims(token);
         }
 
         public static AutenticarSaida Obter(string json)

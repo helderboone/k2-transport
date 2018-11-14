@@ -74,7 +74,7 @@ namespace K2.Api.Controllers
         /// <summary>
         /// Obtém um usuario a partir do seu ID
         /// </summary>
-        [Authorize(Policy = TipoPoliticaAcesso.Administrador)]
+        [AllowAnonymous]
         [HttpGet]
         [Route("v1/usuarios/obter-por-id/{id:int}")]
         public async Task<ISaida> ObterPorId(int id)

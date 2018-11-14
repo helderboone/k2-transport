@@ -1,4 +1,5 @@
-﻿using K2.Web.Filters;
+﻿using K2.Infraestrutura;
+using K2.Web.Filters;
 using K2.Web.Helpers;
 using K2.Web.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -73,6 +75,62 @@ namespace K2.Web.Controllers
                 AllowRefresh = true,
                 IsPersistent = permanecerLogado,
                 ExpiresUtc = saida.Retorno.DataExpiracaoToken
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);
+
+            return new JsonResult(new { Token = saida.ObterToken() });
+
+            //return new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Usuário autenticado com sucesso."));
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("login-por-token")]
+        [FeedbackExceptionFilter("Ocorreu um erro na tentativa de efetuar login.", TipoAcaoAoOcultarFeedback.Ocultar)]
+        public async Task<IActionResult> Login(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Token vazio ou não informado."));
+
+            var claims = JwtTokenHelper.ExtrairClaims(token)?.ToList();
+
+            if (claims == null || !claims.Any())
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Nenhuma claim encontrada no token informado."));
+
+            var idUsuario = claims.FirstOrDefault(x => x.Type == "IdUsuario")?.Value;
+
+            if (string.IsNullOrEmpty(idUsuario))
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Claim \"IdUsuario\" não encontrada no token informado."));
+
+            var apiResponse = await _restSharpHelper.ChamarApi("usuarios/obter-por-id/" + idUsuario, Method.GET, null, false);
+
+            var saida = Saida.Obter(apiResponse.Content);
+
+            if (!saida.Sucesso)
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, "Não foi possível efetuar o login.", saida.Mensagens));
+
+            if (!Convert.ToBoolean(saida.Retorno["ativo"]))
+                return new FeedbackResult(new Feedback(TipoFeedback.Atencao, $"O usuário {saida.Retorno["nome"]} está inativo.", saida.Mensagens));
+
+            // Cria o cookie de autenticação
+
+            claims.Add(new Claim("jwtToken", token));
+
+            var userIdentity = new ClaimsIdentity(
+                new GenericIdentity(saida.Retorno["nome"].ToString()),
+                claims,
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                null,
+                null);
+
+            var principal = new ClaimsPrincipal(userIdentity);
+
+            var authenticationProperties = new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                IsPersistent = true,
+                ExpiresUtc = DateTimeHelper.ObterHorarioAtualBrasilia().AddYears(1)
             };
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);
