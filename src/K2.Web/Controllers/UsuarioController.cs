@@ -28,7 +28,6 @@ namespace K2.Web.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("")]
         [Route("login")]
         public IActionResult Login()
         {
@@ -80,8 +79,6 @@ namespace K2.Web.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);
 
             return new JsonResult(new { Token = saida.ObterToken() });
-
-            //return new FeedbackResult(new Feedback(TipoFeedback.Sucesso, "Usuário autenticado com sucesso."));
         }
 
         [AllowAnonymous]

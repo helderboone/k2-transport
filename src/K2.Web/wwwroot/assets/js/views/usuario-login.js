@@ -141,23 +141,6 @@ var SnippetLogin = function() {
             handleFormSwitch();
             handleSignInFormSubmit();
             handleForgetPasswordFormSubmit();
-
-            if (typeof (Storage) !== "undefined") {
-                var token = localStorage.getItem("token");
-
-                if (token != "" && token != null) {
-                    App.bloquear();
-
-                    $.post(App.corrigirPathRota("login-por-token"), { token: token }, function (feedbackViewModel) {
-                        var feedback = Feedback.converter(feedbackViewModel);
-
-                        if (feedback.Tipo.Nome === Tipo.Sucesso)
-                            location.href = App.corrigirPathRota("viagens");
-                        else
-                            console.info(feedback.Mensagem);
-                    });
-                }
-            }
         }
     };
 }();

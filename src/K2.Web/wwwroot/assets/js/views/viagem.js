@@ -60,7 +60,7 @@
                     data: null,
                     className: "td-actions dt-center all",
                     orderable: false,
-                    width: "70px",
+                    width: "1px",
                     render: function (data, type, row) {
                         return '<div class="m-dropdown m-dropdown--inline" m-dropdown-toggle="click" aria-expanded="true">' + 
                                     '<a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill m-dropdown__toggle">' +
@@ -221,7 +221,7 @@
                     data: null,
                     className: "td-actions dt-center all",
                     orderable: false,
-                    width: "70px",
+                    width: "1px",
                     render: function (data, type, row) {
                         return '<div class="m-dropdown m-dropdown--inline" m-dropdown-toggle="click" aria-expanded="true">' + 
                                     '<a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill m-dropdown__toggle">' +
@@ -384,7 +384,7 @@
                         data: null,
                         className: "td-actions dt-center all",
                         orderable: false,
-                        width: "70px",
+                        width: "1px",
                         visible: $("#iPerfilUsuarioLogado").val() === "Administrador",
                         render: function (data, type, row) {
                             

@@ -28,7 +28,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/web/login",
+  "start_url": "/web",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "orientation": "portrait",

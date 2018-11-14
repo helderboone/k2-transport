@@ -89,6 +89,8 @@ namespace K2.Web
 
             app.UseAuthentication();
 
+            app.UseDefaultFiles();
+
             app.UseStaticFiles();
 
             app.UseMvc();
