@@ -214,7 +214,13 @@
 </table>
 <table class="table table-bordered m-table m-table--border-metal" style="width:100%; margin:0; border-spacing: 1px; border-top: none;">
     <tr>
-        <td colspan="3" style="border-top: none;">Observações:<br /><br /></td>
+        <td colspan="3" style="border-top: none;">
+            Observações:<br />
+            @if (!string.IsNullOrEmpty(Model.Observacao))
+            {
+                <span>@Html.Raw(Model.Observacao?.Replace("\n", "<br />"))</span>
+            }
+        </td>
     </tr>
     <tr>
         <td colspan="3" class="m--align-center" style="border-bottom: none;">

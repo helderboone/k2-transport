@@ -107,6 +107,11 @@ namespace K2.Dominio.Entidades
         public string TelefoneContratanteFrete { get; private set; }
 
         /// <summary>
+        /// Observações da viagem
+        /// </summary>
+        public string Observacao { get; private set; }
+
+        /// <summary>
         /// Carro designado para realizar a viagem
         /// </summary>
         public Carro Carro { get; private set; }
@@ -204,6 +209,7 @@ namespace K2.Dominio.Entidades
             this.DocumentoContratanteFrete = entrada.DocumentoContratanteFrete;
             this.RgContratanteFrete        = entrada.RgContratanteFrete;
             this.TelefoneContratanteFrete  = entrada.TelefoneContratanteFrete;
+            this.Observacao                = entrada.Observacao;
         }
 
         public TipoSituacaoViagem ObterTipoSituacao()

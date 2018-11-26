@@ -111,6 +111,11 @@ namespace K2.Dominio.Comandos.Saida
         public string TelefoneContratanteFrete { get; }
 
         /// <summary>
+        /// Observações da viagem
+        /// </summary>
+        public string Observacao { get; }
+
+        /// <summary>
         /// Carro relacionado a viagem
         /// </summary>
         public object Carro { get; }
@@ -167,6 +172,7 @@ namespace K2.Dominio.Comandos.Saida
             DocumentoContratanteFrete = viagem.DocumentoContratanteFrete;
             RgContratanteFrete        = viagem.RgContratanteFrete;
             TelefoneContratanteFrete  = viagem.TelefoneContratanteFrete;
+            Observacao                = viagem.Observacao;
             Carro = new
             {
                 viagem.Carro.Descricao,

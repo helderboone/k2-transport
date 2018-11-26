@@ -664,7 +664,8 @@
                         DocumentoContratanteFrete: $("#iDocumentoContratanteFrete").val(),
                         RgContratanteFrete: $("#iRgContratanteFrete").val(),
                         TelefoneContratanteFrete: $("#iTelefoneContratanteFrete").val(),
-                        EnderecoContratanteFrete: $("#iEnderecoContratanteFrete").val()
+                        EnderecoContratanteFrete: $("#iEnderecoContratanteFrete").val(),
+                        Observacao: $("#tObservacao").val()
                     };
 
                     App.bloquear();

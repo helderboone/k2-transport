@@ -40,5 +40,7 @@ namespace K2.Web.Models
         public string RgContratanteFrete { get; set; }
 
         public string TelefoneContratanteFrete { get; set; }
+
+        public string Observacao { get; set; }
     }
 }

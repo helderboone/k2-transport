@@ -91,6 +91,8 @@ namespace K2.Web.Models
 
         public string TelefoneContratanteFreteFormatado => this.TelefoneContratanteFrete?.Formatar("(##)######-####");
 
+        public string Observacao { get; set; }
+
         public ViagemCarroRetorno Carro { get; set; }
 
         public ViagemMotoristaRetorno Motorista { get; set; }

@@ -95,6 +95,11 @@ namespace K2.Dominio.Comandos.Entrada
         /// </summary>
         public string TelefoneContratanteFrete { get; }
 
+        /// <summary>
+        /// Observações da viagem
+        /// </summary>
+        public string Observacao { get; }
+
         public CadastrarViagemEntrada(
             int idCarro,
             int idMotorista,
@@ -112,7 +117,8 @@ namespace K2.Dominio.Comandos.Entrada
             string enderecoContratanteFrete = null,
             string documentoContratanteFrete = null,
             string rgContratanteFrete = null,
-            string telefoneContratanteFrete = null
+            string telefoneContratanteFrete = null,
+            string observacao = null
             )
         {
             IdCarro                   = idCarro;
@@ -132,6 +138,7 @@ namespace K2.Dominio.Comandos.Entrada
             DocumentoContratanteFrete = documentoContratanteFrete;
             RgContratanteFrete        = rgContratanteFrete;
             TelefoneContratanteFrete  = telefoneContratanteFrete;
+            Observacao                = observacao;
 
             Validar();
         }

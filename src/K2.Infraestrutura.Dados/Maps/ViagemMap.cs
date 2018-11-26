@@ -46,6 +46,7 @@ namespace K2.Infraestrutura.Dados.Maps
             builder.Property(x => x.DocumentoContratanteFrete);
             builder.Property(x => x.RgContratanteFrete);
             builder.Property(x => x.TelefoneContratanteFrete);
+            builder.Property(x => x.Observacao);
 
             builder.Ignore(x => x.PercentualDisponibilidade);
             builder.Ignore(x => x.QuantidadeLugaresDisponiveis);

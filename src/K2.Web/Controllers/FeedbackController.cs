@@ -8,6 +8,14 @@ namespace K2.Web.Controllers
     public class FeedbackController : Controller
     {
         [AllowAnonymous]
+        [Route("hello")]
+        [HttpGet]
+        public IActionResult Hello()
+        {
+            return NoContent();
+        }
+
+        [AllowAnonymous]
         [Route("feedback/{httpStatusCode:int}")]
         public IActionResult Feedback(HttpStatusCode httpStatusCode)
         {
